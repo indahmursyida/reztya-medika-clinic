@@ -1,0 +1,1 @@
+# reztya-medika-clinic
