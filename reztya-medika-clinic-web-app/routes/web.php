@@ -18,3 +18,7 @@ Route::permanentRedirect('/', '/home');
 Route::get('/home', function () {
     return view('layout/main');
 });
+
+Route::get('/signup', function () {
+    return view('users/signup');
+});
