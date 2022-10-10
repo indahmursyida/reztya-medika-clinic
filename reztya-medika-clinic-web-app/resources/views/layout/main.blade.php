@@ -15,8 +15,8 @@
     <body class="bg-light">
         <nav class="navbar navbar-light p-1 pt-0">
             <div class="container-fluid pt-1">
-                <a class="navbar-brand ps-3" href="/home" data-toggle="tooltip" title="Home" style="font-family: Alander,sans-serif; text-decoration: none;">
-                    <img src="storage/Reztya Logo.PNG" class="" href="/home" data-toggle="tooltip" title="Home" style="width: 20%; text-decoration: none;">
+                <a class="navbar-brand ps-3" href="/home">
+                    <img src="storage/Reztya Logo.PNG" data-toggle="tooltip" title="Home" style="width: 20%; text-decoration: none;">
                 </a>
                 <div class="position-absolute mb-2" style="margin-left: 18%">
                     <a class="link-success" href="/services" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">

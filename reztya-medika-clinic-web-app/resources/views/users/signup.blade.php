@@ -2,75 +2,92 @@
 @section('title', 'Sign up')
 
 @section('container')
-    <div style="height: 200px; width: 400px; position: fixed; top: 50%; left: 50%; margin-top: -280px; margin-left: -200px;">
+    <div class="container" style="width: 450px;">
         @if($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 Sign up failed!
                 <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <div class="pb-3">
+        <div style="margin-top: -10%">
             <div class="d-flex justify-content-center">
-                <h3 class="fw-bold">Game<h3 class="fw-bold text-danger">SLot</h3></h3>
-            </div>
-            <div class="d-flex justify-content-center">
-                <p class="h3 fw-bold">Sign up to your account</p>
+                <p class="h3 fw-bold">Register Account</p>
             </div>
         </div>
         <div class="d-flex justify-content-center">
             <div class="card bg-white" style="width: 30rem;">
-                <div class="card-body m-2">
+                <div class="card-body">
                     <form action="/signup" method="post">
                         @csrf
-                        <div class="form-group">
-                            <label class="form-control-plaintext">Name</label>
-                            <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required value="{{old('name')}}" autofocus>
+                        <div class="form-floating mb-2">
+                            <input placeholder="Username" id="floatingUsername" class="form-control @error('username') is-invalid @enderror" type="text" name="username" required value="{{old('username')}}" autofocus>
+                            <label for="floatingUsername">Username</label>
+                            @error('username')
+                            <div class="invalid-feedback">
+                                Please insert username.
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input placeholder="Name" id="floatingName" class="form-control @error('name') is-invalid @enderror" type="text" name="name" required value="{{old('name')}}">
+                            <label for="floatingName">Name</label>
                             @error('name')
                             <div class="invalid-feedback">
                                 Please insert name.
                             </div>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label class="form-control-plaintext">Email address</label>
-                            <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" required value="{{old('email')}}">
-                            @error('email')
+                        <div class="form-floating mb-2">
+                            <input placeholder="Birthdate" id="floatingBirthdate" class="form-control @error('birthdate') is-invalid @enderror" type="date" name="birthdate" required value="{{old('birthdate')}}">
+                            <label for="floatingBirthdate">Birthdate</label>
+                            @error('birthdate')
                             <div class="invalid-feedback">
-                                Please insert correct email.
+                                Please insert birthdate.
                             </div>
                             @enderror
                         </div>
-                        <div class="form-group pb-2">
-                            <label class="form-control-plaintext">Password</label>
-                            <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" required>
+                        <div class="form-floating mb-2">
+                            <input placeholder="Phone" id="floatingPhone" class="form-control @error('phone') is-invalid @enderror" type="number" name="phone" required value="{{old('phone')}}">
+                            <label for="floatingPhone">Phone Number</label>
+                            @error('phone')
+                            <div class="invalid-feedback">
+                                Please insert phone.
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input placeholder="Address" id="floatingAddress" class="form-control @error('address') is-invalid @enderror" type="text" name="address" required value="{{old('address')}}">
+                            <label for="floatingAddress">Address</label>
+                            @error('address')
+                            <div class="invalid-feedback">
+                                Please insert address.
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input placeholder="Email" id="floatingEmail" class="form-control @error('email') is-invalid @enderror" type="text" name="email" required value="{{old('email')}}">
+                            <label for="floatingEmail">Email</label>
+                            @error('email')
+                            <div class="invalid-feedback">
+                                Please insert email.
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input placeholder="Password" id="floatingPassword" class="form-control @error('password') is-invalid @enderror" type="password" name="password" required value="{{old('password')}}">
+                            <label for="floatingPassword">Password</label>
                             @error('password')
                             <div class="invalid-feedback">
                                 Please insert password.
                             </div>
                             @enderror
                         </div>
-                        <label>Gender</label>
-                        <div class="form-group">
-                            <div class="form-check-inline pe-5">
-                                <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" id="gender" name="gender" value="Male" required>
-                                <label class="form-check-label" for="gender">Male</label>
-                            </div>
-                            <div class="form-check-inline ps-5">
-                                <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" id="gender" name="gender" value="Female" required>
-                                <label class="form-check-label" for="gender">Female</label>
-                            </div>
-                            @error('gender')
+                        <div class="form-floating mb-2">
+                            <input placeholder="ConfirmPassword" id="floatingConfirmPassword" class="form-control @error('confirm_password') is-invalid @enderror" type="password" name="confirm_password" required value="{{old('confirm_password')}}">
+                            <label for="floatingConfirmPassword">Confirm Password</label>
+                            @error('confirm_password')
                             <div class="invalid-feedback">
-                                Please choose one of the gender.
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="form-group pb-3">
-                            <label class="form-control-plaintext">Date of Birth</label>
-                            <input class="form-control @error('date_of_birth') is-invalid @enderror" type="date" name="date_of_birth" required value="{{old('date_of_birth')}}">
-                            @error('date_of_birth')
-                            <div class="invalid-feedback">
-                                Your age must be over 13 or more years old.
+                                Please insert confirm password.
                             </div>
                             @enderror
                         </div>
