@@ -18,9 +18,9 @@ return new class extends Migration
             $table->foreignId('category_id');
             $table->string('name', 255);
             $table->text('description');
-            $table->integer('price', 255);
+            $table->integer('price');
             $table->date('expired_date');
-            $table->integer('stock', 11);
+            $table->integer('stock');
             $table->string('image_path', 255);
             $table->timestamps();
         });

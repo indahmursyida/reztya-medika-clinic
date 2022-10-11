@@ -9,6 +9,7 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'category_id';
     protected $fillable = ['category_name'];
     public function service(){
         return $this->hasMany(Service::class);
