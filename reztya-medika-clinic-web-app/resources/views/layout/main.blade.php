@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <!-- CSS only -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url('css/manage-schedule.css')}}">
         <!-- Fonts -->
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link href="http://fonts.cdnfonts.com/css/alander" rel="stylesheet">
@@ -17,7 +18,7 @@
         <nav class="navbar navbar-light p-1 pt-0">
             <div class="container-fluid pt-1">
                 <a class="navbar-brand ps-3" href="/home" data-toggle="tooltip" title="Home" style="font-family: Alander,sans-serif; text-decoration: none;">
-                    <img src="storage/Reztya Logo.PNG" class="" href="/home" data-toggle="tooltip" title="Home" style="width: 20%; text-decoration: none;">
+                    <img src="storage/reztya_logo.png" class="" href="/home" data-toggle="tooltip" title="Home" style="width: 20%; text-decoration: none;">
                 </a>
                 <div class="position-absolute mb-2" style="margin-left: 18%">
                     <a class="link-success" href="/services" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">

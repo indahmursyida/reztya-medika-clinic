@@ -18,3 +18,12 @@ Route::permanentRedirect('/', '/home');
 Route::get('/home', function () {
     return view('layout/main');
 });
+
+Route::get('/manage-schedule', function () {
+    return view('manage-schedule');
+});
+
+Route::get('/add-schedule', function () {
+    return view('add-schedule');
+});
+
