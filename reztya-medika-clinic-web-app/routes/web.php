@@ -33,4 +33,4 @@ Route::post('/signup', [\App\Http\Controllers\UserController::class, 'userRegist
 Route::get('/signin', function () {
     return view('users.signin');
 })->middleware('guest');
-//Route::post('/signin', [\App\Http\Controllers\UserController::class, 'userRegister']);
+Route::post('/signin', [\App\Http\Controllers\UserController::class, 'userLogin']);

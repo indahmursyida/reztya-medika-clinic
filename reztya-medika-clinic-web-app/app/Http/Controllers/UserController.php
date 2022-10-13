@@ -132,8 +132,8 @@ class UserController extends Controller
             if(Auth::attempt($credentials)) {
                 $remember_me = $request->remember_me;
                 if($remember_me) {
-                    Cookie::queue('email', $request->email, 10080);
-                    Cookie::queue('password', $request->password, 10080);
+                    Cookie::queue('email', $request->email);
+                    Cookie::queue('password', $request->password);
                 }
 
                 $request->session()->regenerate();
