@@ -17,3 +17,11 @@
     padding-left: 350px;
     padding-right: 350px;
 }
+
+.form-control:focus {
+    border-color: #00A54F !important;
+}
+
+.outline-reztya {
+    border-color: #00A54F !important;
+}

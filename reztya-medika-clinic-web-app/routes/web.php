@@ -13,12 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Redirects
 Route::permanentRedirect('/', '/home');
+Route::permanentRedirect('/login', '/signin');
+Route::permanentRedirect('/logout', '/home')->middleware('auth');
 
+// Home
 Route::get('/home', function () {
-    return view('layout/main');
+    return view('layout.main');
 });
 
+// Sign Up
 Route::get('/signup', function () {
-    return view('users/signup');
-});
+    return view('users.signup');
+})->middleware('guest');
+Route::post('/signup', [\App\Http\Controllers\UserController::class, 'userRegister']);
+
+// Sign In
+Route::get('/signin', function () {
+    return view('users.signin');
+})->middleware('guest');
+//Route::post('/signin', [\App\Http\Controllers\UserController::class, 'userRegister']);

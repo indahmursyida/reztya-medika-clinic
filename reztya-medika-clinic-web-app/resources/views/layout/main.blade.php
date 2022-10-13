@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="{{ url('css/index.css') }}">
         <title>@yield('title')</title>
     </head>
-    <body class="bg-light">
+    <body style="background-color: white">
         <nav class="navbar navbar-light p-1 pt-0">
             <div class="container-fluid pt-1">
                 <a class="navbar ps-4" href="/home" style="max-width: 15%;">
@@ -51,7 +51,7 @@
             </div>
         </nav>
         <div class="container mt-4">@yield('container')</div>
-        <footer class="footer fixed-bottom pb-1 bg-light" style="">
+        <footer class="footer fixed-bottom pb-1 bg-light" style="background-color: white">
             <div class="container text-center pt-1">
                 <a style="text-decoration: none; font-size: 12px; color: #00A54F" href="/home" data-toggle="tooltip" title="Home">
                     © 2022 Reztya Medika Clinic. All rights reserved.
