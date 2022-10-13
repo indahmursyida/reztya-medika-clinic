@@ -42,3 +42,11 @@
 .text-reztya:hover {
     color: #7DC241 !important;
 }
+
+.font-alander-reztya {
+    font-family: Alander, sans-serif;
+}
+
+.font-futura-reztya {
+    font-family: 'Futura Md BT', sans-serif;
+}
