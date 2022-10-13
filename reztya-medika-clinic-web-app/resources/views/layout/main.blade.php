@@ -20,13 +20,13 @@
             <img src="storage/reztya_logo.png" data-toggle="tooltip" title="Home" style="max-width: 80%;">
         </a>
         <div class="position-absolute mb-2" style="margin-left: 18%">
-            <a class="link-success" href="/services" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">
-                Services
+            <a class="link-success font-reztya" href="/services" style="text-decoration: none; font-size: 110%;">
+                Perawatan
             </a>
         </div>
         <div class="position-absolute mb-2" style="margin-left: 26%">
-            <a class="link-success" href="/products" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">
-                Products
+            <a class="link-success font-reztya" href="/products" style="text-decoration: none; font-size: 110%;">
+                Produk
             </a>
         </div>
         @auth
@@ -41,10 +41,10 @@
         @else
             <div class="pe-5 mb-2">
                 <a class="link-success pe-4" href="/signin" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">
-                    Sign in
+                    Masuk
                 </a>
                 <a class="link-success" href="/signup" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">
-                    Sign up
+                    Daftar
                 </a>
             </div>
         @endauth
