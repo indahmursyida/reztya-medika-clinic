@@ -3,20 +3,23 @@
 @section('title', 'Add Schedule')
 
 @section('container')
-<h1 class="text-center" style="color: #00A54F">Add Schedule</h1>
-<div>
-    <p class="" >Date</p>
-    <input class="input-data ps-3 pb-1" type="date" placeholder="Date">
-</div>
-<div>
-    <p class="">Start Time</p>
-    <input class="input-data ps-3 pb-1" type="date" placeholder="Date">
-</div>
-<div>
-    <p class="">End Time</p>
-    <input class="input-data ps-3 pb-1" type="date" placeholder="Date">
-</div>
-<div>
-    <input type="button" class="btn btn-outline-success" value="Add">
-</div>
+<form action="" method="POST">
+    <h1 class="text-center mb-3">Tambah Jadwal</h1>
+    <div class="mb-3">
+        <p class="mb-2">Tanggal</p>
+        <input class="input-data ps-3 pb-1 form-control" type="date">
+    </div>
+    <div class="mb-3">
+        <p class="mb-2">Waktu Mulai</p>
+        <input class="input-data ps-3 pb-1 form-control" type="time">
+    </div>
+    <div class="mb-3">
+        <p class="mb-2">Waktu Berakhir</p>
+        <input class="input-data ps-3 pb-1 form-control" type="time">
+    </div>
+    <div class="d-flex justify-content-center mt-5">
+        <input type="submit" class="btn btn-outline-success" value="Tambah Jadwal">
+    </div>
+</form>
+
 @endsection

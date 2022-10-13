@@ -27,3 +27,6 @@ Route::get('/add-schedule', function () {
     return view('add-schedule');
 });
 
+Route::get('/edit-schedule', function () {
+    return view('edit-schedule');
+});

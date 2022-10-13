@@ -3,21 +3,23 @@
 @section('title', 'Manage Schedule')
 
 @section('container')
-<h1 class="text-center" style="color: #00A54F">Manage Schedule</h1>
-<div class="button_new_schedule">
-    <a class="btn btn-outline-success">+ Add New Schedule</a>
-</div>
-<div class="schedule pt-5">
-    <div class="d-flex jus align-items-center">
-        <p class="d-flex align-items-center pe-3">Date</p>
-        <p class="green-background">Category</p>
+<div class="font-futura-reztya">
+    <h1 class="text-center">Jadwal Perawatan</h1>
+    <div class="button_new_schedule">
+        <a class="btn btn-outline-success">Tambah Jadwal</a>
     </div>
-    <div class="d-flex justify-content-between">
-        <p class="justify-content-start">Start Time - End Time</p>
-        <div class="d-flex">
-            <p class="green-background justify-content-end me-3">Edit</p>
-        <p class="green-background">Delete</p>
+    <div class="schedule pt-5">
+        <div class="d-flex jus align-items-center">
+            <p class="d-flex align-items-center pe-3">Tanggal</p>
+        </div>
+        <div class="d-flex justify-content-between">
+            <p class="justify-content-star">Waktu Mulai - Waktu Berakhir</p>
+            <div class="d-flex">
+                <a href="" type="button" class="btn button-outline-reztya">Ubah</a>
+                <a href="" type="button" class="btn btn-outline-danger">Hapus</a>
+            </div>
         </div>
     </div>
 </div>
+
 @endsection
