@@ -1,0 +1,19 @@
+.button-color {
+    background-color: #00A54F!important;
+    color: white;
+}
+
+.button-outline-reztya {
+    border-color: #00A54F!important;
+    color: #00A54F !important;
+}
+
+.button-outline-reztya:hover{
+    background-color: #00A54F !important;
+    color: white !important;
+}
+
+.container-product{
+    padding-left: 350px;
+    padding-right: 350px;
+}
