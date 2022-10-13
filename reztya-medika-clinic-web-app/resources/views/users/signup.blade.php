@@ -11,7 +11,7 @@
         @endif
         <div style="margin-top: -4%; margin-bottom: -2%;">
             <div class="d-flex justify-content-center">
-                <p class="h5 fw-bold" style="font-family: Alander, sans-serif;">Register Account</p>
+                <p class="h5 fw-bold unselectable" style="font-family: Alander, sans-serif;">Register Account</p>
             </div>
         </div>
         <div class="d-flex justify-content-center mt-2">
