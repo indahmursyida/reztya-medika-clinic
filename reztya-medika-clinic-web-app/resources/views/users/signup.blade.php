@@ -17,7 +17,7 @@
         <div class="d-flex justify-content-center mt-2">
             <div class="card bg-white outline-reztya" style="width: 30rem;">
                 <div class="card-body">
-                    <form action="/signup" method="post">
+                    <form action="/signup" method="POST">
                         @csrf
                         <div class="form-floating mb-2" autofocus>
                             <input placeholder="Username" id="floatingUsername" class="shadow-none form-control @error('username') is-invalid @enderror" type="text" name="username" required value="{{old('username')}}" autofocus>
@@ -56,7 +56,7 @@
                             @enderror
                         </div>
                         <div class="form-floating mb-2">
-                            <textarea placeholder="Address" id="floatingAddress" class="shadow-none form-control @error('address') is-invalid @enderror" type="text" name="address" required value="{{old('address')}}"></textarea>
+                            <input placeholder="Address" id="floatingAddress" class="shadow-none form-control @error('address') is-invalid @enderror" type="text" name="address" required value="{{old('address')}}">
                             <label for="floatingAddress" style="font-family: 'Futura Md BT', sans-serif">Address</label>
                             @error('address')
                             <div class="invalid-feedback">
@@ -83,7 +83,7 @@
                             @enderror
                         </div>
                         <div class="form-floating mb-2">
-                            <input placeholder="ConfirmPassword" id="floatingConfirmPassword" class="shadow-none form-control @error('confirm_password') is-invalid @enderror" type="password" name="confirm_password" required value="{{old('confirm_password')}}">
+                            <input placeholder="Confirm Password" id="floatingConfirmPassword" class="shadow-none form-control @error('confirm_password') is-invalid @enderror" type="password" name="confirm_password" required value="{{old('confirm_password')}}">
                             <label for="floatingConfirmPassword" style="font-family: 'Futura Md BT', sans-serif">Confirm Password</label>
                             @error('confirm_password')
                             <div class="invalid-feedback">

@@ -111,12 +111,14 @@ class UserController extends Controller
             'confirm_password' => 'required'
         ]);
 
-        if ($validated['password'] == $confirm_password) {
+        if ($validated['password'] == $confirm_password['confirm_password']) {
             $validated['password'] = Hash::make($validated['password']);
+            $validated['phone'] = strval($validated['phone']);
 
             DB::table('users')->insert($validated);
             return redirect()->intended('/home')->with('addSuccess', 'Sign up success! Please sign in');
         }
+
         return redirect()->back()->with('signupError', 'Sign up error!');
     }
 
