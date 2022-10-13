@@ -17,10 +17,17 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $primaryKey = 'user_id';
     protected $fillable = [
+        'user_id',
+        'username',
         'name',
+        'birthdate',
+        'phone',
+        'address',
         'email',
         'password',
+        'confirm_password'
     ];
 
     /**
@@ -41,4 +48,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function product() {
+        return $this->hasMany(Product::class );
+    }
+
+    public function schedule() {
+        return $this->hasMany(Schedule::class, 'user_id');
+    }
+
+    public function service() {
+        return $this->hasMany(Service::class, 'user_id');
+    }
 }

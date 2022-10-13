@@ -16,8 +16,8 @@
     <body class="bg-light">
         <nav class="navbar navbar-light p-1 pt-0">
             <div class="container-fluid pt-1">
-                <a class="navbar-brand ps-3" href="/home">
-                    <img src="storage/Reztya Logo.PNG" data-toggle="tooltip" title="Home" style="width: 20%; text-decoration: none;">
+                <a class="navbar ps-4" href="/home" style="max-width: 15%;">
+                    <img src="storage/reztya_logo.png" data-toggle="tooltip" title="Home" style="max-width: 80%;">
                 </a>
                 <div class="position-absolute mb-2" style="margin-left: 18%">
                     <a class="link-success" href="/services" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">
@@ -51,8 +51,8 @@
             </div>
         </nav>
         <div class="container mt-4">@yield('container')</div>
-        <footer class="footer fixed-bottom pb-2 bg-light" style="">
-            <div class="container text-center pt-2">
+        <footer class="footer fixed-bottom pb-1 bg-light" style="">
+            <div class="container text-center pt-1">
                 <a style="text-decoration: none; font-size: 12px; color: #00A54F" href="/home" data-toggle="tooltip" title="Home">
                     © 2022 Reztya Medika Clinic. All rights reserved.
                 </a>
