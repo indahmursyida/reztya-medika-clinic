@@ -11,7 +11,7 @@
     <input type="hidden" name="old_image" value="{{ $product->image_path }}">
     @if($product->image_path)
     <div class="d-flex justify-content-center my-4">
-        <img src="{{ asset('storage/' . $product->image_path) }}" width="300" height="300" class="img-preview img-fluid border border-3 rounded">
+        <img src="{{ asset('storage/' . $product->image_path) }}" width="300" height="300" class="img-preview img-fluid img-thumbnail">
     </div>
     @else
     <div class="d-flex justify-content-center my-4">

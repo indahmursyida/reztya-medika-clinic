@@ -9,7 +9,7 @@
         <h2 class="pb-5 font-alander-reztya">Tambah Produk</h2>
     </div>
     <div class="d-flex justify-content-center my-4">
-        <img class="img-preview img-fluid border border-3 rounded" width="300" height="300">
+        <img class="img-preview img-fluid img-responsive img-thumbnail" width="300" height="300">
     </div>
 
     <form method="post" action="/store-product" enctype="multipart/form-data" class="row g-4 needs-validation" novalidate>

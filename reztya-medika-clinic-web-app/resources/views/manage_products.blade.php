@@ -31,7 +31,7 @@
             @foreach($products as $product)
             <tr class="text-center">
                 <td>{{ $i }}</td>
-                <td><img src="{{ asset('storage/' . $product->image_path) }}" width="150" height="150" class="img-preview img-fluid border border-3 rounded"></td>
+                <td><img src="{{ asset('storage/' . $product->image_path) }}" width="150" height="150" class="img-preview img-fluid img-thumbnail"></td>
                 <td>{{ $product->name }}</td>
                 <td>{{ $product->stock }} buah</td>
                 <td>Rp.{{  number_format($product->price, 0, '', '.') }}</td>
