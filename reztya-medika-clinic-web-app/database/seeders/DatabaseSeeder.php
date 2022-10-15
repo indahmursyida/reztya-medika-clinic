@@ -35,11 +35,12 @@ class DatabaseSeeder extends Seeder
         Product::create([
             'name' => 'Body Shower',
             'category_id' => '1',
-            'description' => 'Untuk mandi',
+            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+            'size' => '100',
             'price' => '150000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => 'blabla'
+            'image_path' => '/product-images/bodyshower.jpg'
         ]);
     }
 }
