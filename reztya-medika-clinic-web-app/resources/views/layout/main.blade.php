@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ url('css/index.css') }}">
     <title>@yield('title')</title>
 </head>
-<body class="bg-light">
+<body>
 <nav class="navbar navbar-light p-1 pt-0">
     <div class="container-fluid pt-1">
         <a class="navbar ps-4" href="/home" style="max-width: 15%;">
