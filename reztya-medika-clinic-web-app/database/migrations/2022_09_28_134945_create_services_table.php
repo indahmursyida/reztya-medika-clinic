@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('schedule_id');
             $table->string('name', 255);
             $table->text('description');
+            $table->integer('duration');
             $table->integer('price');
             $table->string('image_path', 255);
             $table->timestamps();

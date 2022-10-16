@@ -1,0 +1,59 @@
+@extends('layout/main')
+
+@section('title', 'Daftar Layanan Perawatan')
+
+@section('container')
+<div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
+    <div class="py-3 text-center">
+        <h2 class="pb-5 font-alander-reztya">Daftar Layanan Perawatan</h1>
+    </div>
+    <a href="/add-service" class="btn button-outline-reztya my-3">Tambah Layanan Perawatan</a>
+    <table class="table table-bordered outline-reztya">
+        <thead>
+            <tr class="text-center">
+                <th>No.</th>
+                <th>Gambar Layanan Perawatan</th>
+                <th>Nama Layanan Perawatan</th>
+                <th>Durasi Layanan Perawatan</th>
+                <th>Harga Layanan Perawatan</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if($services->isEmpty())
+            <tr>
+                <td colspan="6" class="text-center">Layanan Perawatan tidak tersedia</td>
+            </tr>
+            @else
+            @php
+            $i = 1
+            @endphp
+            @foreach($services as $service)
+            <tr class="text-center">
+                <td>{{ $i }}</td>
+                <td><img src="{{ asset('storage/' . $service->image_path) }}" width="150" height="150" class="img-preview img-fluid img-thumbnail"></td>
+                <td>{{ $service->name }}</td>
+                <td>{{ $service->duration }} menit</td>
+                <td>Rp.{{  number_format($service->price, 0, '', '.') }}</td>
+                <td>
+                    <a class="btn btn-outline-secondary btn-sm" href="/service-detail/{{ $service->service_id }}">Lihat Detail</a>
+                    <a class="btn btn-outline-primary btn-sm" href="/edit-service/{{ $service->service_id }}">Edit</a>
+                    <form method="post" action="/delete-service/{{ $service->service_id }}" class="d-inline">
+                        @method('post') @csrf
+                        <button class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')">
+                            Hapus
+                        </button>
+                    </form>
+                </td>
+            </tr>
+
+            @php
+            $i++
+            @endphp
+            @endforeach
+            @endif
+        </tbody>
+    </table>
+</div>
+
+@endsection

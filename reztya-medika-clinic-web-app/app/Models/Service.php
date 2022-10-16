@@ -15,6 +15,7 @@ class Service extends Model
         'schedule_id', 
         'name', 
         'description', 
+        'duration', 
         'price', 
         'image_path'
     ];
