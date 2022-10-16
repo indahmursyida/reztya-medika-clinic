@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -47,11 +46,12 @@ class ProductController extends Controller
 
         $validatedData = $request->validate([
             'category_id' => 'required',
-            'name' => 'required',
+            'name' => 'required|unique:products|max:255',
             'description' => 'required',
+            'size' => 'nullable',
             'price' => ['required', 'gte:0'],
-            'expired_date' => ['required'],
-            'stock' => ['required'],
+            'expired_date' => 'required|date',
+            'stock' => 'required|digits_between:0,1000',
             'image_path' => 'required|image'
         ]);
 
@@ -104,16 +104,19 @@ class ProductController extends Controller
     {
         $validatedData = $request->validate([
             'category_id' => 'required',
-            'name' => 'required',
+            'name' => 'required|unique:products|max:255',
             'description' => 'required',
+            'size' => 'nullable',
             'price' => ['required', 'gte:0'],
-            'expired_date' => ['required'],
-            'stock' => ['required'],
+            'expired_date' => 'required|date',
+            'stock' => 'required|digits_between:0,1000',
             'image_path' => 'required|image'
         ]);
 
         if($request->file('image_path')){
-
+            if($request->old_image){
+                Storage::delete($request->old_image);
+            }
             $validatedData['image_path'] = $request->file('image_path')->store('product-images');
         }
         Product::find($id)

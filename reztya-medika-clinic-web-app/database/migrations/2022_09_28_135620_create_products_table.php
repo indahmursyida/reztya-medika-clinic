@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('category_id');
             $table->string('name', 255);
             $table->text('description');
-            $table->integer('size')->nullable();
+            $table->string('size')->nullable();
             $table->integer('price');
             $table->date('expired_date');
             $table->integer('stock');

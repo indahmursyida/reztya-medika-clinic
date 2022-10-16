@@ -14,6 +14,7 @@ class Product extends Model
         'category_id', 
         'name', 
         'description', 
+        'size', 
         'price', 
         'expired_date',
         'stock',

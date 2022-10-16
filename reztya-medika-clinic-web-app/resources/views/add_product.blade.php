@@ -69,6 +69,18 @@
         </div>
 
         <div class="col-md-4">
+            <label class="form-label" for="size">Ukuran Produk</label>
+        </div>
+        <div class="col-md-8">
+            <input type="text" class="form-control @error('size') is-invalid @enderror" id="size" name="size" value="{{ old('size') }}">
+            @error('size')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
+        </div>
+
+        <div class="col-md-4">
             <label class="form-label" for="expired_date">Tanggal Kadaluarsa Produk</label>
         </div>
         <div class="col-md-8">
@@ -84,7 +96,11 @@
             <label class="form-label" for="price">Harga Produk</label>
         </div>
         <div class="col-md-8">
-            <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}">
+            <div class="input-group">
+                <span class="input-group-text">Rp. </span>
+                <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}">
+            </div>
+
             @error('price')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -96,7 +112,7 @@
             <label class="form-label" for="stock">Stok Produk</label>
         </div>
         <div class="col-md-8">
-            <input type="number" class="form-control @error('stock') is-invalid @enderror" id="stock" name="stock" value="{{ old('stock') }}">
+            <input type="number" class="form-control @error('stock') is-invalid @enderror form-quantity" id="stock" name="stock" value="{{ old('stock', 1) }}" min="1" max="1000">
             @error('stock')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -110,7 +126,7 @@
 </div>
 
 <script>
-    function previewImage(){
+    function previewImage() {
         const image = document.querySelector('#image_path');
         const imgPreview = document.querySelector('.img-preview');
 
@@ -119,7 +135,7 @@
         const oFReader = new FileReader();
         oFReader.readAsDataURL(image.files[0]);
 
-        oFReader.onload = function(oFREvent){
+        oFReader.onload = function(oFREvent) {
             imgPreview.src = oFREvent.target.result;
         }
     }

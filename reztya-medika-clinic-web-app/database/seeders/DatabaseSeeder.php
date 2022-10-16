@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Body Shower',
             'category_id' => '1',
             'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
-            'size' => '100',
+            'size' => '100 ml',
             'price' => '150000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',

@@ -8,7 +8,7 @@
     <div class="py-3 text-center">
         <h2 class="py-3 font-alander-reztya">Edit Produk</h2>
     </div>
-    <input type="hidden" name="old_image" value="{{ $product->image_path }}">
+
     @if($product->image_path)
     <div class="d-flex justify-content-center my-4">
         <img src="{{ asset('storage/' . $product->image_path) }}" width="300" height="300" class="img-preview img-fluid img-thumbnail">
@@ -24,6 +24,7 @@
         <div class="col-md-4">
             <label class="form-label" for="image">Foto Produk</label>
         </div>
+        <input type="hidden" name="old_image" id="old_image" value="{{ $product->image_path }}">
         <div class="col-md-8">
             <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path" onchange="previewImage()">
             @error('image_path')
@@ -76,6 +77,18 @@
         </div>
 
         <div class="col-md-4">
+            <label class="form-label" for="size">Ukuran Produk</label>
+        </div>
+        <div class="col-md-8">
+            <input type="text" class="form-control @error('size') is-invalid @enderror" id="size" name="size" value="{{ old('size', $product->size) }}">
+            @error('size')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
+        </div>
+
+        <div class="col-md-4">
             <label class="form-label" for="expired_date">Tanggal Kadaluarsa Produk</label>
         </div>
         <div class="col-md-8">
@@ -91,7 +104,10 @@
             <label class="form-label" for="price">Harga Produk</label>
         </div>
         <div class="col-md-8">
-            <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $product->price) }}">
+            <div class="input-group">
+                <span class="input-group-text">Rp. </span>
+                <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $product->price) }}">
+            </div>
             @error('price')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -103,7 +119,7 @@
             <label class="form-label" for="stock">Stok Produk</label>
         </div>
         <div class="col-md-8">
-            <input type="number" class="form-control @error('stock') is-invalid @enderror" id="stock" name="stock" value="{{ old('stock', $product->stock) }}">
+            <input type="number" class="form-control @error('stock') is-invalid @enderror form-quantity" id="stock" name="stock" value="{{ old('stock', $product->stock) }}" min="1" max="1000">
             @error('stock')
             <div class="invalid-feedback">
                 {{ $message }}

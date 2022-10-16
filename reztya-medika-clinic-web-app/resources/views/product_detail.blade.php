@@ -14,7 +14,7 @@
 			<div class="col-sm-6">
 				<h3 class="text-reztya my-3">{{ $product->name }}</h3>
 				@if(!is_null($product->size))
-				<h5>Ukuran: {{ $product->size }} ml</h5>
+				<p>Ukuran: {{ $product->size }}</p>
 				@endif
 				<h5>Rp.{{  number_format($product->price, 0, '', '.') }}</h5>
 				<div class="my-5"><p>{{ $product->description }}</p></DIv>
