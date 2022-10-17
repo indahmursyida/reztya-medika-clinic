@@ -7,22 +7,22 @@
     <div class="py-3 text-center">
         <h2 class="pb-5 font-alander-reztya">Daftar Layanan Perawatan</h1>
     </div>
-    <a href="/add-service" class="btn button-outline-reztya my-3">Tambah Layanan Perawatan</a>
+    <a href="/add-service" class="btn button-outline-reztya my-3">Tambah Perawatan</a>
     <table class="table table-bordered outline-reztya">
         <thead>
             <tr class="text-center">
                 <th>No.</th>
-                <th>Gambar Layanan Perawatan</th>
-                <th>Nama Layanan Perawatan</th>
-                <th>Durasi Layanan Perawatan</th>
-                <th>Harga Layanan Perawatan</th>
+                <th>Gambar Perawatan</th>
+                <th>Nama Perawatan</th>
+                <th>Durasi Perawatan</th>
+                <th>Harga Perawatan</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
             @if($services->isEmpty())
             <tr>
-                <td colspan="6" class="text-center">Layanan Perawatan tidak tersedia</td>
+                <td colspan="6" class="text-center">Perawatan tidak tersedia</td>
             </tr>
             @else
             @php
@@ -36,7 +36,7 @@
                 <td>{{ $service->duration }} menit</td>
                 <td>Rp.{{  number_format($service->price, 0, '', '.') }}</td>
                 <td>
-                    <a class="btn btn-outline-secondary btn-sm" href="/service-detail/{{ $service->service_id }}">Lihat Detail</a>
+                <a class="btn btn-outline-secondary btn-sm" href="/service-detail/{{ $service->service_id }}">Lihat Detail</a>
                     <a class="btn btn-outline-primary btn-sm" href="/edit-service/{{ $service->service_id }}">Edit</a>
                     <form method="post" action="/delete-service/{{ $service->service_id }}" class="d-inline">
                         @method('post') @csrf

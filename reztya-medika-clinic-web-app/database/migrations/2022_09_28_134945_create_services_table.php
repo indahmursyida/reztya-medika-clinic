@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id('service_id');
             $table->foreignId('category_id');
-            $table->foreignId('schedule_id');
             $table->string('name', 255);
             $table->text('description');
             $table->integer('duration');

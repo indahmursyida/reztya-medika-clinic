@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,3 +19,11 @@ Route::permanentRedirect('/', '/home');
 Route::get('/home', function () {
     return view('layout/main');
 });
+
+Route::get('/manage-services', [ServiceController::class, 'index']);
+Route::get('/service-detail/{id}', [ServiceController::class, 'show']);
+Route::post('/delete-service/{id}', [ServiceController::class, 'destroy']);
+Route::get('/add-service', [ServiceController::class, 'create']);
+Route::post('/store-service', [ServiceController::class, 'store']);
+Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
+Route::put('/update-service/{id}', [ServiceController::class, 'update']);

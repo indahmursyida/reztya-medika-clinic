@@ -12,7 +12,6 @@ class Service extends Model
     protected $primaryKey = 'service_id';
     protected $fillable = [
         'category_id', 
-        'schedule_id', 
         'name', 
         'description', 
         'duration', 
@@ -21,8 +20,5 @@ class Service extends Model
     ];
     public function category(){
         return $this->belongsTo(Category::class, 'category_id');
-    }
-    public function schedule(){
-        return $this->hasMany(Schedule::class, 'schedule_id');
     }
 }
