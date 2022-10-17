@@ -28,9 +28,9 @@ class SignUpController extends Controller
             $validated['phone'] = strval($validated['phone']);
 
             DB::table('users')->insert($validated);
-            return redirect()->intended('/home')->with('addSuccess', 'Sign up success! Please sign in');
+            return redirect()->intended('/home')->with('addSuccess', 'Daftar sukses! Tolong masuk');
         }
 
-        return redirect()->back()->with('signupError', 'Sign up error!');
+        return redirect()->back()->with('signupError', 'Daftar error!');
     }
 }
