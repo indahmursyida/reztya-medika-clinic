@@ -14,7 +14,7 @@
                 <p class="h5 fw-bold unselectable" style="font-family: Alander, sans-serif;">Register Account</p>
             </div>
         </div>
-        <div class="d-flex justify-content-center mt-2">
+        <div class="unselectable d-flex justify-content-center mt-2">
             <div class="card bg-white outline-reztya" style="width: 30rem;">
                 <div class="card-body">
                     <form action="/signup" method="POST">
