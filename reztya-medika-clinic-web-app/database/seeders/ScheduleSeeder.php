@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ScheduleSeeder extends Seeder
 {
@@ -14,6 +16,26 @@ class ScheduleSeeder extends Seeder
      */
     public function run()
     {
-        //
+        // $dt = Carbon::now();
+        // $date_now = $dt->toDateTimeString();
+        $duration = 
+        $schedules = [
+            [
+                'schedule_id'=> 1, 
+                'start_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-01 10:00:00'),
+                'end_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-01 11:00:00')
+            ],
+            [
+                'schedule_id'=> 2, 
+                'start_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-02 11:00:00'), 
+                'end_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-02 12:00:00')
+            ],
+            [
+                'schedule_id'=> 3, 
+                'start_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-03 13:00:00'), 
+                'end_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-03 14:00:00')
+            ]
+        ];
+        DB::table('schedules')->insert($schedules);
     }
 }

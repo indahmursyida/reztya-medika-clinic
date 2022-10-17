@@ -14,10 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('schedules', function (Blueprint $table) {
-            $table->id('schedule_id')->length(20);
-            $table->date('schedule_date');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->increments('schedule_id')->primaryKey();
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
             $table->timestamps();
         });
     }

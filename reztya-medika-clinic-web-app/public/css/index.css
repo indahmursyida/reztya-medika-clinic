@@ -9,7 +9,11 @@
 
 .button-color {
     background-color: #00A54F!important;
-    color: white;
+    color: white !important;
+}
+
+.button-color:hover {
+    background-color: #008d44!important;
 }
 
 .button-outline-reztya {

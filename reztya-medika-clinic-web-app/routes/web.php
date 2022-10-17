@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,14 +20,20 @@ Route::get('/home', function () {
     return view('layout/main');
 });
 
-Route::get('/manage-schedule', function () {
-    return view('manage-schedule');
-});
+Route::get('/manage-schedule', [ScheduleController::class, 'index'])->name('manage-schedule');
 
 Route::get('/add-schedule', function () {
     return view('add-schedule');
 });
 
+Route::post('/add-schedule', function () {
+    return view('add-schedule');
+});
+
 Route::get('/edit-schedule', function () {
     return view('edit-schedule');
+});
+
+Route::get('/view-order', function () {
+    return view('view-order');
 });
