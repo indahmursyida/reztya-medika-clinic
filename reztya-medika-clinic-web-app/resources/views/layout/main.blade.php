@@ -13,20 +13,20 @@
         <link rel="stylesheet" href="{{ url('css/index.css') }}">
         <title>@yield('title')</title>
     </head>
-    <body style="background-color: white">
-        <nav class="navbar navbar-light p-1 pt-0">
-            <div class="container-fluid pt-1">
+    <body>
+        <nav class="unselectable navbar p-1 pt-0">
+            <div class="row container-fluid pt-1">
                 <a class="navbar ps-4" href="/home" style="max-width: 15%;">
                     <img src="storage/reztya_logo.png" data-toggle="tooltip" title="Home" style="max-width: 80%;">
                 </a>
-                <div class="position-absolute mb-2" style="margin-left: 18%">
-                    <a class="link-success" href="/services" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">
-                        Services
+                <div class="col-2 mb-2">
+                    <a class="link-success font-futura-reztya" href="/services" style="text-decoration: none; font-size: 110%;">
+                        Layanan Perawatan
                     </a>
                 </div>
-                <div class="position-absolute mb-2" style="margin-left: 26%">
-                    <a class="link-success" href="/products" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">
-                        Products
+                <div class="col-6 mb-2">
+                    <a class="link-success font-futura-reztya" href="/products" style="text-decoration: none; font-size: 110%;">
+                        Produk
                     </a>
                 </div>
                 @auth
@@ -39,19 +39,21 @@
 
                     </div>
                 @else
-                    <div class="pe-5 mb-2">
-                        <a class="link-success pe-4" href="/signin" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">
-                            Sign in
+                    <div class="col-1 mb-2">
+                        <a class="font-futura-reztya link-success pe-4" href="/signin" style="text-decoration: none; font-size: 110%;">
+                            Masuk
                         </a>
-                        <a class="link-success" href="/signup" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">
-                            Sign up
+                    </div>
+                    <div class="col-1 mb-2">
+                        <a class="font-futura-reztya link-success" href="/signup" style="text-decoration: none; font-size: 110%;">
+                            Daftar
                         </a>
                     </div>
                 @endauth
             </div>
         </nav>
         <div class="container mt-4">@yield('container')</div>
-        <footer class="footer fixed-bottom pb-1 bg-light" style="background-color: white">
+        <footer class="unselectable footer fixed-bottom pb-1" style="">
             <div class="container text-center pt-1">
                 <a style="text-decoration: none; font-size: 12px; color: #00A54F" href="/home" data-toggle="tooltip" title="Home">
                     © 2022 Reztya Medika Clinic. All rights reserved.

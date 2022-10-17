@@ -23,8 +23,8 @@
 }
 
 .container-product{
-    padding-left: 350px;
-    padding-right: 350px;
+    padding-left: 200px;
+    padding-right: 200px;
 }
 
 .form-control:focus {
@@ -41,4 +41,16 @@
 
 .text-reztya:hover {
     color: #7DC241 !important;
+}
+
+.font-alander-reztya {
+    font-family: Alander, sans-serif;
+}
+
+.font-futura-reztya {
+    font-family: 'Futura Md BT', sans-serif;
+}
+
+.form-quantity{
+    width: 70px;
 }
