@@ -20,12 +20,12 @@
                     <img src="storage/reztya_logo.png" data-toggle="tooltip" title="Home" style="max-width: 80%;">
                 </a>
                 <div class="col-2 mb-2">
-                    <a class="link-success font-futura-reztya" href="/services" style="text-decoration: none; font-size: 110%;">
+                    <a class="text-reztya font-futura-reztya fs-6" href="/services" style="text-decoration: none;">
                         Layanan Perawatan
                     </a>
                 </div>
                 <div class="col-6 mb-2">
-                    <a class="link-success font-futura-reztya" href="/products" style="text-decoration: none; font-size: 110%;">
+                    <a class="text-reztya font-futura-reztya fs-6" href="/products" style="text-decoration: none;">
                         Produk
                     </a>
                 </div>
@@ -35,17 +35,34 @@
                     @endif
                 @endauth
                 @auth
-                    <div>
-
+                    <div class="col-2">
+                        <div class="row align-items-start">
+                                <div class="font-futura-reztya text-reztya dropdown">
+                                    <p class="fs-6 dropdown-toggle" type="button" id="dropdownToggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Welcome, {{auth()->user()->username}}
+                                    </p>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                        <li><a class="button-outline-reztya dropdown-item" href="/profile/{{auth()->user()->name}}">Lihat Profil</a></li>
+                                        <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order</a></li>
+                                        <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order Aktif</a></li>
+                                        <li>
+                                            <form method="POST" action="/signout">
+                                                @csrf
+                                                <button type="submit" class="button-outline-reztya dropdown-item font-futura-reztya">Keluar</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </div>
                     </div>
                 @else
                     <div class="col-1 mb-2">
-                        <a class="font-futura-reztya link-success pe-4" href="/signin" style="text-decoration: none; font-size: 110%;">
+                        <a class="font-futura-reztya text-reztya pe-4 fs-6" href="/signin" style="text-decoration: none;">
                             Masuk
                         </a>
                     </div>
                     <div class="col-1 mb-2">
-                        <a class="font-futura-reztya link-success" href="/signup" style="text-decoration: none; font-size: 110%;">
+                        <a class="font-futura-reztya text-reztya fs-6" href="/signup" style="text-decoration: none;">
                             Daftar
                         </a>
                     </div>

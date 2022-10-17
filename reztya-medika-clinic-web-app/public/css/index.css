@@ -54,3 +54,7 @@
 .form-quantity{
     width: 70px;
 }
+
+.form-check-input:checked {
+    background: #00A54F !important;
+}
