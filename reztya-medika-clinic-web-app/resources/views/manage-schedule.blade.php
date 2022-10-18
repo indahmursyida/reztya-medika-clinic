@@ -29,11 +29,11 @@ use Carbon\Carbon;
             @for ( $i = 0; $i < count($schedules); $i++)
             <tr>
                 <th scope="row" class="align-middle">{{ $i+1 }}</th>
-                <td class="align-middle text-center">{{ Carbon::parse($schedules[$i]->start_time)->format('j F Y') }} </td>
-                <td class="align-middle text-center">{{ Carbon::parse($schedules[$i]->start_time)->format('H:i:s')  }} WIB</td>
-                <td class="align-middle text-center">{{ Carbon::parse($schedules[$i]->end_time)->format('H:i:s') }} WIB</td>
+                <td class="align-middle text-center">{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('j F Y') }} </td>
+                <td class="align-middle text-center">{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('H:i:s')  }} WIB</td>
+                <td class="align-middle text-center">{{ \Carbon\Carbon::parse($schedules[$i]->end_time)->format('H:i:s') }} WIB</td>
                 <td class="d-flex justify-content-center">
-                    <a href="{{ url('edit-schedule')}}" type="button" class="btn button-outline-reztya me-2">Edit</a>
+                    <a href="{{ url('edit-schedule', ["id" => $schedules[$i]->schedule_id])}}" type="button" class="btn button-outline-reztya me-2">Edit</a>
                     <a href="" type="button" class="btn btn-outline-danger" onclick="return confirm('Are you sure want to delete?')">Hapus</a>
                 </td>
               </tr>
@@ -41,7 +41,7 @@ use Carbon\Carbon;
         </tbody>
     </table>
 </div>
-<div style="display:flex !important; justify-content:center !important; ">
+{{-- <div style="display:flex !important; justify-content:center !important; ">
     {{$schedules->links()}}
-</div>
+</div> --}}
 @endsection

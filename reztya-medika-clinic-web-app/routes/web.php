@@ -21,7 +21,8 @@ Route::get('/home', function () {
 });
 
 Route::get('/manage-schedule', [ScheduleController::class, 'index'])->name('manage-schedule');
-
+Route::get('/edit-schedule/{id}', [ScheduleController::class, 'update'])->name('edit-schedule');
+ 
 Route::get('/add-schedule', function () {
     return view('add-schedule');
 });

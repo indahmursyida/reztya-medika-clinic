@@ -22,18 +22,18 @@ class ScheduleSeeder extends Seeder
         $schedules = [
             [
                 'schedule_id'=> 1, 
-                'start_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-01 10:00:00'),
-                'end_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-01 11:00:00')
+                'start_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 10:00:00'),
+                'end_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 11:00:00')
             ],
             [
                 'schedule_id'=> 2, 
-                'start_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-02 11:00:00'), 
-                'end_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-02 12:00:00')
+                'start_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '02-11-2022 11:00:00'), 
+                'end_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '02-11-2022 12:00:00')
             ],
             [
                 'schedule_id'=> 3, 
-                'start_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-03 13:00:00'), 
-                'end_time'=> Carbon::createFromFormat('Y-m-d H:i:s', '2022-11-03 14:00:00')
+                'start_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 13:00:00'), 
+                'end_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 14:00:00')
             ]
         ];
         DB::table('schedules')->insert($schedules);
