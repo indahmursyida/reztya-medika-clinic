@@ -3,7 +3,8 @@
 @section('title', 'Edit Schedule')
 
 @section('container')
-<form action="" method="POST">
+<form action="{{ route('update-schedule')}}" method="POST">
+    {{csrf_field()}}
     <h1 class="text-center mb-3">Edit Jadwal</h1>
     <div class="mb-3">
         <input type="hidden" value="{{$schedule->schedule_id}}" name="id">
