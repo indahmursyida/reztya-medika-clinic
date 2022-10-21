@@ -20,23 +20,8 @@ Route::get('/home', function () {
     return view('layout/main');
 });
 
-Route::get('/manage-schedule', [ScheduleController::class, 'index'])->name('manage-schedule');
-Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit'])->name('edit-schedule');
-Route::post('/update-schedule', [ScheduleController::class, 'update_schedule'])->name('update-schedule');
-Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete_schedule'])->name('delete-schedule');
-
-Route::get('/add-schedule', function () {
-    return view('add-schedule');
-});
-
-Route::post('/add-schedule', function () {
-    return view('add-schedule');
-});
-
-Route::get('/edit-schedule', function () {
-    return view('edit-schedule');
-});
-
-Route::get('/view-order', function () {
-    return view('view-order');
-});
+Route::get('/manage-schedule', [ScheduleController::class, 'index']);
+Route::post('/add-schedule', [ScheduleController::class, 'add']);
+Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit']);
+Route::put('/update-schedule/{id}', [ScheduleController::class, 'update']);
+Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete']);

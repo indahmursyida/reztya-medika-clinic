@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Schedule;
+use Illuminate\Console\Scheduling\ScheduleWorkCommand;
 use Illuminate\Support\Facades\Validator;
 
 class ScheduleController extends Controller
@@ -14,43 +15,38 @@ class ScheduleController extends Controller
         return view('manage-schedule')->with('schedules', $schedules);
     }
 
+    public function add(Request $req)
+    {
+        $validated_data = $req->validate([
+            'schedule_id' => 'required',
+            'start_time' => 'required|date',
+            'end_time' => 'required|date'
+        ]);
+
+        Schedule::create($validated_data);
+        return redirect('/manage-schedule')->with('success','Product successfully added!');
+    }
+
     public function edit($id)
     {
         $schedule = Schedule::find($id);
         return view('edit-schedule')->with('schedule', $schedule);
     }
 
-    public function update_schedule(Request $req)
+    public function update(Request $req, $id)
     {
-        $rules = [
-            "schedule_id" => "required",
-            "start_time" => "required",
-            "end_time" => "required"
-        ];
+        $validated_data = $req->validate([
+            'start_time' => 'required|datetime',
+            'end_time' => 'required|datetime'
+        ]);
 
-        $validator = Validator::make($req->all(), $rules);
-
-        if(!$validator->fails())
-        {
-            $schedule = Schedule::find($req['schedule_id']);
-
-            $schedule->update([
-                "start_time" => $req['start_time'],
-                "end_time" => $req['end_time']
-            ]);
-            
-            return redirect()->route('manage-schedule');
-        }
-        else
-        {
-            return back()->withErrors($validator);
-        }
+        Schedule::find($id)->update($validated_data);
+        return redirect('/manage-schedule');
     }
     
-    public function delete_schedule($id)
+    public function delete($id)
     {
-        $data = Schedule::find($id);
-        $data->delete();
-        return redirect()->route('manage-schedule');
+        Schedule::find($id)->delete();
+        return redirect('/manage-schedule')->with('success','Product successfully deleted!');
     }
 }

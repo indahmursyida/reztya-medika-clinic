@@ -18,20 +18,16 @@ class ScheduleSeeder extends Seeder
     {
         // $dt = Carbon::now();
         // $date_now = $dt->toDateTimeString();
-        $duration = 
         $schedules = [
             [
-                'schedule_id'=> 1, 
                 'start_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 10:00:00'),
                 'end_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 11:00:00')
             ],
             [
-                'schedule_id'=> 2, 
                 'start_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '02-11-2022 11:00:00'), 
                 'end_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '02-11-2022 12:00:00')
             ],
             [
-                'schedule_id'=> 3, 
                 'start_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 13:00:00'), 
                 'end_time'=> Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 14:00:00')
             ]

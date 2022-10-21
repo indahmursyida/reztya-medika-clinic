@@ -33,8 +33,17 @@ use Carbon\Carbon;
                 <td class="align-middle text-center">{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('H:i:s')  }} WIB</td>
                 <td class="align-middle text-center">{{ \Carbon\Carbon::parse($schedules[$i]->end_time)->format('H:i:s') }} WIB</td>
                 <td class="d-flex justify-content-center">
-                    <a href="{{ route('edit-schedule', ["id" => $schedules[$i]->schedule_id])}}" type="button" class="btn button-outline-reztya me-2">Edit</a>
-                    <a href="{{ route('delete-schedule',["id" => $schedules[$i]->schedule_id])}}" type="button" class="btn btn-outline-danger" onclick="return confirm('Are you sure want to delete?')">Hapus</a>
+                    <a href="/edit-schedule/{{$schedules[$i]->schedule_id}}" type="button" class="btn button-outline-reztya me-2">
+                        Edit
+                    </a>
+                    {{-- <a href="{{ route('delete-schedule',["id" => $schedules[$i]->schedule_id])}}" type="button" class="btn btn-outline-danger" onclick="return confirm('Are you sure want to delete?')">Hapus</a> --}}
+                    <form href="/delete-schedule/{{ $schedules[$i]->schedule_id }}" method="POST">
+                        @method('post') @csrf
+                        <button class="btn btn-outline-danger" onclick="return confirm('Are you sure want to delete?')">
+                            Hapus
+                        </button>
+                    </form>
+                    
                 </td>
               </tr>
             @endfor
