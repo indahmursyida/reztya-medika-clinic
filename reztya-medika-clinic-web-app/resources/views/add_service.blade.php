@@ -6,7 +6,7 @@
 
 <div class="container-product border outline-reztya rounded-4 font-futura-reztya py-5">
     <div class="py-3 text-center">
-        <h2 class="pb-5 font-alander-reztya">Tambah Perawatan</h2>
+        <h2 class="pb-5 font-alander-reztya unselectable">Tambah Perawatan</h2>
     </div>
     <div class="d-flex justify-content-center my-4">
         <img class="img-preview img-fluid img-responsive img-thumbnail" width="300" height="300">
@@ -86,7 +86,7 @@
         <div class="col-md-8">
             <div class="input-group">
                 <span class="input-group-text">Rp. </span>
-                <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}">
+                <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}">
             </div>
 
             @error('price')

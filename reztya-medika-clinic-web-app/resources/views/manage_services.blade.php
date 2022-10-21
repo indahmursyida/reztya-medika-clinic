@@ -5,7 +5,7 @@
 @section('container')
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
     <div class="py-3 text-center">
-        <h2 class="pb-5 font-alander-reztya">Daftar Layanan Perawatan</h1>
+        <h2 class="pb-5 font-alander-reztya unselectable">Daftar Layanan Perawatan</h1>
     </div>
     <a href="/add-service" class="btn button-outline-reztya my-3">Tambah Perawatan</a>
     <table class="table table-bordered outline-reztya">

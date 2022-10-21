@@ -4,9 +4,9 @@
 
 @section('container')
 
-<div class="container-service border outline-reztya rounded-4 font-futura-reztya py-5">
+<div class="container-product border outline-reztya rounded-4 font-futura-reztya py-5">
     <div class="py-3 text-center">
-        <h2 class="py-3 font-alander-reztya">Edit Perawatan</h2>
+        <h2 class="py-3 font-alander-reztya unselectable">Edit Perawatan</h2>
     </div>
 
     @if($service->image_path)
@@ -80,7 +80,11 @@
             <label class="form-label" for="duration">Durasi Layanan Perawatan</label>
         </div>
         <div class="col-md-8">
-            <input type="number" class="form-control @error('duration') is-invalid @enderror form-quantity" id="duration" name="duration" value="{{ old('duration', $service->duration) }}" min="1" max="1000">
+            <div class="input-group">
+                <input type="number" class="form-control @error('duration') is-invalid @enderror form-quantity" id="duration" name="duration" value="{{ old('duration', $service->duration) }}" min="1" max="1000">
+                <span class="input-group-text">Menit</span>
+            </div>
+            
             @error('duration')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -94,7 +98,7 @@
         <div class="col-md-8">
             <div class="input-group">
                 <span class="input-group-text">Rp. </span>
-                <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $service->price) }}">
+                <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $service->price) }}">
             </div>
             @error('price')
             <div class="invalid-feedback">
