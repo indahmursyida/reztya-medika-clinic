@@ -24,7 +24,5 @@ Route::get('/home', function () {
 });
 
 // Sign Up
-Route::get('/signup', function () {
-    return view('users.signup');
-})->middleware('guest');
+Route::get('/signup', [\App\Http\Controllers\SignUpController::class, 'signUp'])->middleware('guest');
 Route::post('/signup', [\App\Http\Controllers\SignUpController::class, 'userRegister']);

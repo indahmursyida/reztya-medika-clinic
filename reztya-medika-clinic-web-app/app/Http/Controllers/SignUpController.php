@@ -12,7 +12,7 @@ class SignUpController extends Controller
         $validated = $request->validate([
             'username' => 'required|max:255',
             'name' => 'required',
-            'birthdate' => 'required|date',
+            'birthdate' => 'required|date|before:now',
             'email' => 'required|unique:users|email:rfc,dns',
             'password' => 'required',
             'phone' => 'required',
@@ -28,9 +28,13 @@ class SignUpController extends Controller
             $validated['phone'] = strval($validated['phone']);
 
             DB::table('users')->insert($validated);
-            return redirect()->intended('/home')->with('addSuccess', 'Daftar sukses! Tolong masuk');
+            return redirect()->intended('/home')->with('addSuccess', 'Pendaftaran berhasil! Silahkan masuk');
         }
 
-        return redirect()->back()->with('signupError', 'Daftar error!');
+        return redirect()->back()->with('signupError', 'Pendaftaran tidak berhasil!');
+    }
+
+    public function signUp() {
+        return view('users.signup');
     }
 }
