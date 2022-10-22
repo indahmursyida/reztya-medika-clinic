@@ -3,50 +3,48 @@
 @section('title', 'Manage Schedule')
 
 @section('container')
-<?php
-use Carbon\Carbon;
-?>
-<div class="font-futura-reztya">
-    <h1 class="text-center">Jadwal Perawatan</h1>
-    <div class="mt-5 mb-4">
-        <a href="{{ url('/add-schedule') }}" class="btn button-color">Tambah Jadwal</a>
+<div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
+    <h2 class="my-3 text-center font-alander-reztya">Jadwal Perawatan</h2>
+    <div class="mt-2 mb-4">
+        <a href="{{ url('/add-schedule') }}" class="btn btn-add rounded-2 border"  title="Tambah Jadwal">
+            <img src="storage/add.png" class="align-middle" height="15px" width="15px">
+        </a>
     </div>
-    
-    <table class="table">
+    <table class="table table-striped">
         <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col" class="text-center">Tanggal</th>
-                <th scope="col" class="text-center">Waktu Mulai</th>
-                <th scope="col" class="text-center">Waktu Berakhir</th>
-                {{-- <th class="d-flex justify-content-center text-center" style="width: fit-content;">
-                    <p style="opacity: 0%;">-------------------------</p>
-                </th> --}}
-                <th scope="col"></th>
+            <tr class="text-center" style="background-color: #7dc241">
+                <th scope="col">No.</th>
+                {{-- <th scope="col" >Tanggal</th> --}}
+                <th scope="col">Waktu Mulai</th>
+                <th scope="col">Waktu Berakhir</th>
+                <th scope="col">Aksi</th>
             </tr>
         </thead>        
         <tbody>
-            @for ( $i = 0; $i < count($schedules); $i++)
+            @if($schedules->isEmpty())
             <tr>
-                <th scope="row" class="align-middle">{{ $i+1 }}</th>
-                <td class="align-middle text-center">{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('j F Y') }} </td>
-                <td class="align-middle text-center">{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('H:i:s')  }} WIB</td>
-                <td class="align-middle text-center">{{ \Carbon\Carbon::parse($schedules[$i]->end_time)->format('H:i:s') }} WIB</td>
-                <td class="d-flex justify-content-center">
-                    <a href="/edit-schedule/{{$schedules[$i]->schedule_id}}" type="button" class="btn button-outline-reztya me-2">
-                        Edit
+                <td colspan="5" class="text-center">Jadwal tidak tersedia</td>
+            </tr>
+            @else
+            @for ( $i = 0; $i < count($schedules); $i++)
+            <tr class="align-middle text-center">
+                <td>{{ $i+1 }}</td>
+                {{-- <td>{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('j F Y') }} </td> 
+                <td>{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('H:i:s')  }} WIB</td>
+                <td>{{ \Carbon\Carbon::parse($schedules[$i]->end_time)->format('H:i:s') }} WIB</td> --}}
+                <td>{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->toDayDateTimeString() }} </td>
+                <td>{{ \Carbon\Carbon::parse($schedules[$i]->end_time)->toDayDateTimeString() }} </td>
+                <td>
+                    <a href="/edit-schedule/{{$schedules[$i]->schedule_id}}" type="button" class="btn button-color rounded-2 btn-sm me-2 btn-edit" title="Edit Jadwal">
+                        <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
                     </a>
-                    {{-- <a href="{{ route('delete-schedule',["id" => $schedules[$i]->schedule_id])}}" type="button" class="btn btn-outline-danger" onclick="return confirm('Are you sure want to delete?')">Hapus</a> --}}
-                    <form href="/delete-schedule/{{ $schedules[$i]->schedule_id }}" method="POST">
-                        @method('post') @csrf
-                        <button class="btn btn-outline-danger" onclick="return confirm('Are you sure want to delete?')">
-                            Hapus
-                        </button>
-                    </form>
-                    
+                    <a href="/delete-schedule/{{$schedules[$i]->schedule_id}}" type="button" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')" title="Hapus Jadwal">
+                        <img src="storage/delete.png" class="align-middle" height="15px" width="15px">
+                    </a>
                 </td>
               </tr>
             @endfor
+            @endif
         </tbody>
     </table>
 </div>

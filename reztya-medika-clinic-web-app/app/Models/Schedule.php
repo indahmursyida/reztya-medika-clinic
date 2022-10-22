@@ -20,10 +20,4 @@ class Schedule extends Model
     public function service(){
         return $this->belongsTo(Service::class, 'service_id');
     }
-
-    public function set_date($value)
-    {
-        $this->attributes['start_time'] = Carbon::createFromFormat('m-d-Y', $value)->format('Y-m-d');
-        // return Carbon::parse($this->attributes['start_time'])->translatedFormat('l, d F Y');
-    }
 }

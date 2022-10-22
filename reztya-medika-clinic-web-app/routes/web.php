@@ -21,7 +21,8 @@ Route::get('/home', function () {
 });
 
 Route::get('/manage-schedule', [ScheduleController::class, 'index']);
-Route::post('/add-schedule', [ScheduleController::class, 'add']);
+Route::get('/add-schedule', [ScheduleController::class, 'add']);
+Route::post('/add-schedule', [ScheduleController::class, 'store']);
 Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit']);
 Route::put('/update-schedule/{id}', [ScheduleController::class, 'update']);
 Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete']);

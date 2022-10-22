@@ -15,12 +15,16 @@ class ScheduleController extends Controller
         return view('manage-schedule')->with('schedules', $schedules);
     }
 
-    public function add(Request $req)
+    public function add()
+    {
+        return view('add-schedule');
+    }
+
+    public function store(Request $req)
     {
         $validated_data = $req->validate([
-            'schedule_id' => 'required',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date'
+            'start_time' => 'required|before:end_time',
+            'end_time' => 'required|after:start_time'
         ]);
 
         Schedule::create($validated_data);
@@ -36,8 +40,8 @@ class ScheduleController extends Controller
     public function update(Request $req, $id)
     {
         $validated_data = $req->validate([
-            'start_time' => 'required|datetime',
-            'end_time' => 'required|datetime'
+            'start_time' => 'required|before:end_time',
+            'end_time' => 'required|after:start_time'
         ]);
 
         Schedule::find($id)->update($validated_data);
