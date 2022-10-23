@@ -30,7 +30,8 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-4">
-                <button type="submit" class="btn btn-outline-success">Simpan</button>
+                <button type="submit" class="btn btn-outline-success me-2">Simpan</button>
+                <a href="/manage-schedule" type="button" class="btn btn-outline-danger">Batal</a>
             </div>
         </form>
     </div>
