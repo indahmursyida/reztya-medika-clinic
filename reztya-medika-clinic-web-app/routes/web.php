@@ -18,3 +18,6 @@ Route::permanentRedirect('/', '/home');
 Route::get('/home', function () {
     return view('layout/main');
 });
+
+// Profile
+Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'viewProfile']);
