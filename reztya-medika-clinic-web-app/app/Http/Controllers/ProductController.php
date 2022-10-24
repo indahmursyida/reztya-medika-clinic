@@ -49,10 +49,26 @@ class ProductController extends Controller
             'name' => 'required|unique:products|max:255',
             'description' => 'required',
             'size' => 'nullable',
-            'price' => ['required', 'gte:0'],
-            'expired_date' => 'required|date',
-            'stock' => 'required|digits_between:0,1000',
+            'price' => 'required|numeric',
+            'expired_date' => 'required|date|after:now',
+            'stock' => 'required|min:1|max:1000',
             'image_path' => 'required|image'
+        ],[
+            'category_id.required' => 'Kategori produk wajib diisi',
+            'name.required' => 'Nama produk wajib diisi',
+            'name.unique' => 'Nama produk tidak boleh sama dengan nama produk lainnya',
+            'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter',
+            'description.required'=> 'Deskripsi produk produk wajib diisi',
+            'price.required' => 'Harga produk wajib diisi',
+            'price.numeric' => 'Harga produk harus angka',
+            'expired_date.required' => 'Tanggal kadaluarsa produk wajib diisi',
+            'expired_date.date' => 'Tanggal kadaluarsa produk tidak valid',
+            'expired_date.after' => 'Produk sudah kadaluarsa!',
+            'stock.required' => 'Stok produk wajib diisi',
+            'stock.min' => 'Stok produk minimal 1',
+            'stock.max' => 'Stok produk maksimal 1000',
+            'image_path.required' => 'Foto produk wajib diisi',
+            'image_path.image' => 'Foto produk tidak valid'
         ]);
 
         if($request->file('image_path')){
@@ -107,10 +123,26 @@ class ProductController extends Controller
             'name' => 'required|unique:products|max:255',
             'description' => 'required',
             'size' => 'nullable',
-            'price' => ['required', 'gte:0'],
-            'expired_date' => 'required|date',
-            'stock' => 'required|digits_between:0,1000',
+            'price' => 'required|numeric',
+            'expired_date' => 'required|date|after:now',
+            'stock' => 'required|min:1|max:1000',
             'image_path' => 'required|image'
+        ],[
+            'category_id.required' => 'Kategori produk wajib diisi',
+            'name.required' => 'Nama produk wajib diisi',
+            'name.unique' => 'Nama produk tidak boleh sama dengan nama produk lainnya',
+            'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter',
+            'description.required'=> 'Deskripsi produk produk wajib diisi',
+            'price.required' => 'Harga produk wajib diisi',
+            'price.numeric' => 'Harga produk harus angka',
+            'expired_date.required' => 'Tanggal kadaluarsa produk wajib diisi',
+            'expired_date.date' => 'Tanggal kadaluarsa produk tidak valid',
+            'expired_date.after' => 'Produk sudah kadaluarsa!',
+            'stock.required' => 'Stok produk wajib diisi',
+            'stock.min' => 'Stok produk minimal 1',
+            'stock.max' => 'Stok produk maksimal 1000',
+            'image_path.required' => 'Foto produk wajib diisi',
+            'image_path.image' => 'Foto produk harus berbentuk jpeg, jpg, atau png'
         ]);
 
         if($request->file('image_path')){

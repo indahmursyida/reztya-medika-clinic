@@ -5,7 +5,7 @@
 @section('container')
 <div class="container-product border outline-reztya rounded-4 font-futura-reztya py-5">
 		<div class="py-3 text-center">
-			<h2 class="pb-3 font-alander-reztya">Detail Produk</h2>
+			<h2 class="pb-3 font-alander-reztya unselectable">Detail Produk</h2>
 		</div>
 		<div class="row py-5">
 			<div class="col-sm-6 pe-5">
@@ -16,7 +16,7 @@
 				@if(!is_null($product->size))
 				<p>Ukuran: {{ $product->size }}</p>
 				@endif
-				<h5>Rp.{{  number_format($product->price, 0, '', '.') }}</h5>
+				<h5>Rp. {{  number_format($product->price, 0, '', '.') }}</h5>
 				<div class="my-5"><p>{{ $product->description }}</p></DIv>
 				<p>Expired Date: {{ date('d F Y', strtotime($product->expired_date)) }}</p>
 				<label for="stock" class="my-2">Jumlah</label>
@@ -24,7 +24,7 @@
 			</div>
 		</div>
 		<div class="d-flex justify-content-center pb-5">
-		<button class="btn btn-success">Tambahkan ke keranjang</button>
+		<button class="btn btn-success"><i class="fa-solid fa-cart-shopping"></i> Tambahkan ke keranjang</button>
 		</div>
 		
 	</div>

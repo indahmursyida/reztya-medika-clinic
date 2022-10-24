@@ -6,7 +6,7 @@
 
 <div class="container-product border outline-reztya rounded-4 font-futura-reztya py-5">
     <div class="py-3 text-center">
-        <h2 class="pb-5 font-alander-reztya">Tambah Produk</h2>
+        <h2 class="pb-5 font-alander-reztya unselectable">Tambah Produk</h2>
     </div>
     <div class="d-flex justify-content-center my-4">
         <img class="img-preview img-fluid img-responsive img-thumbnail" width="300" height="300">
@@ -21,7 +21,7 @@
             <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path" onchange="previewImage()">
             @error('image_path')
             <div class="invalid-feedback">
-                {{ $message }}
+            {{ $message }}
             </div>
             @enderror
         </div>
@@ -33,7 +33,7 @@
             <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" value="{{ old('name') }}">
             @error('name')
             <div class="invalid-feedback">
-                {{ $message }}
+            {{ $message }}
             </div>
             @enderror
         </div>
@@ -51,7 +51,7 @@
             </select>
             @error('category_id')
             <div class="invalid-feedback">
-                {{ $message }}
+                Kategori produk wajib diisi
             </div>
             @enderror
         </div>
@@ -73,11 +73,6 @@
         </div>
         <div class="col-md-8">
             <input type="text" class="form-control @error('size') is-invalid @enderror" id="size" name="size" value="{{ old('size') }}">
-            @error('size')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-            @enderror
         </div>
 
         <div class="col-md-4">
@@ -87,7 +82,7 @@
             <input type="date" class="form-control @error('expired_date') is-invalid @enderror" id="expired_date" name="expired_date" value="{{ old('expired_date') }}">
             @error('expired_date')
             <div class="invalid-feedback">
-                {{ $message }}
+            {{ $message }}
             </div>
             @enderror
         </div>
@@ -98,12 +93,12 @@
         <div class="col-md-8">
             <div class="input-group">
                 <span class="input-group-text">Rp. </span>
-                <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}">
+                <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}">
             </div>
 
             @error('price')
             <div class="invalid-feedback">
-                {{ $message }}
+            {{ $message }}
             </div>
             @enderror
         </div>
@@ -115,12 +110,12 @@
             <input type="number" class="form-control @error('stock') is-invalid @enderror form-quantity" id="stock" name="stock" value="{{ old('stock', 1) }}" min="1" max="1000">
             @error('stock')
             <div class="invalid-feedback">
-                {{ $message }}
+            {{ $message }}
             </div>
             @enderror
         </div>
         <div class="col-12 d-flex justify-content-center pb-5">
-            <button class="btn button-color" type="submit">Tambah Produk</button>
+            <button class="btn button-color" type="submit"><i class="fa-solid fa-plus"></i> Tambah Produk</button>
         </div>
     </form>
 </div>

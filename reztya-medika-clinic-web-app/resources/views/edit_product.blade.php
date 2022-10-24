@@ -6,7 +6,7 @@
 
 <div class="container-product border outline-reztya rounded-4 font-futura-reztya py-5">
     <div class="py-3 text-center">
-        <h2 class="py-3 font-alander-reztya">Edit Produk</h2>
+        <h2 class="py-3 font-alander-reztya unselectable">Edit Produk</h2>
     </div>
 
     @if($product->image_path)
@@ -29,7 +29,7 @@
             <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path" onchange="previewImage()">
             @error('image_path')
             <div class="invalid-feedback">
-                {{ $message }}
+                Foto produk wajib diisi
             </div>
             @enderror
         </div>
@@ -41,7 +41,7 @@
             <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" value="{{ old('name', $product->name) }}">
             @error('name')
             <div class="invalid-feedback">
-                Nama Produk harus diisi
+                Nama Produk wajib diisi
             </div>
             @enderror
         </div>
@@ -59,7 +59,7 @@
             </select>
             @error('category_id')
             <div class="invalid-feedback">
-                {{ $message }}
+                Kategori produk wajib diisi
             </div>
             @enderror
         </div>
@@ -71,7 +71,7 @@
             <textarea class="form-control @error('description') is-invalid @enderror" placeholder="Description" id="description" name="description" style="height: 100px" value="{{ old('description', $product->description) }}">{{ old('description', $product->description) }}</textarea>
             @error('description')
             <div class="invalid-feedback">
-                {{ $message }}
+                Deskripsi produk wajib diisi
             </div>
             @enderror
         </div>
@@ -81,11 +81,6 @@
         </div>
         <div class="col-md-8">
             <input type="text" class="form-control @error('size') is-invalid @enderror" id="size" name="size" value="{{ old('size', $product->size) }}">
-            @error('size')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-            @enderror
         </div>
 
         <div class="col-md-4">
@@ -95,7 +90,7 @@
             <input type="date" class="form-control @error('expired_date') is-invalid @enderror" id="expired_date" name="expired_date" value="{{ old('expired_date', $product->expired_date) }}">
             @error('expired_date')
             <div class="invalid-feedback">
-                {{ $message }}
+                Tanggal kadaluarsa produk wajib diisi
             </div>
             @enderror
         </div>
@@ -110,7 +105,7 @@
             </div>
             @error('price')
             <div class="invalid-feedback">
-                {{ $message }}
+                Harga produk wajib diisi
             </div>
             @enderror
         </div>
@@ -122,7 +117,7 @@
             <input type="number" class="form-control @error('stock') is-invalid @enderror form-quantity" id="stock" name="stock" value="{{ old('stock', $product->stock) }}" min="1" max="1000">
             @error('stock')
             <div class="invalid-feedback">
-                {{ $message }}
+                Stok produk wajib diisi
             </div>
             @enderror
         </div>

@@ -18,18 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
         Category::create([
             'category_name' => 'Body Care'
         ]);
 
         Category::create([
-            'category_name' => 'SkinCare'
+            'category_name' => 'Skincare'
         ]);
         
         Product::create([
