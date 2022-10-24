@@ -7,7 +7,7 @@
     <div class="py-3 text-center">
         <h2 class="pb-5 font-alander-reztya unselectable">Daftar Layanan Perawatan</h1>
     </div>
-    <a href="/add-service" class="btn button-outline-reztya my-3">Tambah Perawatan</a>
+    <a href="/add-service" class="btn button-outline-reztya my-3"><i class="fa-solid fa-plus"></i> Tambah Perawatan</a>
     <table class="table table-bordered outline-reztya">
         <thead>
             <tr class="text-center">
@@ -34,14 +34,14 @@
                 <td><img src="{{ asset('storage/' . $service->image_path) }}" width="150" height="150" class="img-preview img-fluid img-thumbnail"></td>
                 <td>{{ $service->name }}</td>
                 <td>{{ $service->duration }} menit</td>
-                <td>Rp.{{  number_format($service->price, 0, '', '.') }}</td>
+                <td>Rp.{{ number_format($service->price, 0, '', '.') }}</td>
                 <td>
-                <a class="btn btn-outline-secondary btn-sm" href="/service-detail/{{ $service->service_id }}">Lihat Detail</a>
-                    <a class="btn btn-outline-primary btn-sm" href="/edit-service/{{ $service->service_id }}">Edit</a>
+                    <a class="btn btn-outline-secondary btn-sm" href="/service-detail/{{ $service->service_id }}"><i class="fa-solid fa-circle-info"></i> Detail</a>
+                    <a class="btn btn-outline-primary btn-sm" href="/edit-service/{{ $service->service_id }}"><i class="fa-regular fa-pen-to-square"></i></a>
                     <form method="post" action="/delete-service/{{ $service->service_id }}" class="d-inline">
                         @method('post') @csrf
                         <button class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')">
-                            Hapus
+                        <i class="fa-solid fa-trash"></i>
                         </button>
                     </form>
                 </td>

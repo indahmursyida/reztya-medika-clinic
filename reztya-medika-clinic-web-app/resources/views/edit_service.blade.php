@@ -84,7 +84,7 @@
                 <input type="number" class="form-control @error('duration') is-invalid @enderror form-quantity" id="duration" name="duration" value="{{ old('duration', $service->duration) }}" min="1" max="1000">
                 <span class="input-group-text">Menit</span>
             </div>
-            
+
             @error('duration')
             <div class="invalid-feedback">
                 {{ $message }}
