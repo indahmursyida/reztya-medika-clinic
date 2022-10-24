@@ -11,6 +11,8 @@
     <link href="http://fonts.cdnfonts.com/css/alander" rel="stylesheet">
     <link href="http://fonts.cdnfonts.com/css/futura-md-bt" rel="stylesheet">
     <link rel="stylesheet" href="{{ url('css/index.css') }}">
+    <!-- Fontawesome-->
+    <script src="https://kit.fontawesome.com/d003a54dde.js" crossorigin="anonymous"></script>
     <title>@yield('title')</title>
 </head>
 <body>
