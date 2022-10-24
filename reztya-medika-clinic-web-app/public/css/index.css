@@ -27,8 +27,8 @@
 }
 
 .container-product{
-    padding-left: 350px;
-    padding-right: 350px;
+    padding-left: 200px;
+    padding-right: 200px;
 }
 
 .form-control:focus {
@@ -56,6 +56,9 @@
     font-family: 'Futura Md BT', sans-serif;
 }
 
+.form-quantity{
+    width: 70px;
+}
 .btn-add{
     border-color: #00A54F !important;
     background-color: #00A54F;
