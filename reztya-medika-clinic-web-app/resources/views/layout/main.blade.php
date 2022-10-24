@@ -11,6 +11,8 @@
     <link href="http://fonts.cdnfonts.com/css/alander" rel="stylesheet">
     <link href="http://fonts.cdnfonts.com/css/futura-md-bt" rel="stylesheet">
     <link rel="stylesheet" href="{{ url('css/index.css') }}">
+    <!-- Fontawesome-->
+    <script src="https://kit.fontawesome.com/d003a54dde.js" crossorigin="anonymous"></script>
     <title>@yield('title')</title>
 </head>
 <body>
@@ -70,7 +72,7 @@
     </div>
 </nav>
 <div class="container mt-4">@yield('container')</div>
-<footer class="unselectable footer fixed-bottom pb-1" style="">
+<footer class="unselectable footer fixed-bottom pb-1 bg-white">
     <div class="container text-center pt-1">
         <a style="text-decoration: none; font-size: 12px; color: #00A54F" href="/home" data-toggle="tooltip" title="Home">
             © 2022 Reztya Medika Clinic. All rights reserved.
