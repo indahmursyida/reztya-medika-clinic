@@ -20,20 +20,20 @@
                     <form action="/signin" method="POST">
                         @csrf
                         <div class="form-floating mb-2">
-                            <input placeholder="Email" id="floatingEmail" class="shadow-none form-control @error('email') is-invalid @enderror" type="text" name="email" required value="{{\Illuminate\Support\Facades\Cookie::get('email')}}">
+                            <input placeholder="Email" id="floatingEmail" class="shadow-none form-control @error('email') is-invalid @enderror" type="text" name="email" value="{{\Illuminate\Support\Facades\Cookie::get('email')}}">
                             <label for="floatingEmail" class="font-futura-reztya">Email</label>
                             @error('email')
                             <div class="invalid-feedback">
-                                Tolong isi email.
+                                Email wajib diisi
                             </div>
                             @enderror
                         </div>
                         <div class="form-floating mb-2">
-                            <input placeholder="Password" id="floatingPassword" class="shadow-none form-control @error('password') is-invalid @enderror" type="password" name="password" required value="{{\Illuminate\Support\Facades\Cookie::get('password')}}">
+                            <input placeholder="Password" id="floatingPassword" class="shadow-none form-control @error('password') is-invalid @enderror" type="password" name="password" value="{{\Illuminate\Support\Facades\Cookie::get('password')}}">
                             <label for="floatingPassword" class="font-futura-reztya">Kata Sandi</label>
                             @error('password')
                             <div class="invalid-feedback">
-                                Tolong isi kata sandi.
+                                Kata sandi wajib diisi
                             </div>
                             @enderror
                         </div>
