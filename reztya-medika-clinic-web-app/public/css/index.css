@@ -55,6 +55,15 @@
     width: 70px;
 }
 
-.form-check-input:checked {
-    background: #00A54F !important;
+.sign-box {
+    width: 450px;
+}
+
+.box-up {
+    margin-top: -4%;
+    margin-bottom: -2%;
+}
+
+.card-sign {
+    width: 30rem;
 }
