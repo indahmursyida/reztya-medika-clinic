@@ -12,6 +12,7 @@
 				<img src="{{ asset('storage/' . $product->image_path) }}" class="img-fluid img-thumbnail">
 			</div>
 			<div class="col-sm-6">
+			<div class="btn btn-outline-secondary rounded-pill">{{$product->category->category_name}}</div>
 				<h3 class="text-reztya my-3">{{ $product->name }}</h3>
 				@if(!is_null($product->size))
 				<p>Ukuran: {{ $product->size }}</p>
