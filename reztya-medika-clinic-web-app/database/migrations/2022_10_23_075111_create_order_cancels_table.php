@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_cancels', function (Blueprint $table) {
-            $table->increments('cancel_id')->primary_key();
+            $table->id('cancel_id');
             $table->boolean('cancel_status');
             $table->string('cancel_description', 255);
-            $table->timestamps('created_at');
             $table->string('created_by', 255);
+            $table->timestamps();
         });
     }
 

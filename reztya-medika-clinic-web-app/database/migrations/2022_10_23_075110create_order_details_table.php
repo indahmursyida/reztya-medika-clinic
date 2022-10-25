@@ -14,11 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_details', function (Blueprint $table) {
-            $table->increments('order_detail_id')->primary_key();
-            $table->integer('service_id')->unsigned();
-            $table->foreign('service_id')->references('service_id')->on('services');
-            $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('product_id')->on('products');
+            $table->id('order_detail_id');
+            $table->foreignId('service_id');
+            $table->foreignId('product_id');
             $table->integer('quantity')->length(11);
             $table->timestamps();
         });

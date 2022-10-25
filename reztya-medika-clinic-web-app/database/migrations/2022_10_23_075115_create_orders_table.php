@@ -14,15 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->increments('order_id')->primary_key();
-            $table->integer('order_detail_id')->unsigned();
-            $table->foreign('order_detail_id')->references('order_detail_id')->on('order_details');
-            $table->integer('cancel_id')->unsigned();
-            $table->foreign('cancel_id')->references('cancel_id')->on('order_cancels');
-            $table->integer('payment_receipt_id')->unsigned();
-            $table->foreign('payment_receipt_id')->references('payment_receipt_id')->on('payment_receipts');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('user_id')->on('users');
+            $table->id('order_id');
+            $table->foreignId('order_detail_id');
+            $table->foreignId('cancel_id');
+            $table->foreignId('payment_receipt_id');
+            $table->foreignId('user_id');
             $table->date('order_date');
             $table->string('status', 255);
             $table->timestamps();
