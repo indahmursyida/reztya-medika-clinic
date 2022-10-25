@@ -2,7 +2,7 @@
 @section('title', 'Daftar')
 
 @section('container')
-    <div class="container signup-box mb-5">
+    <div class="container sign-box mb-5">
         @if($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 Pendaftaran tidak berhasil!
