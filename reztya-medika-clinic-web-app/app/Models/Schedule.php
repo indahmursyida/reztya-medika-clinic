@@ -11,8 +11,8 @@ class Schedule extends Model
 
     protected $primaryKey = 'schedule_id';
     protected $fillable = [
-        'start_date',
-        'end_date'
+        'start_time',
+        'end_time'
     ];
 
     public function service(){
