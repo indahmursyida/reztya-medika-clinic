@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Schedule;
 use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -54,7 +55,7 @@ class DatabaseSeeder extends Seeder
         Category::create([
             'category_name' => 'Skincare'
         ]);
-        
+
         Product::create([
             'name' => 'Body Shower',
             'category_id' => '1',
@@ -93,6 +94,19 @@ class DatabaseSeeder extends Seeder
             'price' => '120000',
             'image_path' => '/service-images/maskerwajah.jpeg'
         ]);
-        $this->call(ScheduleSeeder::class);
+        Schedule::create([
+            'start_time' => Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 10:00:00'),
+            'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 11:00:00')
+        ]);
+
+        Schedule::create([
+            'start_time' => Carbon::createFromFormat('d-m-Y H:i:s', '02-11-2022 11:00:00'),
+            'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '02-11-2022 12:00:00')
+        ]);
+
+        Schedule::create([
+            'start_time' => Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 13:00:00'),
+            'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 14:00:00')
+        ]);
     }
 }
