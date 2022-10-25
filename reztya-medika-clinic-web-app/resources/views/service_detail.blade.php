@@ -12,6 +12,7 @@
 			<img src="{{ asset('storage/' . $service->image_path) }}" class="img-fluid img-thumbnail">
 		</div>
 		<div class="col-sm-6">
+			<div class="btn btn-outline-secondary rounded-pill">{{$service->category->category_name}}</div>
 			<h3 class="text-reztya my-3">{{ $service->name }}</h3>
 			<p>Durasi: {{ $service->duration }} menit</p>
 			<h5>Rp.{{ number_format($service->price, 0, '', '.') }}</h5>
