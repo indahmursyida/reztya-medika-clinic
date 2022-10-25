@@ -72,7 +72,7 @@
     </div>
 </nav>
 <div class="container mt-4">@yield('container')</div>
-<footer class="unselectable footer fixed-bottom pb-1" style="">
+<footer class="unselectable footer fixed-bottom pb-1 bg-white">
     <div class="container text-center pt-1">
         <a style="text-decoration: none; font-size: 12px; color: #00A54F" href="/home" data-toggle="tooltip" title="Home">
             © 2022 Reztya Medika Clinic. All rights reserved.
