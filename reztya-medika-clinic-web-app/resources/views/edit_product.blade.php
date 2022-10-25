@@ -77,7 +77,7 @@
         </div>
 
         <div class="col-md-4">
-            <label class="form-label" for="size">Ukuran Produk</label>
+            <label class="form-label" for="size">Ukuran Produk (ml/gr)</label>
         </div>
         <div class="col-md-8">
             <input type="text" class="form-control @error('size') is-invalid @enderror" id="size" name="size" value="{{ old('size', $product->size) }}">
