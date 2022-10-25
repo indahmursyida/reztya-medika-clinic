@@ -14,9 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('services', function (Blueprint $table) {
-            $table->id('service_id');
-            $table->foreignId('category_id');
-            $table->foreignId('schedule_id');
+            $table->increments('service_id')->primary_key();
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('category_id')->on('categories');
+            $table->integer('schedule_id')->unsigned();
+            $table->foreign('schedule_id')->references('schedule_id')->on('schedules');
             $table->string('name', 255);
             $table->text('description');
             $table->integer('price');
