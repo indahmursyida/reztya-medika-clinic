@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Schedule;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -86,7 +87,8 @@ class ServiceController extends Controller
     {
         $service = Service::find($id);
         return view('service_detail', [
-            'service' => $service
+            'service' => $service,
+            'schedules' => Schedule::all()
         ]);
     }
 

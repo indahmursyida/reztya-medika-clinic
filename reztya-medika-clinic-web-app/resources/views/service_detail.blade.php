@@ -20,6 +20,20 @@
 			</DIv>
 			<label for="stock" class="my-2">Jumlah</label>
 			<input type="number" class="form-control form-quantity" id="quantity" name="quantity" min="1" max="{{ old('quantity') }}" value="{{ old('quantity', 1) }}">
+			<div class="col-md-8">
+				<select class="form-select @error('schedule_id') is-invalid @enderror" id="schedule_id" name="schedule_id">
+					@foreach($schedules as $schedule) @if(old('schedule_id') == $schedule->schedule_id)
+					<option value="{{ $schedule->schedule_id }}" selected>{{ $schedule->start_time }} - {{ $schedule->end_time }}</option>
+					@else
+					<option value="{{ $schedule->schedule_id }}">{{ $schedule->start_time }} - {{ $schedule->end_time }}</option>
+					@endif @endforeach
+				</select>
+				@error('schedule_id')
+				<div class="invalid-feedback">
+					{{ $message }}
+				</div>
+				@enderror
+			</div>
 		</div>
 	</div>
 	<div class="d-flex justify-content-center pb-5">
