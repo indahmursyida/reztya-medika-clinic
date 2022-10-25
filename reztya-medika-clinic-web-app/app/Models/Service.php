@@ -11,14 +11,19 @@ class Service extends Model
 
     protected $primaryKey = 'service_id';
     protected $fillable = [
-        'category_id', 
-        'name', 
-        'description', 
-        'duration', 
-        'price', 
+        'category_id',
+        'schedule_id',
+        'name',
+        'description',
+        'duration',
+        'price',
         'image_path'
     ];
     public function category(){
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function schedule(){
+        return $this->hasMany(Schedule::class, 'schedule_id');
     }
 }
