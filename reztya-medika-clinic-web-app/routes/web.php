@@ -21,6 +21,7 @@ Route::get('/home', function () {
     return view('layout/main');
 });
 
+//Product
 Route::get('/manage-products', [ProductController::class, 'index']);
 Route::get('/product-detail/{id}', [ProductController::class, 'show']);
 Route::post('/delete-product/{id}', [ProductController::class, 'destroy']);
@@ -28,6 +29,8 @@ Route::get('/add-product', [ProductController::class, 'create']);
 Route::post('/store-product', [ProductController::class, 'store']);
 Route::get('/edit-product/{id}', [ProductController::class, 'edit']);
 Route::put('/update-product/{id}', [ProductController::class, 'update']);
+
+//Service
 Route::get('/manage-services', [ServiceController::class, 'index']);
 Route::get('/service-detail/{id}', [ServiceController::class, 'show']);
 Route::post('/delete-service/{id}', [ServiceController::class, 'destroy']);
