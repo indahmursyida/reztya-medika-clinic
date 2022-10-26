@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\OrderDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,3 +39,7 @@ Route::get('/add-service', [ServiceController::class, 'create']);
 Route::post('/store-service', [ServiceController::class, 'store']);
 Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
 Route::put('/update-service/{id}', [ServiceController::class, 'update']);
+
+//OrderDetail
+Route::post('/buy-product', [OrderDetailController::class, 'buyProduct']);
+Route::post('/book-service', [OrderDetailController::class, 'bookService']);
