@@ -2,7 +2,7 @@
 @section('title', 'Masuk')
 
 @section('container')
-    <div class="unselectable container" style="width: 450px;" style="background-color: white">
+    <div class="unselectable container bg-white sign-box">
         @if(session()->has('loginError'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{session('loginError')}}
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center mt-2">
-            <div class="card bg-white outline-reztya" style="width: 30rem;">
+            <div class="card bg-white outline-reztya card-sign">
                 <div class="card-body">
                     <form action="/signin" method="POST">
                         @csrf
@@ -42,7 +42,7 @@
                             <label class="form-check-label" for="rememberMe">Ingat saya</label>
                         </div>
                         <div class="mt-3 mb-3 me-3 form-check text-center ">
-                            <a class="h6 font-futura-reztya text-reztya" href="/forgot-password" style="text-decoration: none;">Lupa Kata Sandi</a>
+                            <a class="h6 font-futura-reztya text-reztya text-decoration-none" href="/forgot-password">Lupa Kata Sandi</a>
                         </div>
                         <div class="d-grid gap-2">
                             <button class="btn button-outline-reztya font-futura-reztya" type="submit">Masuk</button>
