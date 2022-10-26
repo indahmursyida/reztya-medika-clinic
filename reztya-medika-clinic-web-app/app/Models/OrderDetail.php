@@ -17,15 +17,15 @@ class OrderDetail extends Model
         'quantity'
     ];
     public function service(){
-        return $this->hasMany(Service::class, 'service_id');
+        return $this->belongsTo(Service::class, 'service_id');
     }
 
     public function product(){
-        return $this->hasMany(Product::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
     public function schedule(){
-        return $this->hasMany(Service::class, 'schedule_id');
+        return $this->hasOne(Schedule::class, 'schedule_id');
     }
 
     public function order(){

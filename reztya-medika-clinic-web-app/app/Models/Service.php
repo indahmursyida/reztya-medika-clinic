@@ -26,4 +26,8 @@ class Service extends Model
     public function schedule(){
         return $this->hasMany(Schedule::class, 'schedule_id');
     }
+
+    public function orderDetail(){
+        return $this->hasMany(OrderDetail::class);
+    }
 }
