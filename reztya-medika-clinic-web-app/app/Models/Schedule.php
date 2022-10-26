@@ -15,7 +15,7 @@ class Schedule extends Model
         'end_time'
     ];
 
-    public function service(){
-        return $this->belongsTo(Service::class, 'service_id');
+    public function orderDetail(){
+        return $this->belongsTo(OrderDetail::class, 'order_detail_id');
     }
 }

@@ -19,7 +19,7 @@ class Order extends Model
         'status'
     ];
     public function orderDetail(){
-        return $this->hasOne(OrderDetail::class, 'order_detail_id');
+        return $this->hasMany(OrderDetail::class, 'order_detail_id');
     }
 
     public function cancel(){

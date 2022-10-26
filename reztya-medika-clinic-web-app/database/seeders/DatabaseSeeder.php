@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Category;
+use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Schedule;
 use App\Models\Service;
@@ -21,7 +22,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        Category::create([
+            'category_name' => 'Body Care'
+        ]);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
@@ -107,6 +110,16 @@ class DatabaseSeeder extends Seeder
         Schedule::create([
             'start_time' => Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 13:00:00'),
             'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 14:00:00')
+        ]);
+
+        OrderDetail::create([
+            'service_id' => 1,
+            'schedule_id' => 1
+        ]);
+
+        OrderDetail::create([
+            'product_id' => 1,
+            'quantity' => 2
         ]);
     }
 }
