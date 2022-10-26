@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,3 +28,10 @@ Route::get('/add-product', [ProductController::class, 'create']);
 Route::post('/store-product', [ProductController::class, 'store']);
 Route::get('/edit-product/{id}', [ProductController::class, 'edit']);
 Route::put('/update-product/{id}', [ProductController::class, 'update']);
+Route::get('/manage-services', [ServiceController::class, 'index']);
+Route::get('/service-detail/{id}', [ServiceController::class, 'show']);
+Route::post('/delete-service/{id}', [ServiceController::class, 'destroy']);
+Route::get('/add-service', [ServiceController::class, 'create']);
+Route::post('/store-service', [ServiceController::class, 'store']);
+Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
+Route::put('/update-service/{id}', [ServiceController::class, 'update']);
