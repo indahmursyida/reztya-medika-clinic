@@ -43,7 +43,7 @@
     </div>
     <h5 class="d-flex justify-content-end">Total Price</h5>
     <div class="d-flex justify-content-center">
-        <button class="btn button-outline-reztya" type="button">Pesan</button>
+        <button class="btn button-outline-reztya" type="button">Buat Pesanan</button>
     </div>
 </div>
 @endsection
