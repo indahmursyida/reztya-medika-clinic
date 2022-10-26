@@ -21,4 +21,12 @@ class Service extends Model
     public function category(){
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    public function schedule(){
+        return $this->hasMany(Schedule::class, 'schedule_id');
+    }
+
+    public function orderDetail(){
+        return $this->hasMany(OrderDetail::class);
+    }
 }
