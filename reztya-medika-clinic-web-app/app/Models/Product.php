@@ -14,6 +14,7 @@ class Product extends Model
         'category_id', 
         'name', 
         'description', 
+        'size', 
         'price', 
         'expired_date',
         'stock',
@@ -21,5 +22,9 @@ class Product extends Model
     ];
     public function category(){
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function orderDetail(){
+        return $this->hasMany(OrderDetail::class);
     }
 }

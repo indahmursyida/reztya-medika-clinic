@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
-            $table->id('service_id');
-            $table->foreignId('category_id');
-            $table->string('name', 255);
-            $table->text('description');
-            $table->integer('duration');
-            $table->integer('price');
-            $table->string('image_path', 255);
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id('order_id');
+            $table->foreignId('order_detail_id');
+            $table->foreignId('cancel_id');
+            // $table->foreignId('payment_receipt_id');
+            $table->foreignId('user_id');
+            $table->date('order_date');
+            $table->string('status', 255);
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('orders');
     }
 };

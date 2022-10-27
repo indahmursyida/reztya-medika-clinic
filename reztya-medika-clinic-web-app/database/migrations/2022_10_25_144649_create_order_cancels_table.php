@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
-            $table->id('service_id');
-            $table->foreignId('category_id');
-            $table->string('name', 255);
-            $table->text('description');
-            $table->integer('duration');
-            $table->integer('price');
-            $table->string('image_path', 255);
+        Schema::create('order_cancels', function (Blueprint $table) {
+            $table->id('cancel_id');
+            $table->boolean('cancel_status');
+            $table->string('cancel_description', 255);
+            $table->string('created_by', 255);
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('order_cancels');
     }
 };
