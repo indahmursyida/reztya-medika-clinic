@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SignInController;
+use App\Http\Controllers\SignUpController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,17 +28,17 @@ Route::get('/home', function () {
 });
 
 // Sign Up
-Route::get('/signup', [\App\Http\Controllers\SignUpController::class, 'signUp'])->middleware('guest');
-Route::post('/signup', [\App\Http\Controllers\SignUpController::class, 'userRegister']);
+Route::get('/signup', [SignUpController::class, 'signUp'])->middleware('guest');
+Route::post('/signup', [SignUpController::class, 'userRegister']);
 
 // Sign In
 Route::get('/signin', function () {
     return view('users.signin');
 })->middleware('guest');
-Route::post('/signin', [\App\Http\Controllers\SignInController::class, 'userLogin']);
+Route::post('/signin', [SignInController::class, 'userLogin']);
 
 // Sign Out
-Route::post('/signout', [\App\Http\Controllers\SignInController::class, 'userLogout'])->middleware('auth');
+Route::post('/signout', [SignInController::class, 'userLogout'])->middleware('auth');
 
 //Product
 Route::get('/manage-products', [ProductController::class, 'index']);
