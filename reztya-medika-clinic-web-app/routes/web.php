@@ -23,6 +23,10 @@ Route::get('/home', function () {
     return view('layout.main');
 });
 
+// Sign Up
+Route::get('/signup', [\App\Http\Controllers\SignUpController::class, 'signUp'])->middleware('guest');
+Route::post('/signup', [\App\Http\Controllers\SignUpController::class, 'userRegister']);
+
 // Sign In
 Route::get('/signin', function () {
     return view('users.signin');
