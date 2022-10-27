@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // Redirects
 Route::permanentRedirect('/', '/home');
-Route::permanentRedirect('/login', '/signin');
+Route::permanentRedirect('/login', '/signin')->middleware('guest');
 Route::permanentRedirect('/logout', '/home')->middleware('auth');
 
 // Home
@@ -30,4 +30,4 @@ Route::get('/signin', function () {
 Route::post('/signin', [\App\Http\Controllers\SignInController::class, 'userLogin']);
 
 // Sign Out
-Route::post('/signout', [\App\Http\Controllers\SignInController::class, 'userLogout']);
+Route::post('/signout', [\App\Http\Controllers\SignInController::class, 'userLogout'])->middleware('auth');
