@@ -4,7 +4,7 @@
 @section('container')
     <div class="unselectable container bg-white sign-box">
         @if(session()->has('loginError'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show font-futura-reztya" role="alert">
                 {{session('loginError')}}
                 <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>

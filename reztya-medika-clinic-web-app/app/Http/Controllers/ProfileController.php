@@ -4,9 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    public function changePassword(Request $request) {
+        $password = $request->validate([
+            'oldpass' => 'required',
+            'newpass' => 'required',
+            'confnewpass' => 'required'
+        ]);
+
+        if (Hash::check($password['oldpass'], \auth()->user()->password)) {
+            if ($password['newpass'] == $password['confnewpass']) {
+                $newPassword = $password['confnewpass'];
+                $newPassword = Hash::make($newPassword);
+                $email = \auth()->user()->email;
+                DB::table('users')->where('email', $email)->update([
+                    'password' => $newPassword
+                ]);
+                $request->session()->regenerate();
+                return redirect()->intended('/home');
+            }
+            return back()->with('passwordChangeError', 'Konfirmasi kata sandi baru wajib sesuai dengan kata sandi baru!');
+        }
+        return back()->with('passwordChangeError', 'Kata sandi lama tidak sesuai!');
+    }
+
     public function viewProfile() {
         return view('profile.view-profile');
     }

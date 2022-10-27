@@ -43,6 +43,9 @@ Route::get('/view-profile/{username}', [\App\Http\Controllers\ProfileController:
 Route::get('/edit-profile/{username}', [\App\Http\Controllers\ProfileController::class, 'viewEditProfile'])->middleware('auth');
 Route::post('/edit-profile/{username}', [\App\Http\Controllers\ProfileController::class, 'editProfile'])->middleware('auth');
 
+// Change Password
+Route::post('/change-password/{username}', [\App\Http\Controllers\ProfileController::class, 'changePassword'])->middleware('auth');
+
 //Product
 Route::get('/manage-products', [ProductController::class, 'index']);
 Route::get('/product-detail/{id}', [ProductController::class, 'show']);
