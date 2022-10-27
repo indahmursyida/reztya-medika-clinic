@@ -216,7 +216,7 @@
                         </ul>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5">
-                        <button class="btn button-outline-reztya" type="submit">Simpan</button>
+                        <button class="btn button-outline-reztya" type="submit">Ubah</button>
                     </div>
                 </form>
             </div>
