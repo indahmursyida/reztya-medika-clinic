@@ -40,7 +40,7 @@ class SignInController extends Controller
 
                     return redirect()->intended('/home');
                 } else {
-                    return redirect()->back()->with('loginError', 'Anda telah di ban! Silahkan kontak klinik!');
+                    return redirect()->back()->with('loginError', 'Akun Anda telah diblokir! Silahkan kontak klinik!');
                 }
             }
         }
