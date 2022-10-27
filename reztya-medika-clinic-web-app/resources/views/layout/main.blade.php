@@ -19,7 +19,7 @@
 <nav class="unselectable navbar p-1 pt-0">
     <div class="row container-fluid pt-1">
         <a class="navbar ps-4" href="/home" style="max-width: 15%;">
-            <img src="storage/reztya_logo.png" data-toggle="tooltip" title="Home" style="max-width: 80%;">
+            <img src="{{url('storage/reztya_logo.png')}}" data-toggle="tooltip" title="Home" style="max-width: 80%;">
         </a>
         <div class="col-2 mb-2">
             <a class="text-reztya font-futura-reztya fs-6" href="/services" style="text-decoration: none;">
@@ -44,7 +44,7 @@
                             Welcome, {{auth()->user()->username}}
                         </p>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                            <li><a class="button-outline-reztya dropdown-item" href="/profile/{{auth()->user()->name}}">Lihat Profil</a></li>
+                            <li><a class="button-outline-reztya dropdown-item" href="/view-profile/{{auth()->user()->username}}">Lihat Profil</a></li>
                             <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order</a></li>
                             <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order Aktif</a></li>
                             <li>

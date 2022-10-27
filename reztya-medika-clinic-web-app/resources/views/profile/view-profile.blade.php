@@ -2,7 +2,7 @@
 @section('title', 'Profile')
 
 @section('container')
-    <div class="unselectable container bg-white sign-box">
+    <div class="unselectable container bg-white">
         @if(session()->has('updateError'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{session('updateError')}}
@@ -14,26 +14,26 @@
                 <p class="h5 fw-bold unselectable font-alander-reztya">Profil</p>
             </div>
         </div>
-        <div class="d-flex justify-content-center mt-2 bg-white font-futura-reztya">
+        <div class="d-flex justify-content-center mt-2 bg-white font-futura-reztya mb-4">
             <div class="profile-box">
                 <div class="card outline-reztya">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-view">
                             <div class="row row-profile">
-                                <div class="ms-4 col-3 view-profile-img">
-                                    <img width="120px" src="storage/profile-images/profile_picture_default.jpg" class="bg-secondary img-thumbnail rounded-circle" id="preview" aria-expanded="false" alt="Profile Picture">
+                                <div class="d-flex align-self-center ms-4 col-3 view-profile-img">
+                                    <img width="120px" src="{{asset('storage/' . auth()->user()->profile_picture)}}" class="bg-secondary img-thumbnail rounded-circle" id="preview" aria-expanded="false" alt="Profile Picture">
                                 </div>
                                 <div class="col-9 mt-4 ms-3">
                                     <div class="row">
                                         <div class="col-auto mb-1">
-                                            <a href="/edit-profile" style="text-decoration: none">
-                                                <h5 class="fw-bold text-reztya">{{auth()->user()->full_name}}</h5>
+                                            <a href="/edit-profile/{{auth()->user()->username}}" style="text-decoration: none">
+                                                <h5 class="fw-bold text-reztya">{{auth()->user()->name}}</h5>
                                             </a>
                                         </div>
                                         <div class="row">
                                             <div class="col-4">
                                                 <div>
-                                                    <h6>{{auth()->user()->birth_date}}</h6>
+                                                    <h6>{{auth()->user()->birthdate}}</h6>
                                                 </div>
                                                 <div>
                                                     <h6 class="text-wrap">{{auth()->user()->address}}</h6>
@@ -41,7 +41,7 @@
                                             </div>
                                             <div class="col-8">
                                                 <div>
-                                                    <h6>{{auth()->user()->phone_number}}</h6>
+                                                    <h6>{{auth()->user()->phone}}</h6>
                                                 </div>
                                                 <div>
                                                     <h6>{{auth()->user()->email}}</h6>

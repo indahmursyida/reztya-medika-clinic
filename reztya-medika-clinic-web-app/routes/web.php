@@ -37,11 +37,11 @@ Route::post('/signin', [\App\Http\Controllers\SignInController::class, 'userLogi
 Route::post('/signout', [\App\Http\Controllers\SignInController::class, 'userLogout'])->middleware('auth');
 
 // View Profile
-Route::get('/view-profile', [\App\Http\Controllers\ProfileController::class, 'viewProfile'])->middleware('auth');
+Route::get('/view-profile/{username}', [\App\Http\Controllers\ProfileController::class, 'viewProfile'])->middleware('auth');
 
 // Edit Profile
-Route::get('/edit-profile', [\App\Http\Controllers\ProfileController::class, 'viewEditProfile'])->middleware('auth');
-Route::post('/edit-profile', [\App\Http\Controllers\ProfileController::class, 'editProfile'])->middleware('auth');
+Route::get('/edit-profile/{username}', [\App\Http\Controllers\ProfileController::class, 'viewEditProfile'])->middleware('auth');
+Route::post('/edit-profile/{username}', [\App\Http\Controllers\ProfileController::class, 'editProfile'])->middleware('auth');
 
 //Product
 Route::get('/manage-products', [ProductController::class, 'index']);

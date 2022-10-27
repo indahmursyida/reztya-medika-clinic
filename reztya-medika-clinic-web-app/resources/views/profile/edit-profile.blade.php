@@ -16,25 +16,25 @@
         </div>
         <div class="d-flex justify-content-center mt-2 bg-white font-futura-reztya">
             <div class="profile-box">
-                <form action="/edit-profile" method="POST" enctype="multipart/form-data">
+                <form action="/edit-profile/{{auth()->user()->username}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="d-flex justify-content-center mb-3">
                         <div class="col-auto">
-                            <img width="200px" src="storage/profile-images/profile_picture_default.jpg" class="bg-secondary img-thumbnail rounded-circle" id="preview" aria-expanded="false" alt="Profile Picture">
+                            <img width="200px" src="{{asset('storage/' . auth()->user()->profile_picture)}}" class="bg-secondary img-thumbnail rounded-circle" id="preview" aria-expanded="false" alt="Profile Picture">
                         </div>
                     </div>
                     <div class="card outline-reztya">
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-3-profile col-range">
+                                    <div class="col-3">
                                         <label for="name" class="col-form-label">Foto</label>
                                     </div>
-                                    <div class="col-md-7 mt-1">
-                                        <input type="file" name="photo" class="form-control form-control-sm @error('photo') is-invalid @enderror" aria-describedby="photo" onchange="loadFile(event)">
+                                    <div class="col-md-8 mt-1">
+                                        <input type="file" name="photo" class="shadow-none form-control form-control-sm @error('photo') is-invalid @enderror" aria-describedby="photo" onchange="loadFile(event)">
                                         @error('photo')
                                         <div class="invalid-feedback">
-                                            Format foto wajib JPEG, JPG, atau PNG
+                                            Format foto wajib JPEG, JPG, SVG, GIF, atau PNG
                                         </div>
                                         @enderror
                                     </div>
@@ -42,11 +42,11 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-3-profile col-range">
+                                    <div class="col-3">
                                         <label for="username" class="col-form-label">Username</label>
                                     </div>
-                                    <div class="col-md-7 mt-2">
-                                        <input type="text" name="username" class="form-control form-control-sm @error('username') is-invalid @enderror" aria-describedby="username" placeholder="{{auth()->user()->username}}" value="{{old('username')}}">
+                                    <div class="col-md-8 mt-2">
+                                        <input type="text" name="username" class="shadow-none form-control form-control-sm @error('username') is-invalid @enderror" aria-describedby="username" placeholder="{{auth()->user()->username}}" value="{{old('username')}}">
                                         @error('username')
                                         <div class="invalid-feedback">
                                             Username wajib diisi
@@ -57,11 +57,11 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-3-profile col-range">
+                                    <div class="col-3">
                                         <label for="name" class="col-form-label">Nama Lengkap</label>
                                     </div>
-                                    <div class="col-md-7 mt-2">
-                                        <input type="text" name="name" class="form-control form-control-sm @error('name') is-invalid @enderror" aria-describedby="name" placeholder="{{auth()->user()->full_name}}" value="{{old('name')}}">
+                                    <div class="col-md-8 mt-2">
+                                        <input type="text" name="name" class="shadow-none form-control form-control-sm @error('name') is-invalid @enderror" aria-describedby="name" placeholder="{{auth()->user()->name}}" value="{{old('name')}}">
                                         @error('name')
                                         <div class="invalid-feedback">
                                             Nama lengkap wajib diisi
@@ -72,11 +72,11 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-3-profile col-range">
+                                    <div class="col-3">
                                         <label for="birthdate" class="col-form-label">Tanggal Lahir</label>
                                     </div>
-                                    <div class="col-md-4 mt-2">
-                                        <input type="date" name="birthdate" class="form-control form-control-sm @error('birthdate') is-invalid @enderror" aria-describedby="birthdate" placeholder="{{auth()->user()->birth_date}}" value="{{old('birthdate')}}">
+                                    <div class="col-md-5 mt-2">
+                                        <input type="date" name="birthdate" class="shadow-none form-control form-control-sm @error('birthdate') is-invalid @enderror" aria-describedby="birthdate" placeholder="{{auth()->user()->birthdate}}" value="{{old('birthdate')}}">
                                         @error('birthdate')
                                         <div class="invalid-feedback">
                                             Tanggal lahir wajib diisi
@@ -87,11 +87,11 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-3-profile col-range">
+                                    <div class="col-3">
                                         <label for="phone" class="col-form-label">Nomor Telepon</label>
                                     </div>
-                                    <div class="col-md-7 mt-3">
-                                        <input type="number" name="phone" class="form-control form-control-sm @error('phone') is-invalid @enderror" aria-describedby="phone" placeholder="{{auth()->user()->phone_number}}" value="{{old('phone')}}">
+                                    <div class="col-md-8 mt-3">
+                                        <input type="number" name="phone" class="shadow-none form-control form-control-sm @error('phone') is-invalid @enderror" aria-describedby="phone" placeholder="{{auth()->user()->phone}}" value="{{old('phone')}}">
                                         @error('phone')
                                         <div class="invalid-feedback">
                                             Nomor telepon wajib diisi
@@ -102,11 +102,11 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-3-profile col-range">
+                                    <div class="col-3">
                                         <label for="address" class="col-form-label">Alamat</label>
                                     </div>
-                                    <div class="col-md-7 mt-1">
-                                        <textarea name="address" class="form-control form-control-sm @error('address') is-invalid @enderror" aria-describedby="address" placeholder="{{auth()->user()->address}}"></textarea>
+                                    <div class="col-md-8 mt-1">
+                                        <textarea name="address" class="shadow-none form-control form-control-sm @error('address') is-invalid @enderror" aria-describedby="address">{{auth()->user()->address}}</textarea>
                                         @error('address')
                                         <div class="invalid-feedback">
                                             Alamat wajib diisi
@@ -117,11 +117,11 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-3-profile col-range">
+                                    <div class="col-3">
                                         <label for="email" class="col-form-label">Email</label>
                                     </div>
-                                    <div class="col-md-7 mt-1">
-                                        <input type="text" name="email" class="form-control form-control-sm @error('email') is-invalid @enderror" aria-describedby="email" placeholder="{{auth()->user()->email}}" value="{{old('email')}}">
+                                    <div class="col-md-8 mt-1">
+                                        <input type="text" name="email" class="shadow-none form-control form-control-sm @error('email') is-invalid @enderror" aria-describedby="email" placeholder="{{auth()->user()->email}}" value="{{old('email')}}">
                                         @error('email')
                                         <div class="invalid-feedback">
                                             Email wajib diisi
@@ -132,11 +132,11 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-3-profile col-range">
+                                    <div class="col-3">
                                         <label for="password" class="col-form-label">Kata Sandi</label>
                                     </div>
-                                    <div class="col-md-7 mt-1">
-                                        <input type="password" name="password" class="form-control form-control-sm @error('password') is-invalid @enderror" aria-describedby="password" value="{{old('password')}}">
+                                    <div class="col-md-8 mt-1">
+                                        <input type="password" name="password" class="shadow-none form-control form-control-sm @error('password') is-invalid @enderror" aria-describedby="password" value="{{old('password')}}">
                                         @error('password')
                                         <div class="invalid-feedback">
                                             Password wajib diisi / harus sesuai

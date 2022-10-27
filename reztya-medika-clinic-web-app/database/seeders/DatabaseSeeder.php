@@ -39,15 +39,16 @@ class DatabaseSeeder extends Seeder
             'user_role_name' => 'Guest'
         ]);
 
-        DB::table('profile')->insert([
+        DB::table('users')->insert([
             'user_role_id' => 1,
             'username' => 'Admin',
             'name' => 'Admin Admin Admin',
             'birthdate' => '2001-06-18',
             'phone' => '081285879816',
             'address' => 'Your Heart my Darling',
-            'email' => 'harishsaid37@gmail.com',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('admin'),
+            'profile_picture' => 'profile-images/profile_picture_default.jpg',
             'is_banned' => false
         ]);
 

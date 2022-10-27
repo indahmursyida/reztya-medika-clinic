@@ -15,10 +15,11 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'photo' => 'required|image',
             'name' => 'required',
-            'birthdate' => 'required|date|before:now',
+            'username' => 'required',
+            'birthdate' => 'required|date|before:2010',
             'phone' => 'required|numeric',
             'address' => 'required|max:255',
-            'email' => 'required|unique:profile|email:rfc,dns',
+            'email' => 'required|email:rfc,dns',
             'password' => 'required|current_password'
         ]);
 
@@ -26,7 +27,7 @@ class ProfileController extends Controller
             $name = $request->name;
             $email = $request->email;
             $birthdate = $request->birthdate;
-            $phone = str($request->phone);
+            $phone = strval($request->phone);
             $address = $request->address;
             $username = $request->username;
 
@@ -35,16 +36,16 @@ class ProfileController extends Controller
 
             $currentEmail = auth()->user()->email;
 
-            DB::table('profile')->where('email', $currentEmail)->update([
-                'full_name' => $name,
+            DB::table('users')->where('email', $currentEmail)->update([
+                'name' => $name,
                 'email' => $email,
                 'profile_picture' => $profilePicture,
-                'birth_date' => $birthdate,
-                'phone_number' => $phone,
+                'birthdate' => $birthdate,
+                'phone' => $phone,
                 'address' => $address,
                 'username' => $username
             ]);
-            return redirect()->intended('/view-profile');
+            return redirect()->intended('/view-profile/{username}');
         }
         return redirect()->back()->with('updateError', 'Ubah profil gagal!');
     }
