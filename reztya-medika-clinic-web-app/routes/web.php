@@ -52,19 +52,19 @@ Route::post('/edit-profile/{username}', [ProfileController::class, 'editProfile'
 Route::post('/change-password/{username}', [ProfileController::class, 'changePassword'])->middleware('auth');
 
 //Product
-Route::get('/manage-products', [ProductController::class, 'index']);
-Route::get('/product-detail/{id}', [ProductController::class, 'show']);
-Route::post('/delete-product/{id}', [ProductController::class, 'destroy']);
-Route::get('/add-product', [ProductController::class, 'create']);
-Route::post('/store-product', [ProductController::class, 'store']);
-Route::get('/edit-product/{id}', [ProductController::class, 'edit']);
-Route::put('/update-product/{id}', [ProductController::class, 'update']);
+Route::get('/manage-products', [ProductController::class, 'index'])->middleware('admin');
+Route::get('/product-detail/{id}', [ProductController::class, 'show'])->middleware('admin');
+Route::post('/delete-product/{id}', [ProductController::class, 'destroy'])->middleware('admin');
+Route::get('/add-product', [ProductController::class, 'create'])->middleware('admin');
+Route::post('/store-product', [ProductController::class, 'store'])->middleware('admin');
+Route::get('/edit-product/{id}', [ProductController::class, 'edit'])->middleware('admin');
+Route::put('/update-product/{id}', [ProductController::class, 'update'])->middleware('admin');
 
 //Service
-Route::get('/manage-services', [ServiceController::class, 'index']);
-Route::get('/service-detail/{id}', [ServiceController::class, 'show']);
-Route::post('/delete-service/{id}', [ServiceController::class, 'destroy']);
-Route::get('/add-service', [ServiceController::class, 'create']);
-Route::post('/store-service', [ServiceController::class, 'store']);
-Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
-Route::put('/update-service/{id}', [ServiceController::class, 'update']);
+Route::get('/manage-services', [ServiceController::class, 'index'])->middleware('admin');
+Route::get('/service-detail/{id}', [ServiceController::class, 'show'])->middleware('admin');
+Route::post('/delete-service/{id}', [ServiceController::class, 'destroy'])->middleware('admin');
+Route::get('/add-service', [ServiceController::class, 'create'])->middleware('admin');
+Route::post('/store-service', [ServiceController::class, 'store'])->middleware('admin');
+Route::get('/edit-service/{id}', [ServiceController::class, 'edit'])->middleware('admin');
+Route::put('/update-service/{id}', [ServiceController::class, 'update'])->middleware('admin');
