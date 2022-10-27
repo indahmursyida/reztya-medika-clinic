@@ -1,5 +1,7 @@
 <?php
-
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,3 +55,11 @@ Route::get('/add-service', [ServiceController::class, 'create']);
 Route::post('/store-service', [ServiceController::class, 'store']);
 Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
 Route::put('/update-service/{id}', [ServiceController::class, 'update']);
+
+//Category
+Route::get('/manage-categories', [CategoryController::class, 'index']);
+Route::post('/delete-category/{id}', [CategoryController::class, 'destroy']);
+Route::get('/add-category', [CategoryController::class, 'create']);
+Route::post('/store-category', [CategoryController::class, 'store']);
+Route::get('/edit-category/{id}', [CategoryController::class, 'edit']);
+Route::put('/update-category/{id}', [CategoryController::class, 'update']);
