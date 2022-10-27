@@ -11,12 +11,11 @@ class Service extends Model
 
     protected $primaryKey = 'service_id';
     protected $fillable = [
-        'category_id',
-        'schedule_id',
-        'name',
-        'description',
-        'duration',
-        'price',
+        'category_id', 
+        'name', 
+        'description', 
+        'duration', 
+        'price', 
         'image_path'
     ];
     public function category(){
@@ -25,5 +24,9 @@ class Service extends Model
 
     public function schedule(){
         return $this->hasMany(Schedule::class, 'schedule_id');
+    }
+
+    public function orderDetail(){
+        return $this->hasMany(OrderDetail::class);
     }
 }

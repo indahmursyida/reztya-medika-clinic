@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
-            $table->id('schedule_id');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id('order_id');
+            $table->foreignId('order_detail_id');
+            $table->foreignId('cancel_id');
+            // $table->foreignId('payment_receipt_id');
+            $table->foreignId('user_id');
+            $table->date('order_date');
+            $table->string('status', 255);
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('orders');
     }
 };
