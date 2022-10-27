@@ -87,7 +87,7 @@
                             <label for="floatingConfirmPassword" class="font-futura-reztya">Konfirmasi Kata Sandi</label>
                             @error('confirm_password')
                             <div class="invalid-feedback">
-                                Konfirmasi kata sandi wajib diisi / Konfirmasi kata sandi tidak sesuai dengan kata sandi.
+                                Konfirmasi kata sandi wajib diisi / Konfirmasi kata sandi tidak sesuai dengan kata sandi
                             </div>
                             @enderror
                         </div>
