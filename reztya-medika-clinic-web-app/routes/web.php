@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Redirects
 Route::permanentRedirect('/', '/home');
+Route::permanentRedirect('/login', '/signin')->middleware('guest');
+Route::permanentRedirect('/logout', '/home')->middleware('auth');
 
+// Home
 Route::get('/home', function () {
-    return view('layout/main');
+    return view('layout.main');
 });
+
+// Sign In
+Route::get('/signin', function () {
+    return view('users.signin');
+})->middleware('guest');
+Route::post('/signin', [\App\Http\Controllers\SignInController::class, 'userLogin']);
+
+// Sign Out
+Route::post('/signout', [\App\Http\Controllers\SignInController::class, 'userLogout'])->middleware('auth');
 
 //Product
 Route::get('/manage-products', [ProductController::class, 'index']);
