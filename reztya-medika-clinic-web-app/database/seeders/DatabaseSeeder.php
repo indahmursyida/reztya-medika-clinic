@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'user_role_name' => 'Guest'
         ]);
 
-        DB::table('users')->insert([
+        DB::table('profile')->insert([
             'user_role_id' => 1,
             'username' => 'Admin',
             'name' => 'Admin Admin Admin',

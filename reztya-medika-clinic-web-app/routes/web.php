@@ -19,5 +19,9 @@ Route::get('/home', function () {
     return view('layout/main');
 });
 
-// Profile
-Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'viewProfile']);
+// View Profile
+Route::get('/view-profile', [\App\Http\Controllers\ProfileController::class, 'viewProfile']);
+
+// Edit Profile
+Route::get('/edit-profile', [\App\Http\Controllers\ProfileController::class, 'viewEditProfile']);
+Route::post('/edit-profile', [\App\Http\Controllers\ProfileController::class, 'editProfile']);
