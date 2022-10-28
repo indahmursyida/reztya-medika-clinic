@@ -69,7 +69,7 @@
         <div class="row d-flex justify-content-center mt-5 mb-5">
             <div class="col-6">
                 <div class="row">
-                    <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya">Services</p>
+                    <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Services</p>
                     <a href="#">
                         <img src="{{url('storage/Service Reztya.jpg')}}" class="img-thumbnail img-thumbnail-home d-block w-100" alt="...">
                     </a>
@@ -77,7 +77,7 @@
             </div>
             <div class="col-6">
                 <div class="row">
-                    <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya">Products</p>
+                    <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Products</p>
                     <a href="#">
                         <img src="{{url('storage/Service Reztya.jpg')}}" class="img-thumbnail img-thumbnail-home d-block w-100" alt="...">
                     </a>

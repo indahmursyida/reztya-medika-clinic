@@ -78,6 +78,9 @@
                             <li><a class="button-outline-reztya dropdown-item" href="/profile/{{auth()->user()->name}}">Lihat Profil</a></li>
                             <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order</a></li>
                             <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order Aktif</a></li>
+                            @if(auth()->user()->user_role_id == 1)
+                                <li><a class="button-outline-reztya dropdown-item" href="#">Ban / Unban Akun</a></li>
+                            @endif
                             <li>
                                 <form method="POST" action="/signout">
                                     @csrf
