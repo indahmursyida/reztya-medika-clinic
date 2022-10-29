@@ -18,4 +18,8 @@ class Schedule extends Model
     public function orderDetail(){
         return $this->belongsTo(OrderDetail::class, 'order_detail_id');
     }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

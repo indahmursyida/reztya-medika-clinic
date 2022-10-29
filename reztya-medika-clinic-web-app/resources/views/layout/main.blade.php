@@ -19,22 +19,53 @@
 <nav class="unselectable navbar p-1 pt-0">
     <div class="row container-fluid pt-1">
         <a class="navbar ps-4" href="/home" style="max-width: 15%;">
-            <img src="storage/reztya_logo.png" data-toggle="tooltip" title="Home" style="max-width: 80%;">
+            <img src="{{url('storage/reztya_logo.png')}}" data-toggle="tooltip" title="Home" style="max-width: 80%;">
         </a>
-        <div class="col-2 mb-2">
-            <a class="text-reztya font-futura-reztya fs-6" href="/services" style="text-decoration: none;">
-                Layanan Perawatan
-            </a>
-        </div>
-        <div class="col-6 mb-2">
-            <a class="text-reztya font-futura-reztya fs-6" href="/products" style="text-decoration: none;">
-                Produk
-            </a>
-        </div>
         @auth
-            @if(auth()->user()->role == 'admin')
-
+            @if(auth()->user()->user_role_id == 1)
+                <div class="col-2 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/services">
+                        Layanan Perawatan
+                    </a>
+                </div>
+                <div class="col-2 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/products">
+                        Produk
+                    </a>
+                </div>
+                <div class="col-2 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/manage-services">
+                        Kelola Layanan Perawatan
+                    </a>
+                </div>
+                <div class="col-2 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/manage-products">
+                        Kelola Produk
+                    </a>
+                </div>
+            @else
+                <div class="col-2 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/services">
+                        Layanan Perawatan
+                    </a>
+                </div>
+                <div class="col-6 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/products">
+                        Produk
+                    </a>
+                </div>
             @endif
+        @else
+            <div class="col-2 mb-2">
+                <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/services">
+                    Layanan Perawatan
+                </a>
+            </div>
+            <div class="col-6 mb-2">
+                <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/products">
+                    Produk
+                </a>
+            </div>
         @endauth
         @auth
             <div class="col-2">
@@ -47,6 +78,9 @@
                             <li><a class="button-outline-reztya dropdown-item" href="/profile/{{auth()->user()->name}}">Lihat Profil</a></li>
                             <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order</a></li>
                             <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order Aktif</a></li>
+                            @if(auth()->user()->user_role_id == 1)
+                                <li><a class="button-outline-reztya dropdown-item" href="#">Ban / Unban Akun</a></li>
+                            @endif
                             <li>
                                 <form method="POST" action="/signout">
                                     @csrf

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SignInController;
+use App\Http\Controllers\SignUpController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,10 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Redirects
 Route::permanentRedirect('/', '/home');
+Route::permanentRedirect('/login', '/signin')->middleware('guest');
+Route::permanentRedirect('/logout', '/home')->middleware('auth');
 
+// Home
 Route::get('/home', function () {
-    return view('layout/main');
+    return view('layout.main');
 });
 
 Route::get('/order', function () {
@@ -32,6 +38,19 @@ Route::get('/active-order', function () {
 Route::get('/payment-receipt-form', function () {
     return view('payment-receipt-form');
 });
+
+// Sign Up
+Route::get('/signup', [SignUpController::class, 'signUp'])->middleware('guest');
+Route::post('/signup', [SignUpController::class, 'userRegister']);
+
+// Sign In
+Route::get('/signin', function () {
+    return view('users.signin');
+})->middleware('guest');
+Route::post('/signin', [SignInController::class, 'userLogin']);
+
+// Sign Out
+Route::post('/signout', [SignInController::class, 'userLogout'])->middleware('auth');
 
 //Product
 Route::get('/manage-products', [ProductController::class, 'index']);
@@ -50,4 +69,3 @@ Route::get('/add-service', [ServiceController::class, 'create']);
 Route::post('/store-service', [ServiceController::class, 'store']);
 Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
 Route::put('/update-service/{id}', [ServiceController::class, 'update']);
-
