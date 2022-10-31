@@ -1,5 +1,5 @@
 @extends('layout/main')
-@section('title', 'Profile')
+@section('title', 'Profil')
 
 @section('container')
     <div class="unselectable container bg-white">
@@ -26,8 +26,9 @@
                                 <div class="col-9 mt-4 ms-3">
                                     <div class="row">
                                         <div class="col-auto mb-1">
-                                            <a href="/edit-profile/{{auth()->user()->username}}" style="text-decoration: none">
-                                                <h5 class="fw-bold text-reztya">{{auth()->user()->name}}</h5>
+                                            <a class="row text-reztya text-decoration-none edit-icon" href="/edit-profile/{{auth()->user()->username}}">
+                                                <h5 class="col-10 fw-bold">{{auth()->user()->name}}</h5>
+                                                <i class="col-2 fa-regular fa-pen-to-square mt-1"></i>
                                             </a>
                                         </div>
                                         <div class="row">
