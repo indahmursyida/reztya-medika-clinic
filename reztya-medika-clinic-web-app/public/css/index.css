@@ -22,6 +22,17 @@
     color: white !important;
 }
 
+.button-outline-ban-reztya {
+    border-color: #00A54F !important;
+    color: #00A54F !important;
+}
+
+.button-outline-ban-reztya:hover{
+    background-color: darkred !important;
+    border-color: darkred !important;
+    color: white !important;
+}
+
 .container-product{
     padding-left: 200px;
     padding-right: 200px;
@@ -36,6 +47,10 @@
 }
 
 .text-reztya {
+    color: #00A54F !important;
+}
+
+.text-color-reztya {
     color: #00A54F !important;
 }
 
