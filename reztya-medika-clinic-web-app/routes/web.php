@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BanController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SignInController;
@@ -57,3 +58,8 @@ Route::get('/add-service', [ServiceController::class, 'create']);
 Route::post('/store-service', [ServiceController::class, 'store']);
 Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
 Route::put('/update-service/{id}', [ServiceController::class, 'update']);
+
+// Ban and Unban User
+Route::get('/view-users', [BanController::class, 'viewUsers'])->middleware('admin');
+Route::post('/ban-user/{username}', [BanController::class, 'banUser'])->middleware('admin');
+Route::post('/unban-user/{username}', [BanController::class, 'unbanUser'])->middleware('admin');
