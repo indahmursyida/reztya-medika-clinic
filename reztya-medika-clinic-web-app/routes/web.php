@@ -65,7 +65,7 @@ Route::get('/add-service', [ServiceController::class, 'create']);
 Route::post('/store-service', [ServiceController::class, 'store']);
 Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
 Route::put('/update-service/{id}', [ServiceController::class, 'update']);
-Route::get('/view-services/search-product', [ServiceController::class, 'search']);
+Route::get('/view-services/search-services', [ServiceController::class, 'search']);
 Route::get('/view-services/filter/name/a-to-z', [ServiceController::class, 'filterAtoZ']);
 Route::get('/view-services/filter/name/z-to-a', [ServiceController::class, 'filterZtoA']);
 Route::get('/view-services/filter/price/high-to-low', [ServiceController::class, 'filterPriceHightoLow']);
