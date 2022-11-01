@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SignInController;
 use App\Http\Controllers\SignUpController;
@@ -57,3 +58,6 @@ Route::get('/add-service', [ServiceController::class, 'create']);
 Route::post('/store-service', [ServiceController::class, 'store']);
 Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
 Route::put('/update-service/{id}', [ServiceController::class, 'update']);
+
+// Review
+Route::get('/{user_id}/add-clinic-review', [ReviewController::class, 'addClinicReview'])->middleware('auth');
