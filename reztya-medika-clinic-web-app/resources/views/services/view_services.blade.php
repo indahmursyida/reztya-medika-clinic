@@ -49,7 +49,7 @@
             <div class="row">
                 @foreach($services as $service)
                     <div class="col-3 mb-4 font-futura-reztya">
-                        <a href="#" class="text-decoration-none">
+                        <a href="/service-detail/{{$service->service_id}}" class="text-decoration-none">
                             <div class="card bg-white outline-reztya">
                                 <div class="card-header">
                                     <img class="card-img-top" src="{{asset('storage/Service Reztya.jpg')}}">
@@ -62,7 +62,7 @@
                                         Rp {{$service->price}}
                                     </div>
                                     <a href="###" class="btn button-outline-reztya float-end w-25">
-                                        Buy
+                                        Beli
                                     </a>
                                 </div>
                             </div>
