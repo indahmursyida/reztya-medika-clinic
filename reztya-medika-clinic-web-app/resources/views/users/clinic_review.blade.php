@@ -9,16 +9,37 @@
                 <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <div class="pt-3">
+        <div class="pt-2">
             <div class="d-flex justify-content-center">
                 <p class="h5 fw-bold unselectable font-alander-reztya">Tambah Tinjauan Klinik</p>
             </div>
         </div>
-        <div class="d-flex justify-content-center mt-2">
+        <div class="d-flex justify-content-center mt-2 mb-5">
             <div class="card bg-white outline-reztya card-sign">
                 <div class="card-body">
-                    <div class="card-title font-futura-reztya">
-                        Order No: 01
+                    <div class="row card-title font-futura-reztya">
+                        <div class="col-7">
+                            Order No: 01
+                        </div>
+                        <div class="col-5">
+                            <div class="float-end">
+                                Tanggal: 01-01-2001
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row card-title font-futura-reztya">
+                        <div class="col-7">
+                            <p>Products:</p>
+                            <p>lakjfladj</p>
+                            <p>lakjfladj</p>
+                        </div>
+                        <div class="col-5">
+                            <div class="float-end">
+                                <p>Services:</p>
+                                <p>lakjfladj</p>
+                            </div>
+                        </div>
                     </div>
                     <hr>
                     <form action="/signin" method="POST">
@@ -42,10 +63,10 @@
     </div>
     <script>
         var textarea = document.getElementById("floatingReview");
-        var heightLimit = 400; /* Maximum height: 200px */
+        var heightLimit = 800;
 
         textarea.oninput = function() {
-            textarea.style.height = ""; /* Reset the height*/
+            textarea.style.height = "";
             textarea.style.height = Math.min(textarea.scrollHeight, heightLimit) + "px";
         };
     </script>
