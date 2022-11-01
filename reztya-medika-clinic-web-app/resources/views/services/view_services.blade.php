@@ -3,9 +3,9 @@
 
 @section('container')
     <div class="container mb-5 mt-5">
-        @if(session(''))
+        @if($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{session('')}}
+                {{$errors}}
                 <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
