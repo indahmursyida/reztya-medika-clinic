@@ -22,10 +22,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Category::create([
-            'category_name' => 'Body Care'
-        ]);
-
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
@@ -79,6 +75,46 @@ class DatabaseSeeder extends Seeder
             'stock' => '20',
             'image_path' => '/product-images/moisturizer.jpg'
         ]);
+        Product::create([
+            'name' => 'Body Shower',
+            'category_id' => '1',
+            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+            'size' => '150 ml',
+            'price' => '150000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/bodyshower.jpg'
+        ]);
+        Product::create([
+            'name' => 'Moisturizer',
+            'category_id' => '2',
+            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+            'size' => '100 ml',
+            'price' => '950000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/moisturizer.jpg'
+        ]);
+        Product::create([
+            'name' => 'Body Shower',
+            'category_id' => '1',
+            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+            'size' => '150 ml',
+            'price' => '150000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/bodyshower.jpg'
+        ]);
+        Product::create([
+            'name' => 'Moisturizer',
+            'category_id' => '2',
+            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+            'size' => '100 ml',
+            'price' => '950000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/moisturizer.jpg'
+        ]);
 
         Service::create([
             'name' => 'Totok Wajah',
@@ -97,6 +133,40 @@ class DatabaseSeeder extends Seeder
             'price' => '120000',
             'image_path' => '/service-images/maskerwajah.jpeg'
         ]);
+        Service::create([
+            'name' => 'Totok Wajah',
+            'category_id' => '2',
+            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+            'duration' => '20',
+            'price' => '150000',
+            'image_path' => '/service-images/totokwajah.jpeg'
+        ]);
+
+        Service::create([
+            'name' => 'Masker Wajah',
+            'category_id' => '2',
+            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+            'duration' => '30',
+            'price' => '120000',
+            'image_path' => '/service-images/maskerwajah.jpeg'
+        ]);Service::create([
+        'name' => 'Totok Wajah',
+        'category_id' => '2',
+        'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+        'duration' => '20',
+        'price' => '150000',
+        'image_path' => '/service-images/totokwajah.jpeg'
+    ]);
+
+        Service::create([
+            'name' => 'Masker Wajah',
+            'category_id' => '2',
+            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+            'duration' => '30',
+            'price' => '120000',
+            'image_path' => '/service-images/maskerwajah.jpeg'
+        ]);
+
         Schedule::create([
             'start_time' => Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 10:00:00'),
             'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 11:00:00')
