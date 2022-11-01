@@ -2,7 +2,7 @@
 @section('title', 'Tinjauan Klinik')
 
 @section('container')
-    <div class="unselectable container bg-white sign-box">
+    <div class="unselectable container bg-white">
         @if(session('')))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{session('')}}
@@ -17,39 +17,36 @@
         <div class="d-flex justify-content-center mt-2">
             <div class="card bg-white outline-reztya card-sign">
                 <div class="card-body">
+                    <div class="card-title font-futura-reztya">
+                        Order No: 01
+                    </div>
+                    <hr>
                     <form action="/signin" method="POST">
                         @csrf
-                        <div class="form-floating mb-2">
-                            <input placeholder="Email" id="floatingEmail" class="shadow-none form-control @error('email') is-invalid @enderror" type="text" name="email" value="{{\Illuminate\Support\Facades\Cookie::get('email')}}">
-                            <label for="floatingEmail" class="font-futura-reztya">Email</label>
-                            @error('email')
+                        <div class="form-floating mb-3">
+                            <textarea autofocus placeholder="Tinjauan Klinik" id="floatingReview" class="shadow-none form-control @error('review') is-invalid @enderror" name="review">{{old('review')}}</textarea>
+                            <label for="floatingReview" class="font-futura-reztya">Tinjauan Klinik</label>
+                            @error('review')
                             <div class="invalid-feedback">
-                                Email wajib diisi
+                                Tinjauan klinik wajib diisi
                             </div>
                             @enderror
                         </div>
-                        <div class="form-floating mb-2">
-                            <input placeholder="Password" id="floatingPassword" class="shadow-none form-control @error('password') is-invalid @enderror" type="password" name="password" value="{{\Illuminate\Support\Facades\Cookie::get('password')}}">
-                            <label for="floatingPassword" class="font-futura-reztya">Kata Sandi</label>
-                            @error('password')
-                            <div class="invalid-feedback">
-                                Kata sandi wajib diisi
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="mt-3 mb-3 form-check">
-                            <input class="form-check-input shadow-none outline-reztya" type="checkbox" id="remember_me" name="remember_me">
-                            <label class="form-check-label" for="rememberMe">Ingat saya</label>
-                        </div>
-                        <div class="mt-3 mb-3 me-3 form-check text-center ">
-                            <a class="h6 font-futura-reztya text-reztya text-decoration-none" href="/forgot-password">Lupa Kata Sandi</a>
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button class="btn button-outline-reztya font-futura-reztya" type="submit">Masuk</button>
+                        <div class="d-grid">
+                            <button class="btn button-outline-reztya font-futura-reztya" type="submit">Kirim Tinjauan Klinik</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        var textarea = document.getElementById("floatingReview");
+        var heightLimit = 400; /* Maximum height: 200px */
+
+        textarea.oninput = function() {
+            textarea.style.height = ""; /* Reset the height*/
+            textarea.style.height = Math.min(textarea.scrollHeight, heightLimit) + "px";
+        };
+    </script>
 @endsection

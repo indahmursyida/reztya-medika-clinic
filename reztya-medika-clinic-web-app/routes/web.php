@@ -60,4 +60,4 @@ Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
 Route::put('/update-service/{id}', [ServiceController::class, 'update']);
 
 // Review
-Route::get('/{user_id}/add-clinic-review', [ReviewController::class, 'addClinicReview'])->middleware('auth');
+Route::get('/add-clinic-review', [ReviewController::class, 'addClinicReview']);
