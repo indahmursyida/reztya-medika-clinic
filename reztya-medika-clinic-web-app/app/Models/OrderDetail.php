@@ -11,11 +11,17 @@ class OrderDetail extends Model
 
     protected $primaryKey = 'order_detail_id';
     protected $fillable = [
-        'service_id', 
+        'service_id',
         'product_id',
-        'schedule_id',  
+        'schedule_id',
+        'feedback_id',
         'quantity'
     ];
+
+    public function feedback(){
+        return $this->hasOne(Feedback::class, 'feedback_id', 'feedback_id');
+    }
+
     public function service(){
         return $this->belongsTo(Service::class, 'service_id');
     }

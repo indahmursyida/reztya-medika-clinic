@@ -31,18 +31,29 @@
                     <div class="row card-title font-futura-reztya">
                         <div class="col-7">
                             <p>Products:</p>
-                            <p>lakjfladj</p>
-                            <p>lakjfladj</p>
+                            @if(count($orderDetail->product_id) < 1)
+                                <p>Empty</p>
+                            @else
+                                @foreach($orderDetail as $product)
+                                    <p>{{$product->product_id}}</p> x<p>{{$product->quantity}}</p>
+                                @endforeach
+                            @endif
                         </div>
                         <div class="col-5">
                             <div class="float-end">
                                 <p>Services:</p>
-                                <p>lakjfladj</p>
+                                @if(count($orderDetail->service_id) < 1)
+                                    <p>Empty</p>
+                                @else
+                                    @foreach($orderDetail as $service)
+                                        <p>{{$service->service_id}}</p>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
                     <hr>
-                    <form action="/signin" method="POST">
+                    <form action="/order-detail/1/add-clinic-review" method="POST">
                         @csrf
                         <div class="form-floating mb-3">
                             <textarea autofocus placeholder="Tinjauan Klinik" id="floatingReview" class="shadow-none form-control @error('review') is-invalid @enderror" name="review">{{old('review')}}</textarea>
@@ -53,6 +64,8 @@
                             </div>
                             @enderror
                         </div>
+                        <input hidden type="hidden" value="">
+                        <input hidden type="hidden" value="">
                         <div class="d-grid">
                             <button class="btn button-outline-reztya font-futura-reztya" type="submit">Kirim Tinjauan Klinik</button>
                         </div>
