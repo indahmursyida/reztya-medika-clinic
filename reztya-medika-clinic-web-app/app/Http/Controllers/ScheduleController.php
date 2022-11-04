@@ -27,6 +27,7 @@ class ScheduleController extends Controller
             'end_time' => 'required|after:start_time'
         ]);
 
+        $validated_data['status'] = 'Ready';
         Schedule::create($validated_data);
         return redirect('/manage-schedule')->with('success','Product successfully added!');
     }
@@ -43,7 +44,7 @@ class ScheduleController extends Controller
             'start_time' => 'required|before:end_time',
             'end_time' => 'required|after:start_time'
         ]);
-
+        $validated_data['status'] = 'Ready';
         Schedule::find($id)->update($validated_data);
         return redirect('/manage-schedule');
     }

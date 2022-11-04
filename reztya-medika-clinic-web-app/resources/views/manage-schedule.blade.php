@@ -17,6 +17,7 @@
                 {{-- <th scope="col" >Tanggal</th> --}}
                 <th scope="col">Waktu Mulai</th>
                 <th scope="col">Waktu Berakhir</th>
+                <th scope="col">Status</th>
                 <th scope="col">Aksi</th>
             </tr>
         </thead>        
@@ -34,6 +35,7 @@
                 <td>{{ \Carbon\Carbon::parse($schedules[$i]->end_time)->format('H:i:s') }} WIB</td> --}}
                 <td>{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->toDayDateTimeString() }} </td>
                 <td>{{ \Carbon\Carbon::parse($schedules[$i]->end_time)->toDayDateTimeString() }} </td>
+                <td>{{ $schedules[$i]->status }} </td>
                 <td>
                     <a href="/edit-schedule/{{$schedules[$i]->schedule_id}}" type="button" class="btn button-color rounded-2 btn-sm me-2 btn-edit" title="Edit Jadwal">
                         <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
