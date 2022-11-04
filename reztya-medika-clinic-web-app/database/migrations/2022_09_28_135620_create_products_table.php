@@ -19,7 +19,8 @@ return new class extends Migration
             $table->foreign('category_id')->references('category_id')->on('categories');
             $table->string('name', 255);
             $table->text('description');
-            $table->integer('price')->length(11);
+            $table->string('size')->nullable();
+            $table->integer('price');
             $table->date('expired_date');
             $table->integer('stock')->length(11);
             $table->string('image_path', 255);

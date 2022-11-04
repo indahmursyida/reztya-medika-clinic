@@ -17,26 +17,77 @@
 <nav class="navbar navbar-light p-1 pt-0">
     <div class="container-fluid pt-1">
         <a class="navbar ps-4" href="/home" style="max-width: 15%;">
-            <img src="storage/reztya_logo.png" data-toggle="tooltip" title="Home" style="max-width: 80%;">
+            <img src="{{url('storage/reztya_logo.png')}}" data-toggle="tooltip" title="Home" style="max-width: 80%;">
         </a>
-        <div class="position-absolute mb-2" style="margin-left: 18%">
-            <a class="link-success font-reztya" href="/services" style="text-decoration: none; font-size: 110%;">
-                Perawatan
-            </a>
-        </div>
-        <div class="position-absolute mb-2" style="margin-left: 26%">
-            <a class="link-success font-reztya" href="/products" style="text-decoration: none; font-size: 110%;">
-                Produk
-            </a>
-        </div>
         @auth
-            @if(auth()->user()->role == 'admin')
-
+            @if(auth()->user()->user_role_id == 1)
+                <div class="col-2 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/services">
+                        Layanan Perawatan
+                    </a>
+                </div>
+                <div class="col-2 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/products">
+                        Produk
+                    </a>
+                </div>
+                <div class="col-2 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/manage-services">
+                        Kelola Layanan Perawatan
+                    </a>
+                </div>
+                <div class="col-2 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/manage-products">
+                        Kelola Produk
+                    </a>
+                </div>
+            @else
+                <div class="col-2 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/services">
+                        Layanan Perawatan
+                    </a>
+                </div>
+                <div class="col-6 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/products">
+                        Produk
+                    </a>
+                </div>
             @endif
+        @else
+            <div class="col-2 mb-2">
+                <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/services">
+                    Layanan Perawatan
+                </a>
+            </div>
+            <div class="col-6 mb-2">
+                <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/products">
+                    Produk
+                </a>
+            </div>
         @endauth
         @auth
-            <div>
-
+            <div class="col-2">
+                <div class="row align-items-start">
+                    <div class="font-futura-reztya text-reztya dropdown">
+                        <p class="fs-6 dropdown-toggle" type="button" id="dropdownToggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Welcome, {{auth()->user()->username}}
+                        </p>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                            <li><a class="button-outline-reztya dropdown-item" href="/profile/{{auth()->user()->name}}">Lihat Profil</a></li>
+                            <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order</a></li>
+                            <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order Aktif</a></li>
+                            @if(auth()->user()->user_role_id == 1)
+                                <li><a class="button-outline-reztya dropdown-item" href="#">Ban / Unban Akun</a></li>
+                            @endif
+                            <li>
+                                <form method="POST" action="/signout">
+                                    @csrf
+                                    <button type="submit" class="button-outline-reztya dropdown-item font-futura-reztya">Keluar</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         @else
             <div class="pe-5 mb-2">
@@ -51,7 +102,7 @@
     </div>
 </nav>
 <div class="container mt-4">@yield('container')</div>
-<footer class="footer fixed-bottom pb-1 bg-light" style="">
+<footer class="unselectable footer fixed-bottom pb-1 bg-white">
     <div class="container text-center pt-1">
         <a style="text-decoration: none; font-size: 12px; color: #00A54F" href="/home" data-toggle="tooltip" title="Home">
             © 2022 Reztya Medika Clinic. All rights reserved.

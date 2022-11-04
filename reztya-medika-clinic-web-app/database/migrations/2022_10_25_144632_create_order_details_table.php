@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
-            $table->id('schedule_id');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
-            $table->string('status');
+        Schema::create('order_details', function (Blueprint $table) {
+            $table->id('order_detail_id');
+            $table->foreignId('service_id')->nullable();
+            $table->foreignId('product_id')->nullable();
+            $table->foreignId('schedule_id')->nullable();
+            $table->integer('quantity')->nullable()->length(11);
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('order_details');
     }
 };

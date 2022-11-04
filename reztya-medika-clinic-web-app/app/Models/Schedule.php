@@ -12,13 +12,16 @@ class Schedule extends Model
     
     protected $primaryKey = 'schedule_id';
     protected $fillable = [
-        'schedule_id',
         'start_time',
         'end_time',
         'status'
     ];
 
-    public function service(){
-        return $this->belongsTo(Service::class, 'service_id');
+    public function orderDetail(){
+        return $this->belongsTo(OrderDetail::class, 'order_detail_id');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
-            $table->id('schedule_id');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
-            $table->string('status');
+        Schema::create('order_cancels', function (Blueprint $table) {
+            $table->id('cancel_id');
+            $table->boolean('cancel_status');
+            $table->string('cancel_description', 255);
+            $table->string('created_by', 255);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('order_cancels');
     }
 };
