@@ -17,6 +17,7 @@ return new class extends Migration
             $table->increments('schedule_id')->primaryKey();
             $table->dateTime('start_time');
             $table->dateTime('end_time');
+            $table->string('status');
             $table->timestamps();
         });
     }

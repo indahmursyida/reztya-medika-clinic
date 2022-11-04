@@ -14,7 +14,8 @@ class Schedule extends Model
     protected $fillable = [
         'schedule_id',
         'start_time',
-        'end_time'
+        'end_time',
+        'status'
     ];
 
     public function service(){
