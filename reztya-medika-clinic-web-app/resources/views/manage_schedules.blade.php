@@ -3,6 +3,9 @@
 @section('title', 'Manage Schedule')
 
 @section('container')
+@php
+    use Carbon\Carbon;
+@endphp
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
     <h2 class="my-3 text-center font-alander-reztya">Jadwal Perawatan</h2>
     <div class="mt-2 mb-4">
@@ -14,7 +17,6 @@
         <thead>
             <tr class="text-center" style="background-color: #7dc241">
                 <th scope="col">No.</th>
-                {{-- <th scope="col" >Tanggal</th> --}}
                 <th scope="col">Waktu Mulai</th>
                 <th scope="col">Waktu Berakhir</th>
                 <th scope="col">Status</th>
@@ -33,8 +35,8 @@
                 {{-- <td>{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('j F Y') }} </td> 
                 <td>{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('H:i:s')  }} WIB</td>
                 <td>{{ \Carbon\Carbon::parse($schedules[$i]->end_time)->format('H:i:s') }} WIB</td> --}}
-                <td>{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->toDayDateTimeString() }} </td>
-                <td>{{ \Carbon\Carbon::parse($schedules[$i]->end_time)->toDayDateTimeString() }} </td>
+                <td>{{ Carbon::parse($schedules[$i]->start_time)->toDayDateTimeString() }} </td>
+                <td>{{ Carbon::parse($schedules[$i]->end_time)->toDayDateTimeString() }} </td>
                 <td>{{ $schedules[$i]->status }} </td>
                 <td>
                     <a href="/edit-schedule/{{$schedules[$i]->schedule_id}}" type="button" class="btn button-color rounded-2 btn-sm me-2 btn-edit" title="Edit Jadwal">

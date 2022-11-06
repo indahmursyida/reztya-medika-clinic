@@ -59,7 +59,7 @@ Route::post('/store-service', [ServiceController::class, 'store']);
 Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
 Route::put('/update-service/{id}', [ServiceController::class, 'update']);
 
-Route::get('/manage-schedule', [ScheduleController::class, 'index']);
+Route::get('/manage-schedules', [ScheduleController::class, 'index']);
 Route::get('/add-schedule', [ScheduleController::class, 'add']);
 Route::post('/add-schedule', [ScheduleController::class, 'store']);
 Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit']);
