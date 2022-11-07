@@ -29,25 +29,28 @@
                 <td colspan="5" class="text-center">Jadwal tidak tersedia</td>
             </tr>
             @else
-            @for ( $i = 0; $i < count($schedules); $i++)
+            @php
+                $i = 1
+            @endphp
+            @foreach($schedules as $schedule)
             <tr class="align-middle text-center">
-                <td>{{ $i+1 }}</td>
+                <td>{{ $i++ }}</td>
                 {{-- <td>{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('j F Y') }} </td> 
                 <td>{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('H:i:s')  }} WIB</td>
                 <td>{{ \Carbon\Carbon::parse($schedules[$i]->end_time)->format('H:i:s') }} WIB</td> --}}
-                <td>{{ Carbon::parse($schedules[$i]->start_time)->toDayDateTimeString() }} </td>
-                <td>{{ Carbon::parse($schedules[$i]->end_time)->toDayDateTimeString() }} </td>
-                <td>{{ $schedules[$i]->status }} </td>
+                <td>{{ Carbon::parse($schedule->start_time)->toDayDateTimeString() }} </td>
+                <td>{{ Carbon::parse($schedule->end_time)->toDayDateTimeString() }} </td>
+                <td>{{ $schedule->status }} </td>
                 <td>
-                    <a href="/edit-schedule/{{$schedules[$i]->schedule_id}}" type="button" class="btn button-color rounded-2 btn-sm me-2 btn-edit" title="Edit Jadwal">
+                    <a href="/edit-schedule/{{$schedule->schedule_id}}" type="button" class="btn button-color rounded-2 btn-sm me-2 btn-edit" title="Edit Jadwal">
                         <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
                     </a>
-                    <a href="/delete-schedule/{{$schedules[$i]->schedule_id}}" type="button" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')" title="Hapus Jadwal">
+                    <a href="/delete-schedule/{{$schedule->schedule_id}}" type="button" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')" title="Hapus Jadwal">
                         <img src="storage/delete.png" class="align-middle" height="15px" width="15px">
                     </a>
                 </td>
               </tr>
-            @endfor
+            @endforeach
             @endif
         </tbody>
     </table>
