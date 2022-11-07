@@ -16,7 +16,7 @@ class Schedule extends Model
     ];
 
     public function orderDetail(){
-        return $this->belongsTo(OrderDetail::class, 'order_detail_id');
+        return $this->hasMany(OrderDetail::class, 'schedule_id');
     }
 
     public function user() {

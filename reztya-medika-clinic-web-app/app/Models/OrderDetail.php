@@ -11,9 +11,10 @@ class OrderDetail extends Model
 
     protected $primaryKey = 'order_detail_id';
     protected $fillable = [
+        'order_id',
         'service_id', 
         'product_id',
-        'schedule_id',  
+        'schedule_id',
         'quantity'
     ];
     public function service(){
@@ -25,11 +26,10 @@ class OrderDetail extends Model
     }
 
     public function schedule(){
-        return $this->hasOne(Schedule::class, 'schedule_id');
+        return $this->belongsTo(Schedule::class, 'schedule_id');
     }
 
     public function order(){
         return $this->belongsTo(Order::class, 'order_id');
     }
-
 }

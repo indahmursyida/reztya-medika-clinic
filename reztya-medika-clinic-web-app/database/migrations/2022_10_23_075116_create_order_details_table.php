@@ -14,11 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_details', function (Blueprint $table) {
-            $table->id('order_detail_id');
+            $table->id('order_detail_id')->primaryKey();
+            $table->foreignId('order_id');
             $table->foreignId('service_id')->nullable();
             $table->foreignId('product_id')->nullable();
             $table->foreignId('schedule_id')->nullable();
-            $table->integer('quantity')->nullable()->length(11);
+            $table->integer('quantity')->length(11);
             $table->timestamps();
         });
     }

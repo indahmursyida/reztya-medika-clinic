@@ -4,6 +4,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SignInController;
 use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,10 +26,6 @@ Route::permanentRedirect('/logout', '/home')->middleware('auth');
 // Home
 Route::get('/home', function () {
     return view('layout.main');
-});
-
-Route::get('/order', function () {
-    return view('order');
 });
 
 Route::get('/active-order', function () {
@@ -69,3 +66,13 @@ Route::get('/add-service', [ServiceController::class, 'create']);
 Route::post('/store-service', [ServiceController::class, 'store']);
 Route::get('/edit-service/{id}', [ServiceController::class, 'edit']);
 Route::put('/update-service/{id}', [ServiceController::class, 'update']);
+
+Route::get('/order', [OrderController::class, 'order']);
+Route::get('/active-order', [OrderController::class, 'active_order']);
+Route::put('/reschedule/{id}', [OrderController::class, 'reschedule']);
+Route::get('/delete-order-item/{id}', [OrderController::class, 'delete_order_item']);
+Route::get('/cancel-order/{id}', [OrderController::class, 'cancel_order']);
+Route::get('/finish-order/{id}', [OrderController::class, 'finish_order']);
+Route::get('/history-order', [OrderController::class, 'history_order']);
+Route::get('/payment-receipt-form/{id}', [OrderController::class, 'form_payment_receipt'])->name('form_payment');
+Route::post('/add-payment-receipt', [OrderController::class, 'add_payment_receipt']);

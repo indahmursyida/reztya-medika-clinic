@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Schedule;
@@ -36,7 +37,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('user_role')->insert([
-            'user_role_name' => 'Guest'
+            'user_role_name' => 'Member'
         ]);
 
         DB::table('users')->insert([
@@ -48,6 +49,18 @@ class DatabaseSeeder extends Seeder
             'address' => 'Your Heart my Darling',
             'email' => 'harishsaid37@gmail.com',
             'password' => bcrypt('admin'),
+            'is_banned' => false
+        ]);
+
+        DB::table('users')->insert([
+            'user_role_id' => 2,
+            'username' => 'Member',
+            'name' => 'Member Member Member',
+            'birthdate' => '2001-06-19',
+            'phone' => '081285879817',
+            'address' => 'Your Heart my Darling',
+            'email' => 'member@gmail.com',
+            'password' => bcrypt('member'),
             'is_banned' => false
         ]);
 
@@ -112,14 +125,40 @@ class DatabaseSeeder extends Seeder
             'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 14:00:00')
         ]);
 
-        OrderDetail::create([
-            'service_id' => 1,
-            'schedule_id' => 1
+        Order::create([
+            'user_id' => 2,
+            'order_date' => Carbon::create('2022', '05', '23'),
+            'status' => 'UNPAID'
         ]);
 
         OrderDetail::create([
+            'order_detail_id' => 1,
+            'order_id' => 1,
+            'service_id' => 1,
+            'schedule_id' => 2,
+            'quantity' => 1
+        ]);
+
+        OrderDetail::create([
+            'order_detail_id' => 2,
+            'order_id' => 1,
+            'service_id' => 2,
+            'schedule_id' => 3,
+            'quantity' => 1
+        ]);
+
+        OrderDetail::create([
+            'order_detail_id' => 3,
+            'order_id' => 1,
             'product_id' => 1,
             'quantity' => 2
+        ]);
+
+        OrderDetail::create([
+            'order_detail_id' => 4,
+            'order_id' => 1,
+            'product_id' => 2,
+            'quantity' => 3
         ]);
     }
 }

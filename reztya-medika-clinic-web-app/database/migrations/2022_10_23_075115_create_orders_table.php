@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id');
-            $table->foreignId('order_detail_id');
-            $table->foreignId('cancel_id');
-            $table->foreignId('payment_receipt_id');
+            $table->foreignId('cancel_id')->nullable();
+            $table->foreignId('payment_receipt_id')->nullable();
             $table->foreignId('user_id');
             $table->date('order_date');
             $table->string('status', 255);

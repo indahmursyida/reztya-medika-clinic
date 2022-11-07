@@ -13,13 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order_cancels', function (Blueprint $table) {
-            $table->id('cancel_id');
-            $table->boolean('cancel_status');
-            $table->string('cancel_description', 255);
-            $table->string('created_by', 255);
-            $table->timestamps();
-        });
+        //
     }
 
     /**
@@ -29,6 +23,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_cancels');
+        //
     }
 };
