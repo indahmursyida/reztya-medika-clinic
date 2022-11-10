@@ -49,7 +49,7 @@ use Carbon\Carbon;
                     </div>
                     <div class="form-floating mb-2">
                         <select class="form-select align-items-middle @error('payment_method') is-invalid @enderror" id="floating_select" onchange="payment_method_select_handler(this)" name="payment_method">
-                            <option selected>-- Pilih satu --</option>
+                            <option>-- Pilih satu --</option>
                             <option class="align-middle" value="Cash">Cash</option>
                             <option class="align-middle" value="Transfer">Transfer</option>
                         </select>

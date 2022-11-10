@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('payment_receipts', function (Blueprint $table) {
             $table->id('payment_receipt_id')->primaryKey();
             $table->foreignId('feedback_id')->nullable();
-            $table->date('payment_date');
-            $table->integer('payment_amount')->length(11);
-            $table->string('payment_method', 15);
+            $table->date('payment_date')->nullable();;
+            $table->integer('payment_amount')->length(11)->nullable();;
+            $table->string('payment_method', 15)->nullable();;
             $table->string('account_number', 15)->nullable();
             $table->string('created_by', 255);
             $table->timestamps();

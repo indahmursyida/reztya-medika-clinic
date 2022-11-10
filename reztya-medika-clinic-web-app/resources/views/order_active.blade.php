@@ -120,7 +120,7 @@
     @else ADMIN  --}}
     @if($order)
         <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
-            <h2 class="my-3 text-center font-alander-reztya">Pesanan Aktif</h2>
+            <h2 class="my-3 text-center font-alander-reztya unselectable">Pesanan Aktif</h2>
             @foreach($order as $y)
                 <div class="d-flex justify-content-between">
                     <h4>{{ date('l, d M Y', strtotime($y->order_date)) }}</h4>
@@ -169,50 +169,52 @@
                                                         Waktu Berakhir: {{ date('H:i:s', strtotime($x->schedule->end_time)) }}
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-sm button-outline-reztya" type="button" data-toggle="modal" data-target="#reschedulePopup">Jadwal Ulang</button>
-                                                <!-- Modal -->
+                                                <button class="btn btn-sm button-outline-reztya" data-toggle="modal" data-target="#reschedulePopup">Jadwal Ulang</button>
+                                                <!-- Modal --> 
                                                 <div class="modal fade" id="reschedulePopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             {{-- Form --}}
-                                                            <form action="/reschedule/{{ $x->order_detail_id }}" name="order_schedule" id="order_schedule" method="POST" enctype="multipart/form-data">
-                                                                @method('put')
-                                                                @csrf
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="reschedulePopupLongTitle">Jadwal Ulang</h5>
-                                                                </div>
-                                                                <div class="modal-body container">
-                                                                    <div>
+                                                            <td>
+                                                                <form action="/reschedule/{{ $x->order_detail_id }}" method="POST" enctype="multipart/form-data">
+                                                                    @method('put')
+                                                                    @csrf
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="reschedulePopupLongTitle">Jadwal Ulang</h5>
+                                                                    </div>
+                                                                    <div class="modal-body container">
                                                                         <div>
-                                                                            Jadwal Perawatan
-                                                                        </div>
-                                                                        <div>
-                                                                            <select class="form-select" name="schedule_id" id="schedule_id">
-                                                                                @foreach($schedules as $schedule)
-                                                                                {{-- @if(old('schedule_id', $x->schedule_id) == $schedule->schedule_id)
-                                                                                    <option value="{{ $category->category_id }}" selected>{{ $category->category_name }}</option>
-                                                                                @else
-                                                                                    <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
-                                                                                @endif --}}
-                                                                                    <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $x->schedule_id ? 'selected' : '' }}> {{ date('l, d M Y', strtotime($schedule->start_time)) }} | {{ date('H:i:s', strtotime($schedule->start_time)) }} - {{ date('H:i:s', strtotime($schedule->end_time)) }}</option>
-                                                                                @endforeach
-                                                                            </select>
+                                                                            <div>
+                                                                                Jadwal Perawatan
+                                                                            </div>
+                                                                            <input type="hidden" id="order_detail_id" name="order_detail_id" value={{ $x->order_detail_id }}>
+                                                                            <div>
+                                                                                <select class="form-select" name="schedule_id" id="schedule_id">
+                                                                                    @foreach($schedules as $schedule)
+                                                                                    {{-- @if(old('schedule_id', $x->schedule_id) == $schedule->schedule_id)
+                                                                                        <option value="{{ $category->category_id }}" selected>{{ $category->category_name }}</option>
+                                                                                    @else
+                                                                                        <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
+                                                                                    @endif --}}
+                                                                                        <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $x->schedule_id ? 'selected' : '' }}> {{ date('l, d M Y', strtotime($schedule->start_time)) }} | {{ date('H:i:s', strtotime($schedule->start_time)) }} - {{ date('H:i:s', strtotime($schedule->end_time)) }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
-                                                                    {{-- <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button> --}}
-                                                                    {{-- data-dismiss="modal" --}}
-                                                                    <button type="submit" class="btn btn-success">Simpan</button>
-                                                                </div>
-                                                            </form>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
+                                                                        {{-- <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button> --}}
+                                                                        {{-- data-dismiss="modal" --}}
+                                                                        <button type="submit" class="btn btn-success">Simpan</button>
+                                                                    </div>
+                                                                </form>
+                                                            </td>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{ $x->quantity }}</td>
                                         <td>Rp{{ number_format($x->service->price * $x->quantity, 2) }}</td>
                                     </tr>
                                 @endif
@@ -235,8 +237,8 @@
                                         <td>
                                             <img src="{{ asset("storage/" . $x->product->image_path)}}" alt="" width="200px" height="200px">
                                         </td>
-                                        <td>{{ $x->product->name}}</td>
-                                        <td>{{ $x->quantity }}</td>
+                                        <td><b>{{ $x->product->name }}</b></td>
+                                        <td> Kuantitas: {{ $x->quantity }}</td>
                                         <td>Rp{{ number_format($x->product->price * $x->quantity, 2) }}</td>
                                     </tr>
                                 @endif
@@ -246,6 +248,9 @@
                 </div>
                 <div class="d-flex justify-content-center">
                     <a href="/finish-order/{{ $y->order_id }}" class="btn btn-success" type="button" onclick="return confirm('Apakah Anda yakin ingin menyelesaikan pesanan?')">Selesaikan Pesanan</a>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a href="/cancel-order/{{ $y->order_id }}" class="btn btn-outline-danger" type="button" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan?')">Batalkan Pesanan</a>
                 </div>
             @endforeach
         </div>

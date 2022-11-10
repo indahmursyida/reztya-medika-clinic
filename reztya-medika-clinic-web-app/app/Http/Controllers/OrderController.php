@@ -7,6 +7,7 @@ use App\Models\Schedule;
 use App\Models\PaymentReceipt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -26,7 +27,7 @@ class OrderController extends Controller
 
         if(Auth::user()->user_role_id == 1)
         {
-            $order = Order::where('status', 'UNPAID')->get();
+            $order = Order::where('status', 'ON GOING')->get();
         }
         else
         {
@@ -72,7 +73,6 @@ class OrderController extends Controller
         {
             foreach($x->orderDetail as $y)
             {
-                dd($y);
                 if($y->service_id)
                     $totalPrice += $y->service->price * $y->quantity;
                 else
@@ -104,8 +104,12 @@ class OrderController extends Controller
         // if($x->service_id == $service_id)
 
         $validated_data = $req->validate([
+            // 'order_detail_id' => 'required',
             'schedule_id' => 'required'
         ]);
+
+        $validated_data['order_detail_id'] = $id;
+        // dd($validated_data);
 
         OrderDetail::find($id)->update($validated_data);
 
@@ -119,23 +123,36 @@ class OrderController extends Controller
         return redirect('/order')->with('success','Item successfully deleted!');
     }
 
+    public function update_order_item(Request $req, $id)
+    {
+        $validated_data = $req->validate([
+            // 'order_detail_id' => 'required',
+            'quantity' => 'numeric'
+        ]);
+
+        // dd($id);
+
+        OrderDetail::find($id)->update($validated_data);
+        return redirect('/order');
+    }
+
     public function cancel_order($id)
     {
         $order = Order::find($id); 
         $order->status = 'CANCELED';
         $order->save();
-        return redirect('/');
+        return redirect('/history-order');
     }
 
     public function history_order()
     {
         if(Auth::user()->user_role_id == 1)
         {
-            $order = Order::where('status', 'FINISH')->get();
+            $order = Order::all();
         }
         else
         {
-            $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'FINISH')->get();
+            $order = Order::where('user_id', Auth::user()->user_id)->get();
         }
         
         $printServiceOnce = false;
@@ -185,22 +202,45 @@ class OrderController extends Controller
 
     public function add_payment_receipt(Request $req)
     {
-        $validated_data = $req->validate([
-            'order_date' => 'required',
-            'customer_name' => 'required',
-            'payment_date' => 'required',
-            'payment_amount' => 'required',
-            'payment_method' => 'required|in:Cash,Transfer', 
-            'account_number' => 'numeric',
-            'created_by' => 'required',
-            'admin_password' => 'required'
-        ]);
+        if($req->payment_method == 'Cash')
+        {
+            $validated_data = $req->validate([
+                'order_date' => 'required',
+                'customer_name' => 'required',
+                'payment_date' => 'required',
+                'payment_amount' => 'required',
+                'payment_method' => 'required|in:Cash', 
+                'created_by' => 'required',
+                'admin_password' => 'required'
+            ]);
+        }
+        else{
+            $validated_data = $req->validate([
+                'order_date' => 'required',
+                'customer_name' => 'required',
+                'payment_date' => 'required',
+                'payment_amount' => 'required',
+                'payment_method' => 'required|in:Transfer', 
+                'account_number' => 'numeric',
+                'created_by' => 'required',
+                'admin_password' => 'required'
+            ]);
+        }
 
         PaymentReceipt::create($validated_data);
 
-        // $pr->order_id = $id;
-        // $pr->save();
-
         return redirect('/history-order');
+    }
+
+    public function filter_finished()
+    {
+        $orders_filtered = DB::table('orders')
+        ->where('status', '=', 'FINISHED')
+        ->paginate()
+        ->get();
+        
+        return view('order_history', [
+            'order' => $orders_filtered
+        ]);
     }
 }

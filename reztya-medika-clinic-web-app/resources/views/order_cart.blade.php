@@ -10,7 +10,7 @@
 @endif
 @if($order)
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
-        <h2 class="my-3 text-center font-alander-reztya">Order</h2>
+        <h2 class="my-3 text-center font-alander-reztya unselectable">Order</h2>
         {{-- @foreach($order as $y) --}}
             <div class="d-flex flex-column">
                 {{-- @if($order[$i]->order_details->service_id) --}}
@@ -28,20 +28,22 @@
                                         <td>
                                             <img src="{{ asset("storage/" . $x->service->image_path) }}" alt="" width="200px" height="200px">
                                         </td>
-                                        <td>{{ $x->service->name }}</td>
                                         <td>
-                                            {{ $x->quantity }}
-                                            {{-- @if (old('quantity') == $x->quantity)
-                                                <input type="number" class="form-control form-control-sm form-quantity" onchange="window.location.reload()" value="{{ old('quantity', $x->quantity) }}" min="1" max="100">
-                                            @else
-                                            <input type="number" class="form-control form-control-sm form-quantity" onchange="window.location.reload()" min="1" max="100">
-                                            @endif --}}
-                                            
+                                            <b>{{ $x->service->name }}</b>
+                                            <div>
+                                                Tanggal Perawatan: {{ date('l, d M Y', strtotime(old('start_time', $x->schedule->start_time))) }}
+                                            </div>
+                                            <div>
+                                                Waktu Mulai: {{ date('H:i:s', strtotime($x->schedule->start_time)) }}
+                                            </div>
+                                            <div>
+                                                Waktu Berakhir: {{ date('H:i:s', strtotime($x->schedule->end_time)) }}
+                                            </div>
                                         </td>
                                         <td>Rp{{ number_format($x->service->price, 2) }}</td>
                                         <td>
-                                            <a href="/delete-order-item/{{ $x->order_detail_id }}" title="Hapus Perawatan" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus {{ $x->service->name }} dari pesanan?')">
-                                                Hapus
+                                            <a href="/delete-order-item/{{ $x->order_detail_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus perawatan {{ $x->service->name }}?')" title="Hapus Perawatan">
+                                                <img src="storage/delete.png" class="align-middle" height="15px" width="15px">
                                             </a>
                                         </td>
                                     </tr>
@@ -70,15 +72,58 @@
                                     <td>
                                         <img src="{{ asset("storage/" . $x->product->image_path)}}" width="200px" height="200px">
                                     </td>
-                                    <td>{{ $x->product->name}}</td>
-                                    <td>{{ $x->quantity}}</td>
+                                    <td>
+                                        <b>{{ $x->product->name}}</b>
+                                    </td>
+                                    <td>
+                                        Kuantitas: {{ $x->quantity}}
+                                    </td>
                                     {{-- <td>
                                         <input type="number" class="form-control form-control-sm form-quantity" onchange="window.location.reload()" value="{{ old('quantity', $x->quantity) }}" min="1" max="100">
                                     </td> --}}
                                     <td>Rp{{ number_format($x->product->price, 2) }}</td>
                                     <td>
-                                        <a href="/delete-order-item/{{ $x->order_detail_id }}" class="btn btn-danger" type="button" title="Hapus Produk" onclick="return confirm('Apakah Anda yakin ingin menghapus {{ $x->product->name }} dari pesanan?')">
-                                            Hapus
+                                        <button data-toggle="modal" data-target="#editOrderItemPopup" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
+                                            <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
+                                        </button>
+                                        <div class="modal fade" id="editOrderItemPopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editOrderItemTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    {{-- Form --}}
+                                                    <form action="/update-order-item/{{ $x->order_detail_id }}" method="POST" enctype="multipart/form-data">
+                                                        @method('put')
+                                                        @csrf
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="editOrderItemPopupLongTitle">{{ $x->product->name }}</h5>
+                                                        </div>
+                                                        <div class="modal-body container d-flex align-items-center">
+                                                            <div class="me-5">
+                                                                Kuantitas
+                                                            </div> 
+                                                            <div>
+                                                                <input type="hidden" id="order_detail_id" name="order_detail_id" value={{ $x->order_detail_id }}>
+                                                                <div>
+                                                                    <input type="number" class="@error('p_quantity') is-invalid @enderror form-control form-quantity" id="quantity" name="quantity" value="{{ old('quantity', $x->quantity) }}" min="1" max="{{ $x->product->stock }}">
+                                                                </div>
+                                                                @error('quantity')
+                                                                <div class="invalid-feedback">
+                                                                    Kuantitas harus diisi dengan angka
+                                                                </div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
+                                                            {{-- <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button> --}}
+                                                            {{-- data-dismiss="modal" --}}
+                                                            <button type="submit" class="btn btn-success">Simpan</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="/delete-order-item/{{ $x->order_detail_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $x->product->name }}?')" title="Hapus Produk">
+                                            <img src="storage/delete.png" class="align-middle" height="15px" width="15px">
                                         </a>
                                     </td>
                                 </tr>

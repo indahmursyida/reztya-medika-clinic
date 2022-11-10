@@ -82,10 +82,38 @@
 {{-- ADMIN --}}
 @if($order)
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
-        <h2 class="my-3 text-center font-alander-reztya">Riwayat Pesanan</h2>
+        <h2 class="my-3 text-center font-alander-reztya unselectable">Riwayat Pesanan</h2>
         @foreach($order as $y)
+            <div class="d-flex">
+                @if ($y->status == "FINISH")
+                <p class="rounded-2 ps-2 pe-2" style="border: 2px solid #00A54F; color: #00A54F;">
+                @else
+                <p class="rounded-2 ps-2 pe-2" style="border: 2px solid red; color: red;">
+                @endif
+                {{ $y->status }}
+                </p>
+            </div>
+            <div class="dropdown">
+                <button class="btn button-outline-reztya dropdown-toggle mt-4 mb-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Status
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="/history-order/filter/status/finished" class="button-outline-reztya dropdown-item">Finished</a></li>
+                    <li><a href="/history-order/filter/status/canceled" class="button-outline-reztya dropdown-item">Canceled</a></li>
+                    {{-- @foreach($order as $x) --}}
+                        <form action="/history-order/filter/order/{{$y->status}}" method="GET" enctype="multipart/form-data">
+                            <input hidden type="hidden" name="category_id" value="{{$y->status}}">
+                            <li><button type="submit" class="button-outline-reztya dropdown-item">{{$y->status}}</button></li>
+                        </form>
+                    {{-- @endforeach --}}
+                </ul>
+            </div>
             <div class="d-flex justify-content-between">
+                @if ($y->status =="FINISHED")
+                    <h4>{{ date('l, d M Y', strtotime($y->payment_receipt->payment_date)) }}</h4>
+                @else
                 <h4>{{ date('l, d M Y', strtotime($y->order_date)) }}</h4>
+                @endif
                 <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
             </div>
             <div class="d-flex flex-column ms-5">
@@ -120,7 +148,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                {{ $x->service->name}}
+                                                <b>{{ $x->service->name}}</b>
                                                 <div>
                                                     <div>
                                                         Tanggal Perawatan: 
@@ -136,7 +164,6 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{ $x->quantity }}</td>
                                         <td>Rp{{ number_format($x->service->price * $x->quantity, 2) }}</td>
                                     </tr>
                                 @endif
@@ -160,8 +187,8 @@
                                     <td>
                                         <img src="{{ asset("storage/" . $x->product->image_path)}}" alt="" width="200px" height="200px">
                                     </td>
-                                    <td>{{ $x->product->name}}</td>
-                                    <td>{{ $x->quantity }}</td>
+                                    <td><b>{{ $x->product->name}}</b></td>
+                                    <td> Kuantitas: {{ $x->quantity }}</td>
                                     <td>Rp{{ number_format($x->product->price * $x->quantity, 2) }}</td>
                                 </tr>
                             @endif
