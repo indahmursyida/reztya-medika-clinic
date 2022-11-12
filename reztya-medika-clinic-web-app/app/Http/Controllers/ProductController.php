@@ -149,7 +149,7 @@ class ProductController extends Controller
 
         Product::create($validatedData);
 
-        return redirect('manage-products')->with('success','Product succsessfully added!');
+        return redirect('manage-products')->with('success','Produk berhasil ditambahkan!');
     }
 
     /**
@@ -226,7 +226,7 @@ class ProductController extends Controller
         Product::find($id)
             ->update($validatedData);
 
-        return redirect('/manage-products')->with('success','Product succsessfully updated!');
+        return redirect('/manage-products')->with('success','Produk berhasil diubah!');
     }
 
     /**
@@ -244,6 +244,6 @@ class ProductController extends Controller
 
         Product::destroy($id);
 
-        return redirect('/manage-products')->with('Product successfully deleted');
+        return redirect('/manage-products')->with('success', 'Produk berhasil dihapus!');
     }
 }

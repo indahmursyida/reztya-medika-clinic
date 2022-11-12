@@ -52,7 +52,7 @@
                         <a href="/product-detail/{{$product->product_id}}" class="text-decoration-none">
                             <div class="card bg-white outline-reztya">
                                 <div class="card-header">
-                                    <img class="card-img-top" src="{{asset('storage/Service Reztya.jpg')}}">
+                                    <img width="150" height="150" class="card-img-top img-fluid img-thumbnail" src="{{asset('storage/Service Reztya.jpg')}}">
                                 </div>
                                 <div class="card-body">
                                     <div class="card-title text-reztya">

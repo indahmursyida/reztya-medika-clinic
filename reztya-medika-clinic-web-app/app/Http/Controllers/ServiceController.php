@@ -146,7 +146,7 @@ class ServiceController extends Controller
 
         Service::create($validatedData);
 
-        return redirect('manage-services')->with('success', 'Service succsessfully added!');
+        return redirect('manage-services')->with('success', 'Perawatan berhasil ditambahkan!');
     }
 
     /**
@@ -221,7 +221,7 @@ class ServiceController extends Controller
         Service::find($id)
             ->update($validatedData);
 
-        return redirect('/manage-services')->with('success', 'Service succsessfully updated!');
+        return redirect('/manage-services')->with('success', 'Perawatan berhasil diubah!');
     }
 
     /**
@@ -239,6 +239,6 @@ class ServiceController extends Controller
 
         Service::destroy($id);
 
-        return redirect('/manage-services')->with('Service successfully deleted');
+        return redirect('/manage-services')->with('success', 'Perawatan berhasil dihapus!');
     }
 }

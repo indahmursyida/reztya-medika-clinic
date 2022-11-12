@@ -22,17 +22,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         DB::table('user_role')->insert([
             'user_role_name' => 'Admin'
         ]);
 
         DB::table('user_role')->insert([
             'user_role_name' => 'Guest'
+        ]);
+
+        DB::table('user_role')->insert([
+            'user_role_name' => 'Member'
         ]);
 
         DB::table('users')->insert([
@@ -57,11 +56,12 @@ class DatabaseSeeder extends Seeder
             'address' => 'Jalan KH Iskandar Muda',
             'email' => 'testing1@gmail.com',
             'password' => bcrypt('testing1'),
+            'profile_picture' => 'profile-images/profile_picture_default.jpg',
             'is_banned' => false
         ]);
 
         DB::table('users')->insert([
-            'user_role_id' => 2,
+            'user_role_id' => 3,
             'username' => 'Testing2',
             'name' => 'Testing2 Testing2 Testing2',
             'birthdate' => '2001-06-18',
@@ -69,6 +69,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'Jalan KH Iskandar Tua',
             'email' => 'testing2@gmail.com',
             'password' => bcrypt('testing2'),
+            'profile_picture' => 'profile-images/profile_picture_default.jpg',
             'is_banned' => true
         ]);
 
