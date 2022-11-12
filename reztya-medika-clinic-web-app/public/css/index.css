@@ -60,8 +60,59 @@
     font-family: 'Futura Md BT', sans-serif;
 }
 
-.form-quantity{
+.form-quantity {
     width: 70px;
+}
+
+.profile-box {
+    width: 40rem;
+}
+
+.list-group-item {
+    border-color: white !important;
+    margin-right: -5%;
+    background: none !important;
+}
+
+.list-group-item-view {
+    margin-right: 5%;
+    border-color: white !important;
+}
+
+.img-thumbnail {
+    overflow: hidden;
+}
+
+.view-profile-img {
+    margin-right: -7%;
+}
+
+.row-profile {
+    margin-right: -30%;
+}
+
+.ms-1-5 {
+    margin-left: 0 !important
+}
+
+.active-order-box {
+    margin-left: -2%;
+}
+
+.button-active-order {
+    width: 101%;
+    margin-left: -0.5%;
+    margin-top: -0.4%;
+}
+
+.button-history-order {
+    width: 101%;
+    margin-left: -0.45%;
+    margin-top: -0.4%;
+}
+
+.me-2-5 {
+    margin-left: 2% !important;
 }
 
 .sign-box {
@@ -75,6 +126,10 @@
 
 .card-sign {
     width: 30rem;
+}
+
+.edit-icon {
+    margin-right: -3%;
 }
 
 .btn-add{

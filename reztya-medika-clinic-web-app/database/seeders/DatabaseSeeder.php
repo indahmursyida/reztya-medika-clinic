@@ -46,8 +46,9 @@ class DatabaseSeeder extends Seeder
             'birthdate' => '2001-06-18',
             'phone' => '081285879816',
             'address' => 'Your Heart my Darling',
-            'email' => 'harishsaid37@gmail.com',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('admin'),
+            'profile_picture' => 'profile-images/profile_picture_default.jpg',
             'is_banned' => false
         ]);
 
