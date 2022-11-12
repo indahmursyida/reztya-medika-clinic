@@ -23,8 +23,9 @@ return new class extends Migration
             $table->string('address');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('profile_picture');
+            $table->string('profile_picture')->default('profile-images/profile_picture_default.jpg');
             $table->boolean('is_banned')->default(false); // false = not banned, true = banned
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

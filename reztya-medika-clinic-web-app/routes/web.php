@@ -9,7 +9,9 @@ use App\Http\Controllers\SignInController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\OrderDetailController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,20 @@ Route::get('/home', function () {
 // Sign Up
 Route::get('/signup', [SignUpController::class, 'signUp'])->middleware('guest');
 Route::post('/signup', [SignUpController::class, 'userRegister']);
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Link verifikasi telah dikirim!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // Sign In
 Route::get('/signin', function () {

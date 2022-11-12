@@ -69,7 +69,7 @@
                             <label for="floatingEmail" class="font-futura-reztya">Email</label>
                             @error('email')
                             <div class="invalid-feedback">
-                                Email wajib diisi
+                                Email wajib diisi / email sudah terdaftarkan
                             </div>
                             @enderror
                         </div>

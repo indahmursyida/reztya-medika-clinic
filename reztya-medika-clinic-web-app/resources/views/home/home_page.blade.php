@@ -3,9 +3,15 @@
 
 @section('container')
     <div class="unselectable container bg-white">
-        @if(session()->has('loginError'))
+        @if(session()->has('addSuccess'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{session('addSuccess')}}
+                <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if(session()->has('signupError'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{session('loginError')}}
+                {{session('signupError')}}
                 <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif

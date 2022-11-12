@@ -148,7 +148,7 @@
                         </ul>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5">
-                        <button class="btn button-outline-reztya" type="submit">Simpan</button>
+                        <button class="btn button-outline-reztya" onclick="return confirm('Apakah anda yakin mengubah profil?')" type="submit">Simpan</button>
                     </div>
                 </form>
                 <form action="/change-password/{{auth()->user()->username}}" method="POST" enctype="multipart/form-data">
@@ -216,7 +216,7 @@
                         </ul>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5">
-                        <button class="btn button-outline-reztya" type="submit">Ubah</button>
+                        <button class="btn button-outline-reztya" type="submit" onclick="return confirm('Apakah anda yakin mengubah kata sandi?')">Ubah</button>
                     </div>
                 </form>
             </div>
