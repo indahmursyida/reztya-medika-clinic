@@ -40,16 +40,17 @@ class SignInController extends Controller
 
                         $request->session()->regenerate();
 
-                        return redirect()->intended('/home');
+                        RateLimiter::resetAttempts('failed');
+                        return redirect('/home')->with('success', 'Anda berhasil masuk!');
                     } else {
                         return redirect()->back()->with('loginError', 'Akun Anda telah diblokir! Silahkan kontak klinik!');
                     }
                 } else {
                     RateLimiter::hit('failed', 300);
-                    return redirect()->back()->with('loginError', 'Informasi yang dimasukkan salah, 3x coba lagi!');
+                    return redirect()->back()->with('loginError', 'Informasi yang dimasukkan salah, '.RateLimiter::retriesLeft('failed', 3).'x coba lagi!');
                 }
             } else {
-                return redirect('/signin')->with('loginError', 'Terlalu banyak gagal!');
+                return redirect('/signin')->with('loginError', 'Terlalu banyak gagal memasukkan email / password! Harap tunggu '.RateLimiter::availableIn('failed').' menit lagi untuk mencoba ulang!');
             }
         }
         return redirect()->back()->with('loginError', 'Masuk tidak berhasil!');

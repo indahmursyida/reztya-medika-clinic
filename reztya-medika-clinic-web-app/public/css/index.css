@@ -97,13 +97,18 @@
 
 .list-group-item {
     border-color: white !important;
-    margin-right: -5%;
     background: none !important;
 }
 
 .list-group-item-view {
-    margin-right: 5%;
+    margin-right: -0.3%;
+    border-color: #00A54F !important;
+}
+
+.list-group-item-profile {
     border-color: white !important;
+    margin-right: -7.5%;
+    background: none !important;
 }
 
 .img-thumbnail {
