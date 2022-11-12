@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SignInController;
 use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,7 @@ Route::post('/signin', [SignInController::class, 'userLogin']);
 
 // Sign Out
 Route::post('/signout', [SignInController::class, 'userLogout'])->middleware('auth');
+Route::post('/signout', [SignInController::class, 'userLogout'])->middleware('auth');
 
 // View Profile
 Route::get('/view-profile/{username}', [ProfileController::class, 'viewProfile'])->middleware('auth');
@@ -68,3 +70,10 @@ Route::get('/add-service', [ServiceController::class, 'create'])->middleware('ad
 Route::post('/store-service', [ServiceController::class, 'store'])->middleware('admin');
 Route::get('/edit-service/{id}', [ServiceController::class, 'edit'])->middleware('admin');
 Route::put('/update-service/{id}', [ServiceController::class, 'update'])->middleware('admin');
+
+Route::get('/manage-schedules', [ScheduleController::class, 'index']);
+Route::get('/add-schedule', [ScheduleController::class, 'add']);
+Route::post('/add-schedule', [ScheduleController::class, 'store']);
+Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit']);
+Route::put('/update-schedule/{id}', [ScheduleController::class, 'update']);
+Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete']);
