@@ -4,7 +4,7 @@
 @section('container')
     <div class="container sign-box mb-5">
         @if($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show font-futura-reztya" role="alert">
                 Pendaftaran tidak berhasil!
                 <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>

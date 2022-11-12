@@ -42,9 +42,34 @@ class DatabaseSeeder extends Seeder
             'birthdate' => '2001-06-18',
             'phone' => '081285879816',
             'address' => 'Your Heart my Darling',
-            'email' => 'harishsaid37@gmail.com',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('admin'),
+            'profile_picture' => 'profile-images/profile_picture_default.jpg',
             'is_banned' => false
+        ]);
+
+        DB::table('users')->insert([
+            'user_role_id' => 2,
+            'username' => 'Testing1',
+            'name' => 'Testing1 Testing1 Testing1',
+            'birthdate' => '2001-06-18',
+            'phone' => '081285879816',
+            'address' => 'Jalan KH Iskandar Muda',
+            'email' => 'testing1@gmail.com',
+            'password' => bcrypt('testing1'),
+            'is_banned' => false
+        ]);
+
+        DB::table('users')->insert([
+            'user_role_id' => 2,
+            'username' => 'Testing2',
+            'name' => 'Testing2 Testing2 Testing2',
+            'birthdate' => '2001-06-18',
+            'phone' => '081285879816',
+            'address' => 'Jalan KH Iskandar Tua',
+            'email' => 'testing2@gmail.com',
+            'password' => bcrypt('testing2'),
+            'is_banned' => true
         ]);
 
         Category::create([
@@ -97,17 +122,20 @@ class DatabaseSeeder extends Seeder
 
         Schedule::create([
             'start_time' => Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 10:00:00'),
-            'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 11:00:00')
+            'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 11:00:00'),
+            'status' => 'Booked'
         ]);
 
         Schedule::create([
             'start_time' => Carbon::createFromFormat('d-m-Y H:i:s', '02-11-2022 11:00:00'),
-            'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '02-11-2022 12:00:00')
+            'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '02-11-2022 12:00:00'),
+            'status' => 'Canceled'
         ]);
 
         Schedule::create([
             'start_time' => Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 13:00:00'),
-            'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 14:00:00')
+            'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '03-11-2022 14:00:00'),
+            'status' => 'Ready'
         ]);
 
         OrderDetail::create([
