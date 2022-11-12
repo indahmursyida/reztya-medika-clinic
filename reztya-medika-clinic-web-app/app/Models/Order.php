@@ -11,11 +11,11 @@ class Order extends Model
 
     protected $primaryKey = 'order_id';
     protected $fillable = [
-        'order_detail_id', 
-        'cancel_id', 
-        // 'payment_receipt_id', 
-        'user_id', 
-        'order_date', 
+        'order_detail_id',
+        'cancel_id',
+        'payment_receipt_id',
+        'user_id',
+        'order_date',
         'status'
     ];
     public function orderDetail(){
@@ -28,5 +28,9 @@ class Order extends Model
 
     public function user(){
         return $this->hasOne(User::class, 'user_id');
+    }
+
+    public function paymentReceipt(){
+        return $this->hasOne(PaymentReceipt::class, 'payment_receipt_id', 'payment_receipt_id');
     }
 }

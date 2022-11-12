@@ -5,10 +5,82 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function filterCategory(Request $request) {
+        $category_id = $request->category_id;
+        $products = DB::table('products')
+            ->where('category_id', '=', $category_id)
+            ->paginate()
+            ->appends(['category' => $category_id]);
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterPriceHightoLow() {
+        $products = DB::table('products')
+            ->orderBy('price', 'desc')
+            ->get();
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterPriceLowtoHigh() {
+        $products = DB::table('products')
+            ->orderBy('price')
+            ->get();
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterZtoA() {
+        $products = DB::table('products')
+            ->orderBy('name', 'desc')
+            ->get();
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterAtoZ() {
+        $products = DB::table('products')
+            ->orderBy('name')
+            ->get();
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function search(Request $request) {
+        $keyword = $request->keyword;
+        $products = DB::table('products')
+            ->where('name', 'LIKE', "%$keyword%")
+            ->paginate()
+            ->appends(['keyword' => $keyword]);
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+            ]);
+    }
+
+    public function view() {
+        return view('products.view_products', [
+            'products' => Product::all(),
+            'categories' => Category::all(),
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -74,7 +146,7 @@ class ProductController extends Controller
         if($request->file('image_path')){
             $validatedData['image_path'] = $request->file('image_path')->store('product-images');
         }
-        
+
         Product::create($validatedData);
 
         return redirect('manage-products')->with('success','Product succsessfully added!');
@@ -169,7 +241,7 @@ class ProductController extends Controller
         if($product->image_path){
             Storage::delete($product->image_path);
         }
-        
+
         Product::destroy($id);
 
         return redirect('/manage-products')->with('Product successfully deleted');

@@ -6,10 +6,82 @@ use App\Models\Category;
 use App\Models\Schedule;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
+    public function filterCategory(Request $request) {
+        $category_id = $request->category_id;
+        $services = DB::table('services')
+            ->where('category_id', '=', $category_id)
+            ->paginate()
+            ->appends(['category' => $category_id]);
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterPriceHightoLow() {
+        $services = DB::table('services')
+            ->orderBy('price', 'desc')
+            ->get();
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterPriceLowtoHigh() {
+        $services = DB::table('services')
+            ->orderBy('price')
+            ->get();
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterZtoA() {
+        $services = DB::table('services')
+            ->orderBy('name', 'desc')
+            ->get();
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterAtoZ() {
+        $services = DB::table('services')
+            ->orderBy('name')
+            ->get();
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function search(Request $request) {
+        $keyword = $request->keyword;
+        $services = DB::table('services')
+            ->where('name', 'LIKE', "%$keyword%")
+            ->paginate()
+            ->appends(['keyword' => $keyword]);
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function view() {
+        return view('services.view_services', [
+            'services' => Service::all(),
+            'categories' => Category::all()
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *

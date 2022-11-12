@@ -75,11 +75,11 @@
                             Welcome, {{auth()->user()->username}}
                         </p>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                            <li><a class="button-outline-reztya dropdown-item" href="/profile/{{auth()->user()->name}}">Lihat Profil</a></li>
+                            <li><a class="button-outline-reztya dropdown-item" href="/view-profile/{{auth()->user()->username}}">Lihat Profil</a></li>
                             <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order</a></li>
                             <li><a class="button-outline-reztya dropdown-item" href="#">Lihat Order Aktif</a></li>
                             @if(auth()->user()->user_role_id == 1)
-                                <li><a class="button-outline-reztya dropdown-item" href="#">Ban / Unban Akun</a></li>
+                                <li><a class="button-outline-reztya dropdown-item" href="/view-users">Ban / Unban Akun</a></li>
                             @endif
                             <li>
                                 <form method="POST" action="/signout">
@@ -93,12 +93,12 @@
             </div>
         @else
             <div class="col-1 mb-2">
-                <a class="font-futura-reztya text-reztya pe-4 fs-6" href="/signin" style="text-decoration: none;">
+                <a class="font-futura-reztya text-reztya pe-4 fs-6 text-decoration-none" href="/signin">
                     Masuk
                 </a>
             </div>
             <div class="col-1 mb-2">
-                <a class="font-futura-reztya text-reztya fs-6" href="/signup" style="text-decoration: none;">
+                <a class="font-futura-reztya text-reztya fs-6 text-decoration-none" href="/signup">
                     Daftar
                 </a>
             </div>
@@ -108,7 +108,7 @@
 <div class="container mt-4">@yield('container')</div>
 <footer class="unselectable footer fixed-bottom pb-1 bg-white">
     <div class="container text-center pt-1">
-        <a style="text-decoration: none; font-size: 12px; color: #00A54F" href="/home" data-toggle="tooltip" title="Home">
+        <a class="text-decoration-none text-reztya footer-text" href="/home" data-toggle="tooltip" title="Home">
             © 2022 Reztya Medika Clinic. All rights reserved.
         </a>
     </div>
