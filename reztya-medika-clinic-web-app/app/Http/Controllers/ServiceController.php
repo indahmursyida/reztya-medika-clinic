@@ -191,7 +191,7 @@ class ServiceController extends Controller
         $validatedData = $request->validate(
             [
                 'category_id' => 'required',
-                'name' => 'required|unique:services|max:255',
+                'name' => 'required|max:255',
                 'description' => 'required',
                 'duration' => 'required|numeric',
                 'price' => 'required|numeric',
@@ -200,7 +200,6 @@ class ServiceController extends Controller
             [
                 'category_id.required' => 'Kategori perawatan wajib diisi',
                 'name.required' => 'Nama perawatan wajib diisi',
-                'name.unique' => 'Nama perawatan tidak boleh sama dengan nama perawatan lainnya',
                 'name.max' => 'Nama perawatan tidak boleh lebih dari 255 karakter',
                 'description.required' => 'Deskripsi perawatan perawatan wajib diisi',
                 'duration.required' => 'Durasi perawatan wajib diisi',

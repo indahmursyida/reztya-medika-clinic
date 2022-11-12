@@ -192,7 +192,7 @@ class ProductController extends Controller
     {
         $validatedData = $request->validate([
             'category_id' => 'required',
-            'name' => 'required|unique:products|max:255',
+            'name' => 'required|max:255',
             'description' => 'required',
             'size' => 'nullable',
             'price' => 'required|numeric',
@@ -202,7 +202,6 @@ class ProductController extends Controller
         ],[
             'category_id.required' => 'Kategori produk wajib diisi',
             'name.required' => 'Nama produk wajib diisi',
-            'name.unique' => 'Nama produk tidak boleh sama dengan nama produk lainnya',
             'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter',
             'description.required'=> 'Deskripsi produk produk wajib diisi',
             'price.required' => 'Harga produk wajib diisi',

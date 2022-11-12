@@ -21,7 +21,7 @@
             <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path" onchange="previewImage()">
             @error('image_path')
             <div class="invalid-feedback">
-            {{ $message }}
+                {{ $message }}
             </div>
             @enderror
         </div>
@@ -33,7 +33,7 @@
             <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" value="{{ old('name') }}">
             @error('name')
             <div class="invalid-feedback">
-            {{ $message }}
+                {{ $message }}
             </div>
             @enderror
         </div>
@@ -43,6 +43,7 @@
         </div>
         <div class="col-md-8">
             <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
+                <option value="" selected disabled hidden>Pilih kategori</option>
                 @foreach($categories as $category) @if(old('category_id') == $category->category_id)
                 <option value="{{ $category->category_id }}" selected>{{ $category->category_name }}</option>
                 @else
@@ -51,7 +52,7 @@
             </select>
             @error('category_id')
             <div class="invalid-feedback">
-                Kategori produk wajib diisi
+                {{ $message }}
             </div>
             @enderror
         </div>
@@ -82,7 +83,7 @@
             <input type="date" class="form-control @error('expired_date') is-invalid @enderror" id="expired_date" name="expired_date" value="{{ old('expired_date') }}">
             @error('expired_date')
             <div class="invalid-feedback">
-            {{ $message }}
+                {{ $message }}
             </div>
             @enderror
         </div>
@@ -98,7 +99,7 @@
 
             @error('price')
             <div class="invalid-feedback">
-            {{ $message }}
+                {{ $message }}
             </div>
             @enderror
         </div>
@@ -110,7 +111,7 @@
             <input type="number" class="form-control @error('stock') is-invalid @enderror form-quantity" id="stock" name="stock" value="{{ old('stock', 1) }}" min="1" max="1000">
             @error('stock')
             <div class="invalid-feedback">
-            {{ $message }}
+                {{ $message }}
             </div>
             @enderror
         </div>
