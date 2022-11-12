@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
-            $table->integer('user_role_id')->default(1); // 0 = admin, 1 =  user
+            $table->integer('user_role_id')->default(2); // 1 = admin, 2 =  user
             $table->string('username');
             $table->string('name');
             $table->date('birthdate');
@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('address');
             $table->string('email')->unique();
             $table->string('password');
-            $table->boolean('is_banned')->default(false); // 0 = not banned, 1 = banned
+            $table->string('profile_picture');
+            $table->boolean('is_banned')->default(false); // false = not banned, true = banned
             $table->rememberToken();
             $table->timestamps();
         });
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('profile');
     }
 };

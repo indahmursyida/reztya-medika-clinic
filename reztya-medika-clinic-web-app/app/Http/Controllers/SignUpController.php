@@ -26,6 +26,7 @@ class SignUpController extends Controller
         if ($validated['password'] == $confirm_password['confirm_password']) {
             $validated['password'] = Hash::make($validated['password']);
             $validated['phone'] = strval($validated['phone']);
+            $validated['profile_picture'] = 'profile-images/profile_picture_default.jpg';
 
             DB::table('users')->insert($validated);
             return redirect()->intended('/home')->with('addSuccess', 'Pendaftaran berhasil! Silahkan masuk');
