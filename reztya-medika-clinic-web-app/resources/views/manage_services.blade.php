@@ -3,6 +3,12 @@
 @section('title', 'Daftar Layanan Perawatan')
 
 @section('container')
+@if(session()->has('success'))
+<div class="alert alert-success alert-dismissible fade show font-futura-reztya" role="alert">
+    {{session('success')}}
+    <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
     <div class="py-3 text-center">
         <h2 class="pb-5 font-alander-reztya unselectable">Daftar Layanan Perawatan</h1>

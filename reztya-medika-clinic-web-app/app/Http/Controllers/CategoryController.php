@@ -47,7 +47,7 @@ class CategoryController extends Controller
         
         Category::create($validatedData);
 
-        return redirect('manage-categories')->with('success','Category succsessfully added!');
+        return redirect('manage-categories')->with('success','Kategori berhasil ditambahkan!');
     }
 
     /**
@@ -84,7 +84,7 @@ class CategoryController extends Controller
         Category::find($id)
         ->update($validatedData);
 
-        return redirect('manage-categories')->with('success','Category succsessfully updated!');
+        return redirect('manage-categories')->with('success','Kategori berhasil ditambahkan!');
     }
 
     /**
@@ -97,6 +97,6 @@ class CategoryController extends Controller
     {
         Category::destroy($id);
 
-        return redirect('/manage-categories')->with('Category successfully deleted');
+        return redirect('/manage-categories')->with('Kategori berhasil dihapus!');
     }
 }

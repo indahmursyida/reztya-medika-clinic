@@ -34,7 +34,7 @@ class ScheduleController extends Controller
 
         $validated_data['status'] = 'Ready';
         Schedule::create($validated_data);
-        return redirect('/manage-schedules')->with('success','Product successfully added!');
+        return redirect('/manage-schedules')->with('success','Jadwal berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -62,6 +62,6 @@ class ScheduleController extends Controller
     public function delete($id)
     {
         Schedule::find($id)->delete();
-        return redirect('/manage-schedules')->with('success','Product successfully deleted!');
+        return redirect('/manage-schedules')->with('success','Jadwal berhasil dihapus!');
     }
 }

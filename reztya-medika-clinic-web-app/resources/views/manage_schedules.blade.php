@@ -35,9 +35,6 @@
             @foreach($schedules as $schedule)
             <tr class="align-middle text-center">
                 <td>{{ $i++ }}</td>
-                {{-- <td>{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('j F Y') }} </td> 
-                <td>{{ \Carbon\Carbon::parse($schedules[$i]->start_time)->format('H:i:s')  }} WIB</td>
-                <td>{{ \Carbon\Carbon::parse($schedules[$i]->end_time)->format('H:i:s') }} WIB</td> --}}
                 <td>{{ Carbon::parse($schedule->start_time)->toDayDateTimeString() }} </td>
                 <td>{{ Carbon::parse($schedule->end_time)->toDayDateTimeString() }} </td>
                 <td>{{ $schedule->status }} </td>
@@ -55,7 +52,4 @@
         </tbody>
     </table>
 </div>
-{{-- <div style="display:flex !important; justify-content:center !important; ">
-    {{$schedules->links()}}
-</div> --}}
 @endsection
