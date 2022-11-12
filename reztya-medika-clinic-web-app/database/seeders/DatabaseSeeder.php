@@ -52,6 +52,30 @@ class DatabaseSeeder extends Seeder
             'is_banned' => false
         ]);
 
+        DB::table('users')->insert([
+            'user_role_id' => 2,
+            'username' => 'Testing1',
+            'name' => 'Testing1 Testing1 Testing1',
+            'birthdate' => '2001-06-18',
+            'phone' => '081285879816',
+            'address' => 'Jalan KH Iskandar Muda',
+            'email' => 'testing1@gmail.com',
+            'password' => bcrypt('testing1'),
+            'is_banned' => false
+        ]);
+
+        DB::table('users')->insert([
+            'user_role_id' => 2,
+            'username' => 'Testing2',
+            'name' => 'Testing2 Testing2 Testing2',
+            'birthdate' => '2001-06-18',
+            'phone' => '081285879816',
+            'address' => 'Jalan KH Iskandar Tua',
+            'email' => 'testing2@gmail.com',
+            'password' => bcrypt('testing2'),
+            'is_banned' => true
+        ]);
+
         Category::create([
             'category_name' => 'Body Care'
         ]);
