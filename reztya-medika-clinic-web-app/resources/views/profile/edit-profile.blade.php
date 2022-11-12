@@ -25,7 +25,7 @@
                     </div>
                     <div class="card outline-reztya">
                         <ul class="list-group">
-                            <li class="list-group-item">
+                            <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
                                         <label for="name" class="col-form-label">Foto</label>
@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
                                         <label for="username" class="col-form-label">Username</label>
@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
                                         <label for="name" class="col-form-label">Nama Lengkap</label>
@@ -70,7 +70,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
                                         <label for="birthdate" class="col-form-label">Tanggal Lahir</label>
@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
                                         <label for="phone" class="col-form-label">Nomor Telepon</label>
@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
                                         <label for="address" class="col-form-label">Alamat</label>
@@ -115,7 +115,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
                                         <label for="email" class="col-form-label">Email</label>
@@ -130,7 +130,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
                                         <label for="password" class="col-form-label">Kata Sandi</label>
@@ -168,7 +168,7 @@
                     </div>
                     <div class="card outline-reztya">
                         <ul class="list-group">
-                            <li class="list-group-item">
+                            <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
                                         <label for="oldpass" class="col-form-label">Kata Sandi Lama</label>
@@ -183,7 +183,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
                                         <label for="newpass" class="col-form-label">Kata Sandi Baru</label>
@@ -198,7 +198,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
                                         <label for="confnewpass" class="col-form-label">Konfirmasi Kata Sandi Baru</label>
