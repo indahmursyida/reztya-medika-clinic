@@ -22,10 +22,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Category::create([
-            'category_name' => 'Body Care'
-        ]);
-
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
@@ -94,6 +90,7 @@ class DatabaseSeeder extends Seeder
             'stock' => '20',
             'image_path' => '/product-images/bodyshower.jpg'
         ]);
+
         Product::create([
             'name' => 'Moisturizer',
             'category_id' => '2',
@@ -122,6 +119,7 @@ class DatabaseSeeder extends Seeder
             'price' => '120000',
             'image_path' => '/service-images/maskerwajah.jpeg'
         ]);
+
         Schedule::create([
             'start_time' => Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 10:00:00'),
             'end_time' => Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 11:00:00'),

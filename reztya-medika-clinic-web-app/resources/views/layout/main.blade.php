@@ -22,12 +22,12 @@
         @auth
             @if(auth()->user()->user_role_id == 1)
                 <div class="col-2 mb-2">
-                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/services">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-services">
                         Layanan Perawatan
                     </a>
                 </div>
                 <div class="col-2 mb-2">
-                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/products">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-products">
                         Produk
                     </a>
                 </div>
@@ -43,24 +43,24 @@
                 </div>
             @else
                 <div class="col-2 mb-2">
-                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/services">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-services">
                         Layanan Perawatan
                     </a>
                 </div>
                 <div class="col-6 mb-2">
-                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/products">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-products">
                         Produk
                     </a>
                 </div>
             @endif
         @else
             <div class="col-2 mb-2">
-                <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/services">
+                <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-services">
                     Layanan Perawatan
                 </a>
             </div>
             <div class="col-6 mb-2">
-                <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/products">
+                <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-products">
                     Produk
                 </a>
             </div>
