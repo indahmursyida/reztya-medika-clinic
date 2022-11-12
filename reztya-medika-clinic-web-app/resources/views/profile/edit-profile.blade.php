@@ -106,7 +106,7 @@
                                         <label for="address" class="col-form-label">Alamat</label>
                                     </div>
                                     <div class="col-md-8 mt-1">
-                                        <textarea name="address" class="shadow-none form-control form-control-sm @error('address') is-invalid @enderror" aria-describedby="address">{{auth()->user()->address}}</textarea>
+                                        <textarea name="address" class="shadow-none form-control form-control-sm @error('address') is-invalid @enderror" aria-describedby="address" placeholder="{{auth()->user()->address}}">{{old('address')}}</textarea>
                                         @error('address')
                                         <div class="invalid-feedback">
                                             Alamat wajib diisi
