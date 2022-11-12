@@ -31,6 +31,10 @@
     border-color: #00A54F !important;
 }
 
+.form-check-input:checked {
+    background-color: #00A54F !important;
+}
+
 .outline-reztya {
     border-color: #00A54F !important;
 }
