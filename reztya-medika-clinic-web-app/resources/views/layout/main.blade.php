@@ -11,13 +11,15 @@
     <link href="http://fonts.cdnfonts.com/css/alander" rel="stylesheet">
     <link href="http://fonts.cdnfonts.com/css/futura-md-bt" rel="stylesheet">
     <link rel="stylesheet" href="{{ url('css/index.css') }}">
+    <!-- Fontawesome-->
+    <script src="https://kit.fontawesome.com/d003a54dde.js" crossorigin="anonymous"></script>
     <title>@yield('title')</title>
 </head>
-<body class="bg-light">
-<nav class="navbar navbar-light p-1 pt-0">
-    <div class="container-fluid pt-1">
-        <a class="navbar ps-4 reztya-img-link" href="/home">
-            <img class="reztya-img" src="{{url('storage/reztya_logo.png')}}" data-toggle="tooltip" title="Home">
+<body>
+<nav class="unselectable navbar p-1 pt-0">
+    <div class="row container-fluid pt-1">
+        <a class="navbar ps-4" href="/home" style="max-width: 15%;">
+            <img src="{{url('storage/reztya_logo.png')}}" data-toggle="tooltip" title="Home" style="max-width: 80%;">
         </a>
         @auth
             @if(auth()->user()->user_role_id == 1)

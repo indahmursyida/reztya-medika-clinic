@@ -29,7 +29,7 @@ Route::permanentRedirect('/logout', '/home')->middleware('auth');
 
 // Home
 Route::get('/home', function () {
-    return view('layout.main');
+    return view('home.home_page');
 });
 
 // Sign Up

@@ -155,6 +155,22 @@
     width: 30rem;
 }
 
+.carousel-reztya .carousel-control-prev-icon,
+.carousel-reztya .carousel-control-next-icon {
+    filter: brightness(0) saturate(100%) invert(42%) sepia(75%) saturate(4471%) hue-rotate(133deg) brightness(98%) contrast(102%);
+}
+
+.carousel-reztya .carousel-indicators [data-bs-target] {
+    background-color: #00A54F;
+}
+.carousel-reztya .carousel-caption {
+    color: #00A54F;
+}
+
+.img-thumbnail-home {
+    background: #00A54F;
+}
+
 .edit-icon {
     margin-right: -3%;
 }
