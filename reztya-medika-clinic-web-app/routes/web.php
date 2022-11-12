@@ -6,6 +6,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SignInController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\OrderDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -77,3 +78,8 @@ Route::post('/add-schedule', [ScheduleController::class, 'store']);
 Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit']);
 Route::put('/update-schedule/{id}', [ScheduleController::class, 'update']);
 Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete']);
+
+
+//OrderDetail
+Route::post('/buy-product', [OrderDetailController::class, 'buyProduct']);
+Route::post('/book-service', [OrderDetailController::class, 'bookService']);
