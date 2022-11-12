@@ -67,6 +67,18 @@
     color: #7DC241 !important;
 }
 
+.footer-text {
+    font-size: 12px;
+}
+
+.reztya-img-link {
+    max-width: 15%;
+}
+
+.reztya-img {
+    max-width: 80%;
+}
+
 .font-alander-reztya {
     font-family: Alander, sans-serif;
 }

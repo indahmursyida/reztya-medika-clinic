@@ -16,8 +16,8 @@
 <body class="bg-light">
 <nav class="navbar navbar-light p-1 pt-0">
     <div class="container-fluid pt-1">
-        <a class="navbar ps-4" href="/home" style="max-width: 15%;">
-            <img src="{{url('storage/reztya_logo.png')}}" data-toggle="tooltip" title="Home" style="max-width: 80%;">
+        <a class="navbar ps-4 reztya-img-link" href="/home">
+            <img class="reztya-img" src="{{url('storage/reztya_logo.png')}}" data-toggle="tooltip" title="Home">
         </a>
         @auth
             @if(auth()->user()->user_role_id == 1)
@@ -90,11 +90,13 @@
                 </div>
             </div>
         @else
-            <div class="pe-5 mb-2">
-                <a class="link-success pe-4" href="/signin" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">
+            <div class="col-1 mb-2">
+                <a class="font-futura-reztya text-reztya pe-4 fs-6 text-decoration-none" href="/signin">
                     Masuk
                 </a>
-                <a class="link-success" href="/signup" style="text-decoration: none; font-family: 'Futura Md BT', sans-serif; font-size: 110%;">
+            </div>
+            <div class="col-1 mb-2">
+                <a class="font-futura-reztya text-reztya fs-6 text-decoration-none" href="/signup">
                     Daftar
                 </a>
             </div>
@@ -104,7 +106,7 @@
 <div class="container mt-4">@yield('container')</div>
 <footer class="unselectable footer fixed-bottom pb-1 bg-white">
     <div class="container text-center pt-1">
-        <a style="text-decoration: none; font-size: 12px; color: #00A54F" href="/home" data-toggle="tooltip" title="Home">
+        <a class="text-decoration-none text-reztya footer-text" href="/home" data-toggle="tooltip" title="Home">
             © 2022 Reztya Medika Clinic. All rights reserved.
         </a>
     </div>
