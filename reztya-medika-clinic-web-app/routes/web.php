@@ -79,7 +79,6 @@ Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit']);
 Route::put('/update-schedule/{id}', [ScheduleController::class, 'update']);
 Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete']);
 
-
 //OrderDetail
 Route::post('/buy-product', [OrderDetailController::class, 'buyProduct']);
 Route::post('/book-service', [OrderDetailController::class, 'bookService']);
