@@ -1,8 +1,8 @@
 <?php
-
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SignInController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\ScheduleController;
@@ -79,7 +79,14 @@ Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit']);
 Route::put('/update-schedule/{id}', [ScheduleController::class, 'update']);
 Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete']);
 
-
 //OrderDetail
 Route::post('/buy-product', [OrderDetailController::class, 'buyProduct']);
 Route::post('/book-service', [OrderDetailController::class, 'bookService']);
+
+//Category
+Route::get('/manage-categories', [CategoryController::class, 'index']);
+Route::post('/delete-category/{id}', [CategoryController::class, 'destroy']);
+Route::get('/add-category', [CategoryController::class, 'create']);
+Route::post('/store-category', [CategoryController::class, 'store']);
+Route::get('/edit-category/{id}', [CategoryController::class, 'edit']);
+Route::put('/update-category/{id}', [CategoryController::class, 'update']);
