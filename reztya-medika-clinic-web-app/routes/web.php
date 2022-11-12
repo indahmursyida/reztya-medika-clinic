@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\BanController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
@@ -82,6 +84,11 @@ Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete']);
 //OrderDetail
 Route::post('/buy-product', [OrderDetailController::class, 'buyProduct']);
 Route::post('/book-service', [OrderDetailController::class, 'bookService']);
+
+// Ban and Unban User
+Route::get('/view-users', [BanController::class, 'viewUsers'])->middleware('admin');
+Route::post('/ban-user/{username}', [BanController::class, 'banUser'])->middleware('admin');
+Route::post('/unban-user/{username}', [BanController::class, 'unbanUser'])->middleware('admin');
 
 //Category
 Route::get('/manage-categories', [CategoryController::class, 'index']);
