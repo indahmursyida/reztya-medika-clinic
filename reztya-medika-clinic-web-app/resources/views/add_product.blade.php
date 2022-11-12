@@ -60,7 +60,7 @@
             <label class="form-label" for="description">Deskripsi Produk</label>
         </div>
         <div class="col-md-8">
-            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" style="height: 100px" value="{{ old('description') }}"></textarea>
+            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" style="height: 100px" value="{{ old('description') }}">{{ old('description') }}</textarea>
             @error('description')
             <div class="invalid-feedback">
                 {{ $message }}
