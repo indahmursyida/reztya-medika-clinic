@@ -43,6 +43,7 @@
         </div>
         <div class="col-md-8">
             <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
+                <option value="" selected disabled hidden>Pilih kategori</option>
                 @foreach($categories as $category) @if(old('category_id') == $category->category_id)
                 <option value="{{ $category->category_id }}" selected>{{ $category->category_name }}</option>
                 @else
@@ -60,7 +61,7 @@
             <label class="form-label" for="description">Deskripsi Perawatan</label>
         </div>
         <div class="col-md-8">
-            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" style="height: 100px" value="{{ old('description') }}"></textarea>
+            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" style="height: 100px" value="{{ old('description') }}">{{ old('description') }}</textarea>
             @error('description')
             <div class="invalid-feedback">
                 {{ $message }}
