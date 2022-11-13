@@ -69,6 +69,7 @@ Route::put('/update-service/{id}', [ServiceController::class, 'update']);
 
 Route::get('/order', [OrderController::class, 'order']);
 Route::put('/update-order-item/{id}', [OrderController::class, 'update_order_item']);
+Route::post('/update_order_status_on_going/{id}', [OrderController::class, 'update_order_status_on_going']);
 Route::get('/active-order', [OrderController::class, 'active_order']);
 Route::put('/reschedule/{id}', [OrderController::class, 'reschedule']);
 Route::get('/delete-order-item/{id}', [OrderController::class, 'delete_order_item']);
@@ -76,6 +77,5 @@ Route::get('/cancel-order/{id}', [OrderController::class, 'cancel_order']);
 Route::get('/finish-order/{id}', [OrderController::class, 'finish_order']);
 Route::get('/history-order', [OrderController::class, 'history_order']);
 Route::get('/payment-receipt-form/{id}', [OrderController::class, 'form_payment_receipt'])->name('form_payment');
-Route::get('/history-order/filter/status/finished', [OrderController::class, 'filter_finished']);
-Route::get('/history-order/filter/status/canceled', [OrderController::class, 'filter_canceled']);
+Route::get('/history-order/filter/status/{status}', [OrderController::class, 'filter_status']);
 Route::post('/add-payment-receipt', [OrderController::class, 'add_payment_receipt']);

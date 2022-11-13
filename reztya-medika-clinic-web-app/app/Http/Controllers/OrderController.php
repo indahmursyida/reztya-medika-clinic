@@ -13,7 +13,10 @@ class OrderController extends Controller
 {
     public function order()
     {
-        $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'UNPAID')->first();
+        $order = null;
+        if(Auth::user()->user_role_id == 2)
+            $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'UNPAID')->first();
+        
         $printServiceOnce = false;
         $printProductOnce = false;
         $totalPrice = 0;
@@ -22,7 +25,7 @@ class OrderController extends Controller
 
     public function active_order()
     {
-        $isUnpaid = false;
+        $order = null;
         $totalPrice = 0;
 
         if(Auth::user()->user_role_id == 1)
@@ -31,52 +34,36 @@ class OrderController extends Controller
         }
         else
         {
-            $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'UNPAID')->get();
-        }
-
-        if($order)
-        {
-            $isUnpaid = true;
-        }
-        else
-        {
-            $isUnpaid = false;
+            $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'ON GOING')->get();
         }
         
         $schedules = Schedule::all();
         $printServiceOnce = false;
         $printProductOnce = false;
-
-        if($isUnpaid == true)
+        
+        // if($isUnpaid == false)
+        // {
+        //     if(Auth::user()->user_role_id == 1)
+        //     {
+        //         $order = Order::where('status', 'ON GOING')->get();
+        //     }
+        //     else
+        //     {
+        //         $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'ON GOING')->get();
+        //     }
+        // }
+        
+        if(!$order->isEmpty())
         {
             foreach($order as $x)
             {
-                $x->status = 'ON GOING';
-                $x->save();
-            }
-            $isUnpaid = false;
-        }
-        
-        if($isUnpaid == false)
-        {
-            if(Auth::user()->user_role_id == 1)
-            {
-                $order = Order::where('status', 'ON GOING')->get();
-            }
-            else
-            {
-                $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'ON GOING')->get();
-            }
-        }
-
-        foreach($order as $x)
-        {
-            foreach($x->orderDetail as $y)
-            {
-                if($y->service_id)
-                    $totalPrice += $y->service->price * $y->quantity;
-                else
-                    $totalPrice += $y->product->price * $y->quantity;
+                foreach($x->orderDetail as $y)
+                {
+                    if($y->service_id)
+                        $totalPrice += $y->service->price * $y->quantity;
+                    else
+                        $totalPrice += $y->product->price * $y->quantity;
+                }
             }
         }
 
@@ -136,6 +123,16 @@ class OrderController extends Controller
         return redirect('/order');
     }
 
+    public function update_order_status_on_going($id)
+    {
+        $order = Order::find($id)->first();
+
+        $order->status = 'ON GOING';
+        $order->save();
+
+        return redirect('/active-order');
+    }
+
     public function cancel_order($id)
     {
         $order = Order::find($id); 
@@ -148,11 +145,11 @@ class OrderController extends Controller
     {
         if(Auth::user()->user_role_id == 1)
         {
-            $order = Order::all();
+            $order = Order::all()->where('status','!=','UNPAID');
         }
         else
         {
-            $order = Order::where('user_id', Auth::user()->user_id)->get();
+            $order = Order::where('user_id', Auth::user()->user_id)->where('status','!=','UNPAID')->get();
         }
         
         $printServiceOnce = false;
@@ -232,15 +229,35 @@ class OrderController extends Controller
         return redirect('/history-order');
     }
 
-    public function filter_finished()
+    public function filter_status($status)
     {
-        $orders_filtered = DB::table('orders')
-        ->where('status', '=', 'FINISHED')
-        ->paginate()
-        ->get();
+        if(Auth::user()->user_role_id == 1)
+        {
+            $order = Order::where('status', $status)->get();
+        }
+        else
+        {
+            $order = Order::where('user_id', Auth::user()->user_id)->where('status', $status)->get();
+        }
+
+        $printServiceOnce = false;
+        $printProductOnce = false;
+        $totalPrice = 0;
+
+        if(!$order->isEmpty())
+        {
+            foreach($order as $x)
+            {
+                foreach($x->orderDetail as $y)
+                {
+                    if($y->service_id)
+                        $totalPrice += $y->service->price * $y->quantity;
+                    else
+                        $totalPrice += $y->product->price * $y->quantity;
+                }
+            }
+        }
         
-        return view('order_history', [
-            'order' => $orders_filtered
-        ]);
+        return view('order_history')->with('order', $order)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
     }
 }
