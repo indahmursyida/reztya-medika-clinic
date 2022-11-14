@@ -6,10 +6,82 @@ use App\Models\Category;
 use App\Models\Schedule;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
+    public function filterCategory(Request $request) {
+        $category_id = $request->category_id;
+        $services = DB::table('services')
+            ->where('category_id', '=', $category_id)
+            ->paginate()
+            ->appends(['category' => $category_id]);
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterPriceHightoLow() {
+        $services = DB::table('services')
+            ->orderBy('price', 'desc')
+            ->get();
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterPriceLowtoHigh() {
+        $services = DB::table('services')
+            ->orderBy('price')
+            ->get();
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterZtoA() {
+        $services = DB::table('services')
+            ->orderBy('name', 'desc')
+            ->get();
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterAtoZ() {
+        $services = DB::table('services')
+            ->orderBy('name')
+            ->get();
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function search(Request $request) {
+        $keyword = $request->keyword;
+        $services = DB::table('services')
+            ->where('name', 'LIKE', "%$keyword%")
+            ->paginate()
+            ->appends(['keyword' => $keyword]);
+        return view('services.view_services', [
+            'services' => $services,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function view() {
+        return view('services.view_services', [
+            'services' => Service::all(),
+            'categories' => Category::all()
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -74,7 +146,7 @@ class ServiceController extends Controller
 
         Service::create($validatedData);
 
-        return redirect('manage-services')->with('success', 'Service succsessfully added!');
+        return redirect('manage-services')->with('success', 'Perawatan berhasil ditambahkan!');
     }
 
     /**
@@ -119,7 +191,7 @@ class ServiceController extends Controller
         $validatedData = $request->validate(
             [
                 'category_id' => 'required',
-                'name' => 'required|unique:services|max:255',
+                'name' => 'required|max:255',
                 'description' => 'required',
                 'duration' => 'required|numeric',
                 'price' => 'required|numeric',
@@ -128,7 +200,6 @@ class ServiceController extends Controller
             [
                 'category_id.required' => 'Kategori perawatan wajib diisi',
                 'name.required' => 'Nama perawatan wajib diisi',
-                'name.unique' => 'Nama perawatan tidak boleh sama dengan nama perawatan lainnya',
                 'name.max' => 'Nama perawatan tidak boleh lebih dari 255 karakter',
                 'description.required' => 'Deskripsi perawatan perawatan wajib diisi',
                 'duration.required' => 'Durasi perawatan wajib diisi',
@@ -149,7 +220,7 @@ class ServiceController extends Controller
         Service::find($id)
             ->update($validatedData);
 
-        return redirect('/manage-services')->with('success', 'Service succsessfully updated!');
+        return redirect('/manage-services')->with('success', 'Perawatan berhasil diubah!');
     }
 
     /**
@@ -167,6 +238,6 @@ class ServiceController extends Controller
 
         Service::destroy($id);
 
-        return redirect('/manage-services')->with('Service successfully deleted');
+        return redirect('/manage-services')->with('success', 'Perawatan berhasil dihapus!');
     }
 }

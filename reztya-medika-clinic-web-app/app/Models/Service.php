@@ -9,6 +9,7 @@ class Service extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $primaryKey = 'service_id';
     protected $fillable = [
         'category_id', 

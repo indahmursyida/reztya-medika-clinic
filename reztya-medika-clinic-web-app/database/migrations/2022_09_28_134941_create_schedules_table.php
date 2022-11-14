@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('schedule_id');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
+            $table->string('status');
             $table->timestamps();
         });
     }

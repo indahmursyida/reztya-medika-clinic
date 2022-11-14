@@ -41,7 +41,7 @@
             <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" value="{{ old('name', $service->name) }}">
             @error('name')
             <div class="invalid-feedback">
-                Nama Perawatan harus diisi
+                {{ $message }}
             </div>
             @enderror
         </div>
@@ -51,6 +51,7 @@
         </div>
         <div class="col-md-8">
             <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
+                <option value="" selected disabled hidden>Pilih kategori</option>
                 @foreach($categories as $category) @if(old('category_id', $service->category_id) == $category->category_id)
                 <option value="{{ $category->category_id }}" selected>{{ $category->category_name }}</option>
                 @else

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,11 +28,12 @@ class SignUpController extends Controller
         if ($validated['password'] == $confirm_password['confirm_password']) {
             $validated['password'] = Hash::make($validated['password']);
             $validated['phone'] = strval($validated['phone']);
+            // $validated['profile_picture'] = 'profile-images/profile_picture_default.jpg';
 
-            DB::table('users')->insert($validated);
+            $user = User::create($validated);
+            event(new Registered($user));
             return redirect()->intended('/home')->with('addSuccess', 'Pendaftaran berhasil! Silahkan masuk');
         }
-
         return redirect()->back()->with('signupError', 'Pendaftaran tidak berhasil!');
     }
 
