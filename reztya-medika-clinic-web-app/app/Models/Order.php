@@ -19,7 +19,7 @@ class Order extends Model
         'status'
     ];
     public function orderDetail(){
-        return $this->hasMany(OrderDetail::class, 'order_detail_id');
+        return $this->hasMany(OrderDetail::class, 'order_id');
     }
 
     public function cancel(){
@@ -31,6 +31,6 @@ class Order extends Model
     }
 
     public function paymentReceipt(){
-        return $this->hasOne(PaymentReceipt::class, 'payment_receipt_id', 'payment_receipt_id');
+        return $this->hasOne(PaymentReceipt::class, 'payment_receipt_id');
     }
 }

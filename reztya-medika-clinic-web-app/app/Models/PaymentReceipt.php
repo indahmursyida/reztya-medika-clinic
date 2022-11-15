@@ -13,7 +13,6 @@ class PaymentReceipt extends Model
     protected $fillable = [
         'order_id',
         'feedback_id',
-        'user_id',
         'payment_date',
         'payment_amount',
         'payment_method',
@@ -21,6 +20,10 @@ class PaymentReceipt extends Model
     ];
 
     public function order(){
-        return $this->belongsTo(Order::class, 'order_id', 'order_id');
+        return $this->belongsTo(Order::class, 'payment_receipt_id');
+    }
+
+    public function feedback(){
+        return $this->hasOne(Feedback::class, 'feedback_id');
     }
 }

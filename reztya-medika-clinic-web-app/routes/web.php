@@ -7,6 +7,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SignInController;
 use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\OrderDetailController;
 use Illuminate\Http\Request;
@@ -33,6 +34,14 @@ Route::permanentRedirect('/logout', '/home')->middleware('auth');
 // Home
 Route::get('/home', function () {
     return view('home.home_page');
+});
+
+Route::get('/active-order', function () {
+    return view('active-order');
+});
+
+Route::get('/payment-receipt-form', function () {
+    return view('payment-receipt-form');
 });
 
 // Sign Up
@@ -133,3 +142,16 @@ Route::post('/store-category', [CategoryController::class, 'store']);
 Route::get('/edit-category/{id}', [CategoryController::class, 'edit']);
 Route::put('/update-category/{id}', [CategoryController::class, 'update']);
 
+// Order
+Route::get('/order', [OrderController::class, 'order']);
+Route::put('/update-order-item/{id}', [OrderController::class, 'update_order_item']);
+Route::post('/update_order_status_on_going/{id}', [OrderController::class, 'update_order_status_on_going']);
+Route::get('/active-order', [OrderController::class, 'active_order']);
+Route::put('/reschedule/{id}', [OrderController::class, 'reschedule']);
+Route::get('/delete-order-item/{id}', [OrderController::class, 'delete_order_item']);
+Route::get('/cancel-order/{id}', [OrderController::class, 'cancel_order']);
+Route::get('/finish-order/{id}', [OrderController::class, 'finish_order']);
+Route::get('/history-order', [OrderController::class, 'history_order']);
+Route::get('/payment-receipt-form/{id}', [OrderController::class, 'form_payment_receipt'])->name('form_payment');
+Route::get('/history-order/filter/status/{status}', [OrderController::class, 'filter_status']);
+Route::post('/add-payment-receipt', [OrderController::class, 'add_payment_receipt']);
