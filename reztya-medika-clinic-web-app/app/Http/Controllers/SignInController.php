@@ -28,7 +28,6 @@ class SignInController extends Controller
                 'password' => 'required'
             ]);
 
-
             if(!RateLimiter::tooManyAttempts('failed', 3)) {
                 if(Auth::attempt($credentials)) {
                     if(auth()->user()->is_banned == false) {
