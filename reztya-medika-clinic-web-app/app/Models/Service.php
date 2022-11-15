@@ -28,6 +28,6 @@ class Service extends Model
     }
 
     public function orderDetail(){
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class, 'service_id');
     }
 }
