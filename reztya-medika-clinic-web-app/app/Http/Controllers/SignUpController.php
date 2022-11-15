@@ -31,8 +31,11 @@ class SignUpController extends Controller
             // $validated['profile_picture'] = 'profile-images/profile_picture_default.jpg';
 
             $user = User::create($validated);
-            event(new Registered($user));
-            return redirect()->intended('/home')->with('addSuccess', 'Pendaftaran berhasil! Silahkan masuk');
+
+            if($user) {
+                event(new Registered($user));
+                return redirect()->intended('/home')->with('addSuccess', 'Pendaftaran berhasil! Silahkan verify email');
+            }
         }
         return redirect()->back()->with('signupError', 'Pendaftaran tidak berhasil!');
     }

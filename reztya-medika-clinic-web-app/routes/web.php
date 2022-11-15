@@ -9,6 +9,7 @@ use App\Http\Controllers\SignInController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\OrderDetailController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -39,13 +40,15 @@ Route::get('/signup', [SignUpController::class, 'signUp'])->middleware('guest');
 Route::post('/signup', [SignUpController::class, 'userRegister']);
 
 Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+    return view('users.verify-email');
+});
+
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
     return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
+
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
 
@@ -55,7 +58,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 // Sign In
 Route::get('/signin', function () {
     return view('users.signin');
-})->middleware('guest');
+})->middleware('guest')->name('login');
 Route::post('/signin', [SignInController::class, 'userLogin']);
 
 // Sign Out
@@ -63,7 +66,7 @@ Route::post('/signout', [SignInController::class, 'userLogout'])->middleware('au
 Route::post('/signout', [SignInController::class, 'userLogout'])->middleware('auth');
 
 // View Profile
-Route::get('/view-profile/{username}', [ProfileController::class, 'viewProfile'])->middleware('auth');
+Route::get('/view-profile/{username}', [ProfileController::class, 'viewProfile'])->middleware(['auth', 'verified']);
 
 // Edit Profile
 Route::get('/edit-profile/{username}', [ProfileController::class, 'viewEditProfile'])->middleware('auth');
