@@ -8,9 +8,10 @@
     <strong> {{session()->get('message')}} </strong>
 </div>
 @endif -->
+@if($cart != null)
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
     <h2 class="my-3 text-center font-alander-reztya unselectable">Cart</h2>
-    @if(!$cart->isEmpty())
+        @if(!$cart->isEmpty())
         <div class="d-flex flex-column">
             <table class="table">
                 <tbody>
@@ -43,7 +44,7 @@
                                     <button data-toggle="modal" data-target="#editSchedulePopup" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Perawatan">
                                         <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
                                     </button>
-                                    <a href="/delete-order-item/{{ $x->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus perawatan {{ $x->service->name }}?')" title="Hapus Perawatan">
+                                    <a href="/remove-cart/{{ $x->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus perawatan {{ $x->service->name }}?')" title="Hapus Perawatan">
                                         <img src="storage/delete.png" class="align-middle" height="15px" width="15px">
                                     </a>
                                     <div class="modal fade" id="editSchedulePopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editScheduleTitle" aria-hidden="true">
@@ -73,7 +74,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
+                                                            <button type="button" class="btn btn-outline-danger me-3" data-dismiss="modal">Batal</button>
                                                             <button type="submit" class="btn btn-success">Simpan</button>
                                                         </div>
                                                     </form>
@@ -117,7 +118,7 @@
                                     <button data-toggle="modal" data-target="#editQuantityPopup" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
                                         <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
                                     </button>
-                                    <a href="/delete-cart-item/{{ $x->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $x->product->name }}?')" title="Hapus Produk">
+                                    <a href="/remove-cart/{{ $x->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $x->product->name }}?')" title="Hapus Produk">
                                         <img src="storage/delete.png" class="align-middle" height="15px" width="15px">
                                     </a>
                                     <div class="modal fade" id="editQuantityPopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editQuantityTitle" aria-hidden="true">
@@ -148,7 +149,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
+                                                            <button type="button" class="btn btn-outline-danger me-3" data-dismiss="modal">Batal</button>
                                                             <button type="submit" class="btn btn-success">Simpan</button>
                                                         </div>
                                                     </form>
@@ -177,6 +178,9 @@
     @else
         Keranjang Anda masih kosong.
     @endif
+@else
+    Tidak bisa
+@endif
 </div>
 <script>
     $('#service_quantity').on('change', function(){

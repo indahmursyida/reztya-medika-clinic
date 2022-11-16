@@ -45,8 +45,6 @@ class OrderController extends Controller
 
         Cart::where('user_id', Auth::user()->user_id)->delete();
 
-        
-        
         return redirect('/active-order');
     }
 
@@ -67,8 +65,6 @@ class OrderController extends Controller
             $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'ON GOING')->get();
         }
 
-        // dd($order);
-        // dd($order[0]->orderDetail);
         if(!$order->isEmpty())
         {
             foreach($order as $x)
@@ -89,12 +85,10 @@ class OrderController extends Controller
     public function reschedule(Request $req, $id)
     {
         $validated_data = $req->validate([
-            // 'order_detail_id' => 'required',
             'schedule_id' => 'required'
         ]);
 
         $validated_data['order_detail_id'] = $id;
-        // dd($validated_data);
 
         OrderDetail::find($id)->update($validated_data);
 
@@ -148,7 +142,7 @@ class OrderController extends Controller
                 foreach($x->orderDetail as $y)
                 {
                     if($y->service_id)
-                        $totalPrice += $y->service->price * $y->quantity;
+                        $totalPrice += $y->service->price;
                     else
                         $totalPrice += $y->product->price * $y->quantity;
                 }
@@ -174,7 +168,7 @@ class OrderController extends Controller
         foreach($order->orderDetail as $x)
         {
             if($x->service_id)
-                $totalPrice += $x->service->price * $x->quantity;
+                $totalPrice += $x->service->price;
             else
                 $totalPrice += $x->product->price * $x->quantity;
         }
@@ -236,7 +230,7 @@ class OrderController extends Controller
                 foreach($x->orderDetail as $y)
                 {
                     if($y->service_id)
-                        $totalPrice += $y->service->price * $y->quantity;
+                        $totalPrice += $y->service->price;
                     else
                         $totalPrice += $y->product->price * $y->quantity;
                 }
@@ -246,27 +240,30 @@ class OrderController extends Controller
         return view('order_history')->with('order', $order)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
     }
 
-    public function repeat_order($id)
+    public function repeatOrder($id)
     {
-        $order = Order::find($id);
-        $new_order = $order->replicate();
-
-        $new_order->status = 'UNPAID';
-        $new_order->order_date = Carbon::parse(Carbon::now())->format('Y-m-d');
-        $new_order->save();
-
         $order_detail = OrderDetail::where('order_id', $id)->get();
-
-        // dd($order_detail);
-
-        $new_order_detail = [];
+        
         foreach($order_detail as $x)
         {
-            $new_order_detail = $x->replicate();
-            $new_order_detail->order_id = $new_order->order_id;
-            $new_order_detail->save();
+            if($x->service_id)
+            {
+                Cart::create([
+                    'user_id' => Auth::user()->user_id,
+                    'service_id' => $x->service_id,
+                    'schedule_id' => $x->schedule_id
+                ]);
+            }
+            else
+            {
+                Cart::create([
+                    'user_id' => Auth::user()->user_id,
+                    'product_id' => $x->product_id,
+                    'quantity' => $x->quantity
+                ]);
+            }
         }
         
-        return redirect('/order');
+        return redirect('/cart');
     }
 }

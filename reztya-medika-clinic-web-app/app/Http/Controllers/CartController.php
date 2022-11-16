@@ -45,4 +45,11 @@ class CartController extends Controller
         Cart::find($id)->update($validated_data);
         return redirect('/cart');
     }
+
+    public function removeCart($id)
+    {
+        Cart::find($id)->delete();
+
+        return redirect('/cart')->with('success','Item successfully deleted!');
+    }
 }

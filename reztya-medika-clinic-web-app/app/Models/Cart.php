@@ -19,18 +19,18 @@ class Cart extends Model
     ];
 
     public function user(){
-        return $this->hasOne(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function service(){
-        return $this->hasOne(Service::class, 'service_id');
+        return $this->belongsTo(Service::class, 'service_id');
     }
 
     public function product(){
-        return $this->hasOne(Product::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
     public function schedule(){
-        return $this->hasOne(Schedule::class, 'schedule_id');
+        return $this->belongsTo(Schedule::class, 'schedule_id');
     }
 }

@@ -32,6 +32,6 @@ class Service extends Model
     }
 
     public function cart(){
-        return $this->belongsTo(Cart::class, 'service_id');
+        return $this->hasMany(Cart::class, 'service_id');
     }
 }

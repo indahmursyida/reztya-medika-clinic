@@ -22,6 +22,6 @@ class Schedule extends Model
     }
 
     public function cart(){
-        return $this->belongsTo(Cart::class, 'schedule_id');
+        return $this->hasMany(Cart::class, 'schedule_id');
     }
 }

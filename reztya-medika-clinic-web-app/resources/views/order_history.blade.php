@@ -20,7 +20,6 @@
             </ul>
         </div>
         @foreach($order as $y)
-            
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
                     @if ($y->status =="FINISHED")
@@ -88,7 +87,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>Rp{{ number_format($x->service->price * $x->quantity, 2) }}</td>
+                                        <td>Rp{{ number_format($x->service->price, 2) }}</td>
                                     </tr>
                                 @endif
                             @endforeach

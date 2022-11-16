@@ -180,13 +180,13 @@ class DatabaseSeeder extends Seeder
         Cart::create([
             'user_id' => 2,
             'service_id' => 2,
-            'schedule_id' => 3
+            'schedule_id' => 2
         ]);
 
         Cart::create([
             'user_id' => 2,
             'product_id' => 1,
-            'quantity' => 2
+            'quantity' => 1
         ]);
     }
 }
