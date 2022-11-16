@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payment_receipts', function (Blueprint $table) {
-            $table->id('payment_receipt_id');
-            $table->foreignId('order_id');
-            $table->foreignId('feedback_id');
+        Schema::create('carts', function (Blueprint $table) {
+            $table->id('cart_id')->primaryKey();
             $table->foreignId('user_id');
-            $table->date('payment_date');
-            $table->integer('payment_amount');
-            $table->string('payment_method');
-            $table->string('account_number');
+            $table->foreignId('service_id')->nullable();
+            $table->foreignId('product_id')->nullable();
+            $table->foreignId('schedule_id')->nullable();
+            $table->integer('quantity')->length(11)->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_receipts');
+        //
     }
 };

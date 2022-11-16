@@ -95,7 +95,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>Rp{{ number_format($x->service->price * $x->quantity, 2) }}</td>
+                                    <td>Rp{{ number_format($x->service->price, 2) }}</td>
                                 </tr>
                             @endif
                         @endforeach

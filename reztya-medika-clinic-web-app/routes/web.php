@@ -10,6 +10,8 @@ use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\CartController;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -140,10 +142,11 @@ Route::get('/edit-category/{id}', [CategoryController::class, 'edit']);
 Route::put('/update-category/{id}', [CategoryController::class, 'update']);
 
 // Order
-Route::get('/order', [OrderController::class, 'order']);
-Route::put('/update-order-item/{id}', [OrderController::class, 'update_order_item']);
-Route::post('/update_order_status_on_going/{id}', [OrderController::class, 'update_order_status_on_going']);
-Route::get('/active-order', [OrderController::class, 'active_order']);
+Route::get('/cart', [CartController::class, 'index']);
+Route::put('/update-schedule/{id}', [CartController::class, 'updateCartSchedule']);
+Route::put('/update-quantity/{id}', [CartController::class, 'updateCartQuantity']);
+Route::get('/create-order', [OrderController::class, 'createOrder']);
+Route::get('/active-order', [OrderController::class, 'activeOrder']);
 Route::put('/reschedule/{id}', [OrderController::class, 'reschedule']);
 Route::get('/delete-order-item/{id}', [OrderController::class, 'delete_order_item']);
 Route::get('/cancel-order/{id}', [OrderController::class, 'cancel_order']);
@@ -152,3 +155,4 @@ Route::get('/history-order', [OrderController::class, 'history_order']);
 Route::get('/payment-receipt-form/{id}', [OrderController::class, 'form_payment_receipt'])->name('form_payment');
 Route::get('/history-order/filter/status/{status}', [OrderController::class, 'filter_status']);
 Route::post('/add-payment-receipt', [OrderController::class, 'add_payment_receipt']);
+Route::get('/repeat-order/{id}', [OrderController::class, 'repeat_order']);

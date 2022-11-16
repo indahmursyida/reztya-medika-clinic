@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('service_id')->nullable();
             $table->foreignId('product_id')->nullable();
             $table->foreignId('schedule_id')->nullable();
-            $table->integer('quantity')->length(11);
+            $table->integer('quantity')->length(11)->nullable();
             $table->timestamps();
         });
     }

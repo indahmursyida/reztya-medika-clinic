@@ -10,6 +10,7 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Schedule;
 use App\Models\Service;
+use App\Models\Cart;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -174,6 +175,18 @@ class DatabaseSeeder extends Seeder
             'order_id' => 1,
             'product_id' => 2,
             'quantity' => 3
+        ]);
+
+        Cart::create([
+            'user_id' => 2,
+            'service_id' => 2,
+            'schedule_id' => 3
+        ]);
+
+        Cart::create([
+            'user_id' => 2,
+            'product_id' => 1,
+            'quantity' => 2
         ]);
     }
 }

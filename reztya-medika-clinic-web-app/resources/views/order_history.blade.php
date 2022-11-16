@@ -37,6 +37,7 @@
                     </p>
                 </div>
                 <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
+                <a href="/repeat-order/{{ $y->order_id }}" class="btn btn-success">Pesan Lagi</a>
             </div>
             @if(Auth::user()->user_role_id == 1)
                 <div class="d-flex flex-column ms-5">
