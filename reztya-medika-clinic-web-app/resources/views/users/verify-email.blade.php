@@ -30,7 +30,7 @@
                     <form action="/email/verification-notification" method="POST">
                         <div class="d-grid gap-2">
                             @csrf
-                            <button class="btn button-outline-reztya font-futura-reztya" type="submit">Kirim ulang verifikasi</button>
+                            <button class="btn button-outline-reztya font-futura-reztya" type="submit">Kirim Ulang Verifikasi</button>
                         </div>
                     </form>
                 </div>
