@@ -31,10 +31,6 @@ class DatabaseSeeder extends Seeder
             'user_role_name' => 'Member'
         ]);
 
-        DB::table('user_role')->insert([
-            'user_role_name' => 'Member'
-        ]);
-
         DB::table('users')->insert([
             'user_role_id' => 1,
             'username' => 'Admin',
@@ -45,7 +41,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => bcrypt('admin'),
             'profile_picture' => 'profile-images/profile_picture_default.jpg',
-            'is_banned' => false
+            'is_banned' => false,
+            'email_verified_at' => now()
         ]);
 
         DB::table('users')->insert([
@@ -58,11 +55,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'testing1@gmail.com',
             'password' => bcrypt('testing1'),
             'profile_picture' => 'profile-images/profile_picture_default.jpg',
-            'is_banned' => false
+            'is_banned' => false,
+            'email_verified_at' => now()
         ]);
 
         DB::table('users')->insert([
-            'user_role_id' => 3,
+            'user_role_id' => 2,
             'username' => 'Testing2',
             'name' => 'Testing2 Testing2 Testing2',
             'birthdate' => '2001-06-18',

@@ -68,7 +68,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/signin', function () {
     return view('users.signin');
 })->middleware('guest')->name('login');
-Route::post('/signin', [SignInController::class, 'userLogin'])->middleware(['auth', 'verified']);
+Route::post('/signin', [SignInController::class, 'userLogin']);
 
 // Sign Out
 Route::post('/signout', [SignInController::class, 'userLogout'])->middleware(['auth', 'verified']);
