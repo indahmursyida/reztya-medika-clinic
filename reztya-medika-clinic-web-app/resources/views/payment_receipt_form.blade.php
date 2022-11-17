@@ -7,7 +7,7 @@
 use Carbon\Carbon;
 @endphp
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
-    <h2 class="my-3 text-center unselectable font-alander-reztya">Payment Receipt Form</h2>
+    <h2 class="my-3 text-center unselectable font-alander-reztya">Konfirmasi Pembayaran</h2>
     <div class="unselectable d-flex justify-content-center mt-2">
         <div class="card card-sign bg-white outline-reztya">
             <div class="card-body">

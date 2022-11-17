@@ -141,41 +141,41 @@ class DatabaseSeeder extends Seeder
             'status' => 'Ready'
         ]);
 
-        Order::create([
-            'user_id' => 2,
-            'order_date' => Carbon::create('2022', '05', '23'),
-            'status' => 'UNPAID'
-        ]);
+        // Order::create([
+        //     'user_id' => 2,
+        //     'order_date' => Carbon::create('2022', '05', '23'),
+        //     'status' => 'UNPAID'
+        // ]);
 
-        OrderDetail::create([
-            'order_detail_id' => 1,
-            'order_id' => 1,
-            'service_id' => 1,
-            'schedule_id' => 2,
-            'quantity' => 1
-        ]);
+        // OrderDetail::create([
+        //     'order_detail_id' => 1,
+        //     'order_id' => 1,
+        //     'service_id' => 1,
+        //     'schedule_id' => 2,
+        //     'quantity' => 1
+        // ]);
 
-        OrderDetail::create([
-            'order_detail_id' => 2,
-            'order_id' => 1,
-            'service_id' => 2,
-            'schedule_id' => 3,
-            'quantity' => 1
-        ]);
+        // OrderDetail::create([
+        //     'order_detail_id' => 2,
+        //     'order_id' => 1,
+        //     'service_id' => 2,
+        //     'schedule_id' => 3,
+        //     'quantity' => 1
+        // ]);
 
-        OrderDetail::create([
-            'order_detail_id' => 3,
-            'order_id' => 1,
-            'product_id' => 1,
-            'quantity' => 2
-        ]);
+        // OrderDetail::create([
+        //     'order_detail_id' => 3,
+        //     'order_id' => 1,
+        //     'product_id' => 1,
+        //     'quantity' => 2
+        // ]);
 
-        OrderDetail::create([
-            'order_detail_id' => 4,
-            'order_id' => 1,
-            'product_id' => 2,
-            'quantity' => 3
-        ]);
+        // OrderDetail::create([
+        //     'order_detail_id' => 4,
+        //     'order_id' => 1,
+        //     'product_id' => 2,
+        //     'quantity' => 3
+        // ]);
 
         Cart::create([
             'user_id' => 2,

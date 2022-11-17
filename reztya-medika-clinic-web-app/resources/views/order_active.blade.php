@@ -4,6 +4,12 @@
 
 @section('container')
 @if(!$order->isEmpty())
+    <!-- @if(count($errors) > 0)
+    <script>
+        
+        $("#uploadTransferPopup").modal('show');
+    </script>
+    @endif -->
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
         <h2 class="my-3 text-center font-alander-reztya unselectable">Pesanan Aktif</h2>
         @foreach($order as $y)
@@ -56,6 +62,7 @@
                                                     Waktu Berakhir: {{ date('H:i:s', strtotime($x->schedule->end_time)) }}
                                                 </div>
                                             </div>
+                                            @if($y->status == 'ON GOING')
                                             <button class="btn btn-sm button-outline-reztya" data-toggle="modal" data-target="#reschedulePopup">Jadwal Ulang</button>
                                             <!-- Modal --> 
                                             <div class="modal fade" id="reschedulePopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
@@ -93,6 +100,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
                                         </div>
                                     </td>
                                     <td>Rp{{ number_format($x->service->price, 2) }}</td>
@@ -117,7 +125,12 @@
                                     <td>
                                         <img src="{{ asset("storage/" . $x->product->image_path)}}" alt="" width="200px" height="200px">
                                     </td>
-                                    <td><b>{{ $x->product->name }}</b></td>
+                                    <td>
+                                        <b>{{ $x->product->name }}</b>
+                                        <div>
+                                        Rp{{ number_format($x->product->price, 2) }}
+                                        </div>
+                                    </td>
                                     <td> Kuantitas: {{ $x->quantity }}</td>
                                     <td>Rp{{ number_format($x->product->price * $x->quantity, 2) }}</td>
                                 </tr>
@@ -128,9 +141,74 @@
             </div>
             @if(Auth::user()->user_role_id == 1)
                 <div class="d-flex justify-content-center">
-                    <a href="/finish-order/{{ $y->order_id }}" class="btn btn-success" type="button" onclick="return confirm('Apakah Anda yakin ingin menyelesaikan pesanan?')">Selesaikan Pesanan</a>
+                    <a href="/confirm-payment/{{ $y->order_id }}" class="btn btn-success" type="button">Konfirmasi Pembayaran</a>
                 </div>
             @else
+                @if($y->status == 'ON GOING')
+                    <div class="d-flex justify-content-center">
+                        <button class="btn button-outline-reztya" data-toggle="modal" data-target="#uploadTransferPopup" type="button">Bayar Pesanan</a>
+                    </div>
+                    <div class="modal fade" id="uploadTransferPopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="uploadTransferPopupPopupTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                {{-- Form --}}
+                                <form action="/upload-transfer-receipt/{{ $x->order_id }}" method="POST" enctype="multipart/form-data">
+                                        @method('put')
+                                        @csrf
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Bayar Pesanan</h5>
+                                        </div>
+                                        <div class="modal-body container">
+                                        <p>Anda dapat membayar langsung secara <b>cash</b> ke pihak klinik atau <b>transfer</b> ke nomor rekening <b>53489239 a/n Reztya Medika Clinic</b></p>
+                                        <p>Silahkan lengkapi form berikut jika sudah membayar via transfer.</p>
+                                            <div>
+                                                <div>
+                                                    Foto Bukti Transfer
+                                                </div>
+                                                <div>
+                                                    <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path">
+                                                    @error('image_path')
+                                                    <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                    </div>
+                                                    @enderror
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="font-futura-reztya">Nomor Akun Bank</label>
+                                                <input class="shadow-none form-control @error('account_number') is-invalid @enderror" type="text" name="account_number">
+                                                @error('account_number')
+                                                <div class="invalid-feedback">
+                                                {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                            <div>
+                                                <label class="font-futura-reztya">Nama Akun Bank</label>
+                                                <input class="shadow-none form-control @error('account_name') is-invalid @enderror" type="text" name="account_name">
+                                                @error('account_name')
+                                                <div class="invalid-feedback">
+                                                {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-success">OK</button>
+                                        </div>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+                @elseif($y->status == 'WAITING')
+                    <div>
+                        Mohon menunggu konfirmasi pembayaran transfer oleh Admin Reztya Medika Clinic
+                    </div>
+                @endif
+            @endif
+            @if($y->status != 'WAITING')
                 <div class="d-flex justify-content-center">
                     <a href="/cancel-order/{{ $y->order_id }}" class="btn btn-outline-danger" type="button" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan?')">Batalkan Pesanan</a>
                 </div>
@@ -140,14 +218,22 @@
 @else
     Tidak ada pesanan yang sedang aktif
 @endif
-<script>
-    $('#myModal').on('shown.bs.modal', function () {
-        $('#myInput').trigger('focus');
-    });
+<script type="text/javascript">
+    // $('#reschedulePopup').on('shown.bs.modal', function () {
+    //     $('#myInput').trigger('focus');
+    // });
 
     
-    $('#myModal').on('hidden.bs.modal', function () {
-        window.location.reload();
-    });
+    // $('#reschedulePopup').on('hidden.bs.modal', function () {
+    //     window.location.reload();
+    // });
+
+    // console.log($errors);
+
+    // if($errors){
+    //     // $('#uploadTransferPopup').modal('show');
+    //     alert('error');
+    // }
+
 </script>
 @endsection

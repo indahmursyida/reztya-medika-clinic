@@ -13,7 +13,7 @@ use Carbon\Carbon;
 
 class OrderController extends Controller
 {
-    public function createOrder()
+    public function create()
     {
         $order = Order::create([
             'user_id' => Auth::user()->user_id,
@@ -58,11 +58,11 @@ class OrderController extends Controller
 
         if(Auth::user()->user_role_id == 1)
         {
-            $order = Order::where('status', 'ON GOING')->get();
+            $order = Order::where('status', 'ON GOING')->orWhere('status', 'WAITING')->get();
         }
         else
         {
-            $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'ON GOING')->get();
+            $order = Order::where('user_id', Auth::user()->user_id)->orWhere('status', 'ON GOING')->where('status', 'WAITING')->get();
         }
 
         if(!$order->isEmpty())
@@ -152,11 +152,21 @@ class OrderController extends Controller
         return view('order_history')->with('order', $order)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
     }
 
-    public function finish_order($id)
+    public function confirm_payment($id)
     {
         $order = Order::find($id); 
-        $order->status = 'FINISH';
-        $order->save();
+
+        $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
+
+        if($order->status == 'WAITING')
+        {
+            return view('transfer_payment')->with('payment_receipt', $payment_receipt);
+        }
+        else if($order->status == 'ON GOING')
+        {
+
+        }
+        
         return redirect()->route('form_payment', ['id' => $id]);
     }
 

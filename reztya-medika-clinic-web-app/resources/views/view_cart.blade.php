@@ -109,11 +109,14 @@
                                 </td>
                                 <td>
                                     <b>{{ $x->product->name }}</b>
+                                    <div>
+                                    Rp{{ number_format($x->product->price, 2) }}
+                                    </div>
                                 </td>
                                 <td>
                                     Kuantitas: {{ $x->quantity }}
                                 </td>
-                                <td>Rp{{ number_format($x->product->price, 2) }}</td>
+                                <td>Rp{{ number_format($x->product->price * $x->quantity, 2) }}</td>
                                 <td>
                                     <button data-toggle="modal" data-target="#editQuantityPopup" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
                                         <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
