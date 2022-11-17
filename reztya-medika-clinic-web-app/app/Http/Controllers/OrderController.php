@@ -120,15 +120,33 @@ class OrderController extends Controller
         return redirect('/history-order');
     }
 
+    public function updatePaymentReceipt(Request $req, $id)
+    {
+        $validated_data = $req->validate([
+            'confirmed_by' => 'required'
+        ]);
+
+        $payment_receipt = PaymentReceipt::find($id);
+
+        $payment_receipt->update($validated_data);
+
+        $order = Order::where('payment_receipt_id', $id)->first();
+
+        $order->status = 'FINISHED';
+        $order->save();
+
+        return redirect('/history-order');
+    }
+
     public function history_order()
     {
         if(Auth::user()->user_role_id == 1)
         {
-            $order = Order::all()->where('status','!=','UNPAID');
+            $order = Order::where('status','!=','ON GOING')->get();
         }
         else
         {
-            $order = Order::where('user_id', Auth::user()->user_id)->where('status','!=','UNPAID')->get();
+            $order = Order::where('user_id', Auth::user()->user_id)->where('status','!=','ON GOING')->get();
         }
         
         $printServiceOnce = false;
@@ -186,34 +204,62 @@ class OrderController extends Controller
         return view('payment_receipt_form')->with('order', $order)->with('totalPrice', $totalPrice);
     }
 
-    public function add_payment_receipt(Request $req)
+    public function add_payment_receipt(Request $req, $id)
     {
-        if($req->payment_method == 'Cash')
+        $order = Order::find($id);
+        $totalPrice = 0;
+
+        foreach($order->orderDetail as $x)
         {
-            $validated_data = $req->validate([
-                'order_date' => 'required',
-                'customer_name' => 'required',
-                'payment_date' => 'required',
-                'payment_amount' => 'required',
-                'payment_method' => 'required|in:Cash', 
-                'created_by' => 'required',
-                'admin_password' => 'required'
-            ]);
-        }
-        else{
-            $validated_data = $req->validate([
-                'order_date' => 'required',
-                'customer_name' => 'required',
-                'payment_date' => 'required',
-                'payment_amount' => 'required',
-                'payment_method' => 'required|in:Transfer', 
-                'account_number' => 'numeric',
-                'created_by' => 'required',
-                'admin_password' => 'required'
-            ]);
+            if($x->service_id)
+                $totalPrice += $x->service->price;
+            else
+                $totalPrice += $x->product->price * $x->quantity;
         }
 
-        PaymentReceipt::create($validated_data);
+        if($order->status == 'ON GOING')
+        {
+            $validated_data = $req->validate([
+                // 'order_date' => 'required',
+                // 'customer_name' => 'required',
+                // 'payment_date' => 'required',
+                // 'payment_amount' => 'required',
+                // 'payment_method' => 'required|in:Cash', 
+                'confirmed_by' => 'required',
+                'admin_password' => 'required'
+            ]);
+
+            $payment_receipt = PaymentReceipt::create([
+                'confirmed_by' => $req->confirmed_by,
+                'payment_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
+                'payment_amount' => $totalPrice,
+                'payment_method' => 'Cash'
+            ]);
+
+            dd($payment_receipt);
+
+            $order->payment_receipt_id = $payment_receipt->payment_receipt_id;
+            $order->save();
+        }
+        else if($order->status == 'WAITING'){
+            $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
+            $validated_data = $req->validate([
+                // 'order_date' => 'required',
+                // 'customer_name' => 'required',
+                // 'payment_date' => 'required',
+                // 'payment_amount' => 'required',
+                // 'payment_method' => 'required|in:Transfer', 
+                // 'account_number' => 'numeric',
+                'confirmed_by' => 'required',
+                'admin_password' => 'required'
+            ]);
+
+            $payment_receipt->confirmed_by = $validated_data['confirmed_by'];
+            $payment_receipt->save();
+        }
+        
+        $order->status = 'FINISHED';
+        $order->save();
 
         return redirect('/history-order');
     }

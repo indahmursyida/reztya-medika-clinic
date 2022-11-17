@@ -154,10 +154,11 @@ Route::get('/active-order', [OrderController::class, 'activeOrder']);
 Route::put('/reschedule/{id}', [OrderController::class, 'reschedule']);
 Route::get('/cancel-order/{id}', [OrderController::class, 'cancel_order']);
 Route::get('/confirm-payment/{id}', [OrderController::class, 'confirm_payment']);
+Route::post('/update-payment-receipt/{id}', [OrderController::class, 'updatePaymentReceipt']);
 Route::get('/history-order', [OrderController::class, 'history_order']);
 Route::get('/payment-receipt-form/{id}', [OrderController::class, 'form_payment_receipt'])->name('form_payment');
 Route::get('/history-order/filter/status/{status}', [OrderController::class, 'filter_status']);
-Route::post('/add-payment-receipt', [OrderController::class, 'add_payment_receipt']);
+Route::post('/add-payment-receipt/{id}', [OrderController::class, 'add_payment_receipt']);
 Route::get('/repeat-order/{id}', [OrderController::class, 'repeatOrder']);
 
 Route::put('/upload-transfer-receipt/{id}', [PaymentReceiptController::class, 'transferReceipt']);

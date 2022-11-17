@@ -153,52 +153,52 @@
                             <div class="modal-content">
                                 {{-- Form --}}
                                 <form action="/upload-transfer-receipt/{{ $x->order_id }}" method="POST" enctype="multipart/form-data">
-                                        @method('put')
-                                        @csrf
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Bayar Pesanan</h5>
-                                        </div>
-                                        <div class="modal-body container">
-                                        <p>Anda dapat membayar langsung secara <b>cash</b> ke pihak klinik atau <b>transfer</b> ke nomor rekening <b>53489239 a/n Reztya Medika Clinic</b></p>
-                                        <p>Silahkan lengkapi form berikut jika sudah membayar via transfer.</p>
+                                    @method('put')
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Bayar Pesanan</h5>
+                                    </div>
+                                    <div class="modal-body container">
+                                    <p>Anda dapat membayar langsung secara <b>cash</b> ke pihak klinik atau <b>transfer</b> ke nomor rekening <b>53489239 a/n Reztya Medika Clinic</b></p>
+                                    <p>Silahkan lengkapi form berikut jika sudah membayar via transfer.</p>
+                                        <div>
                                             <div>
-                                                <div>
-                                                    Foto Bukti Transfer
-                                                </div>
-                                                <div>
-                                                    <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path">
-                                                    @error('image_path')
-                                                    <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                    </div>
-                                                    @enderror
-                                                    </select>
-                                                </div>
+                                                Foto Bukti Transfer
                                             </div>
                                             <div>
-                                                <label class="font-futura-reztya">Nomor Akun Bank</label>
-                                                <input class="shadow-none form-control @error('account_number') is-invalid @enderror" type="text" name="account_number">
-                                                @error('account_number')
+                                                <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path">
+                                                @error('image_path')
                                                 <div class="invalid-feedback">
                                                 {{ $message }}
                                                 </div>
                                                 @enderror
-                                            </div>
-                                            <div>
-                                                <label class="font-futura-reztya">Nama Akun Bank</label>
-                                                <input class="shadow-none form-control @error('account_name') is-invalid @enderror" type="text" name="account_name">
-                                                @error('account_name')
-                                                <div class="invalid-feedback">
-                                                {{ $message }}
-                                                </div>
-                                                @enderror
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-success">OK</button>
+                                        <div>
+                                            <label class="font-futura-reztya">Nomor Akun Bank</label>
+                                            <input class="shadow-none form-control @error('account_number') is-invalid @enderror" type="text" name="account_number">
+                                            @error('account_number')
+                                            <div class="invalid-feedback">
+                                            {{ $message }}
+                                            </div>
+                                            @enderror
                                         </div>
-                                    </form>
+                                        <div>
+                                            <label class="font-futura-reztya">Nama Akun Bank</label>
+                                            <input class="shadow-none form-control @error('account_name') is-invalid @enderror" type="text" name="account_name">
+                                            @error('account_name')
+                                            <div class="invalid-feedback">
+                                            {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
+                                        <button type="submit" class="btn btn-success">OK</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ use Carbon\Carbon;
     <div class="unselectable d-flex justify-content-center mt-2">
         <div class="card card-sign bg-white outline-reztya">
             <div class="card-body">
-                <form action="/add-payment-receipt" method="POST" enctype="multipart/form-data" class="needs-validation">
+                <form action="/add-payment-receipt/{{$order->order_id}}" method="POST" enctype="multipart/form-data" class="needs-validation">
                     @method('post')
                     @csrf
                     <div class="d-flex justify-content-center">
@@ -21,75 +21,76 @@ use Carbon\Carbon;
                         <input id="order_id" class="shadow-none form-control" type="text" name="order_id" value="{{old('order_id', $order->order_id)}}" hidden>
                     </div>
                     <div class="form-floating mb-2">
-                        <input placeholder="order_date" id="floating_order_date" class="shadow-none form-control @error('order_date') is-invalid @enderror" type="date" name="order_date" value="{{old('order_date', $order->order_date)}}">
+                        <input placeholder="order_date" disabled="true" id="floating_order_date" class="shadow-none form-control" type="date" name="order_date" value="{{old('order_date', $order->order_date)}}">
                         <label for="floating_order_date" class="font-futura-reztya">Tanggal Pesanan (Bulan/Tanggal/Tahun)</label>
-                        @error('order_date')
+                        {{-- @error('order_date')
                         <div class="invalid-feedback">
-                            Tanggal Pesanan wajib diisi
+                            Tanggal pesanan wajib diisi
                         </div>
-                        @enderror
+                        @enderror --}}
                     </div>
                     <div class="form-floating mb-2" autofocus>
-                        <input placeholder="Customer Name" id="floating_customer_name" class="shadow-none form-control @error('customer_name') is-invalid @enderror" type="text" name="customer_name" value="{{old('customer_name', $order->user->name)}}" >
+                        <input placeholder="Customer Name" disabled="true"  id="floating_customer_name" class="shadow-none form-control" type="text" name="customer_name" value="{{old('customer_name', $order->user->name)}}" >
                         <label for="floating_customer_name" class="font-futura-reztya">Nama Pelanggan</label>
-                        @error('customer_name')
+                        {{-- @error('customer_name')
                         <div class="invalid-feedback">
-                            Nama Pelanggan wajib diisi
+                            Nama pelanggan wajib diisi
                         </div>
-                        @enderror
+                        @enderror --}}
                     </div>
                     <div class="form-floating mb-2">
-                        <input placeholder="Payment Date" id="floating_payment_date" class="shadow-none form-control @error('payment_date') is-invalid @enderror" type="date" name="payment_date" value="{{ date("Y-m-d", strtotime("now")) }}">
+                        <input placeholder="Payment Date" disabled="true" id="floating_payment_date" class="shadow-none form-control" type="date" name="payment_date" value="{{ date("Y-m-d", strtotime("now")) }}">
                         <label for="floating_payment_date" class="font-futura-reztya">Tanggal Pembayaran (Bulan/Tanggal/Tahun)</label>
-                        @error('payment_date')
+                        {{-- @error('payment_date')
                         <div class="invalid-feedback">
-                            Tanggal Pembayaran wajib diisi
+                            Tanggal pembayaran wajib diisi
                         </div>
-                        @enderror
+                        @enderror --}}
                     </div>
                     <div class="form-floating mb-2">
-                        <select class="form-select align-items-middle @error('payment_method') is-invalid @enderror" id="floating_select" onchange="payment_method_select_handler(this)" name="payment_method">
+                        <input disabled="true" class="shadow-none form-control" type="text" name="payment_method" value="Cash">
+                        {{-- <select class="form-select align-items-middle @error('payment_method') is-invalid @enderror" id="floating_select" onchange="payment_method_select_handler(this)" name="payment_method">
                             <option>-- Pilih satu --</option>
                             <option class="align-middle" value="Cash">Cash</option>
                             <option class="align-middle" value="Transfer">Transfer</option>
-                        </select>
+                        </select> --}}
                         <label for="floating_select">Metode Pembayaran</label>
                         {{-- <div class="mb-1 radio">
                             <label><input type="radio" class="ms-3" name="payment_method" value="Cash">Cash</label>
                             <label><input type="radio" class="ms-2" name="payment_method" value="Transfer">Transfer</label>
                         </div> --}}
-                        @error('payment_method')
+                        {{-- @error('payment_method')
                         <div class="invalid-feedback">
                             Metode Pembayaran wajib diisi
                         </div>
-                        @enderror
+                        @enderror --}}
                     </div>
                     <div class="form-floating mb-2" id="account_number" style="display: none">
-                        <input placeholder="Account Number" id="floating_account_number" class="shadow-none form-control @error('account_number') is-invalid @enderror" type="text" name="account_number">
+                        <input placeholder="Account Number" id="floating_account_number" class="shadow-none form-control" type="text" name="account_number">
                         <label for="floating_account_number" class="font-futura-reztya">Nomor Akun Bank</label>
-                        @error('account_number')
+                        {{-- @error('account_number')
                         <div class="invalid-feedback">
                             Nomor Akun Bank harus diisi dengan angka
                         </div>
-                        @enderror
+                        @enderror --}}
                     </div>
                     <div class="form-floating mb-2">
-                        <input placeholder="Jumlah Pembayaran" id="floating_payment_amount" class="shadow-none form-control @error('payment_amount') is-invalid @enderror" type="number" name="payment_amount" value="{{ old('payment_amount', $totalPrice)}}">
-                        <label for="payment_amount" class="font-futura-reztya">Jumlah Pembayaran (Rp)</label>
-                        @error('payment_amount')
+                        <input id="floating_payment_amount" disabled="true" class="shadow-none form-control" type="text" name="payment_amount" value="Rp{{ old('payment_amount', number_format($totalPrice, 2))}}">
+                        <label for="payment_amount" class="font-futura-reztya">Jumlah Pembayaran</label>
+                        {{-- @error('payment_amount')
                         <div class="invalid-feedback">
                             Jumlah Pembayaran wajib diisi
                         </div>
-                        @enderror
+                        @enderror --}}
                     </div>
                     
                     <div class="d-flex justify-content-center">
                         Verifikasi Admin
                     </div>
                     <div class="form-floating mb-2">
-                        <input placeholder="Username Admin" id="floating_created_by" class="shadow-none form-control @error('created_by') is-invalid @enderror" type="text" name="created_by" value="{{old('username', $order->user->username)}}">
-                        <label for="floating_created_by" class="font-futura-reztya">Username Admin</label>
-                        @error('created_by')
+                        <input placeholder="Username Admin" id="floating_confirmed_by" class="shadow-none form-control" type="text" name="confirmed_by" value="{{old('username', Auth::user()->username)}}">
+                        <label for="floating_confirmed_by" class="font-futura-reztya">Username Admin</label>
+                        @error('confirmed_by')
                         <div class="invalid-feedback">
                             Username Admin wajib diisi
                         </div>

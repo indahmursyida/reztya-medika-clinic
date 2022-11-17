@@ -23,11 +23,11 @@
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
                     @if ($y->status =="FINISHED")
-                        <h4>{{ date('l, d M Y', strtotime($y->payment_receipt->payment_date)) }}</h4>
+                        <h4>{{ date('l, d M Y', strtotime($y->paymentReceipt->payment_date)) }}</h4>
                     @else
                         <h4>{{ date('l, d M Y', strtotime($y->order_date)) }}</h4>
                     @endif
-                    @if ($y->status == "FINISH")
+                    @if ($y->status == "FINISHED")
                     <p class="rounded-2 ps-2 pe-2 ms-3" style="border: 2px solid #00A54F; color: #00A54F;">
                     @else
                     <p class="rounded-2 ps-2 pe-2 ms-3" style="border: 2px solid red; color: red;">
@@ -36,7 +36,9 @@
                     </p>
                 </div>
                 <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
-                <a href="/repeat-order/{{ $y->order_id }}" class="btn btn-success">Pesan Lagi</a>
+                @if(Auth::user()->user_role_id == 2)
+                    a href="/repeat-order/{{ $y->order_id }}" class="btn btn-success">Pesan Lagi</a>
+                @endif
             </div>
             @if(Auth::user()->user_role_id == 1)
                 <div class="d-flex flex-column ms-5">

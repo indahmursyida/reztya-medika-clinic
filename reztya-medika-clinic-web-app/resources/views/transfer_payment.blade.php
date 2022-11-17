@@ -53,7 +53,7 @@ use Carbon\Carbon;
     <div class="unselectable d-flex justify-content-center mt-2">
         <div class="card card-sign bg-white outline-reztya">
             <div class="card-body">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="/update-payment-receipt/{{ $payment_receipt->payment_receipt_id }}" method="POST" enctype="multipart/form-data">
                     @method('post')
                     @csrf
                     <div class="text-center">
@@ -78,7 +78,7 @@ use Carbon\Carbon;
                         @enderror
                     </div>
                     <div class="d-grid gap-2">
-                        <button class="btn button-outline-reztya font-futura-reztya" onclick="is_payment_method_selected(floating_select.value)" type="submit">Submit</button>
+                        <button class="btn button-outline-reztya font-futura-reztya" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
