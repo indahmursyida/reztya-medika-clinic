@@ -18,7 +18,8 @@ class PaymentReceipt extends Model
         'payment_method',
         'account_number',
         'account_name',
-        'image_path'
+        'image_path',
+        'confirmed_by'
     ];
 
     public function order(){

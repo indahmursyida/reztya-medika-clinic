@@ -61,7 +61,7 @@
                                                         <div class="modal-body container d-flex align-items-center">
                                                             <div class="me-5">
                                                                 Jadwal Perawatan
-                                                            </div> 
+                                                            </div>
                                                             <div>
                                                                 <!-- <input type="hidden" id="cart_id" name="cart_id" value={{ $x->cart_id }}> -->
                                                                 <div>
@@ -138,7 +138,7 @@
                                                         <div class="modal-body container d-flex align-items-center">
                                                             <div class="me-5">
                                                                 Kuantitas
-                                                            </div> 
+                                                            </div>
                                                             <div>
                                                                 <!-- <input type="hidden" id="cart_id" name="cart_id" value={{ $x->order_detail_id }}> -->
                                                                 <div>

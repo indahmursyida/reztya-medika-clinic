@@ -230,7 +230,7 @@ class OrderController extends Controller
             ]);
 
             $payment_receipt = PaymentReceipt::create([
-                'confirmed_by' => $req->confirmed_by,
+                'confirmed_by' => $validated_data['confirmed_by'],
                 'payment_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
                 'payment_amount' => $totalPrice,
                 'payment_method' => 'Cash'

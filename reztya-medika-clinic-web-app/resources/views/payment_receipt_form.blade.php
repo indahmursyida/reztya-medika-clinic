@@ -21,7 +21,7 @@ use Carbon\Carbon;
                         <input id="order_id" class="shadow-none form-control" type="text" name="order_id" value="{{old('order_id', $order->order_id)}}" hidden>
                     </div>
                     <div class="form-floating mb-2">
-                        <input placeholder="order_date" disabled="true" id="floating_order_date" class="shadow-none form-control" type="date" name="order_date" value="{{old('order_date', $order->order_date)}}">
+                        <input placeholder="order_date" disabled id="floating_order_date" class="shadow-none form-control" type="date" name="order_date" value="{{old('order_date', $order->order_date)}}">
                         <label for="floating_order_date" class="font-futura-reztya">Tanggal Pesanan (Bulan/Tanggal/Tahun)</label>
                         {{-- @error('order_date')
                         <div class="invalid-feedback">
@@ -30,7 +30,7 @@ use Carbon\Carbon;
                         @enderror --}}
                     </div>
                     <div class="form-floating mb-2" autofocus>
-                        <input placeholder="Customer Name" disabled="true"  id="floating_customer_name" class="shadow-none form-control" type="text" name="customer_name" value="{{old('customer_name', $order->user->name)}}" >
+                        <input placeholder="Customer Name" disabled id="floating_customer_name" class="shadow-none form-control" type="text" name="customer_name" value="{{old('customer_name', $order->user->name)}}" >
                         <label for="floating_customer_name" class="font-futura-reztya">Nama Pelanggan</label>
                         {{-- @error('customer_name')
                         <div class="invalid-feedback">
@@ -39,7 +39,7 @@ use Carbon\Carbon;
                         @enderror --}}
                     </div>
                     <div class="form-floating mb-2">
-                        <input placeholder="Payment Date" disabled="true" id="floating_payment_date" class="shadow-none form-control" type="date" name="payment_date" value="{{ date("Y-m-d", strtotime("now")) }}">
+                        <input placeholder="Payment Date" disabled id="floating_payment_date" class="shadow-none form-control" type="date" name="payment_date" value="{{ date("Y-m-d", strtotime("now")) }}">
                         <label for="floating_payment_date" class="font-futura-reztya">Tanggal Pembayaran (Bulan/Tanggal/Tahun)</label>
                         {{-- @error('payment_date')
                         <div class="invalid-feedback">
@@ -48,7 +48,7 @@ use Carbon\Carbon;
                         @enderror --}}
                     </div>
                     <div class="form-floating mb-2">
-                        <input disabled="true" class="shadow-none form-control" type="text" name="payment_method" value="Cash">
+                        <input disabled class="shadow-none form-control" type="text" name="payment_method" value="Cash">
                         {{-- <select class="form-select align-items-middle @error('payment_method') is-invalid @enderror" id="floating_select" onchange="payment_method_select_handler(this)" name="payment_method">
                             <option>-- Pilih satu --</option>
                             <option class="align-middle" value="Cash">Cash</option>
@@ -75,7 +75,7 @@ use Carbon\Carbon;
                         @enderror --}}
                     </div>
                     <div class="form-floating mb-2">
-                        <input id="floating_payment_amount" disabled="true" class="shadow-none form-control" type="text" name="payment_amount" value="Rp{{ old('payment_amount', number_format($totalPrice, 2))}}">
+                        <input id="floating_payment_amount" disabled class="shadow-none form-control" type="text" name="payment_amount" value="Rp{{ old('payment_amount', number_format($totalPrice, 2))}}">
                         <label for="payment_amount" class="font-futura-reztya">Jumlah Pembayaran</label>
                         {{-- @error('payment_amount')
                         <div class="invalid-feedback">
@@ -83,7 +83,7 @@ use Carbon\Carbon;
                         </div>
                         @enderror --}}
                     </div>
-                    
+
                     <div class="d-flex justify-content-center">
                         Verifikasi Admin
                     </div>
@@ -129,7 +129,7 @@ use Carbon\Carbon;
         selected = select.value;
         console.log(selected);
     }
-    
+
     function is_payment_method_selected(value)
     {
         console.log(value);
