@@ -81,7 +81,7 @@ class OrderController extends Controller
 
         return view('order_active')->with('order', $order)->with('schedules', $schedules)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
     }
-    
+
     public function reschedule(Request $req, $id)
     {
         $validated_data = $req->validate([
@@ -114,7 +114,7 @@ class OrderController extends Controller
 
     public function cancel_order($id)
     {
-        $order = Order::find($id); 
+        $order = Order::find($id);
         $order->status = 'CANCELED';
         $order->save();
         return redirect('/history-order');
@@ -148,7 +148,7 @@ class OrderController extends Controller
         {
             $order = Order::where('user_id', Auth::user()->user_id)->where('status','!=','ON GOING')->get();
         }
-        
+
         $printServiceOnce = false;
         $printProductOnce = false;
         $totalPrice = 0;
@@ -172,7 +172,7 @@ class OrderController extends Controller
 
     public function confirm_payment($id)
     {
-        $order = Order::find($id); 
+        $order = Order::find($id);
 
         $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
 
@@ -184,13 +184,13 @@ class OrderController extends Controller
         {
 
         }
-        
+
         return redirect()->route('form_payment', ['id' => $id]);
     }
 
     public function form_payment_receipt($id)
     {
-        $order = Order::find($id); 
+        $order = Order::find($id);
         $totalPrice = 0;
 
         foreach($order->orderDetail as $x)
@@ -224,7 +224,7 @@ class OrderController extends Controller
                 // 'customer_name' => 'required',
                 // 'payment_date' => 'required',
                 // 'payment_amount' => 'required',
-                // 'payment_method' => 'required|in:Cash', 
+                // 'payment_method' => 'required|in:Cash',
                 'confirmed_by' => 'required',
                 'admin_password' => 'required'
             ]);
@@ -248,7 +248,7 @@ class OrderController extends Controller
                 // 'customer_name' => 'required',
                 // 'payment_date' => 'required',
                 // 'payment_amount' => 'required',
-                // 'payment_method' => 'required|in:Transfer', 
+                // 'payment_method' => 'required|in:Transfer',
                 // 'account_number' => 'numeric',
                 'confirmed_by' => 'required',
                 'admin_password' => 'required'
@@ -257,7 +257,7 @@ class OrderController extends Controller
             $payment_receipt->confirmed_by = $validated_data['confirmed_by'];
             $payment_receipt->save();
         }
-        
+
         $order->status = 'FINISHED';
         $order->save();
 
@@ -292,14 +292,14 @@ class OrderController extends Controller
                 }
             }
         }
-        
+
         return view('order_history')->with('order', $order)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
     }
 
     public function repeatOrder($id)
     {
         $order_detail = OrderDetail::where('order_id', $id)->get();
-        
+
         foreach($order_detail as $x)
         {
             if($x->service_id)
@@ -319,7 +319,7 @@ class OrderController extends Controller
                 ]);
             }
         }
-        
+
         return redirect('/cart');
     }
 }

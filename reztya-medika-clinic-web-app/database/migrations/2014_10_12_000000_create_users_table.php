@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
-            $table->integer('user_role_id')->default(2); // 1 = admin, 2 =  user
+            $table->foreignId('user_role_id')->default(2); // 1 = admin, 2 =  user
             $table->string('username');
             $table->string('name');
             $table->date('birthdate');

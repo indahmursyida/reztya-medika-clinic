@@ -29,9 +29,12 @@ class AuthServiceProvider extends ServiceProvider
 
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
-                ->subject('Verify Alamat Email')
-                ->line('Klik tombol di bawah untuk verify email anda.')
-                ->action('Verify Alamat Email', $url);
+                ->greeting('Selamat Datang Member Baru!')
+                ->subject('Verifikasi Alamat Email')
+                ->line('Klik tombol di bawah untuk verifikasi email anda.')
+                ->action('Verifikasi Alamat Email', $url)
+                ->line('Terima kasih sudah bergabung dengan kami!');
+                //->salutation("Salam, \r\n\r\n" . env('app_name'));
         });
     }
 }

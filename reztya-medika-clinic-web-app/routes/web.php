@@ -13,6 +13,7 @@ use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentReceiptController;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -31,7 +32,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // Redirects
 Route::permanentRedirect('/', '/home');
 Route::permanentRedirect('/login', '/signin')->middleware('guest');
-Route::permanentRedirect('/logout', '/home')->middleware('auth');
+Route::permanentRedirect('/logout', '/home')->middleware(['auth', 'verified']);
 
 // Home
 Route::get('/home', function () {
@@ -51,14 +52,16 @@ Route::get('/signup', [SignUpController::class, 'signUp'])->middleware('guest');
 Route::post('/signup', [SignUpController::class, 'userRegister']);
 
 Route::get('/email/verify', function () {
-    return view('auth.verify-email');
+    return view('users.verify-email');
 })->middleware('auth')->name('verification.notice');
+
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
     return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
-Route::post('/email/verification-notification', function (EmailVerificationRequest $request) {
+
+Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
 
     return back()->with('message', 'Link verifikasi telah dikirim!');
@@ -67,22 +70,21 @@ Route::post('/email/verification-notification', function (EmailVerificationReque
 // Sign In
 Route::get('/signin', function () {
     return view('users.signin');
-})->middleware('guest');
+})->middleware('guest')->name('login');
 Route::post('/signin', [SignInController::class, 'userLogin']);
 
 // Sign Out
-Route::post('/signout', [SignInController::class, 'userLogout'])->middleware('auth');
-Route::post('/signout', [SignInController::class, 'userLogout'])->middleware('auth');
+Route::post('/signout', [SignInController::class, 'userLogout'])->middleware(['auth', 'verified']);
 
 // View Profile
-Route::get('/view-profile/{username}', [ProfileController::class, 'viewProfile'])->middleware('auth');
+Route::get('/view-profile/{username}', [ProfileController::class, 'viewProfile'])->middleware(['auth', 'verified']);
 
 // Edit Profile
-Route::get('/edit-profile/{username}', [ProfileController::class, 'viewEditProfile'])->middleware('auth');
-Route::post('/edit-profile/{username}', [ProfileController::class, 'editProfile'])->middleware('auth');
+Route::get('/edit-profile/{username}', [ProfileController::class, 'viewEditProfile'])->middleware(['auth', 'verified']);
+Route::post('/edit-profile/{username}', [ProfileController::class, 'editProfile'])->middleware(['auth', 'verified']);
 
 // Change Password
-Route::post('/change-password/{username}', [ProfileController::class, 'changePassword'])->middleware('auth');
+Route::post('/change-password/{username}', [ProfileController::class, 'changePassword'])->middleware(['auth', 'verified']);
 
 // Products
 Route::get('/view-products', [ProductController::class, 'view']);
