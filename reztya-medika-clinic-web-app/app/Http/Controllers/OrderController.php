@@ -45,7 +45,7 @@ class OrderController extends Controller
 
         Cart::where('user_id', Auth::user()->user_id)->delete();
 
-        return redirect('/active-order');
+        return redirect()->route('detail_order', ['id' => $order->order_id]);
     }
 
     public function activeOrder()
@@ -62,7 +62,7 @@ class OrderController extends Controller
         }
         else
         {
-            $order = Order::where('user_id', Auth::user()->user_id)->orWhere('status', 'ON GOING')->where('status', 'WAITING')->get();
+            $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'WAITING')->orWhere('status', 'ON GOING')->get();
         }
 
         if(!$order->isEmpty())
@@ -80,6 +80,19 @@ class OrderController extends Controller
         }
 
         return view('order_active')->with('order', $order)->with('schedules', $schedules)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
+    }
+
+    public function detailOrder($id)
+    {
+        $order = null;
+        $schedules = Schedule::all();
+        $printServiceOnce = false;
+        $printProductOnce = false;
+        $totalPrice = 0;
+
+        $order = Order::find($id);
+
+        return view('order_detail')->with('order', $order)->with('schedules', $schedules)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
     }
 
     public function reschedule(Request $req, $id)
@@ -138,15 +151,15 @@ class OrderController extends Controller
         return redirect('/history-order');
     }
 
-    public function history_order()
+    public function historyOrder()
     {
         if(Auth::user()->user_role_id == 1)
         {
-            $order = Order::where('status','!=','ON GOING')->get();
+            $order = Order::where('status','FINISHED')->orWhere('status','CANCELED')->get();
         }
         else
         {
-            $order = Order::where('user_id', Auth::user()->user_id)->where('status','!=','ON GOING')->get();
+            $order = Order::where('user_id', Auth::user()->user_id)->where('status','FINISHED')->orWhere('status','CANCELED')->get();
         }
 
         $printServiceOnce = false;
@@ -170,20 +183,20 @@ class OrderController extends Controller
         return view('order_history')->with('order', $order)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
     }
 
-    public function confirm_payment($id)
+    public function confirmPayment($id)
     {
         $order = Order::find($id);
 
         $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
 
-        if($order->status == 'WAITING')
-        {
-            return view('transfer_payment')->with('payment_receipt', $payment_receipt);
-        }
-        else if($order->status == 'ON GOING')
-        {
+        // if($order->status == 'WAITING')
+        // {
+        //     return view('transfer_payment')->with('payment_receipt', $payment_receipt);
+        // }
+        // else if($order->status == 'ON GOING')
+        // {
 
-        }
+        // }
 
         return redirect()->route('form_payment', ['id' => $id]);
     }
@@ -192,6 +205,12 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         $totalPrice = 0;
+        $payment_receipt = null;
+
+        if($order->payment_receipt_id)
+        {
+            $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
+        }
 
         foreach($order->orderDetail as $x)
         {
@@ -201,7 +220,7 @@ class OrderController extends Controller
                 $totalPrice += $x->product->price * $x->quantity;
         }
 
-        return view('payment_receipt_form')->with('order', $order)->with('totalPrice', $totalPrice);
+        return view('payment_receipt_form')->with('order', $order)->with('totalPrice', $totalPrice)->with('payment_receipt', $payment_receipt);
     }
 
     public function add_payment_receipt(Request $req, $id)
@@ -264,36 +283,37 @@ class OrderController extends Controller
         return redirect('/history-order');
     }
 
-    public function filter_status($status)
+    public function filterFinished()
     {
         if(Auth::user()->user_role_id == 1)
         {
-            $order = Order::where('status', $status)->get();
+            $order = Order::where('status', 'FINISHED')->get();
         }
         else
         {
-            $order = Order::where('user_id', Auth::user()->user_id)->where('status', $status)->get();
+            $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'FINISHED')->get();
         }
 
         $printServiceOnce = false;
         $printProductOnce = false;
-        $totalPrice = 0;
 
-        if(!$order->isEmpty())
+        return view('order_history')->with('order', $order)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce);
+    }
+
+    public function filterCanceled()
+    {
+        if(Auth::user()->user_role_id == 1)
         {
-            foreach($order as $x)
-            {
-                foreach($x->orderDetail as $y)
-                {
-                    if($y->service_id)
-                        $totalPrice += $y->service->price;
-                    else
-                        $totalPrice += $y->product->price * $y->quantity;
-                }
-            }
+            $order = Order::where('status', 'CANCELED')->get();
         }
+        else
+        {
+            $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'CANCELED')->get();
+        }
+        $printServiceOnce = false;
+        $printProductOnce = false;
 
-        return view('order_history')->with('order', $order)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
+        return view('order_history')->with('order', $order)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce);
     }
 
     public function repeatOrder($id)

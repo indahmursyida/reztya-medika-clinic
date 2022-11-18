@@ -1,9 +1,14 @@
 @extends('layout/main')
 
-@section('name', 'Active Order')
+@section('title', 'Order')
 
 @section('container')
-@if(!$order->isEmpty())
+@if (session('success'))
+<div class="alert alert-success" id="success-alert">
+    <strong> {{session()->get('success')}} </strong>
+</div>
+@endif
+@if($order)
     <!-- @if(count($errors) > 0)
     <script>
         
@@ -12,12 +17,11 @@
     @endif -->
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
         <h2 class="my-3 text-center font-alander-reztya unselectable">Pesanan Aktif</h2>
-        @foreach($order as $y)
-            <div class="d-flex justify-content-between">
-                <h4>{{ date('l, d M Y', strtotime($y->order_date)) }}</h4>
+        <div class="d-flex justify-content-between">
+            <h4>{{ date('l, d M Y', strtotime($order->order_date)) }}</h4>
                 @php
                     $totalPrice = 0;
-                    foreach($y->orderDetail as $p)
+                    foreach($order->orderDetail as $p)
                     {
                         if($p->service_id)
                             $totalPrice += $p->service->price;
@@ -31,22 +35,22 @@
                 <div class="d-flex flex-column ms-5">
                     <div>
                         Nama Pelanggan:  
-                        <b>{{ $y->user->name }}</b>
+                        <b>{{ $order->user->name }}</b>
                     </div>
                     <div>
                         No. HP Pelanggan: 
-                        <b>{{ $y->user->phone }}</b>
+                        <b>{{ $order->user->phone }}</b>
                     </div>
                     <div>
                         Alamat Pelanggan: 
-                        <b>{{ $y->user->address }}</b>
+                        <b>{{ $order->user->address }}</b>
                     </div>
                 </div>
             @endif
             <div class="d-flex flex-column ms-3">
                 <table class="table">
                     <tbody>
-                        @foreach($y->orderDetail as $x)
+                        @foreach($order->orderDetail as $x)
                             @if($x->service_id)
                                 @if($printServiceOnce == false)
                                     <h5>Perawatan</h5>
@@ -72,7 +76,7 @@
                                                     Waktu Berakhir: {{ date('H:i:s', strtotime($x->schedule->end_time)) }}
                                                 </div>
                                             </div>
-                                            @if($y->status == 'ON GOING')
+                                            @if($order->status == 'ON GOING')
                                             <button class="btn btn-sm button-outline-reztya" data-toggle="modal" data-target="#reschedulePopup">Jadwal Ulang</button>
                                             <!-- Modal --> 
                                             <div class="modal fade" id="reschedulePopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
@@ -123,7 +127,7 @@
             <div class="d-flex flex-column ms-3">
                 <table class="table">
                     <tbody>
-                        @foreach ($y->orderDetail as $x)
+                        @foreach ($order->orderDetail as $x)
                             @if($x->product_id)
                                 @if($printProductOnce == false)
                                     <h5>Produk</h5>
@@ -154,7 +158,7 @@
                     <a href="/confirm-payment/{{ $y->order_id }}" class="btn btn-success" type="button">Konfirmasi Pembayaran</a>
                 </div>
             @else
-                @if($y->status == 'ON GOING')
+                @if($order->status == 'ON GOING')
                     <div class="d-flex justify-content-center">
                         <button class="btn button-outline-reztya" data-toggle="modal" data-target="#uploadTransferPopup" type="button">Bayar Pesanan</a>
                     </div>
@@ -162,7 +166,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 {{-- Form --}}
-                                <form action="/upload-transfer-receipt/{{ $x->order_id }}" method="POST" enctype="multipart/form-data">
+                                <form action="/upload-transfer-receipt/{{ $order->order_id }}" method="POST" enctype="multipart/form-data">
                                     @method('put')
                                     @csrf
                                     <div class="modal-header">
@@ -212,38 +216,25 @@
                             </div>
                         </div>
                     </div>
-                @elseif($y->status == 'WAITING')
+                @elseif($order->status == 'WAITING')
                     <div>
                         Mohon menunggu konfirmasi pembayaran transfer oleh Admin Reztya Medika Clinic
                     </div>
                 @endif
             @endif
-            @if($y->status != 'WAITING')
+            @if($order->status == 'ON GOING')
                 <div class="d-flex justify-content-center">
-                    <a href="/cancel-order/{{ $y->order_id }}" class="btn btn-outline-danger" type="button" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan?')">Batalkan Pesanan</a>
+                    <a href="/cancel-order/{{ $order->order_id }}" class="btn btn-outline-danger" type="button" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan?')">Batalkan Pesanan</a>
                 </div>
             @endif
-        @endforeach
     </div>
 @else
     Tidak ada pesanan yang sedang aktif
 @endif
-<script type="text/javascript">
-    // $('#reschedulePopup').on('shown.bs.modal', function () {
-    //     $('#myInput').trigger('focus');
-    // });
 
-    
-    // $('#reschedulePopup').on('hidden.bs.modal', function () {
-    //     window.location.reload();
-    // });
-
-    // console.log($errors);
-
-    // if($errors){
-    //     // $('#uploadTransferPopup').modal('show');
-    //     alert('error');
-    // }
-
+<script>
+    $('#service_quantity').on('change', function(){
+            window.location.reload();
+        });
 </script>
 @endsection
