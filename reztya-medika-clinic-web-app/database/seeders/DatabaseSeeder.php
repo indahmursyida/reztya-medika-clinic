@@ -183,8 +183,20 @@ class DatabaseSeeder extends Seeder
 
         Cart::create([
             'user_id' => 2,
+            'service_id' => 1,
+            'schedule_id' => 1
+        ]);
+
+        Cart::create([
+            'user_id' => 2,
             'product_id' => 1,
             'quantity' => 1
+        ]);
+
+        Cart::create([
+            'user_id' => 2,
+            'product_id' => 2,
+            'quantity' => 3
         ]);
     }
 }

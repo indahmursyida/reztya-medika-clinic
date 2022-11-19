@@ -6,7 +6,7 @@
 @if(!$order->isEmpty())
     <!-- @if(count($errors) > 0)
     <script>
-        
+
         $("#uploadTransferPopup").modal('show');
     </script>
     @endif -->
@@ -25,20 +25,20 @@
                             $totalPrice += $p->product->price * $p->quantity;
                     }
                 @endphp
-                <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
+                <h4>Rp {{ number_format($totalPrice, 2) }}</h4>
             </div>
             @if(Auth::user()->user_role_id == 1)
                 <div class="d-flex flex-column ms-5">
                     <div>
-                        Nama Pelanggan:  
+                        Nama Pelanggan:
                         <b>{{ $y->user->name }}</b>
                     </div>
                     <div>
-                        No. HP Pelanggan: 
+                        No. HP Pelanggan:
                         <b>{{ $y->user->phone }}</b>
                     </div>
                     <div>
-                        Alamat Pelanggan: 
+                        Alamat Pelanggan:
                         <b>{{ $y->user->address }}</b>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                                 @endif
                                 <tr>
                                     <td>
-                                        <img src="{{ asset("storage/" . $x->service->image_path) }}" alt="" width="200px" height="200px">
+                                        <img src="{{ asset('storage/' . $x->service->image_path) }}" alt="" width="200px" height="200px">
                                     </td>
                                     <td>
                                         <div>
@@ -73,47 +73,45 @@
                                                 </div>
                                             </div>
                                             @if($y->status == 'ON GOING')
-                                            <button class="btn btn-sm button-outline-reztya" data-toggle="modal" data-target="#reschedulePopup">Jadwal Ulang</button>
-                                            <!-- Modal --> 
-                                            <div class="modal fade" id="reschedulePopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
+                                            <button class="btn btn-sm button-outline-reztya" data-toggle="modal" data-target="#reschedulePopup-{{$x->order_detail_id}}">Jadwal Ulang</button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="reschedulePopup-{{$x->order_detail_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         {{-- Form --}}
-                                                        <td>
-                                                            <form action="/reschedule/{{ $x->order_detail_id }}" method="POST" enctype="multipart/form-data">
-                                                                @method('put')
-                                                                @csrf
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="reschedulePopupLongTitle">Jadwal Ulang</h5>
-                                                                </div>
-                                                                <div class="modal-body container">
+                                                        <form action="/reschedule/{{ $x->order_detail_id }}" method="POST" enctype="multipart/form-data">
+                                                            @method('put')
+                                                            @csrf
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="reschedulePopupLongTitle">Jadwal Ulang</h5>
+                                                            </div>
+                                                            <div class="modal-body container">
+                                                                <div>
                                                                     <div>
-                                                                        <div>
-                                                                            Jadwal Perawatan
-                                                                        </div>
-                                                                        <input type="hidden" id="order_detail_id" name="order_detail_id" value={{ $x->order_detail_id }}>
-                                                                        <div>
-                                                                            <select class="form-select" name="schedule_id" id="schedule_id">
-                                                                                @foreach($schedules as $schedule)
-                                                                                    <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $x->schedule_id ? 'selected' : '' }}> {{ date('l, d M Y', strtotime($schedule->start_time)) }} | {{ date('H:i:s', strtotime($schedule->start_time)) }} - {{ date('H:i:s', strtotime($schedule->end_time)) }}</option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
+                                                                        Jadwal Perawatan
+                                                                    </div>
+                                                                    <input type="hidden" id="order_detail_id" name="order_detail_id" value={{ $x->order_detail_id }}>
+                                                                    <div>
+                                                                        <select class="form-select" name="schedule_id" id="schedule_id">
+                                                                            @foreach($schedules as $schedule)
+                                                                                <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $x->schedule_id ? 'selected' : '' }}> {{ date('l, d M Y', strtotime($schedule->start_time)) }} | {{ date('H:i:s', strtotime($schedule->start_time)) }} - {{ date('H:i:s', strtotime($schedule->end_time)) }}</option>
+                                                                            @endforeach
+                                                                        </select>
                                                                     </div>
                                                                 </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
-                                                                    <button type="submit" class="btn btn-success">Simpan</button>
-                                                                </div>
-                                                            </form>
-                                                        </td>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
+                                                                <button type="submit" class="btn btn-success">Simpan</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
                                             @endif
                                         </div>
                                     </td>
-                                    <td>Rp{{ number_format($x->service->price, 2) }}</td>
+                                    <td>Rp {{ number_format($x->service->price, 2) }}</td>
                                 </tr>
                             @endif
                         @endforeach
@@ -133,16 +131,16 @@
                                 @endif
                                 <tr>
                                     <td>
-                                        <img src="{{ asset("storage/" . $x->product->image_path)}}" alt="" width="200px" height="200px">
+                                        <img src="{{ asset('storage/' . $x->product->image_path)}}" alt="" width="200px" height="200px">
                                     </td>
                                     <td>
                                         <b>{{ $x->product->name }}</b>
                                         <div>
-                                        Rp{{ number_format($x->product->price, 2) }}
+                                        Rp {{ number_format($x->product->price, 2) }}
                                         </div>
                                     </td>
                                     <td> Kuantitas: {{ $x->quantity }}</td>
-                                    <td>Rp{{ number_format($x->product->price * $x->quantity, 2) }}</td>
+                                    <td>Rp {{ number_format($x->product->price * $x->quantity, 2) }}</td>
                                 </tr>
                             @endif
                         @endforeach
@@ -156,7 +154,7 @@
             @else
                 @if($y->status == 'ON GOING')
                     <div class="d-flex justify-content-center">
-                        <button class="btn button-outline-reztya" data-toggle="modal" data-target="#uploadTransferPopup" type="button">Bayar Pesanan</a>
+                        <button class="btn button-outline-reztya" data-toggle="modal" data-target="#uploadTransferPopup" type="button">Bayar Pesanan</button>
                     </div>
                     <div class="modal fade" id="uploadTransferPopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="uploadTransferPopupPopupTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -182,7 +180,7 @@
                                                 {{ $message }}
                                                 </div>
                                                 @enderror
-                                                </select>
+                                                </div>
                                             </div>
                                         </div>
                                         <div>
@@ -233,7 +231,7 @@
     //     $('#myInput').trigger('focus');
     // });
 
-    
+
     // $('#reschedulePopup').on('hidden.bs.modal', function () {
     //     window.location.reload();
     // });
