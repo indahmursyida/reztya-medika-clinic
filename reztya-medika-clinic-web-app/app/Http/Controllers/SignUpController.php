@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,8 +32,12 @@ class SignUpController extends Controller
             // $validated['profile_picture'] = 'profile-images/profile_picture_default.jpg';
 
             $user = User::create($validated);
-            event(new Registered($user));
-            return redirect()->intended('/home')->with('addSuccess', 'Pendaftaran berhasil! Silahkan masuk');
+
+            if($user) {
+                event(new Registered($user));
+                Auth::login($user);
+                return redirect(route('verification.notice'))->with('message', 'Pendaftaran berhasil! Silahkan verifikasi email');
+            }
         }
         return redirect()->back()->with('signupError', 'Pendaftaran tidak berhasil!');
     }

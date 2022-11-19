@@ -28,7 +28,6 @@ class SignInController extends Controller
                 'password' => 'required'
             ]);
 
-
             if(!RateLimiter::tooManyAttempts('failed', 3)) {
                 if(Auth::attempt($credentials)) {
                     if(auth()->user()->is_banned == false) {
@@ -50,7 +49,7 @@ class SignInController extends Controller
                     return redirect()->back()->with('loginError', 'Informasi yang dimasukkan salah, '.RateLimiter::retriesLeft('failed', 3).'x coba lagi!');
                 }
             } else {
-                return redirect('/signin')->with('loginError', 'Terlalu banyak gagal memasukkan email / password! Harap tunggu '.RateLimiter::availableIn('failed').' menit lagi untuk mencoba ulang!');
+                return redirect('/signin')->with('loginError', 'Terlalu banyak gagal memasukkan email / password! Harap tunggu '. round(RateLimiter::availableIn('failed') / 60) .' menit lagi untuk mencoba ulang!');
             }
         }
         return redirect()->back()->with('loginError', 'Masuk tidak berhasil!');
