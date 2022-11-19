@@ -106,7 +106,7 @@ Route::get('/view-products/filter/category/{category_name}', [ProductController:
 // Services
 Route::get('/view-services', [ServiceController::class, 'view']);
 Route::get('/manage-services', [ServiceController::class, 'index'])->middleware('admin');
-Route::get('/service-detail/{id}', [ServiceController::class, 'show'])->middleware('admin');
+Route::get('/service-detail/{id}', [ServiceController::class, 'show']);
 Route::post('/delete-service/{id}', [ServiceController::class, 'destroy'])->middleware('admin');
 Route::get('/add-service', [ServiceController::class, 'create'])->middleware('admin');
 Route::post('/store-service', [ServiceController::class, 'store'])->middleware('admin');
@@ -128,8 +128,8 @@ Route::put('/update-schedule/{id}', [ScheduleController::class, 'update']);
 Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete']);
 
 //OrderDetail
-Route::post('/buy-product', [OrderDetailController::class, 'buyProduct']);
-Route::post('/book-service', [OrderDetailController::class, 'bookService']);
+Route::post('/buy-product', [CartController::class, 'buyProduct']);
+Route::post('/book-service', [CartController::class, 'bookService']);
 
 // Ban and Unban User
 Route::get('/view-users', [BanController::class, 'viewUsers'])->middleware('admin');
