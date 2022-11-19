@@ -91,18 +91,4 @@
             </div>
         </div>
     </div>
-    <table >
-    <tr>
-      <th>Name:</th>
-      <td>Bill Gates</td>
-    </tr>
-    <tr>
-      <th>Telephone:</th>
-      <td>555 77 854</td>
-    </tr>
-    <tr>
-      <th>Telephone:</th>
-      <td>555 77 855</td>
-    </tr>
-  </table>
 @endsection
