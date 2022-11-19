@@ -10,6 +10,7 @@ use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\EmailNotificationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -55,11 +56,11 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
     return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
+// Route::post('/email/verification-notification', function (Request $request) {
+//     $request->user()->sendEmailVerificationNotification();
 
-    return back()->with('message', 'Link verifikasi telah dikirim!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+//     return back()->with('message', 'Link verifikasi telah dikirim!');
+// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // Sign In
 Route::get('/signin', function () {
@@ -84,7 +85,7 @@ Route::post('/change-password/{username}', [ProfileController::class, 'changePas
 // Products
 Route::get('/view-products', [ProductController::class, 'view']);
 Route::get('/manage-products', [ProductController::class, 'index'])->middleware('admin');
-Route::get('/product-detail/{id}', [ProductController::class, 'show'])->middleware('admin');
+Route::get('/product-detail/{id}', [ProductController::class, 'show']);
 Route::post('/delete-product/{id}', [ProductController::class, 'destroy'])->middleware('admin');
 Route::get('/add-product', [ProductController::class, 'create'])->middleware('admin');
 Route::post('/store-product', [ProductController::class, 'store'])->middleware('admin');
@@ -101,7 +102,7 @@ Route::get('/view-products/filter/category/{category_name}', [ProductController:
 // Services
 Route::get('/view-services', [ServiceController::class, 'view']);
 Route::get('/manage-services', [ServiceController::class, 'index'])->middleware('admin');
-Route::get('/service-detail/{id}', [ServiceController::class, 'show'])->middleware('admin');
+Route::get('/service-detail/{id}', [ServiceController::class, 'show']);
 Route::post('/delete-service/{id}', [ServiceController::class, 'destroy'])->middleware('admin');
 Route::get('/add-service', [ServiceController::class, 'create'])->middleware('admin');
 Route::post('/store-service', [ServiceController::class, 'store'])->middleware('admin');
@@ -152,3 +153,6 @@ Route::get('/history-order', [OrderController::class, 'history_order']);
 Route::get('/payment-receipt-form/{id}', [OrderController::class, 'form_payment_receipt'])->name('form_payment');
 Route::get('/history-order/filter/status/{status}', [OrderController::class, 'filter_status']);
 Route::post('/add-payment-receipt', [OrderController::class, 'add_payment_receipt']);
+
+//Notification Email
+Route::get('/send-notification', [EmailNotificationController::class, 'index']);

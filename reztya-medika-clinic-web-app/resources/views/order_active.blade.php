@@ -74,7 +74,10 @@
                                                                         <div>
                                                                             Jadwal Perawatan
                                                                         </div>
-                                                                        <input type="hidden" id="order_detail_id" name="order_detail_id" value={{ $x->order_detail_id }}>
+                                                                        <input type="hidden" id="order_detail_id" name="order_detail_id" value="{{ $x->order_detail_id }}">
+                                                                        <input type="hidden" id="old_schedule" name="old_schedule" value="{{ $x->schedule->start_time }}">
+                                                                        <input type="hidden" id="service_name" name="service_name" value="{{ $x->service->name }}">
+                                                                        <input type="hidden" id="order_id" name="order_id" value="{{ $y->order_id }}">
                                                                         <div>
                                                                             <select class="form-select" name="schedule_id" id="schedule_id">
                                                                                 @foreach($schedules as $schedule)

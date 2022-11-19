@@ -61,7 +61,7 @@
                                     <div class="card-description text-black">
                                         Rp {{$product->price}}
                                     </div>
-                                    <a href="###" class="btn button-outline-reztya float-end w-25">
+                                    <a href="/product-detail/{{ $product->id }}" class="btn button-outline-reztya float-end w-25">
                                         Beli
                                     </a>
                                 </div>

@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('user_role')->insert([
-            'user_role_name' => 'Member'
+            'user_role_name' => 'Guest'
         ]);
 
         DB::table('users')->insert([

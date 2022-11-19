@@ -1,13 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Mail\SendEmail;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Schedule;
 use App\Models\PaymentReceipt;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -97,7 +101,18 @@ class OrderController extends Controller
 
         $validated_data['order_detail_id'] = $id;
         // dd($validated_data);
-
+        $newSchedule = Schedule::find($validated_data['schedule_id']);
+        $content = [
+            'title' => 'Informasi Perubahan Jadwal pada Perawatan Anda',
+            'username' => Auth::user()->username,
+            'name' => Auth::user()->name,
+            'old_schedule' => Carbon::parse($req['old_schedule'])->translatedFormat('l, d F Y, H:i'),
+            'order_id' => $req['order_id'],
+            'service_name' => $req['service_name'],
+            'new_schedule' => Carbon::parse($newSchedule->start_time)->translatedFormat('l, d F Y, H:i')
+        ];
+        $emailAddress = 'indahbahrina@gmail.com';
+        Mail::to($emailAddress)->send(new SendEmail($content));
         OrderDetail::find($id)->update($validated_data);
 
         return redirect('/active-order');
