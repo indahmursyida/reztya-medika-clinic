@@ -52,17 +52,19 @@ class OrderController extends Controller
     {
         $order = null;
         $totalPrice = 0;
+        $totalItem = 0;
         $schedules = Schedule::all();
-        $printServiceOnce = false;
-        $printProductOnce = false;
+        $printOnce = false;
 
-        if(Auth::user()->user_role_id == 1)
-        {
-            $order = Order::where('status', 'ON GOING')->orWhere('status', 'WAITING')->get();
-        }
-        else
-        {
-            $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'WAITING')->orWhere('status', 'ON GOING')->get();
+        if(Auth::user()){
+            if(Auth::user()->user_role_id == 1)
+            {
+                $order = Order::where('status', 'ON GOING')->orWhere('status', 'WAITING')->get();
+            }
+            else
+            {
+                $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'WAITING')->orWhere('status', 'ON GOING')->get();
+            }
         }
 
         if(!$order->isEmpty())
@@ -79,7 +81,7 @@ class OrderController extends Controller
             }
         }
 
-        return view('order_active')->with('order', $order)->with('schedules', $schedules)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
+        return view('order_active')->with('order', $order)->with('schedules', $schedules)->with('printOnce', $printOnce)->with('totalPrice', $totalPrice)->with('totalItem', $totalItem);
     }
 
     public function detailOrder($id)
