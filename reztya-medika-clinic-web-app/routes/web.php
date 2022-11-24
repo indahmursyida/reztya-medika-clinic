@@ -71,7 +71,7 @@ Route::get('/signin', function () {
 Route::post('/signin', [SignInController::class, 'userLogin']);
 
 // Sign Out
-Route::post('/signout', [SignInController::class, 'userLogout'])->middleware(['auth', 'verified']);
+Route::post('/signout', [SignInController::class, 'userLogout'])->middleware('auth');
 
 // View Profile
 Route::get('/view-profile/{username}', [ProfileController::class, 'viewProfile'])->middleware(['auth', 'verified']);
