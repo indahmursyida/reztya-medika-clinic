@@ -153,6 +153,7 @@ Route::get('/remove-cart/{id}', [CartController::class, 'removeCart']);
 //Order
 Route::get('/create-order', [OrderController::class, 'create']);
 Route::get('/active-order', [OrderController::class, 'activeOrder']);
+
 Route::get('/order-detail/{id}', [OrderController::class, 'detailOrder'])->name('detail_order');
 Route::put('/reschedule/{id}', [OrderController::class, 'reschedule']);
 Route::get('/cancel-order/{id}', [OrderController::class, 'cancel_order']);

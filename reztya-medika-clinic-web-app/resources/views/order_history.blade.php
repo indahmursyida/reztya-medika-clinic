@@ -17,16 +17,16 @@
         </div>
         @foreach($order as $y)
             <div class="d-flex justify-content-between">
-                <div class="d-flex">
+                <div class="container">
                     @if ($y->status =="FINISHED")
-                        <h4>{{ date('l, d M Y', strtotime($y->paymentReceipt->payment_date)) }}</h4>
+                        <h4 class="col-md-4">{{ date('d M Y', strtotime($y->paymentReceipt->payment_date)) }}</h4>
                     @else
-                        <h4>{{ date('l, d M Y', strtotime($y->order_date)) }}</h4>
+                        <h4 class="col-md-4">{{ date('d M Y', strtotime($y->order_date)) }}</h4>
                     @endif
                     @if ($y->status == "FINISHED")
-                    <p class="rounded-2 ps-2 pe-2 ms-3" style="border: 2px solid #00A54F; color: #00A54F;">
+                    <p class="rounded-2 ps-2 pe-2 ms-3 col" style="border: 2px solid #00A54F; color: #00A54F; cursor: default;">
                     @else
-                    <p class="rounded-2 ps-2 pe-2 ms-3" style="border: 2px solid red; color: red;">
+                    <p class="btn rounded-2 ps-2 pe-2 ms-3 col" style="border: 2px solid red; color: red; cursor: default;">
                     @endif
                     {{ $y->status }}
                     </p>
@@ -42,6 +42,7 @@
                             $totalPrice += $p->product->price * $p->quantity;
                     }
                     @endphp
+                    Total Harga: 
                     <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
                     @if(Auth::user()->user_role_id == 2)
                         <a href="/repeat-order/{{ $y->order_id }}" class="btn btn-success ms-5">Pesan Lagi</a>

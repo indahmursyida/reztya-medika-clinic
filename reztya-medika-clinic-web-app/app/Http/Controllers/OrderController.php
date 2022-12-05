@@ -52,7 +52,7 @@ class OrderController extends Controller
     {
         $order = null;
         $totalPrice = 0;
-        $totalItem = 0;
+        // $totalItem = 0;
         $schedules = Schedule::all();
         $printOnce = false;
 
@@ -80,8 +80,9 @@ class OrderController extends Controller
                 }
             }
         }
+        // ->with('totalItem', $totalItem)
 
-        return view('order_active')->with('order', $order)->with('schedules', $schedules)->with('printOnce', $printOnce)->with('totalPrice', $totalPrice)->with('totalItem', $totalItem);
+        return view('order_active')->with('order', $order)->with('schedules', $schedules)->with('printOnce', $printOnce)->with('totalPrice', $totalPrice);
     }
 
     public function detailOrder($id)

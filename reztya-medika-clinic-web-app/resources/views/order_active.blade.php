@@ -15,8 +15,8 @@
         @foreach($order as $y)
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
-                    <h4>{{ date('d M Y', strtotime($y->order_date)) }}</h4>
-                    <p class="rounded-2 ps-2 pe-2 ms-3" style="border: 2px solid #00A54F; color: #00A54F;">
+                    <h4 class="align-items-center">{{ date('d M Y', strtotime($y->order_date)) }}</h4>
+                    <p class="rounded-2 ps-2 pe-2 mt-2 mb-2 ms-3 d-flex align-items-center" style="border: 2px solid #00A54F; color: #00A54F;">
                         {{ $y->status }}
                     </p>
                 </div>
@@ -73,12 +73,6 @@
                                         <td>
                                             Rp{{ number_format($x->service->price, 2) }}
                                         </td>
-                                        <td>
-                                            @php
-                                                $totalItem = count($y->orderDetail);
-                                            @endphp
-                                            <p>+{{$totalItem - 1}} pesanan lainnya</p>
-                                        </td>
                                     </tr>
                                 @elseif($x->product_id)
                                     <tr>
@@ -92,21 +86,21 @@
                                             </div>
                                         </td>
                                         <td>Rp {{ number_format($x->product->price * $x->quantity, 2) }}</td>
-                                        <td>
-                                            @php
-                                                $totalItem = count($y->orderDetail);
-                                            @endphp
-                                            <p>+{{$totalItem - 1}} pesanan lainnya</p>
-                                        </td>
                                     </tr>
                                 @endif
                             @endif
                         @endforeach
                     </tbody>
                 </table>
+                <div>
+                    @php
+                        $totalItem = count($y->orderDetail);
+                    @endphp
+                    <p>+{{$totalItem - 1}} pesanan lainnya</p>
+                </div>
             </div>
             <div class="d-flex justify-content-center">
-                <button class="btn button-outline-reztya" type="button">Lihat Detail Pesanan</button>
+                <a href="/order-detail/{{$y->order_detail_id}}" class="btn button-outline-reztya" type="button">Lihat Detail Pesanan</a>
             </div>
         @endforeach
     </div>

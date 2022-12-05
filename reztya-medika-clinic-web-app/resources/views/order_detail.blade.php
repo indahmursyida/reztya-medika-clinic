@@ -18,7 +18,22 @@
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
         <h2 class="my-3 text-center font-alander-reztya unselectable">Order</h2>
         <div class="d-flex justify-content-between">
-            <h4>{{ date('d M Y', strtotime($order->order_date)) }}</h4>
+            <div class="d-flex mb-2">
+                <h4 class="d-flex align-items-center mb-0">{{ date('d M Y', strtotime($order->order_date)) }}</h4>
+                @if ($order->status == "FINISHED")
+                    <p class="rounded-2 ms-3 mb-0" style="border: 2px solid #00A54F;">
+                        <span class="badge" style="color: #00A54F; background-color: blue;">{{ $order->status }}</span>
+                    </p>
+                @elseif($order->status == "ON GOING")
+                    <p class="rounded-2 ms-3 mb-0" style="border: 2px solid orange;">
+                        <span class="badge" style="color: orange;">{{ $order->status }}</span>
+                    </p>
+                @else
+                    <p class="rounded-2 ms-3 mb-0" style="border: 2px solid red;">
+                        <span class="badge" style="color: red;">{{ $order->status }}</span>
+                    </p>
+                @endif
+            </div>
             @php
                 $totalPrice = 0;
                 foreach($order->orderDetail as $p)
@@ -29,9 +44,9 @@
                         $totalPrice += $p->product->price * $p->quantity;
                 }
             @endphp
-            <div>
-                Total Harga: 
-                <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
+            <div class="d-flex align-items-center">
+                <p class="mb-0 me-3">Total Harga:</p>
+                <h5 class="d-flex justify-content-end mb-0 pe-5">Rp{{ number_format($totalPrice, 2) }}</h5>
             </div>
         </div>
         @if(Auth::user()->user_role_id == 1)
@@ -63,7 +78,7 @@
                             @endif
                             <tr>
                                 <td>
-                                    <img src="{{ asset("storage/" . $x->service->image_path) }}" alt="" width="200px" height="200px">
+                                    <img src="{{ asset("storage/" . $x->service->image_path) }}" alt="" width="100px" height="100px">
                                 </td>
                                 <td>
                                     <div>
@@ -73,10 +88,10 @@
                                                 Tanggal Perawatan: {{ date('l, d M Y', strtotime(old('start_time', $x->schedule->start_time))) }}
                                             </div>
                                             <div>
-                                                Waktu Mulai: {{ date('H:i:s', strtotime($x->schedule->start_time)) }}
+                                                Waktu Mulai: {{ date('H.i', strtotime($x->schedule->start_time)) }}
                                             </div>
                                             <div>
-                                                Waktu Berakhir: {{ date('H:i:s', strtotime($x->schedule->end_time)) }}
+                                                Waktu Berakhir: {{ date('H.i', strtotime($x->schedule->end_time)) }}
                                             </div>
                                         </div>
                                         @if($order->status == 'ON GOING')
@@ -138,21 +153,30 @@
                             @endif
                             <tr>
                                 <td>
-                                    <img src="{{ asset("storage/" . $x->product->image_path)}}" alt="" width="200px" height="200px">
+                                    <img src="{{ asset("storage/" . $x->product->image_path)}}" alt="" width="100px" height="100px">
                                 </td>
                                 <td>
                                     <b>{{ $x->product->name }}</b>
                                     <div>
                                     Rp{{ number_format($x->product->price, 2) }}
                                     </div>
+                                    
                                 </td>
-                                <td> Kuantitas: {{ $x->quantity }}</td>
+                                <td>
+                                    <div>
+                                        Kuantitas: {{ $x->quantity }}
+                                    </div>
+                                </td>
                                 <td>Rp{{ number_format($x->product->price * $x->quantity, 2) }}</td>
                             </tr>
                         @endif
                     @endforeach
                 </tbody>
             </table>
+            <!-- <div class="d-flex justify-content-end">
+                <p>Total Harga:</p>
+                <h4 class="d-flex justify-content-end me-5">Rp{{ number_format($totalPrice, 2) }}</h4>
+            </div> -->
         </div>
         @if(Auth::user()->user_role_id == 1)
             <div class="d-flex justify-content-center">
@@ -218,8 +242,12 @@
                     </div>
                 </div>
             @elseif($order->status == 'WAITING')
-                <div>
+                <div class="lead">
                     Mohon menunggu konfirmasi pembayaran transfer oleh Admin Reztya Medika Clinic
+                </div>
+            @elseif($order->status == 'CANCELED' || $order->status == 'FINISHED')
+                <div class="d-flex justify-content-center">
+                    <a href="/repeat-order/{{ $order->order_id }}" class="btn btn-success ms-5">Pesan Lagi</a>
                 </div>
             @endif
         @endif

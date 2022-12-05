@@ -166,7 +166,7 @@
                 </tbody>
             </table>
         </div>
-        <h5 class="d-flex justify-content-end">Total Price = Rp {{ number_format($totalPrice, 2) }}</h5>
+        <h5 class="d-flex justify-content-end">Total Harga: Rp {{ number_format($totalPrice, 2) }}</h5>
         <div class="d-flex justify-content-center">
             <a href="/create-order" class="btn button-outline-reztya">Buat Pesanan</a>
             <!-- <form action="/create-order/{{Auth::user()->user_id}}" method="post">
