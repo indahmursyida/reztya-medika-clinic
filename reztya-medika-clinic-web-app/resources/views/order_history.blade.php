@@ -1,6 +1,6 @@
 @extends('layout/main')
 
-@section('name', 'Order History')
+@section('title', 'Order History')
 
 @section('container')
 @if(!$order->isEmpty())
@@ -20,7 +20,7 @@
             </ul>
         </div>
         @foreach($order as $y)
-            
+
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
                     @if ($y->status =="FINISHED")
@@ -41,15 +41,15 @@
             @if(Auth::user()->user_role_id == 1)
                 <div class="d-flex flex-column ms-5">
                     <div>
-                        Nama Pelanggan:  
+                        Nama Pelanggan:
                         <b>{{ $y->user->name }}</b>
                     </div>
                     <div>
-                        No. HP Pelanggan: 
+                        No. HP Pelanggan:
                         <b>{{ $y->user->phone }}</b>
                     </div>
                     <div>
-                        Alamat Pelanggan: 
+                        Alamat Pelanggan:
                         <b>{{ $y->user->address }}</b>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                                                 <b>{{ $x->service->name}}</b>
                                                 <div>
                                                     <div>
-                                                        Tanggal Perawatan: 
+                                                        Tanggal Perawatan:
                                                         {{ date('l, d M Y', strtotime(old('start_time', $x->schedule->start_time))) }}
                                                         {{-- {{ old('start_time', $x->schedule->start_time) }}  --}}
                                                     </div>

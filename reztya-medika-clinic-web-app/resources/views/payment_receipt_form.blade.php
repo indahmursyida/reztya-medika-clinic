@@ -1,6 +1,6 @@
 @extends('layout/main')
 
-@section('name', 'Payment Receipt Form')
+@section('title', 'Payment Receipt Form')
 
 @section('container')
 @php
@@ -82,7 +82,7 @@ use Carbon\Carbon;
                         </div>
                         @enderror
                     </div>
-                    
+
                     <div class="d-flex justify-content-center">
                         Verifikasi Admin
                     </div>
@@ -128,7 +128,7 @@ use Carbon\Carbon;
         selected = select.value;
         console.log(selected);
     }
-    
+
     function is_payment_method_selected(value)
     {
         console.log(value);

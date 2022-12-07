@@ -38,11 +38,11 @@ Route::get('/home', function () {
 
 Route::get('/active-order', function () {
     return view('active-order');
-});
+})->middleware(['auth', 'verified']);
 
 Route::get('/payment-receipt-form', function () {
     return view('payment-receipt-form');
-});
+})->middleware(['auth', 'verified']);
 
 // Sign Up
 Route::get('/signup', [SignUpController::class, 'signUp'])->middleware('guest');
@@ -117,16 +117,16 @@ Route::get('/view-services/filter/price/low-to-high', [ServiceController::class,
 Route::get('/view-services/filter/category/{category_name}', [ServiceController::class, 'filterCategory']);
 
 // Schedules
-Route::get('/manage-schedules', [ScheduleController::class, 'index']);
-Route::get('/add-schedule', [ScheduleController::class, 'add']);
-Route::post('/add-schedule', [ScheduleController::class, 'store']);
-Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit']);
-Route::put('/update-schedule/{id}', [ScheduleController::class, 'update']);
-Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete']);
+Route::get('/manage-schedules', [ScheduleController::class, 'index'])->middleware('admin');
+Route::get('/add-schedule', [ScheduleController::class, 'add'])->middleware('admin');
+Route::post('/add-schedule', [ScheduleController::class, 'store'])->middleware('admin');
+Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit'])->middleware('admin');
+Route::put('/update-schedule/{id}', [ScheduleController::class, 'update'])->middleware('admin');
+Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete'])->middleware('admin');
 
 //OrderDetail
-Route::post('/buy-product', [OrderDetailController::class, 'buyProduct']);
-Route::post('/book-service', [OrderDetailController::class, 'bookService']);
+Route::post('/buy-product', [OrderDetailController::class, 'buyProduct'])->middleware(['auth', 'verified']);
+Route::post('/book-service', [OrderDetailController::class, 'bookService'])->middleware(['auth', 'verified']);
 
 // Ban and Unban User
 Route::get('/view-users', [BanController::class, 'viewUsers'])->middleware('admin');
@@ -134,23 +134,23 @@ Route::post('/ban-user/{username}', [BanController::class, 'banUser'])->middlewa
 Route::post('/unban-user/{username}', [BanController::class, 'unbanUser'])->middleware('admin');
 
 // Category
-Route::get('/manage-categories', [CategoryController::class, 'index']);
-Route::post('/delete-category/{id}', [CategoryController::class, 'destroy']);
-Route::get('/add-category', [CategoryController::class, 'create']);
-Route::post('/store-category', [CategoryController::class, 'store']);
-Route::get('/edit-category/{id}', [CategoryController::class, 'edit']);
-Route::put('/update-category/{id}', [CategoryController::class, 'update']);
+Route::get('/manage-categories', [CategoryController::class, 'index'])->middleware('admin');
+Route::post('/delete-category/{id}', [CategoryController::class, 'destroy'])->middleware('admin');
+Route::get('/add-category', [CategoryController::class, 'create'])->middleware('admin');
+Route::post('/store-category', [CategoryController::class, 'store'])->middleware('admin');
+Route::get('/edit-category/{id}', [CategoryController::class, 'edit'])->middleware('admin');
+Route::put('/update-category/{id}', [CategoryController::class, 'update'])->middleware('admin');
 
 // Order
-Route::get('/order', [OrderController::class, 'order']);
-Route::put('/update-order-item/{id}', [OrderController::class, 'update_order_item']);
-Route::post('/update_order_status_on_going/{id}', [OrderController::class, 'update_order_status_on_going']);
-Route::get('/active-order', [OrderController::class, 'active_order']);
-Route::put('/reschedule/{id}', [OrderController::class, 'reschedule']);
-Route::get('/delete-order-item/{id}', [OrderController::class, 'delete_order_item']);
-Route::get('/cancel-order/{id}', [OrderController::class, 'cancel_order']);
-Route::get('/finish-order/{id}', [OrderController::class, 'finish_order']);
-Route::get('/history-order', [OrderController::class, 'history_order']);
-Route::get('/payment-receipt-form/{id}', [OrderController::class, 'form_payment_receipt'])->name('form_payment');
-Route::get('/history-order/filter/status/{status}', [OrderController::class, 'filter_status']);
-Route::post('/add-payment-receipt', [OrderController::class, 'add_payment_receipt']);
+Route::get('/order', [OrderController::class, 'order'])->middleware(['auth', 'verified']);
+Route::put('/update-order-item/{id}', [OrderController::class, 'update_order_item'])->middleware(['auth', 'verified']);
+Route::post('/update_order_status_on_going/{id}', [OrderController::class, 'update_order_status_on_going'])->middleware(['auth', 'verified']);
+Route::get('/active-order', [OrderController::class, 'active_order'])->middleware(['auth', 'verified']);
+Route::put('/reschedule/{id}', [OrderController::class, 'reschedule'])->middleware(['auth', 'verified']);
+Route::get('/delete-order-item/{id}', [OrderController::class, 'delete_order_item'])->middleware(['auth', 'verified']);
+Route::get('/cancel-order/{id}', [OrderController::class, 'cancel_order'])->middleware(['auth', 'verified']);
+Route::get('/finish-order/{id}', [OrderController::class, 'finish_order'])->middleware('admin');
+Route::get('/history-order', [OrderController::class, 'history_order'])->middleware('admin');
+Route::get('/payment-receipt-form/{id}', [OrderController::class, 'form_payment_receipt'])->name('form_payment')->middleware('admin');
+Route::get('/history-order/filter/status/{status}', [OrderController::class, 'filter_status'])->middleware(['auth', 'verified']);
+Route::post('/add-payment-receipt', [OrderController::class, 'add_payment_receipt'])->middleware('admin');

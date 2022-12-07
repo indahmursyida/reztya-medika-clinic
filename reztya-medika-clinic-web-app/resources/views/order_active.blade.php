@@ -1,6 +1,6 @@
 @extends('layout/main')
 
-@section('name', 'Active Order')
+@section('title', 'Active Order')
 
 @section('container')
 @if(!$order->isEmpty())
@@ -14,15 +14,15 @@
             @if(Auth::user()->user_role_id == 1)
                 <div class="d-flex flex-column ms-5">
                     <div>
-                        Nama Pelanggan:  
+                        Nama Pelanggan:
                         <b>{{ $y->user->name }}</b>
                     </div>
                     <div>
-                        No. HP Pelanggan: 
+                        No. HP Pelanggan:
                         <b>{{ $y->user->phone }}</b>
                     </div>
                     <div>
-                        Alamat Pelanggan: 
+                        Alamat Pelanggan:
                         <b>{{ $y->user->address }}</b>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                                                 </div>
                                             </div>
                                             <button class="btn btn-sm button-outline-reztya" data-toggle="modal" data-target="#reschedulePopup">Jadwal Ulang</button>
-                                            <!-- Modal --> 
+                                            <!-- Modal -->
                                             <div class="modal fade" id="reschedulePopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
@@ -145,7 +145,7 @@
         $('#myInput').trigger('focus');
     });
 
-    
+
     $('#myModal').on('hidden.bs.modal', function () {
         window.location.reload();
     });
