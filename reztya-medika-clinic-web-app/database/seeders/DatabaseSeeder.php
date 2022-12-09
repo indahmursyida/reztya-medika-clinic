@@ -104,22 +104,50 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Service::create([
-            'name' => 'Totok Wajah',
+            'name' => 'Paket Pijat dan Setrika Wajah',
             'category_id' => '2',
-            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
-            'duration' => '20',
-            'price' => '150000',
+            'description' => "Pijat Stres Wajah, Setrika Wajah",
+            'duration' => '60',
+            'price' => '225000',
             'image_path' => '/service-images/totokwajah.jpeg'
         ]);
 
         Service::create([
-            'name' => 'Masker Wajah',
+            'name' => 'Paket Pijat Wajah, Lumi SPA, Setrika Wajah, Masker',
             'category_id' => '2',
-            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
-            'duration' => '30',
-            'price' => '120000',
+            'description' => "Pijat Stres Wajah, Lumi SPA, Setrika Wajah, Masker",
+            'duration' => '50',
+            'price' => '325000',
+            'image_path' => '/service-images/totokwajah.jpeg'
+        ]);
+
+        Service::create([
+            'name' => 'Paket Pijat Wajah dan Lumi SPA',
+            'category_id' => '2',
+            'description' => "Pijat Stres Wajah dan Lumi SPA",
+            'duration' => '50',
+            'price' => '175000',
             'image_path' => '/service-images/maskerwajah.jpeg'
         ]);
+
+        Service::create([
+            'name' => 'Paket Pijat Wajah dan Lumi SPA',
+            'category_id' => '2',
+            'description' => "Pijat Stres Wajah dan Lumi SPA",
+            'duration' => '50',
+            'price' => '275000',
+            'image_path' => '/service-images/maskerwajah.jpeg'
+        ]);
+
+        Service::create([
+            'name' => 'Paket Pijat Wajah, Lumi SPA, Setrika Wajah, Masker, Totok Inner Beauty',
+            'category_id' => '2',
+            'description' => "Pijat Stres Wajah, Lumi SPA, Setrika Wajah, Masker, Totok Inner Beauty",
+            'duration' => '50',
+            'price' => '385000',
+            'image_path' => '/service-images/maskerwajah.jpeg'
+        ]);
+
 
         Schedule::create([
             'start_time' => Carbon::createFromFormat('d-m-Y H:i:s', '01-11-2022 10:00:00'),

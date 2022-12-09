@@ -30,7 +30,7 @@
                             $totalPrice += $p->product->price * $p->quantity;
                     }
                 @endphp
-                <div>
+                <div class="d-flex">
                     Total Harga: 
                     <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
                 </div>
