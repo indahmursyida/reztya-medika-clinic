@@ -81,32 +81,59 @@ class DatabaseSeeder extends Seeder
             'category_name' => 'Skincare'
         ]);
 
-        Product::create([
-            'name' => 'Body Shower',
-            'category_id' => '1',
-            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
-            'size' => '150 ml',
-            'price' => '150000',
-            'expired_date' => Carbon::create('2024', '08', '23'),
-            'stock' => '20',
-            'image_path' => '/product-images/bodyshower.jpg'
-        ]);
+        // Product::create([
+        //     'name' => 'Body Shower',
+        //     'category_id' => '1',
+        //     'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+        //     'size' => '150 ml',
+        //     'price' => '150000',
+        //     'expired_date' => Carbon::create('2024', '08', '23'),
+        //     'stock' => '20',
+        //     'image_path' => '/product-images/bodyshower.jpg'
+        // ]);
 
-        Product::create([
-            'name' => 'Moisturizer',
+        // Product::create([
+        //     'name' => 'Moisturizer',
+        //     'category_id' => '2',
+        //     'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+        //     'size' => '100 ml',
+        //     'price' => '950000',
+        //     'expired_date' => Carbon::create('2024', '08', '23'),
+        //     'stock' => '20',
+        //     'image_path' => '/product-images/moisturizer.jpg'
+        // ]);
+
+        Service::create([
+            'name' => 'Bekam',
             'category_id' => '2',
-            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
-            'size' => '100 ml',
-            'price' => '950000',
-            'expired_date' => Carbon::create('2024', '08', '23'),
-            'stock' => '20',
-            'image_path' => '/product-images/moisturizer.jpg'
+            'description' => "BERAM SUNNAH & STERIL\n
+            ㆍ Membuang sel-sel darah yang mati\n
+            ㆍ Menstabilkan tekanan darah\n
+            ㆍ Melancarkan peredaran darah\n
+            ㆍ Mengeluarkan toksin dalam tubuh\n
+            ㆍ Menghilangkan angin dalam badan\n
+            ㆍ Mengurangi kolestrol dalam tubuh\n
+            ㆍ Meringankan tubuh\n
+            ㆍ Melegakan sakit kepala\n
+            ㆍ Mengatasi kelelahan\n",
+            'duration' => '30',
+            'price' => '150000',
+            'image_path' => '/service-images/bekam.jpg'
         ]);
 
         Service::create([
-            'name' => 'Paket Pijat dan Setrika Wajah',
+            'name' => 'Paket Pijat Stres Wajah dan Setrika Wajah',
             'category_id' => '2',
-            'description' => "Pijat Stres Wajah, Setrika Wajah",
+            'description' => "Manfaat Pijat Stres Wajah\n
+            ㆍMencegah penuaan dini\n
+            ㆍMelancarkan peredaran darah\n
+            ㆍMerelaksasi otot wajah\n
+            ㆍMenghilangkan stress\n
+            ㆍMengatasi sinusitis\n
+            ㆍMengecilkan pori-pori\n
+            ㆍDetox kulit secara alami\n
+            ㆍMembuat wajah lebih bercahaya\n\n
+            ",
             'duration' => '60',
             'price' => '225000',
             'image_path' => '/service-images/totokwajah.jpeg'
@@ -118,7 +145,7 @@ class DatabaseSeeder extends Seeder
             'description' => "Pijat Stres Wajah, Lumi SPA, Setrika Wajah, Masker",
             'duration' => '50',
             'price' => '325000',
-            'image_path' => '/service-images/totokwajah.jpeg'
+            'image_path' => '/service-images/totokwajah.jpg'
         ]);
 
         Service::create([
@@ -142,9 +169,9 @@ class DatabaseSeeder extends Seeder
         Service::create([
             'name' => 'Paket Pijat Wajah, Lumi SPA, Setrika Wajah, Masker, Totok Inner Beauty',
             'category_id' => '2',
-            'description' => "Pijat Stres Wajah, Lumi SPA, Setrika Wajah, Masker, Totok Inner Beauty",
-            'duration' => '50',
-            'price' => '385000',
+            'description' => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolor dolores laudantium ipsa earum non et accusantium sint voluptate error necessitatibus accusamus laboriosam impedit est, maxime tempora perferendis sunt quia.",
+            'duration' => '30',
+            'price' => '120000',
             'image_path' => '/service-images/maskerwajah.jpeg'
         ]);
 
@@ -225,6 +252,174 @@ class DatabaseSeeder extends Seeder
             'user_id' => 2,
             'product_id' => 2,
             'quantity' => 3
+        ]);
+
+        Product::create([
+            'name' => 'Susu Almond (Small)',
+            'category_id' => '1',
+            'description' => "Deskripsi Susu Almond",
+            'size' => '250 ml',
+            'price' => '27000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/susualmond.jpg'
+        ]);
+
+        Product::create([
+            'name' => 'Susu Almond (Medium)',
+            'category_id' => '1',
+            'description' => "Deskripsi Susu Almond",
+            'size' => '500 ml',
+            'price' => '50000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/susualmond.jpg'
+        ]);
+
+        Product::create([
+            'name' => 'Susu Almond (Large)',
+            'category_id' => '1',
+            'description' => "Deskripsi Susu Almond",
+            'size' => '1000 ml',
+            'price' => '95000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/susualmond.jpg'
+        ]);
+
+        Product::create([
+            'name' => 'Sari Lemon California (Small)',
+            'category_id' => '1',
+            'description' => "Deskripsi Sari Lemon California",
+            'size' => '250 ml',
+            'price' => '60000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/lemon.jpg'
+        ]);
+
+        Product::create([
+            'name' => 'Sari Lemon California (Medium)',
+            'category_id' => '1',
+            'description' => "Deskripsi Sari Lemon California",
+            'size' => '500 ml',
+            'price' => '100000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/lemon.jpg'
+        ]);
+
+        Product::create([
+            'name' => 'Safron',
+            'category_id' => '1',
+            'description' => "Deskripsi Safron",
+            'size' => '1 gr',
+            'price' => '110000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/safron.jpg'
+        ]);
+
+        Product::create([
+            'name' => 'Chiaseed (Small)',
+            'category_id' => '1',
+            'description' => "Deskripsi Chiaseed",
+            'size' => '100 gr',
+            'price' => '25000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/chiaseed.jpg'
+        ]);
+
+        Product::create([
+            'name' => 'Chiaseed (Medium)',
+            'category_id' => '1',
+            'description' => "Deskripsi Chiaseed",
+            'size' => '250 gr',
+            'price' => '50000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/chiaseed.jpg'
+        ]);
+
+        Product::create([
+            'name' => 'Granola Honey',
+            'category_id' => '1',
+            'description' => "Deskripsi Granola Honey",
+            'size' => ' gr',
+            'price' => '65000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/granola.jpg'
+        ]);
+
+        Product::create([
+            'name' => 'Madu Hutan (Small)',
+            'category_id' => '1',
+            'description' => "Deskripsi Madu Hutan",
+            'size' => '250 gr',
+            'price' => '50000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/madu.jpg'
+        ]);
+
+        Product::create([
+            'name' => 'Madu Hutan (Medium)',
+            'category_id' => '1',
+            'description' => "Deskripsi Madu Hutan",
+            'size' => '500 gr',
+            'price' => '95000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/madu.jpg'
+        ]);
+
+        Product::create([
+            'name' => 'Madu Hutan (Large)',
+            'category_id' => '1',
+            'description' => "Deskripsi Madu Hutan",
+            'size' => '1000 gr',
+            'price' => '180000',
+            'expired_date' => Carbon::create('2024', '08', '23'),
+            'stock' => '20',
+            'image_path' => '/product-images/madu.jpg'
+        ]);
+
+        Service::create([
+            'name' => 'Bekam',
+            'category_id' => '2',
+            'description' => 'Deskripsi Bekam',
+            'duration' => '30',
+            'price' => '150000',
+            'image_path' => '/service-images/bekam.jpg'
+        ]);
+
+        Service::create([
+            'name' => 'Akupuntur Kecantikan & Kesehatan',
+            'category_id' => '2',
+            'description' => 'Deskripsi Akupuntur Kecantikan & Kesehatan',
+            'duration' => '30',
+            'price' => '125000',
+            'image_path' => '/service-images/.jpg'
+        ]);
+
+        Service::create([
+            'name' => 'Fashdu',
+            'category_id' => '2',
+            'description' => 'Deskripsi Fashdu',
+            'duration' => '30',
+            'price' => '100000',
+            'image_path' => '/service-images/.jpg'
+        ]);
+
+        Service::create([
+            'name' => 'Totok Punggung',
+            'category_id' => '2',
+            'description' => 'Deskripsi Totok Punggung',
+            'duration' => '30',
+            'price' => '100000',
+            'image_path' => '/service-images/totokpunggung.jpg'
         ]);
     }
 }
