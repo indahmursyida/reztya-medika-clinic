@@ -1,6 +1,6 @@
 @extends('layout/main')
 
-@section('name', 'Active Order')
+@section('title', 'Active Order')
 
 @section('container')
 @if(!$order->isEmpty())
@@ -31,7 +31,7 @@
                     }
                 @endphp
                 <div class="d-flex">
-                    Total Harga: 
+                    Total Harga:
                     <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
                 </div>
             </div>

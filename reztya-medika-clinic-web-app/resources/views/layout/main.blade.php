@@ -8,8 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="http://fonts.cdnfonts.com/css/alander" rel="stylesheet">
-    <link href="http://fonts.cdnfonts.com/css/futura-md-bt" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/alander" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/futura-md-bt" rel="stylesheet">
     <link rel="stylesheet" href="{{ url('css/index.css') }}">
     <!-- Fontawesome-->
     <script src="https://kit.fontawesome.com/d003a54dde.js" crossorigin="anonymous"></script>
@@ -83,6 +83,7 @@
                         </p>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                             <li><a class="button-outline-reztya dropdown-item" href="/view-profile/{{auth()->user()->username}}">Lihat Profil</a></li>
+                            <li><a class="button-outline-reztya dropdown-item" href="/order">Lihat Order</a></li>
                             <li><a class="button-outline-reztya dropdown-item" href="/active-order">Lihat Order Aktif</a></li>
                             @if(auth()->user()->user_role_id == 1)
                                 <li><a class="button-outline-reztya dropdown-item" href="/view-users">Ban / Unban Akun</a></li>

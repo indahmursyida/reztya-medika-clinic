@@ -1,6 +1,6 @@
 @extends('layout/main')
 
-@section('name', 'Payment Receipt Form')
+@section('title', 'Payment Receipt Form')
 
 @section('container')
 @php
@@ -13,7 +13,7 @@ use Carbon\Carbon;
             <form action="/add-payment-receipt/{{$order->order_id}}" method="POST" enctype="multipart/form-data" class="needs-validation">
                 @method('post')
                 @csrf
-                
+
                 @if($order->status == 'WAITING')
                 <div class="d-flex justify-content-center my-4">
                     <img class="img-preview img-fluid img-responsive img-thumbnail" width="300" height="300">
@@ -33,7 +33,7 @@ use Carbon\Carbon;
                     <input disabled class="shadow-none form-control" type="text" name="payment_method" value="{{ old('payment_method', $payment_receipt->payment_method)}}">
                     <label for="floating_select">Metode Pembayaran</label>
                 </div>
-                
+
                 <div class="form-floating mb-2">
                     <input disabled id="floating_payment_date" class="shadow-none form-control" type="date" name="payment_date" value="{{ old('payment_date', $payment_receipt->payment_date) }}">
                     <label for="floating_payment_date" class="font-futura-reztya">Tanggal Transfer (Bulan/Tanggal/Tahun)</label>
@@ -80,13 +80,13 @@ use Carbon\Carbon;
                     <input placeholder="Payment Date" disabled id="floating_payment_date" class="shadow-none form-control" type="date" name="payment_date" value="{{ date("Y-m-d", strtotime("now")) }}">
                     <label for="floating_payment_date" class="font-futura-reztya">Tanggal Pembayaran (Bulan/Tanggal/Tahun)</label>
                 </div>
-                
+
                 <div class="form-floating mb-2">
                     <input id="floating_payment_amount" disabled class="shadow-none form-control" type="text" name="payment_amount" value="Rp{{ old('payment_amount', number_format($totalPrice, 2))}}">
                     <label for="payment_amount" class="font-futura-reztya">Total Pembayaran</label>
                 </div>
                 @endif
-                
+
                 <div class="d-flex justify-content-center">
                     Verifikasi Admin
                 </div>

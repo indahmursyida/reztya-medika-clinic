@@ -1,6 +1,6 @@
 @extends('layout/main')
 
-@section('name', 'Order History')
+@section('title', 'Order History')
 
 @section('container')
 @if(!$order->isEmpty())
@@ -42,7 +42,7 @@
                             $totalPrice += $p->product->price * $p->quantity;
                     }
                     @endphp
-                    Total Harga: 
+                    Total Harga:
                     <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
                     @if(Auth::user()->user_role_id == 2)
                         <a href="/repeat-order/{{ $y->order_id }}" class="btn btn-success ms-5">Pesan Lagi</a>
@@ -52,15 +52,15 @@
             @if(Auth::user()->user_role_id == 1)
                 <div class="d-flex flex-column ms-5">
                     <div>
-                        Nama Pelanggan:  
+                        Nama Pelanggan:
                         <b>{{ $y->user->name }}</b>
                     </div>
                     <div>
-                        No. HP Pelanggan: 
+                        No. HP Pelanggan:
                         <b>{{ $y->user->phone }}</b>
                     </div>
                     <div>
-                        Alamat Pelanggan: 
+                        Alamat Pelanggan:
                         <b>{{ $y->user->address }}</b>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                                                 <b>{{ $x->service->name}}</b>
                                                 <div>
                                                     <div>
-                                                        Tanggal Perawatan: 
+                                                        Tanggal Perawatan:
                                                         {{ date('l, d M Y', strtotime(old('start_time', $x->schedule->start_time))) }}
                                                         {{-- {{ old('start_time', $x->schedule->start_time) }}  --}}
                                                     </div>

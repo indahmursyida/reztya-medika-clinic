@@ -41,11 +41,11 @@ Route::get('/home', function () {
 
 Route::get('/active-order', function () {
     return view('active-order');
-});
+})->middleware(['auth', 'verified']);
 
 Route::get('/payment-receipt-form', function () {
     return view('payment-receipt-form');
-});
+})->middleware(['auth', 'verified']);
 
 // Sign Up
 Route::get('/signup', [SignUpController::class, 'signUp'])->middleware('guest');
@@ -74,7 +74,7 @@ Route::get('/signin', function () {
 Route::post('/signin', [SignInController::class, 'userLogin']);
 
 // Sign Out
-Route::post('/signout', [SignInController::class, 'userLogout'])->middleware(['auth', 'verified']);
+Route::post('/signout', [SignInController::class, 'userLogout'])->middleware('auth');
 
 // View Profile
 Route::get('/view-profile/{username}', [ProfileController::class, 'viewProfile'])->middleware(['auth', 'verified']);
@@ -120,12 +120,12 @@ Route::get('/view-services/filter/price/low-to-high', [ServiceController::class,
 Route::get('/view-services/filter/category/{category_name}', [ServiceController::class, 'filterCategory']);
 
 // Schedules
-Route::get('/manage-schedules', [ScheduleController::class, 'index']);
-Route::get('/add-schedule', [ScheduleController::class, 'add']);
-Route::post('/add-schedule', [ScheduleController::class, 'store']);
-Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit']);
-Route::put('/update-schedule/{id}', [ScheduleController::class, 'update']);
-Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete']);
+Route::get('/manage-schedules', [ScheduleController::class, 'index'])->middleware('admin');
+Route::get('/add-schedule', [ScheduleController::class, 'add'])->middleware('admin');
+Route::post('/add-schedule', [ScheduleController::class, 'store'])->middleware('admin');
+Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit'])->middleware('admin');
+Route::put('/update-schedule/{id}', [ScheduleController::class, 'update'])->middleware('admin');
+Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete'])->middleware('admin');
 
 //OrderDetail
 Route::post('/buy-product', [CartController::class, 'buyProduct']);
@@ -137,12 +137,12 @@ Route::post('/ban-user/{username}', [BanController::class, 'banUser'])->middlewa
 Route::post('/unban-user/{username}', [BanController::class, 'unbanUser'])->middleware('admin');
 
 // Category
-Route::get('/manage-categories', [CategoryController::class, 'index']);
-Route::post('/delete-category/{id}', [CategoryController::class, 'destroy']);
-Route::get('/add-category', [CategoryController::class, 'create']);
-Route::post('/store-category', [CategoryController::class, 'store']);
-Route::get('/edit-category/{id}', [CategoryController::class, 'edit']);
-Route::put('/update-category/{id}', [CategoryController::class, 'update']);
+Route::get('/manage-categories', [CategoryController::class, 'index'])->middleware('admin');
+Route::post('/delete-category/{id}', [CategoryController::class, 'destroy'])->middleware('admin');
+Route::get('/add-category', [CategoryController::class, 'create'])->middleware('admin');
+Route::post('/store-category', [CategoryController::class, 'store'])->middleware('admin');
+Route::get('/edit-category/{id}', [CategoryController::class, 'edit'])->middleware('admin');
+Route::put('/update-category/{id}', [CategoryController::class, 'update'])->middleware('admin');
 
 // Cart
 Route::get('/cart', [CartController::class, 'index']);
