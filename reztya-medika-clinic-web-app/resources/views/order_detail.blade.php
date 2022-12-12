@@ -11,7 +11,7 @@
 @if($order)
     <!-- @if(count($errors) > 0)
     <script>
-        
+
         $("#uploadTransferPopup").modal('show');
     </script>
     @endif -->
@@ -22,7 +22,7 @@
                 <h4 class="d-flex align-items-center mb-0">{{ date('d M Y', strtotime($order->order_date)) }}</h4>
                 @if ($order->status == "FINISHED")
                     <p class="rounded-2 ms-3 mb-0" style="border: 2px solid #00A54F;">
-                        <span class="badge" style="color: #00A54F; background-color: blue;">{{ $order->status }}</span>
+                        <span class="badge" style="color: #00A54F;">{{ $order->status }}</span>
                     </p>
                 @elseif($order->status == "ON GOING")
                     <p class="rounded-2 ms-3 mb-0" style="border: 2px solid orange;">
@@ -52,15 +52,15 @@
         @if(Auth::user()->user_role_id == 1)
             <div class="d-flex flex-column ms-5">
                 <div>
-                    Nama Pelanggan:  
+                    Nama Pelanggan:
                     <b>{{ $order->user->name }}</b>
                 </div>
                 <div>
-                    No. HP Pelanggan: 
+                    No. HP Pelanggan:
                     <b>{{ $order->user->phone }}</b>
                 </div>
                 <div>
-                    Alamat Pelanggan: 
+                    Alamat Pelanggan:
                     <b>{{ $order->user->address }}</b>
                 </div>
             </div>
@@ -96,7 +96,7 @@
                                         </div>
                                         @if($order->status == 'ON GOING')
                                         <button class="btn btn-sm button-outline-reztya" data-toggle="modal" data-target="#reschedulePopup-{{$x->order_detail_id}}">Jadwal Ulang</button>
-                                        <!-- Modal --> 
+                                        <!-- Modal -->
                                         <div class="modal fade" id="reschedulePopup-{{$x->order_detail_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
@@ -160,7 +160,7 @@
                                     <div>
                                     Rp{{ number_format($x->product->price, 2) }}
                                     </div>
-                                    
+
                                 </td>
                                 <td>
                                     <div>
@@ -179,12 +179,12 @@
             </div> -->
         </div>
         @if(Auth::user()->user_role_id == 1)
-            <div class="d-flex justify-content-center">
-                <a href="/confirm-payment/{{ $y->order_id }}" class="btn btn-success" type="button">Konfirmasi Pembayaran</a>
+            <div class="d-flex justify-content-center mb-2">
+                <a href="/confirm-payment/{{ $x->order_id }}" class="btn btn-success" type="button">Konfirmasi Pembayaran</a>
             </div>
         @else
             @if($order->status == 'ON GOING')
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center mb-2">
                     <button class="btn button-outline-reztya" data-toggle="modal" data-target="#uploadTransferPopup" type="button">Bayar Pesanan</a>
                 </div>
                 <div class="modal fade" id="uploadTransferPopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="uploadTransferPopupPopupTitle" aria-hidden="true">

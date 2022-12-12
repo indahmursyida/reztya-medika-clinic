@@ -1,3 +1,11 @@
+@font-face {font-family: "Futura Md BT Bold";
+    src: url("//db.onlinewebfonts.com/t/1ffbed7089a941aa728bb970f3ad49f6.eot");
+    src: url("//db.onlinewebfonts.com/t/1ffbed7089a941aa728bb970f3ad49f6.eot?#iefix") format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/1ffbed7089a941aa728bb970f3ad49f6.woff2") format("woff2"),
+    url("//db.onlinewebfonts.com/t/1ffbed7089a941aa728bb970f3ad49f6.woff") format("woff"),
+    url("//db.onlinewebfonts.com/t/1ffbed7089a941aa728bb970f3ad49f6.ttf") format("truetype"),
+    url("//db.onlinewebfonts.com/t/1ffbed7089a941aa728bb970f3ad49f6.svg#Futura Md BT") format("svg"); }
+
 .unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -79,12 +87,16 @@
     max-width: 80%;
 }
 
+b {
+    font-family: "Futura Md BT Bold", sans-serif;
+}
+
 .font-alander-reztya {
-    font-family: 'Alander', sans-serif;
+    font-family: "Alander", sans-serif;
 }
 
 .font-futura-reztya {
-    font-family: 'Futura Md BT', sans-serif;
+    font-family: "Futura Md BT", sans-serif;
 }
 
 .form-quantity {

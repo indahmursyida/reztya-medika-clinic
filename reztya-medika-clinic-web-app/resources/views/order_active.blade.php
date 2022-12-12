@@ -100,7 +100,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <a href="/order-detail/{{$y->order_detail_id}}" class="btn button-outline-reztya" type="button">Lihat Detail Pesanan</a>
+                <a href="/order-detail/{{$y->order_id}}" class="btn button-outline-reztya" type="button">Lihat Detail Pesanan</a>
             </div>
         @endforeach
     </div>

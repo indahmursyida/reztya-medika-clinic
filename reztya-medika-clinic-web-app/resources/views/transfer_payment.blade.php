@@ -1,6 +1,6 @@
 @extends('layout/main')
 
-@section('name', 'Bayar via Transfer')
+@section('title', 'Bayar via Transfer')
 
 @section('container')
 @php
@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
     <h2 class="my-3 text-center font-alander-reztya unselectable">Konfirmasi Pembayaran</h2>
-    
+
     <div class="d-flex justify-content-center my-4">
         <img class="img-preview img-fluid img-responsive img-thumbnail" width="300" height="300">
     </div>
@@ -49,7 +49,7 @@ use Carbon\Carbon;
             <p>{{$payment_receipt->account_name}}</p>
         </div>
     </div>
-    
+
     <div class="unselectable d-flex justify-content-center mt-2">
         <div class="card card-sign bg-white outline-reztya">
             <div class="card-body">
@@ -84,7 +84,7 @@ use Carbon\Carbon;
             </div>
         </div>
     </div>
-    
+
 </div>
 
 @endsection
