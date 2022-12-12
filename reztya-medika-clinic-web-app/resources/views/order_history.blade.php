@@ -11,32 +11,43 @@
                 Status
             </button>
             <ul class="dropdown-menu">
-                @foreach($order as $x)
-                    <form action="/history-order/filter/status/{{$x->status}}" method="GET" enctype="multipart/form-data">
-                        {{-- <input hidden type="hidden" name="category_id" value="{{$x->order_id}}"> --}}
-                        <li><button type="submit" class="button-outline-reztya dropdown-item">{{$x->status}}</button></li>
-                    </form>
-                @endforeach
+                <li><a href="/history-order/finished" class="button-outline-reztya dropdown-item">FINISHED</a></li>
+                <li><a href="/history-order/canceled" class="button-outline-reztya dropdown-item">CANCELED</a></li>
             </ul>
         </div>
         @foreach($order as $y)
-
             <div class="d-flex justify-content-between">
-                <div class="d-flex">
+                <div class="container">
                     @if ($y->status =="FINISHED")
-                        <h4>{{ date('l, d M Y', strtotime($y->payment_receipt->payment_date)) }}</h4>
+                        <h4 class="col-md-4">{{ date('d M Y', strtotime($y->paymentReceipt->payment_date)) }}</h4>
                     @else
-                        <h4>{{ date('l, d M Y', strtotime($y->order_date)) }}</h4>
+                        <h4 class="col-md-4">{{ date('d M Y', strtotime($y->order_date)) }}</h4>
                     @endif
-                    @if ($y->status == "FINISH")
-                    <p class="rounded-2 ps-2 pe-2 ms-3" style="border: 2px solid #00A54F; color: #00A54F;">
+                    @if ($y->status == "FINISHED")
+                    <p class="rounded-2 ps-2 pe-2 ms-3 col" style="border: 2px solid #00A54F; color: #00A54F; cursor: default;">
                     @else
-                    <p class="rounded-2 ps-2 pe-2 ms-3" style="border: 2px solid red; color: red;">
+                    <p class="btn rounded-2 ps-2 pe-2 ms-3 col" style="border: 2px solid red; color: red; cursor: default;">
                     @endif
                     {{ $y->status }}
                     </p>
                 </div>
-                <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
+                <div class="d-flex">
+                    @php
+                    $totalPrice = 0;
+                    foreach($y->orderDetail as $p)
+                    {
+                        if($p->service_id)
+                            $totalPrice += $p->service->price;
+                        else
+                            $totalPrice += $p->product->price * $p->quantity;
+                    }
+                    @endphp
+                    Total Harga:
+                    <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
+                    @if(Auth::user()->user_role_id == 2)
+                        <a href="/repeat-order/{{ $y->order_id }}" class="btn btn-success ms-5">Pesan Lagi</a>
+                    @endif
+                </div>
             </div>
             @if(Auth::user()->user_role_id == 1)
                 <div class="d-flex flex-column ms-5">
@@ -87,7 +98,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>Rp{{ number_format($x->service->price * $x->quantity, 2) }}</td>
+                                        <td>Rp{{ number_format($x->service->price, 2) }}</td>
                                     </tr>
                                 @endif
                             @endforeach

@@ -30,4 +30,8 @@ class Service extends Model
     public function orderDetail(){
         return $this->hasMany(OrderDetail::class, 'service_id');
     }
+
+    public function cart(){
+        return $this->hasMany(Cart::class, 'service_id');
+    }
 }

@@ -10,6 +10,9 @@ use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentReceiptController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -86,7 +89,7 @@ Route::post('/change-password/{username}', [ProfileController::class, 'changePas
 // Products
 Route::get('/view-products', [ProductController::class, 'view']);
 Route::get('/manage-products', [ProductController::class, 'index'])->middleware('admin');
-Route::get('/product-detail/{id}', [ProductController::class, 'show'])->middleware('admin');
+Route::get('/product-detail/{id}', [ProductController::class, 'show']);
 Route::post('/delete-product/{id}', [ProductController::class, 'destroy'])->middleware('admin');
 Route::get('/add-product', [ProductController::class, 'create'])->middleware('admin');
 Route::post('/store-product', [ProductController::class, 'store'])->middleware('admin');
@@ -103,7 +106,7 @@ Route::get('/view-products/filter/category/{category_name}', [ProductController:
 // Services
 Route::get('/view-services', [ServiceController::class, 'view']);
 Route::get('/manage-services', [ServiceController::class, 'index'])->middleware('admin');
-Route::get('/service-detail/{id}', [ServiceController::class, 'show'])->middleware('admin');
+Route::get('/service-detail/{id}', [ServiceController::class, 'show']);
 Route::post('/delete-service/{id}', [ServiceController::class, 'destroy'])->middleware('admin');
 Route::get('/add-service', [ServiceController::class, 'create'])->middleware('admin');
 Route::post('/store-service', [ServiceController::class, 'store'])->middleware('admin');
@@ -125,8 +128,8 @@ Route::put('/update-schedule/{id}', [ScheduleController::class, 'update'])->midd
 Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete'])->middleware('admin');
 
 //OrderDetail
-Route::post('/buy-product', [OrderDetailController::class, 'buyProduct'])->middleware(['auth', 'verified']);
-Route::post('/book-service', [OrderDetailController::class, 'bookService'])->middleware(['auth', 'verified']);
+Route::post('/buy-product', [CartController::class, 'buyProduct'])->middleware(['auth', 'verified']);
+Route::post('/book-service', [CartController::class, 'bookService'])->middleware(['auth', 'verified']);
 
 // Ban and Unban User
 Route::get('/view-users', [BanController::class, 'viewUsers'])->middleware('admin');
@@ -141,16 +144,28 @@ Route::post('/store-category', [CategoryController::class, 'store'])->middleware
 Route::get('/edit-category/{id}', [CategoryController::class, 'edit'])->middleware('admin');
 Route::put('/update-category/{id}', [CategoryController::class, 'update'])->middleware('admin');
 
-// Order
-Route::get('/order', [OrderController::class, 'order'])->middleware(['auth', 'verified']);
-Route::put('/update-order-item/{id}', [OrderController::class, 'update_order_item'])->middleware(['auth', 'verified']);
-Route::post('/update_order_status_on_going/{id}', [OrderController::class, 'update_order_status_on_going'])->middleware(['auth', 'verified']);
-Route::get('/active-order', [OrderController::class, 'active_order'])->middleware(['auth', 'verified']);
+// Cart
+Route::get('/cart', [CartController::class, 'index'])->middleware(['auth', 'verified']);
+Route::put('/update-schedule/{id}', [CartController::class, 'updateCartSchedule'])->middleware(['auth', 'verified']);
+Route::put('/update-quantity/{id}', [CartController::class, 'updateCartQuantity'])->middleware(['auth', 'verified']);
+Route::get('/remove-cart/{id}', [CartController::class, 'removeCart'])->middleware(['auth', 'verified']);
+
+//Order
+Route::get('/create-order', [OrderController::class, 'create'])->middleware(['auth', 'verified']);
+Route::get('/active-order', [OrderController::class, 'activeOrder'])->middleware(['auth', 'verified']);
+
+Route::get('/order-detail/{id}', [OrderController::class, 'detailOrder'])->name('detail_order')->middleware(['auth', 'verified']);
 Route::put('/reschedule/{id}', [OrderController::class, 'reschedule'])->middleware(['auth', 'verified']);
-Route::get('/delete-order-item/{id}', [OrderController::class, 'delete_order_item'])->middleware(['auth', 'verified']);
 Route::get('/cancel-order/{id}', [OrderController::class, 'cancel_order'])->middleware(['auth', 'verified']);
-Route::get('/finish-order/{id}', [OrderController::class, 'finish_order'])->middleware('admin');
-Route::get('/history-order', [OrderController::class, 'history_order'])->middleware('admin');
+Route::get('/confirm-payment/{id}', [OrderController::class, 'confirmPayment'])->middleware('admin');
+Route::post('/update-payment-receipt/{id}', [OrderController::class, 'updatePaymentReceipt'])->middleware('admin');
+Route::get('/history-order', [OrderController::class, 'historyOrder'])->middleware(['auth', 'verified']);
 Route::get('/payment-receipt-form/{id}', [OrderController::class, 'form_payment_receipt'])->name('form_payment')->middleware('admin');
-Route::get('/history-order/filter/status/{status}', [OrderController::class, 'filter_status'])->middleware(['auth', 'verified']);
-Route::post('/add-payment-receipt', [OrderController::class, 'add_payment_receipt'])->middleware('admin');
+
+Route::post('/add-payment-receipt/{id}', [OrderController::class, 'add_payment_receipt'])->middleware('admin');
+Route::get('/repeat-order/{id}', [OrderController::class, 'repeatOrder'])->middleware(['auth', 'verified']);
+
+Route::get('/history-order/finished', [OrderController::class, 'filterFinished'])->middleware(['auth', 'verified']);
+Route::get('/history-order/canceled', [OrderController::class, 'filterCanceled'])->middleware(['auth', 'verified']);
+
+Route::put('/upload-transfer-receipt/{id}', [PaymentReceiptController::class, 'transferReceipt'])->middleware(['auth', 'verified']);

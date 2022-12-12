@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order_details', function (Blueprint $table) {
-            $table->id('order_detail_id')->primaryKey();
-            $table->foreignId('order_id');
+        Schema::create('carts', function (Blueprint $table) {
+            $table->id('cart_id')->primaryKey();
+            $table->foreignId('user_id');
             $table->foreignId('service_id')->nullable();
             $table->foreignId('product_id')->nullable();
             $table->foreignId('schedule_id')->nullable();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_details');
+        //
     }
 };
