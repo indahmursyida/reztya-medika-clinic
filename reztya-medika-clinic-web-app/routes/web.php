@@ -86,6 +86,12 @@ Route::post('/edit-profile/{username}', [ProfileController::class, 'editProfile'
 // Change Password
 Route::post('/change-password/{username}', [ProfileController::class, 'changePassword'])->middleware(['auth', 'verified']);
 
+// Reset Password
+Route::get('/reset-password', function () {
+    return view('users.reset_password');
+})->middleware('guest');
+Route::post('/reset-password', [ProfileController::class, 'resetPassword'])->middleware('guest');
+
 // Products
 Route::get('/view-products', [ProductController::class, 'view']);
 Route::get('/manage-products', [ProductController::class, 'index'])->middleware('admin');

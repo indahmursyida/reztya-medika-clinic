@@ -9,6 +9,12 @@
                 <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+            @if(session()->has('success'))
+                <div class="alert alert-success alert-dismissible fade show font-futura-reztya" role="alert">
+                    {{session('success')}}
+                    <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
         <div class="pt-3">
             <div class="d-flex justify-content-center">
                 <p class="h5 fw-bold unselectable font-alander-reztya">Masuk ke Akunmu</p>
@@ -42,7 +48,7 @@
                             <label class="form-check-label" for="rememberMe">Ingat saya</label>
                         </div>
                         <div class="mt-3 mb-3 me-3 form-check text-center ">
-                            <a class="h6 font-futura-reztya text-reztya text-decoration-none" href="/forgot-password">Lupa Kata Sandi</a>
+                            <a class="h6 font-futura-reztya text-reztya text-decoration-none" href="/reset-password">Lupa Kata Sandi</a>
                         </div>
                         <div class="d-grid gap-2">
                             <button class="btn button-outline-reztya font-futura-reztya" type="submit">Masuk</button>
