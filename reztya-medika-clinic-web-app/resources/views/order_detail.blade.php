@@ -8,6 +8,9 @@
     <strong> {{session()->get('success')}} </strong>
 </div>
 @endif
+@php
+use Carbon\Carbon;
+@endphp
 @if($order)
     <!-- @if(count($errors) > 0)
     <script>
@@ -19,7 +22,7 @@
         <h2 class="my-3 text-center font-alander-reztya unselectable">Order</h2>
         <div class="d-flex justify-content-between">
             <div class="d-flex mb-2">
-                <h4 class="d-flex align-items-center mb-0">{{ date('d M Y', strtotime($order->order_date)) }}</h4>
+                <h5 class="d-flex align-items-center mb-0">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h5>
                 @if ($order->status == "FINISHED")
                     <p class="rounded-2 ms-3 mb-0" style="border: 2px solid #00A54F;">
                         <span class="badge" style="color: #00A54F;">{{ $order->status }}</span>
@@ -85,48 +88,48 @@
                                         <b>{{ $x->service->name}}</b>
                                         <div>
                                             <div>
-                                                Tanggal Perawatan: {{ date('l, d M Y', strtotime(old('start_time', $x->schedule->start_time))) }}
+                                                Tanggal Perawatan: {{ Carbon::parse($x->schedule->start_time)->translatedFormat('l, d F Y') }}
                                             </div>
                                             <div>
-                                                Waktu Mulai: {{ date('H.i', strtotime($x->schedule->start_time)) }}
+                                                Waktu Mulai: {{ Carbon::parse($x->schedule->start_time)->translatedFormat('H.i') }}
                                             </div>
                                             <div>
-                                                Waktu Berakhir: {{ date('H.i', strtotime($x->schedule->end_time)) }}
+                                                Waktu Berakhir: {{ Carbon::parse($x->schedule->end_time)->translatedFormat('H.i') }}
                                             </div>
                                         </div>
                                         @if($order->status == 'ON GOING')
-                                        <button class="btn btn-sm button-outline-reztya" data-toggle="modal" data-target="#reschedulePopup-{{$x->order_detail_id}}">Jadwal Ulang</button>
+                                        <button class="btn btn-sm button-outline-reztya mb-4 mt-2" data-toggle="modal" data-target="#reschedulePopup-{{$x->order_detail_id}}">Jadwal Ulang</button>
                                         <!-- Modal -->
                                         <div class="modal fade" id="reschedulePopup-{{$x->order_detail_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     {{-- Form --}}
                                                     <form action="/reschedule/{{ $x->order_detail_id }}" method="POST" enctype="multipart/form-data">
-                                                            @method('put')
-                                                            @csrf
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="reschedulePopupLongTitle">Jadwal Ulang</h5>
-                                                            </div>
-                                                            <div class="modal-body container">
+                                                        @method('put')
+                                                        @csrf
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="reschedulePopupLongTitle">Jadwal Ulang</h5>
+                                                        </div>
+                                                        <div class="modal-body container">
+                                                            <div>
                                                                 <div>
-                                                                    <div>
-                                                                        Jadwal Perawatan
-                                                                    </div>
-                                                                    <input type="hidden" id="order_detail_id" name="order_detail_id" value={{ $x->order_detail_id }}>
-                                                                    <div>
-                                                                        <select class="form-select" name="schedule_id" id="schedule_id">
-                                                                            @foreach($schedules as $schedule)
-                                                                                <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $x->schedule_id ? 'selected' : '' }}> {{ date('l, d M Y', strtotime($schedule->start_time)) }} | {{ date('H:i:s', strtotime($schedule->start_time)) }} - {{ date('H:i:s', strtotime($schedule->end_time)) }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
+                                                                    Jadwal Perawatan
+                                                                </div>
+                                                                <input type="hidden" id="order_detail_id" name="order_detail_id" value={{ $x->order_detail_id }}>
+                                                                <div>
+                                                                    <select class="form-select" name="schedule_id" id="schedule_id">
+                                                                        @foreach($schedules as $schedule)
+                                                                            <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $x->schedule_id ? 'selected' : '' }}> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d M Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
-                                                                <button type="submit" class="btn btn-success">Simpan</button>
-                                                            </div>
-                                                        </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
+                                                            <button type="submit" class="btn btn-success">Simpan</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>

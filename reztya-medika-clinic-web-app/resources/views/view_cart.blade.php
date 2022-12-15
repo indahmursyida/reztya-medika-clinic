@@ -8,6 +8,9 @@
     <strong> {{session()->get('message')}} </strong>
 </div>
 @endif -->
+@php
+use Carbon\Carbon;
+@endphp
 @if($cart != null)
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
     <h2 class="my-3 text-center font-alander-reztya unselectable">Cart</h2>
@@ -18,28 +21,29 @@
                     @foreach($cart as $x)
                         @if($x->service_id)
                             @if($printServiceOnce == false)
-                                <h4>Perawatan</h4>
+                                <h5 class="mb-0">Perawatan</h5>
                                 @php
                                     $printServiceOnce = true;
                                 @endphp
                             @endif
                             <tr>
                                 <td>
-                                    <img src="{{ asset('storage/' . $x->service->image_path) }}" alt="" width="200px" height="200px">
+                                    <img src="{{ asset('storage/' . $x->service->image_path) }}" alt="" width="100px" height="100px">
                                 </td>
                                 <td>
                                     <b>{{ $x->service->name }}</b>
                                     <div>
-                                        Tanggal Perawatan: {{ date('l, d M Y', strtotime(old('start_time', $x->schedule->start_time))) }}
+                                        Tanggal Perawatan: {{ Carbon::parse($x->schedule->start_time)->translatedFormat('l, d F Y') }}
+                                        {{-- date('l, d M Y', strtotime(old('start_time', $x->schedule->start_time))) --}}
                                     </div>
                                     <div>
-                                        Waktu Mulai: {{ date('H:i:s', strtotime($x->schedule->start_time)) }}
+                                        Waktu Mulai: {{ Carbon::parse($x->schedule->start_time)->translatedFormat('H.i') }}
                                     </div>
                                     <div>
-                                        Waktu Berakhir: {{ date('H:i:s', strtotime($x->schedule->end_time)) }}
+                                        Waktu Berakhir: {{ Carbon::parse($x->schedule->end_time)->translatedFormat('H.i') }}
                                     </div>
                                 </td>
-                                <td>Rp {{ number_format($x->service->price, 2) }}</td>
+                                <td>Rp{{ number_format($x->service->price, 2) }}</td>
                                 <td>
                                     <button data-toggle="modal" data-target="#editSchedulePopup-{{$x->cart_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Perawatan">
                                         <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
@@ -57,16 +61,16 @@
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="editSchedulePopupLongTitle">{{ $x->service->name }}</h5>
                                                     </div>
-                                                    <div class="modal-body container d-flex align-items-center">
-                                                        <div class="me-5">
-                                                            Jadwal Perawatan
+                                                    <div class="modal-body">
+                                                        <div class="mb-2">
+                                                            Jadwal yang Tersedia
                                                         </div>
                                                         <div>
                                                             <!-- <input type="hidden" id="cart_id" name="cart_id" value={{ $x->cart_id }}> -->
                                                             <div>
                                                                 <select class="form-select" name="schedule_id" id="schedule_id">
                                                                     @foreach($schedules as $schedule)
-                                                                        <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $x->schedule_id ? 'selected' : '' }}> {{ date('l, d M Y', strtotime($schedule->start_time)) }} | {{ date('H:i:s', strtotime($schedule->start_time)) }} - {{ date('H:i:s', strtotime($schedule->end_time)) }}</option>
+                                                                        <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $x->schedule_id ? 'selected' : '' }}> {{ date('l, d M Y', strtotime($schedule->start_time)) }} | {{ date('H.i', strtotime($schedule->start_time)) }} - {{ date('H.i', strtotime($schedule->end_time)) }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -96,25 +100,25 @@
                     @foreach ($cart as $x)
                         @if($x->product_id)
                             @if($printProductOnce == false)
-                                <h4>Produk</h4>
+                                <h5>Produk</h5>
                                 @php
                                     $printProductOnce = true;
                                 @endphp
                             @endif
                             <tr>
                                 <td>
-                                    <img src="{{ asset('storage/' . $x->product->image_path)}}" width="200px" height="200px">
+                                    <img src="{{ asset('storage/' . $x->product->image_path)}}" width="100px" height="100px">
                                 </td>
                                 <td>
                                     <b>{{ $x->product->name }}</b>
                                     <div>
-                                    Rp {{ number_format($x->product->price, 2) }}
+                                    Rp{{ number_format($x->product->price, 2) }}
                                     </div>
                                 </td>
                                 <td>
                                     Kuantitas: {{ $x->quantity }}
                                 </td>
-                                <td>Rp {{ number_format($x->product->price * $x->quantity, 2) }}</td>
+                                <td>Rp{{ number_format($x->product->price * $x->quantity, 2) }}</td>
                                 <td>
                                     <button type="button" data-toggle="modal" data-target="#editQuantityPopup-{{$x->cart_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
                                         <img src="storage/edit.png" class="align-middle" height="15px" width="15px">

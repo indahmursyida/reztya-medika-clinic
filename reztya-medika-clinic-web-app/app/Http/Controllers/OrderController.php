@@ -13,6 +13,10 @@ use Carbon\Carbon;
 
 class OrderController extends Controller
 {
+    // public function index()
+    // {
+    //     return 
+    // }
     public function create()
     {
         $order = Order::create([
@@ -44,6 +48,8 @@ class OrderController extends Controller
         }
 
         Cart::where('user_id', Auth::user()->user_id)->delete();
+
+        session()->regenerate();
 
         return redirect()->route('detail_order', ['id' => $order->order_id]);
     }
@@ -88,7 +94,7 @@ class OrderController extends Controller
     public function detailOrder($id)
     {
         $order = null;
-        $schedules = Schedule::all();
+        $schedules = Schedule::where('status', 'Available')->get();
         $printServiceOnce = false;
         $printProductOnce = false;
         $totalPrice = 0;
@@ -108,7 +114,7 @@ class OrderController extends Controller
 
         OrderDetail::find($id)->update($validated_data);
 
-        return redirect('/active-order');
+        return redirect()->route('detail_order', ['id' => $id]);
     }
 
     public function delete_order_item($id)

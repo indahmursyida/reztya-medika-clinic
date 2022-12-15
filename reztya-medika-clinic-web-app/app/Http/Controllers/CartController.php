@@ -14,7 +14,7 @@ class CartController extends Controller
     {
         if (Auth::user()->user_role_id != 1) {
             $cart = null;
-            $schedules = Schedule::all();
+            $schedules = Schedule::where('status', 'Available')->get();
             $printServiceOnce = false;
             $printProductOnce = false;
             $totalPrice = 0;
