@@ -48,12 +48,12 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             'user_role_id' => 2,
-            'username' => 'Member1',
-            'name' => 'Member1 Member1 Member1',
+            'username' => 'indahmursyida',
+            'name' => 'Indah Mursyida Bahrina',
             'birthdate' => '2001-06-18',
             'phone' => '081285879816',
             'address' => 'Jalan KH Iskandar Muda',
-            'email' => 'member1@gmail.com',
+            'email' => 'indahbahrina@gmail.com',
             'password' => bcrypt('member'),
             'profile_picture' => 'profile-images/profile_picture_default.jpg',
             'is_banned' => false,
