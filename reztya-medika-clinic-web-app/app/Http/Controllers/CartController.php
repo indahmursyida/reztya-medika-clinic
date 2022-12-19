@@ -73,7 +73,7 @@ class CartController extends Controller
             ]
         );
         $validatedData['user_id'] = $userId;
-        $currentOrder = DB::table('cart')
+        $currentOrder = DB::table('carts')
         ->where('product_id', '=', $validatedData['product_id'])
         ->first();
         if($currentOrder){
