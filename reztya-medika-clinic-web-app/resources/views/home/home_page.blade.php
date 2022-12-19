@@ -76,7 +76,7 @@
             <div class="col-6">
                 <div class="row">
                     <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Services</p>
-                    <a href="#">
+                    <a href="/service-detail/{{$service->service_id}}">
                         <img src="{{url('storage/Service Reztya.jpg')}}" class="img-thumbnail img-thumbnail-home d-block w-100" alt="...">
                     </a>
                 </div>
