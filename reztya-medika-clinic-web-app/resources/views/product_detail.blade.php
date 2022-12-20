@@ -24,7 +24,7 @@
 				<h5>Rp. {{ number_format($product->price, 0, '', '.') }}</h5>
 				<div class="my-5">
 					<p>{{ $product->description }}</p>
-				</DIv>
+				</div>
 				<p>Expired Date: {{ date('d F Y', strtotime($product->expired_date)) }}</p>
 				<label for="quantity" class="my-2">Jumlah</label>
 				<input type="number" class="form-control form-quantity" id="quantity" name="quantity" min="1" max="{{ old('quantity') }}" value="{{ old('quantity', 1) }}">

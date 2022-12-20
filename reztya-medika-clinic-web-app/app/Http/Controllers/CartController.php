@@ -92,12 +92,15 @@ class CartController extends Controller
             [
                 'service_id' => 'required',
                 'schedule_id' => 'required',
+                'home_service' => 'required'
             ],
             [
                 'service_id.required' => 'Perawatan wajib diisi',
-                'schedule_id.required' => 'Jadwal wajib diisi'
+                'schedule_id.required' => 'Jadwal wajib diisi',
+                'home_service.required' => 'Tempat perawatan wajib diisi'
             ]
         );
+        
         $validatedData['user_id'] = $userId;
         Cart::create($validatedData);
         return redirect('/home')->with('success', 'Perawatan berhasil ditambahkan ke keranjang!');
