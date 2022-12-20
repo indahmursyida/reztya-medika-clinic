@@ -43,6 +43,32 @@
 					</div>
 					@enderror
 				</div>
+
+				<label for="home_service" class="my-2">Pilih tempat: </label>
+				<div>
+					<select class="form-select @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+						@if(old('home_service'))
+						<option value="1" selected>
+							Rumah ({{ Auth::user()->address }})
+						</option>
+						<option value="0">
+							Klinik Reztya Medika
+						</option>
+						@else
+						<option value="1">
+							Rumah ({{ Auth::user()->address }})
+						</option>
+						<option value="0" selected>
+							Klinik Reztya Medika
+						</option>
+						@endif
+					</select>
+					@error('home_service')
+					<div class="invalid-feedback">
+						{{ $message }}
+					</div>
+					@enderror
+				</div>
 			</div>
 			<div class="d-flex justify-content-center pb-5 my-5">
 				<button class="btn btn-success" type="submit"><i class="fa-solid fa-cart-shopping"></i> Tambahkan ke keranjang</button>

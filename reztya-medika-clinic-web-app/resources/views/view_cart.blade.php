@@ -32,6 +32,15 @@ use Carbon\Carbon;
                                 </td>
                                 <td>
                                     <b>{{ $x->service->name }}</b>
+                                    @if($x->home_service == 1)
+                                    <div>
+                                        Tempat Perawatan: Rumah ({{ Auth::user()->address }})
+                                    </div>
+                                    @else
+                                    <div>
+                                        Tempat Perawatan: Klinik Reztya Medika
+                                    </div>
+                                    @endif
                                     <div>
                                         Tanggal Perawatan: {{ Carbon::parse($x->schedule->start_time)->translatedFormat('l, d F Y') }}
                                         {{-- date('l, d M Y', strtotime(old('start_time', $x->schedule->start_time))) --}}
