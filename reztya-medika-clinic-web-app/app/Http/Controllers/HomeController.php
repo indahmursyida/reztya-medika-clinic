@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
@@ -23,5 +24,9 @@ class HomeController extends Controller
         echo $dom->saveXML($div);
         */
         return view('home.home_page')->with(compact('service'));
+    }
+
+    public function aboutUs() {
+        return view('home.about_us');
     }
 }

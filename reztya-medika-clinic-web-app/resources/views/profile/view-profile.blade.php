@@ -59,7 +59,7 @@
                     <div class="col-6 active-order-box">
                         <div class="card outline-reztya">
                             <button href="/active-order" class="card-header text-white btn button-outline-reztya button-active-order">
-                                <h5 class="mt-1 d-flex justify-content-start">Active Order</h5>
+                                <h5 class="mt-1 d-flex justify-content-start">Pemesanan Aktif</h5>
                             </button>
                             <ul class="list-group">
                                 <li class="list-group-item">
@@ -106,7 +106,7 @@
                     <div class="col-6 me-2-5">
                         <div class="card outline-reztya">
                             <button href="/order-history" class="card-header text-white btn button-outline-reztya button-history-order">
-                                <h5 class="mt-1 d-flex justify-content-start">Order History</h5>
+                                <h5 class="mt-1 d-flex justify-content-start">Riwayat Pemesanan</h5>
                             </button>
                             <ul class="list-group">
                                 <li class="list-group-item">

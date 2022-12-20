@@ -52,9 +52,14 @@
                         Layanan Perawatan
                     </a>
                 </div>
-                <div class="col-5 mb-2">
+                <div class="col-1 mb-2">
                     <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-products">
                         Produk
+                    </a>
+                </div>
+                <div class="col-4 mb-2">
+                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/about-us">
+                        Tentang Kami
                     </a>
                 </div>
             @endif
@@ -64,9 +69,14 @@
                     Layanan Perawatan
                 </a>
             </div>
-            <div class="col-5 mb-2">
+            <div class="col-1 mb-2">
                 <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-products">
                     Produk
+                </a>
+            </div>
+            <div class="col-4 mb-2">
+                <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/about-us">
+                    Tentang Kami
                 </a>
             </div>
         @endauth

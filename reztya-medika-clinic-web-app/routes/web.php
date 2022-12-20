@@ -40,6 +40,9 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
     // Home
     Route::get('/home', [HomeController::class, 'home']);
 
+    // About Us
+    Route::get('/about-us', [HomeController::class, 'aboutUs']);
+
     Route::get('/active-order', function () {
         return view('active-order');
     })->middleware(['auth', 'verified']);
