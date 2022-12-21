@@ -32,7 +32,7 @@ class SignInController extends Controller
             if(!RateLimiter::tooManyAttempts('failed', 3)) {
                 if(Auth::attempt($credentials)) {
                     if(auth()->user()->hasVerifiedEmail()) {
-                        if(auth()->user()->is_banned == false) {
+                        if(!auth()->user()->is_banned) {
                             $remember_me = $request->remember_me;
                             if($remember_me) {
                                 Cookie::queue('email', $request->email);
@@ -44,6 +44,7 @@ class SignInController extends Controller
                             RateLimiter::resetAttempts('failed');
                             return redirect('/home')->with('success', 'Anda berhasil masuk!');
                         } else {
+                            Auth::logout();
                             return redirect()->back()->with('loginError', 'Akun Anda telah diblokir! Silahkan kontak klinik!');
                         }
                     } else {

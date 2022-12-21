@@ -70,7 +70,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'member2@gmail.com',
             'password' => bcrypt('member2'),
             'profile_picture' => 'profile-images/profile_picture_default.jpg',
-            'is_banned' => true
+            'is_banned' => true,
+            'email_verified_at' => now()
         ]);
 
         Category::create([
@@ -191,8 +192,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Sari Lemon California (Small)',
             'category_id' => '1',
             'description' => "Manfaat Sari Lemon California
-1. Proses detox (racun) dalam tubuh 
-2. Menurunkan berat badan 
+1. Proses detox (racun) dalam tubuh
+2. Menurunkan berat badan
 3. Mencerahkan wajah dan menghilangkan jerawat
 4. Menurunkan kolestrol, diabetes dan asam urat
 5. Mengobati sakit tenggorokan & batuk
@@ -211,8 +212,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Sari Lemon California (Medium)',
             'category_id' => '1',
             'description' => "Manfaat Sari Lemon California
-1. Proses detox (racun) dalam tubuh 
-2. Menurunkan berat badan 
+1. Proses detox (racun) dalam tubuh
+2. Menurunkan berat badan
 3. Mencerahkan wajah dan menghilangkan jerawat
 4. Menurunkan kolestrol, diabetes dan asam urat
 5. Mengobati sakit tenggorokan & batuk
