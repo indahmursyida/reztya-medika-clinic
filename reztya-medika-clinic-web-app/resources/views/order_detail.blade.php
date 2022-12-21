@@ -12,12 +12,6 @@
 use Carbon\Carbon;
 @endphp
 @if($order)
-<!-- @if(count($errors) > 0)
-    <script>
-
-        $("#uploadTransferPopup").modal('show');
-    </script>
-    @endif -->
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
     <h2 class="my-3 text-center font-alander-reztya unselectable">Order</h2>
     <div class="d-flex justify-content-between">
@@ -39,12 +33,12 @@ use Carbon\Carbon;
         </div>
         @php
         $totalPrice = 0;
-        foreach($order->orderDetail as $p)
+        foreach($order->orderDetail as $order_detail)
         {
-        if($p->service_id)
-        $totalPrice += $p->service->price;
-        else
-        $totalPrice += $p->product->price * $p->quantity;
+            if($order_detail->service_id)
+                $totalPrice += $order_detail->service->price;
+            else
+                $totalPrice += $order_detail->product->price * $order_detail->quantity;
         }
         @endphp
         <div class="d-flex align-items-center">
@@ -71,8 +65,8 @@ use Carbon\Carbon;
     <div class="d-flex flex-column ms-3">
         <table class="table">
             <tbody>
-                @foreach($order->orderDetail as $x)
-                @if($x->service_id)
+                @foreach($order->orderDetail as $order_detail)
+                @if($order_detail->service_id)
                 @if($printServiceOnce == false)
                 <h5>Perawatan</h5>
                 @php
@@ -81,30 +75,39 @@ use Carbon\Carbon;
                 @endif
                 <tr>
                     <td>
-                        <img src="{{ asset("storage/" . $x->service->image_path) }}" alt="" width="100px" height="100px">
+                        <img src="{{ asset("storage/" . $order_detail->service->image_path) }}" alt="" width="100px" height="100px">
                     </td>
                     <td>
                         <div>
-                            <b>{{ $x->service->name}}</b>
+                            <b>{{ $order_detail->service->name}}</b>
                             <div>
+                                @if($order_detail->home_service == 1)
+                                    <div>
+                                        Tempat Perawatan: Rumah ({{ Auth::user()->address }})
+                                    </div>
+                                @else
+                                    <div>
+                                        Tempat Perawatan: Klinik Reztya Medika
+                                    </div>
+                                @endif
                                 <div>
-                                    Tanggal Perawatan: {{ Carbon::parse($x->schedule->start_time)->translatedFormat('l, d F Y') }}
+                                    Tanggal Perawatan: {{ Carbon::parse($order_detail->schedule->start_time)->translatedFormat('l, d F Y') }}
                                 </div>
                                 <div>
-                                    Waktu Mulai: {{ Carbon::parse($x->schedule->start_time)->translatedFormat('H.i') }}
+                                    Waktu Mulai: {{ Carbon::parse($order_detail->schedule->start_time)->translatedFormat('H.i') }}
                                 </div>
                                 <div>
-                                    Waktu Berakhir: {{ Carbon::parse($x->schedule->end_time)->translatedFormat('H.i') }}
+                                    Waktu Berakhir: {{ Carbon::parse($order_detail->schedule->end_time)->translatedFormat('H.i') }}
                                 </div>
                             </div>
                             @if($order->status == 'ON GOING')
-                            <button class="btn btn-sm button-outline-reztya mb-4 mt-2" data-toggle="modal" data-target="#reschedulePopup-{{$x->order_detail_id}}">Jadwal Ulang</button>
+                            <button class="btn btn-sm button-outline-reztya mb-4 mt-2" data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}">Jadwal Ulang</button>
                             <!-- Modal -->
-                            <div class="modal fade" id="reschedulePopup-{{$x->order_detail_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
+                            <div class="modal fade" id="reschedulePopup-{{$order_detail->order_detail_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         {{-- Form --}}
-                                        <form action="/reschedule/{{ $x->order_detail_id }}" method="POST" enctype="multipart/form-data">
+                                        <form action="/reschedule/{{ $order_detail->order_detail_id }}" method="POST" enctype="multipart/form-data">
                                             @method('put')
                                             @csrf
                                             <div class="modal-header">
@@ -115,14 +118,15 @@ use Carbon\Carbon;
                                                     <div>
                                                         Jadwal Perawatan
                                                     </div>
-                                                    <input type="hidden" id="order_detail_id" name="order_detail_id" value="{{ $x->order_detail_id }}">
-                                                    <input type="hidden" id="old_schedule" name="old_schedule" value="{{ $x->schedule->start_time }}">
-                                                    <input type="hidden" id="service_name" name="service_name" value="{{ $x->service->name }}">
-                                                    <input type="hidden" id="order_id" name="order_id" value="{{ $p->order_id }}">
+                                                    <input type="hidden" id="order_detail_id" name="order_detail_id" value="{{ $order_detail->order_detail_id }}">
+                                                    <input type="hidden" id="old_schedule" name="old_schedule" value="{{ $order_detail->schedule->start_time }}">
+                                                    <input type="text" id="old_schedule_id" name="old_schedule_id" value="{{ $order_detail->schedule_id }}">
+                                                    <input type="hidden" id="service_name" name="service_name" value="{{ $order_detail->service->name }}">
+                                                    <input type="hidden" id="order_id" name="order_id" value="{{ $order_detail->order_id }}">
                                                     <div>
                                                         <select class="form-select" name="schedule_id" id="schedule_id">
                                                             @foreach($schedules as $schedule)
-                                                            <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $x->schedule_id ? 'selected' : '' }}> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d M Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                            <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $order_detail->schedule_id ? 'selected' : '' }}> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d M Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -139,7 +143,7 @@ use Carbon\Carbon;
                             @endif
                         </div>
                     </td>
-                    <td>Rp{{ number_format($x->service->price, 2) }}</td>
+                    <td>Rp{{ number_format($order_detail->service->price, 2) }}</td>
                 </tr>
                 @endif
                 @endforeach
@@ -149,33 +153,33 @@ use Carbon\Carbon;
     <div class="d-flex flex-column ms-3">
         <table class="table">
             <tbody>
-                @foreach ($order->orderDetail as $x)
-                @if($x->product_id)
-                @if($printProductOnce == false)
-                <h5>Produk</h5>
-                @php
-                $printProductOnce = true;
-                @endphp
-                @endif
-                <tr>
-                    <td>
-                        <img src="{{ asset("storage/" . $x->product->image_path)}}" alt="" width="100px" height="100px">
-                    </td>
-                    <td>
-                        <b>{{ $x->product->name }}</b>
-                        <div>
-                            Rp{{ number_format($x->product->price, 2) }}
-                        </div>
+                @foreach ($order->orderDetail as $order_detail)
+                    @if($order_detail->product_id)
+                        @if($printProductOnce == false)
+                            <h5>Produk</h5>
+                            @php
+                            $printProductOnce = true;
+                            @endphp
+                        @endif
+                        <tr>
+                            <td>
+                                <img src="{{ asset("storage/" . $order_detail->product->image_path)}}" alt="" width="100px" height="100px">
+                            </td>
+                            <td>
+                                <b>{{ $order_detail->product->name }}</b>
+                                <div>
+                                    Rp{{ number_format($order_detail->product->price, 2) }}
+                                </div>
 
-                    </td>
-                    <td>
-                        <div>
-                            Kuantitas: {{ $x->quantity }}
-                        </div>
-                    </td>
-                    <td>Rp{{ number_format($x->product->price * $x->quantity, 2) }}</td>
-                </tr>
-                @endif
+                            </td>
+                            <td>
+                                <div>
+                                    Kuantitas: {{ $order_detail->quantity }}
+                                </div>
+                            </td>
+                            <td>Rp{{ number_format($order_detail->product->price * $order_detail->quantity, 2) }}</td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>
@@ -186,7 +190,7 @@ use Carbon\Carbon;
     </div>
     @if(Auth::user()->user_role_id == 1)
     <div class="d-flex justify-content-center mb-2">
-        <a href="/confirm-payment/{{ $x->order_id }}" class="btn btn-success" type="button">Konfirmasi Pembayaran</a>
+        <a href="/confirm-payment/{{ $order->order_id }}" class="btn btn-success" type="button">Konfirmasi Pembayaran</a>
     </div>
     @else
     @if($order->status == 'ON GOING')

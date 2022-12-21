@@ -18,8 +18,8 @@ use Carbon\Carbon;
         <div class="d-flex flex-column">
             <table class="table">
                 <tbody>
-                    @foreach($cart as $x)
-                        @if($x->service_id)
+                    @foreach($cart as $item)
+                        @if($item->service_id)
                             @if($printServiceOnce == false)
                                 <h5 class="mb-0">Perawatan</h5>
                                 @php
@@ -28,11 +28,11 @@ use Carbon\Carbon;
                             @endif
                             <tr>
                                 <td>
-                                    <img src="{{ asset('storage/' . $x->service->image_path) }}" alt="" width="100px" height="100px">
+                                    <img src="{{ asset('storage/' . $item->service->image_path) }}" alt="" width="100px" height="100px">
                                 </td>
                                 <td>
-                                    <b>{{ $x->service->name }}</b>
-                                    @if($x->home_service == 1)
+                                    <b>{{ $item->service->name }}</b>
+                                    @if($item->home_service == 1)
                                     <div>
                                         Tempat Perawatan: Rumah ({{ Auth::user()->address }})
                                     </div>
@@ -42,52 +42,83 @@ use Carbon\Carbon;
                                     </div>
                                     @endif
                                     <div>
-                                        Tanggal Perawatan: {{ Carbon::parse($x->schedule->start_time)->translatedFormat('l, d F Y') }}
-                                        {{-- date('l, d M Y', strtotime(old('start_time', $x->schedule->start_time))) --}}
+                                        Tanggal Perawatan: {{ Carbon::parse($item->schedule->start_time)->translatedFormat('l, d F Y') }}
                                     </div>
                                     <div>
-                                        Waktu Mulai: {{ Carbon::parse($x->schedule->start_time)->translatedFormat('H.i') }}
+                                        Waktu Mulai: {{ Carbon::parse($item->schedule->start_time)->translatedFormat('H.i') }}
                                     </div>
                                     <div>
-                                        Waktu Berakhir: {{ Carbon::parse($x->schedule->end_time)->translatedFormat('H.i') }}
+                                        Waktu Berakhir: {{ Carbon::parse($item->schedule->end_time)->translatedFormat('H.i') }}
                                     </div>
                                 </td>
-                                <td>Rp{{ number_format($x->service->price, 2) }}</td>
+                                <td>Rp{{ number_format($item->service->price, 2) }}</td>
                                 <td>
-                                    <button data-toggle="modal" data-target="#editSchedulePopup-{{$x->cart_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Perawatan">
+                                    <button data-toggle="modal" data-target="#editSchedulePopup-{{$item->cart_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Perawatan">
                                         <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
                                     </button>
-                                    <a href="/remove-cart/{{ $x->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus perawatan {{ $x->service->name }}?')" title="Hapus Perawatan">
+                                    <a href="/remove-cart/{{ $item->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus perawatan {{ $item->service->name }}?')" title="Hapus Perawatan">
                                         <img src="storage/delete.png" class="align-middle" height="15px" width="15px">
                                     </a>
-                                    <div class="modal fade" id="editSchedulePopup-{{$x->cart_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editScheduleTitle" aria-hidden="true">
+                                    <div class="modal fade" id="editSchedulePopup-{{$item->cart_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editScheduleTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 {{-- Form --}}
-                                                <form action="/update-schedule/{{ $x->cart_id }}" method="POST" enctype="multipart/form-data">
+                                                <form action="/update-schedule/{{ $item->cart_id }}" method="POST" enctype="multipart/form-data">
                                                     @method('put')
                                                     @csrf
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="editSchedulePopupLongTitle">{{ $x->service->name }}</h5>
+                                                        <h5 class="modal-title" id="editSchedulePopupLongTitle">{{ $item->service->name }}</h5>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            Jadwal yang Tersedia
+                                                            Pilih Jadwal yang Tersedia
                                                         </div>
+                                                        <input type="hidden" id="cart_id" name="cart_id" value="{{ $item->cart_id }}">
+                                                        <input type="hidden" id="old_schedule" name="old_schedule" value="{{ $item->schedule->start_time }}">
+                                                        <input type="hidden" id="old_schedule_id" name="old_schedule_id" value="{{ $item->schedule_id }}">
+                                                        <input type="hidden" id="service_name" name="service_name" value="{{ $item->service->name }}">
+                                                        <input type="hidden" id="order_id" name="order_id" value="{{ $item->order_id }}">
                                                         <div>
-                                                            <!-- <input type="hidden" id="cart_id" name="cart_id" value={{ $x->cart_id }}> -->
                                                             <div>
                                                                 <select class="form-select" name="schedule_id" id="schedule_id">
                                                                     @foreach($schedules as $schedule)
-                                                                        <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $x->schedule_id ? 'selected' : '' }}> {{ date('l, d M Y', strtotime($schedule->start_time)) }} | {{ date('H.i', strtotime($schedule->start_time)) }} - {{ date('H.i', strtotime($schedule->end_time)) }}</option>
+                                                                        @if($schedule->schedule_id == $item->schedule_id || $schedule->status == 'Available')
+                                                                            <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $item->schedule_id ? 'selected' : '' }}> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                        @endif
                                                                     @endforeach
                                                                 </select>
+                                                            </div>
+
+                                                            <label for="home_service" class="my-2">Pilih Tempat Layanan</label>
+                                                            <div>
+                                                                <select class="form-select @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                                                    @if(old('home_service'))
+                                                                    <option value="1" selected>
+                                                                        Rumah ({{ Auth::user()->address }})
+                                                                    </option>
+                                                                    <option value="0">
+                                                                        Klinik Reztya Medika
+                                                                    </option>
+                                                                    @else
+                                                                    <option value="1">
+                                                                        Rumah ({{ Auth::user()->address }})
+                                                                    </option>
+                                                                    <option value="0" selected>
+                                                                        Klinik Reztya Medika
+                                                                    </option>
+                                                                    @endif
+                                                                </select>
+                                                                @error('home_service')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                                @enderror
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-outline-danger me-3" data-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn btn-success">Simpan</button>
+                                                        <button type="submit" id="update_schedule" class="btn btn-success">Simpan</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -96,7 +127,7 @@ use Carbon\Carbon;
                                 </td>
                             </tr>
                             @php
-                                $totalPrice += $x->service->price;
+                                $totalPrice += $item->service->price;
                             @endphp
                         @endif
                     @endforeach
@@ -106,8 +137,8 @@ use Carbon\Carbon;
         <div class="d-flex flex-column">
             <table class="table">
                 <tbody>
-                    @foreach ($cart as $x)
-                        @if($x->product_id)
+                    @foreach ($cart as $item)
+                        @if($item->product_id)
                             @if($printProductOnce == false)
                                 <h5>Produk</h5>
                                 @php
@@ -116,43 +147,43 @@ use Carbon\Carbon;
                             @endif
                             <tr>
                                 <td>
-                                    <img src="{{ asset('storage/' . $x->product->image_path)}}" width="100px" height="100px">
+                                    <img src="{{ asset('storage/' . $item->product->image_path)}}" width="100px" height="100px">
                                 </td>
                                 <td>
-                                    <b>{{ $x->product->name }}</b>
+                                    <b>{{ $item->product->name }}</b>
                                     <div>
-                                    Rp{{ number_format($x->product->price, 2) }}
+                                    Rp{{ number_format($item->product->price, 2) }}
                                     </div>
                                 </td>
                                 <td>
-                                    Kuantitas: {{ $x->quantity }}
+                                    Kuantitas: {{ $item->quantity }}
                                 </td>
-                                <td>Rp{{ number_format($x->product->price * $x->quantity, 2) }}</td>
+                                <td>Rp{{ number_format($item->product->price * $item->quantity, 2) }}</td>
                                 <td>
-                                    <button type="button" data-toggle="modal" data-target="#editQuantityPopup-{{$x->cart_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
+                                    <button type="button" data-toggle="modal" data-target="#editQuantityPopup-{{$item->cart_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
                                         <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
                                     </button>
-                                    <a href="/remove-cart/{{ $x->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $x->product->name }}?')" title="Hapus Produk">
+                                    <a href="/remove-cart/{{ $item->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $item->product->name }}?')" title="Hapus Produk">
                                         <img src="storage/delete.png" class="align-middle" height="15px" width="15px">
                                     </a>
-                                    <div class="modal fade" id="editQuantityPopup-{{$x->cart_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editQuantityTitle" aria-hidden="true">
+                                    <div class="modal fade" id="editQuantityPopup-{{$item->cart_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editQuantityTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 {{-- Form --}}
-                                                <form action="/update-quantity/{{ $x->cart_id }}" method="POST" enctype="multipart/form-data">
+                                                <form action="/update-quantity/{{ $item->cart_id }}" method="POST" enctype="multipart/form-data">
                                                     @method('put')
                                                     @csrf
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="editQuantityPopupLongTitle">{{ $x->product->name }}</h5>
+                                                        <h5 class="modal-title" id="editQuantityPopupLongTitle">{{ $item->product->name }}</h5>
                                                     </div>
                                                     <div class="modal-body container d-flex align-items-center">
                                                         <div class="me-5">
                                                             Kuantitas
                                                         </div>
                                                         <div>
-                                                            <!-- <input type="hidden" id="cart_id" name="cart_id" value={{ $x->order_detail_id }}> -->
+                                                            <!-- <input type="hidden" id="cart_id" name="cart_id" value={{ $item->order_detail_id }}> -->
                                                             <div>
-                                                                <input type="number" class="@error('p_quantity') is-invalid @enderror form-control form-quantity" id="quantity" name="quantity" value="{{ old('quantity', $x->quantity) }}" min="1" max="{{ $x->product->stock }}">
+                                                                <input type="number" class="@error('p_quantity') is-invalid @enderror form-control form-quantity" id="quantity" name="quantity" value="{{ old('quantity', $item->quantity) }}" min="1" max="{{ $item->product->stock }}">
                                                             </div>
                                                             @error('quantity')
                                                             <div class="invalid-feedback">
@@ -163,7 +194,7 @@ use Carbon\Carbon;
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-outline-danger me-3" data-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn btn-success">Simpan</button>
+                                                        <button type="submit" id="update_quantity" class="btn btn-success">Simpan</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -172,7 +203,7 @@ use Carbon\Carbon;
                                 </td>
                             </tr>
                             @php
-                                $totalPrice += $x->product->price * $x->quantity;
+                                $totalPrice += $item->product->price * $item->quantity;
                             @endphp
                         @endif
                     @endforeach
@@ -195,8 +226,11 @@ use Carbon\Carbon;
 @endif
 </div>
 <script>
-    $('#service_quantity').on('change', function(){
-            window.location.reload();
-        });
+    $('#update_schedule').on('change', function(){
+        window.location.reload();
+    });
+    $('#update_quantity').on('change', function(){
+        window.location.reload();
+    });
 </script>
 @endsection

@@ -14,13 +14,14 @@ class CartController extends Controller
     {
         if (Auth::user()->user_role_id != 1) {
             $cart = null;
-            $schedules = Schedule::where('status', 'Available')->get();
+            $schedules = Schedule::all();
             $printServiceOnce = false;
             $printProductOnce = false;
             $totalPrice = 0;
 
-            if(Auth::user()->user_role_id == 2)
+            if(Auth::user()->user_role_id == 2){
                 $cart = Cart::where('user_id', Auth::user()->user_id)->get();
+            }
 
             return view('view_cart')->with('cart', $cart)->with('schedules', $schedules)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
         }
@@ -30,8 +31,17 @@ class CartController extends Controller
     public function updateCartSchedule(Request $req, $id)
     {
         $validated_data = $req->validate([
-            'schedule_id' => 'required'
+            'schedule_id' => 'required',
+            'home_service' => 'required'
         ]);
+
+        $old_schedule = Schedule::find($req['old_schedule_id']);
+        $old_schedule->status = 'Available';
+        $old_schedule->save();
+
+        $new_schedule = Schedule::find($req['schedule_id']);
+        $new_schedule->status = 'Booked';
+        $new_schedule->save();
 
         $validated_data['cart_id'] = $id;
 
@@ -92,15 +102,12 @@ class CartController extends Controller
             [
                 'service_id' => 'required',
                 'schedule_id' => 'required',
-                'home_service' => 'required'
             ],
             [
                 'service_id.required' => 'Perawatan wajib diisi',
-                'schedule_id.required' => 'Jadwal wajib diisi',
-                'home_service.required' => 'Tempat perawatan wajib diisi'
+                'schedule_id.required' => 'Jadwal wajib diisi'
             ]
         );
-        
         $validatedData['user_id'] = $userId;
         Cart::create($validatedData);
         return redirect('/home')->with('success', 'Perawatan berhasil ditambahkan ke keranjang!');

@@ -101,16 +101,24 @@ class DatabaseSeeder extends Seeder
             'status' => 'Available'
         ]);
 
+        Schedule::create([
+            'start_time' => Carbon::createFromFormat('d-m-Y H.i', '04-11-2022 13.00'),
+            'end_time' => Carbon::createFromFormat('d-m-Y H.i', '04-11-2022 14.00'),
+            'status' => 'Available'
+        ]);
+
         Cart::create([
             'user_id' => 2,
             'service_id' => 2,
-            'schedule_id' => 2
+            'schedule_id' => 2,
+            'home_service' => 1,
         ]);
 
         Cart::create([
             'user_id' => 2,
             'service_id' => 1,
-            'schedule_id' => 1
+            'schedule_id' => 1,
+            'home_service' => 0
         ]);
 
         Cart::create([

@@ -3,7 +3,10 @@
 @section('title', 'Active Order')
 
 @section('container')
-@if(!$order->isEmpty())
+@php
+use Carbon\Carbon;
+@endphp
+@if(!$orders->isEmpty())
     <!-- @if(count($errors) > 0)
     <script>
 
@@ -12,22 +15,22 @@
     @endif -->
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
         <h2 class="my-3 text-center font-alander-reztya unselectable">Pesanan Aktif</h2>
-        @foreach($order as $y)
+        @foreach($orders as $order)
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
-                    <h4 class="align-items-center">{{ date('d M Y', strtotime($y->order_date)) }}</h4>
+                    <h4 class="align-items-center">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h4>
                     <p class="rounded-2 ps-2 pe-2 mt-2 mb-2 ms-3 d-flex align-items-center" style="border: 2px solid #00A54F; color: #00A54F;">
-                        {{ $y->status }}
+                        {{ $order->status }}
                     </p>
                 </div>
                 @php
                     $totalPrice = 0;
-                    foreach($y->orderDetail as $p)
+                    foreach($order->orderDetail as $order_detail)
                     {
-                        if($p->service_id)
-                            $totalPrice += $p->service->price;
+                        if($order_detail->service_id)
+                            $totalPrice += $order_detail->service->price;
                         else
-                            $totalPrice += $p->product->price * $p->quantity;
+                            $totalPrice += $order_detail->product->price * $order_detail->quantity;
                     }
                 @endphp
                 <div class="d-flex">
@@ -39,53 +42,53 @@
                 <div class="d-flex flex-column ms-5">
                     <div>
                         Nama Pelanggan:
-                        <b>{{ $y->user->name }}</b>
+                        <b>{{ $order->user->name }}</b>
                     </div>
                     <div>
                         No. HP Pelanggan:
-                        <b>{{ $y->user->phone }}</b>
+                        <b>{{ $order->user->phone }}</b>
                     </div>
                     <div>
                         Alamat Pelanggan:
-                        <b>{{ $y->user->address }}</b>
+                        <b>{{ $order->user->address }}</b>
                     </div>
                 </div>
             @endif
             <div class="d-flex flex-column ms-3">
                 <table class="table">
                     <tbody>
-                        @foreach($y->orderDetail as $x)
+                        @foreach($order->orderDetail as $order_detail)
                             @if($printOnce == false)
                                 @php
                                     $printOnce = true;
                                 @endphp
-                                @if($x->service_id)
+                                @if($order_detail->service_id)
                                     <tr>
                                         <h5>Perawatan</h5>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img src="{{ asset('storage/' . $x->service->image_path) }}" alt="" width="120px" height="120px">
+                                            <img src="{{ asset('storage/' . $order_detail->service->image_path) }}" alt="" width="120px" height="120px">
                                         </td>
                                         <td>
-                                            {{ $x->service->name }}
+                                            {{ $order_detail->service->name }}
                                         </td>
                                         <td>
-                                            Rp{{ number_format($x->service->price, 2) }}
+                                            Rp{{ number_format($order_detail->service->price, 2) }}
                                         </td>
                                     </tr>
-                                @elseif($x->product_id)
+                                @elseif($order_detail->product_id)
                                     <tr>
                                         <td>
-                                            <img src="{{ asset('storage/' . $x->product->image_path)}}" alt="" width="200px" height="200px">
+                                            <img src="{{ asset('storage/' . $order_detail->product->image_path)}}" alt="" width="200px" height="200px">
                                         </td>
                                         <td>
-                                            <b>{{ $x->product->name }}</b>
+                                            <b>{{ $order_detail->product->name }}</b>
                                             <div>
-                                            {{ $x->quantity }} barang x Rp{{ number_format($x->product->price, 2) }}
+                                            {{ $order_detail->quantity }} barang x Rp{{ number_format($order_detail->product->price, 2) }}
                                             </div>
                                         </td>
-                                        <td>Rp {{ number_format($x->product->price * $x->quantity, 2) }}</td>
+                                        <td>Rp {{ number_format($order_detail->product->price * $order_detail->quantity, 2) }}</td>
                                     </tr>
                                 @endif
                             @endif
@@ -94,13 +97,13 @@
                 </table>
                 <div>
                     @php
-                        $totalItem = count($y->orderDetail);
+                        $totalItem = count($order->orderDetail);
                     @endphp
                     <p>+{{$totalItem - 1}} pesanan lainnya</p>
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <a href="/order-detail/{{$y->order_id}}" class="btn button-outline-reztya" type="button">Lihat Detail Pesanan</a>
+                <a href="/order-detail/{{$order->order_id}}" class="btn button-outline-reztya" type="button">Lihat Detail Pesanan</a>
             </div>
         @endforeach
     </div>

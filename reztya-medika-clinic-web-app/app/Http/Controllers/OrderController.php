@@ -16,82 +16,74 @@ use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
-    // public function index()
-    // {
-    //     return
-    // }
     public function create()
     {
-        $order = Order::create([
+        $orders = Order::create([
             'user_id' => Auth::user()->user_id,
             'order_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
             'status' => 'ON GOING'
         ]);
 
-        $cart = Cart::where('user_id', Auth::user()->user_id)->get();
+        $carts = Cart::where('user_id', Auth::user()->user_id)->get();
 
-        foreach($cart as $x)
+        foreach($carts as $cart)
         {
-            if($x->service_id)
+            if($cart->service_id)
             {
                 OrderDetail::create([
-                    'order_id' => $order->order_id,
-                    'service_id' => $x->service_id,
-                    'schedule_id' => $x->schedule_id
+                    'order_id' => $orders->order_id,
+                    'service_id' => $cart->service_id,
+                    'schedule_id' => $cart->schedule_id
                 ]);
             }
             else
             {
                 OrderDetail::create([
-                    'order_id' => $order->order_id,
-                    'product_id' => $x->product_id,
-                    'quantity' => $x->quantity
+                    'order_id' => $orders->order_id,
+                    'product_id' => $cart->product_id,
+                    'quantity' => $cart->quantity
                 ]);
             }
         }
 
         Cart::where('user_id', Auth::user()->user_id)->delete();
 
-        session()->regenerate();
-
-        return redirect()->route('detail_order', ['id' => $order->order_id]);
+        return redirect()->route('detail_order', ['id' => $orders->order_id]);
     }
 
     public function activeOrder()
     {
-        $order = null;
+        $orders = null;
         $totalPrice = 0;
-        // $totalItem = 0;
         $schedules = Schedule::all();
         $printOnce = false;
 
         if(Auth::user()){
             if(Auth::user()->user_role_id == 1)
             {
-                $order = Order::where('status', 'ON GOING')->orWhere('status', 'WAITING')->get();
+                $orders = Order::where('status', 'ON GOING')->orWhere('status', 'WAITING')->get();
             }
             else
             {
-                $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'WAITING')->orWhere('status', 'ON GOING')->get();
+                $orders = Order::where('user_id', Auth::user()->user_id)->where('status', 'WAITING')->orWhere('status', 'ON GOING')->get();
             }
         }
 
-        if(!$order->isEmpty())
+        if(!$orders->isEmpty())
         {
-            foreach($order as $x)
+            foreach($orders as $order)
             {
-                foreach($x->orderDetail as $y)
+                foreach($order->orderDetail as $order_detail)
                 {
-                    if($y->service_id)
-                        $totalPrice += $y->service->price;
+                    if($order_detail->service_id)
+                        $totalPrice += $order_detail->service->price;
                     else
-                        $totalPrice += $y->product->price * $y->quantity;
+                        $totalPrice += $order_detail->product->price * $order_detail->quantity;
                 }
             }
         }
-        // ->with('totalItem', $totalItem)
 
-        return view('order_active')->with('order', $order)->with('schedules', $schedules)->with('printOnce', $printOnce)->with('totalPrice', $totalPrice);
+        return view('order_active')->with('orders', $orders)->with('schedules', $schedules)->with('printOnce', $printOnce)->with('totalPrice', $totalPrice);
     }
 
     public function detailOrder($id)
@@ -114,6 +106,7 @@ class OrderController extends Controller
         ]);
 
         $validated_data['order_detail_id'] = $id;
+        dd($req['old_schedule_id']);
 
         $newSchedule = Schedule::find($validated_data['schedule_id']);
         $content = [
@@ -121,10 +114,15 @@ class OrderController extends Controller
             'username' => Auth::user()->username,
             'name' => Auth::user()->name,
             'old_schedule' => Carbon::parse($req['old_schedule'])->translatedFormat('l, d F Y, H:i'),
+            'old_schedule_id' => $req['old_schedule_id'],
             'order_id' => $req['order_id'],
             'service_name' => $req['service_name'],
             'new_schedule' => Carbon::parse($newSchedule->start_time)->translatedFormat('l, d F Y, H:i')
         ];
+        $schedule = Schedule::find($req['old_schedule_id']);
+        
+        $schedule->status = 'Available';
+        $schedule->save();
         $emailAddress = Auth::user()->email;;
         Mail::to($emailAddress)->send(new SendEmail($content));
 
@@ -142,19 +140,19 @@ class OrderController extends Controller
 
     public function update_order_status_on_going($id)
     {
-        $order = Order::find($id)->first();
+        $orders = Order::find($id)->first();
 
-        $order->status = 'ON GOING';
-        $order->save();
+        $orders->status = 'ON GOING';
+        $orders->save();
 
         return redirect('/active-order');
     }
 
     public function cancel_order($id)
     {
-        $order = Order::find($id);
-        $order->status = 'CANCELED';
-        $order->save();
+        $orders = Order::find($id);
+        $orders->status = 'CANCELED';
+        $orders->save();
         return redirect('/history-order');
     }
 
@@ -168,10 +166,10 @@ class OrderController extends Controller
 
         $payment_receipt->update($validated_data);
 
-        $order = Order::where('payment_receipt_id', $id)->first();
+        $orders = Order::where('payment_receipt_id', $id)->first();
 
-        $order->status = 'FINISHED';
-        $order->save();
+        $orders->status = 'FINISHED';
+        $orders->save();
 
         return redirect('/history-order');
     }
@@ -180,39 +178,39 @@ class OrderController extends Controller
     {
         if(Auth::user()->user_role_id == 1)
         {
-            $order = Order::where('status','FINISHED')->orWhere('status','CANCELED')->get();
+            $orders = Order::where('status','FINISHED')->orWhere('status','CANCELED')->get();
         }
         else
         {
-            $order = Order::where('user_id', Auth::user()->user_id)->where('status','FINISHED')->orWhere('status','CANCELED')->get();
+            $orders = Order::where('user_id', Auth::user()->user_id)->where('status','FINISHED')->orWhere('status','CANCELED')->get();
         }
 
         $printServiceOnce = false;
         $printProductOnce = false;
         $totalPrice = 0;
 
-        if($order)
+        if($orders)
         {
-            foreach($order as $x)
+            foreach($orders as $order)
             {
-                foreach($x->orderDetail as $y)
+                foreach($order->orderDetail as $order_detail)
                 {
-                    if($y->service_id)
-                        $totalPrice += $y->service->price;
+                    if($order_detail->service_id)
+                        $totalPrice += $order_detail->service->price;
                     else
-                        $totalPrice += $y->product->price * $y->quantity;
+                        $totalPrice += $order_detail->product->price * $order_detail->quantity;
                 }
             }
         }
 
-        return view('order_history')->with('order', $order)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
+        return view('order_history')->with('orders', $orders)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
     }
 
     public function confirmPayment($id)
     {
-        $order = Order::find($id);
+        $orders = Order::find($id);
 
-        $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
+        $payment_receipt = PaymentReceipt::where('payment_receipt_id', $orders->payment_receipt_id)->first();
 
         // if($order->status == 'WAITING')
         // {
@@ -228,40 +226,40 @@ class OrderController extends Controller
 
     public function form_payment_receipt($id)
     {
-        $order = Order::find($id);
+        $orders = Order::find($id);
         $totalPrice = 0;
         $payment_receipt = null;
 
-        if($order->payment_receipt_id)
+        if($orders->payment_receipt_id)
         {
-            $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
+            $payment_receipt = PaymentReceipt::where('payment_receipt_id', $orders->payment_receipt_id)->first();
         }
 
-        foreach($order->orderDetail as $x)
+        foreach($orders->orderDetail as $order_detail)
         {
-            if($x->service_id)
-                $totalPrice += $x->service->price;
+            if($order_detail->service_id)
+                $totalPrice += $order_detail->service->price;
             else
-                $totalPrice += $x->product->price * $x->quantity;
+                $totalPrice += $order_detail->product->price * $order_detail->quantity;
         }
 
-        return view('payment_receipt_form')->with('order', $order)->with('totalPrice', $totalPrice)->with('payment_receipt', $payment_receipt);
+        return view('payment_receipt_form')->with('orders', $orders)->with('totalPrice', $totalPrice)->with('payment_receipt', $payment_receipt);
     }
 
     public function add_payment_receipt(Request $req, $id)
     {
-        $order = Order::find($id);
+        $orders = Order::find($id);
         $totalPrice = 0;
 
-        foreach($order->orderDetail as $x)
+        foreach($orders->orderDetail as $order_detail)
         {
-            if($x->service_id)
-                $totalPrice += $x->service->price;
+            if($order_detail->service_id)
+                $totalPrice += $order_detail->service->price;
             else
-                $totalPrice += $x->product->price * $x->quantity;
+                $totalPrice += $order_detail->product->price * $order_detail->quantity;
         }
 
-        if($order->status == 'ON GOING')
+        if($orders->status == 'ON GOING')
         {
             $validated_data = $req->validate([
                 // 'order_date' => 'required',
@@ -280,13 +278,11 @@ class OrderController extends Controller
                 'payment_method' => 'Cash'
             ]);
 
-            dd($payment_receipt);
-
-            $order->payment_receipt_id = $payment_receipt->payment_receipt_id;
-            $order->save();
+            $orders->payment_receipt_id = $payment_receipt->payment_receipt_id;
+            $orders->save();
         }
-        else if($order->status == 'WAITING'){
-            $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
+        else if($orders->status == 'WAITING'){
+            $payment_receipt = PaymentReceipt::where('payment_receipt_id', $orders->payment_receipt_id)->first();
             $validated_data = $req->validate([
                 // 'order_date' => 'required',
                 // 'customer_name' => 'required',
@@ -302,8 +298,8 @@ class OrderController extends Controller
             $payment_receipt->save();
         }
 
-        $order->status = 'FINISHED';
-        $order->save();
+        $orders->status = 'FINISHED';
+        $orders->save();
 
         return redirect('/history-order');
     }
@@ -312,55 +308,55 @@ class OrderController extends Controller
     {
         if(Auth::user()->user_role_id == 1)
         {
-            $order = Order::where('status', 'FINISHED')->get();
+            $orders = Order::where('status', 'FINISHED')->get();
         }
         else
         {
-            $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'FINISHED')->get();
+            $orders = Order::where('user_id', Auth::user()->user_id)->where('status', 'FINISHED')->get();
         }
 
         $printServiceOnce = false;
         $printProductOnce = false;
 
-        return view('order_history')->with('order', $order)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce);
+        return view('order_history')->with('orders', $orders)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce);
     }
 
     public function filterCanceled()
     {
         if(Auth::user()->user_role_id == 1)
         {
-            $order = Order::where('status', 'CANCELED')->get();
+            $orders = Order::where('status', 'CANCELED')->get();
         }
         else
         {
-            $order = Order::where('user_id', Auth::user()->user_id)->where('status', 'CANCELED')->get();
+            $orders = Order::where('user_id', Auth::user()->user_id)->where('status', 'CANCELED')->get();
         }
         $printServiceOnce = false;
         $printProductOnce = false;
 
-        return view('order_history')->with('order', $order)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce);
+        return view('order_history')->with('orders', $orders)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce);
     }
 
     public function repeatOrder($id)
     {
-        $order_detail = OrderDetail::where('order_id', $id)->get();
+        $order_details = OrderDetail::where('order_id', $id)->get();
 
-        foreach($order_detail as $x)
+        foreach($order_details as $order_detail)
         {
-            if($x->service_id)
+            if($order_detail->service_id)
             {
                 Cart::create([
                     'user_id' => Auth::user()->user_id,
-                    'service_id' => $x->service_id,
-                    'schedule_id' => $x->schedule_id
+                    'service_id' => $order_detail->service_id,
+                    'schedule_id' => $order_detail->schedule_id
                 ]);
             }
             else
             {
                 Cart::create([
                     'user_id' => Auth::user()->user_id,
-                    'product_id' => $x->product_id,
-                    'quantity' => $x->quantity
+                    'product_id' => $order_detail->product_id,
+                    'quantity' => $order_detail->quantity
                 ]);
             }
         }

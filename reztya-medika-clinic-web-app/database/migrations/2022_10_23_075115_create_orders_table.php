@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->date('order_date');
             $table->string('status', 255);
+            $table->boolean('home_service')->nullable();
             $table->timestamps();
         });
     }

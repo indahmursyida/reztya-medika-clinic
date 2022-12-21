@@ -3,7 +3,7 @@
 @section('title', 'Order History')
 
 @section('container')
-@if(!$order->isEmpty())
+@if(!$orders->isEmpty())
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
         <h2 class="my-3 text-center font-alander-reztya unselectable">Riwayat Pesanan</h2>
         <div class="dropdown">
@@ -15,37 +15,37 @@
                 <li><a href="/history-order/canceled" class="button-outline-reztya dropdown-item">CANCELED</a></li>
             </ul>
         </div>
-        @foreach($order as $y)
+        @foreach($orders as $order)
             <div class="d-flex justify-content-between">
                 <div class="container">
-                    @if ($y->status =="FINISHED")
-                        <h4 class="col-md-4">{{ date('d M Y', strtotime($y->paymentReceipt->payment_date)) }}</h4>
+                    @if ($order->status =="FINISHED")
+                        <h4 class="col-md-4">{{ Carbon::parse($order->paymentReceipt->payment_date)->translatedFormat('d F Y') }}</h4>
                     @else
-                        <h4 class="col-md-4">{{ date('d M Y', strtotime($y->order_date)) }}</h4>
+                        <h4 class="col-md-4">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h4>
                     @endif
-                    @if ($y->status == "FINISHED")
+                    @if ($order->status == "FINISHED")
                     <p class="rounded-2 ps-2 pe-2 ms-3 col" style="border: 2px solid #00A54F; color: #00A54F; cursor: default;">
                     @else
                     <p class="btn rounded-2 ps-2 pe-2 ms-3 col" style="border: 2px solid red; color: red; cursor: default;">
                     @endif
-                    {{ $y->status }}
+                    {{ $order->status }}
                     </p>
                 </div>
                 <div class="d-flex">
                     @php
                     $totalPrice = 0;
-                    foreach($y->orderDetail as $p)
+                    foreach($order->orderDetail as $order_detail)
                     {
-                        if($p->service_id)
-                            $totalPrice += $p->service->price;
+                        if($order_detail->service_id)
+                            $totalPrice += $order_detail->service->price;
                         else
-                            $totalPrice += $p->product->price * $p->quantity;
+                            $totalPrice += $order_detail->product->price * $order_detail->quantity;
                     }
                     @endphp
                     Total Harga:
                     <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
                     @if(Auth::user()->user_role_id == 2)
-                        <a href="/repeat-order/{{ $y->order_id }}" class="btn btn-success ms-5">Pesan Lagi</a>
+                        <a href="/repeat-order/{{ $order->order_id }}" class="btn btn-success ms-5">Pesan Lagi</a>
                     @endif
                 </div>
             </div>
@@ -53,64 +53,65 @@
                 <div class="d-flex flex-column ms-5">
                     <div>
                         Nama Pelanggan:
-                        <b>{{ $y->user->name }}</b>
+                        <b>{{ $order->user->name }}</b>
                     </div>
                     <div>
                         No. HP Pelanggan:
-                        <b>{{ $y->user->phone }}</b>
+                        <b>{{ $order->user->phone }}</b>
                     </div>
                     <div>
                         Alamat Pelanggan:
-                        <b>{{ $y->user->address }}</b>
+                        <b>{{ $order->user->address }}</b>
                     </div>
                 </div>
             @endif
             <div class="d-flex flex-column ms-3">
-                    <table class="table">
-                        <tbody>
-                            @foreach($y->orderDetail as $x)
-                                @if($x->service_id)
-                                    @if($printServiceOnce == false)
-                                        <h5>Perawatan</h5>
-                                        @php
-                                            $printServiceOnce = true;
-                                        @endphp
-                                    @endif
-                                    <tr>
-                                        <td>
-                                            <img src="{{ asset("storage/" . $x->service->image_path) }}" alt="" width="200px" height="200px">
-                                        </td>
-                                        <td>
+                <table class="table">
+                    <tbody>
+                        @foreach($order->orderDetail as $order_detail)
+                            @if($order_detail->service_id)
+                                @if($printServiceOnce == false)
+                                    <h5>Perawatan</h5>
+                                    @php
+                                        $printServiceOnce = true;
+                                    @endphp
+                                @endif
+                                <tr>
+                                    <td>
+                                        <img src="{{ asset("storage/" . $order_detail->service->image_path) }}" alt="" width="200px" height="200px">
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <b>{{ $order_detail->service->name}}</b>
                                             <div>
-                                                <b>{{ $x->service->name}}</b>
                                                 <div>
-                                                    <div>
-                                                        Tanggal Perawatan:
-                                                        {{ date('l, d M Y', strtotime(old('start_time', $x->schedule->start_time))) }}
-                                                        {{-- {{ old('start_time', $x->schedule->start_time) }}  --}}
-                                                    </div>
-                                                    <div>
-                                                        Waktu Mulai: {{ date('H:i:s', strtotime($x->schedule->start_time)) }}
-                                                    </div>
-                                                    <div>
-                                                        Waktu Berakhir: {{ date('H:i:s', strtotime($x->schedule->end_time)) }}
-                                                    </div>
+                                                    Tanggal Perawatan:
+                                                    {{ Carbon::parse( $order_detail->schedule->start_time)->translatedFormat('l, d F Y') }}
+                                                </div>
+                                                <div>
+                                                    Waktu Mulai: 
+                                                    {{ Carbon::parse( $order_detail->schedule->start_time)->translatedFormat('H.i') }}
+                                                </div>
+                                                <div>
+                                                    Waktu Berakhir: 
+                                                    {{ Carbon::parse( $order_detail->schedule->end_time)->translatedFormat('H.i') }}
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td>Rp{{ number_format($x->service->price, 2) }}</td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
+                                        </div>
+                                    </td>
+                                    <td>Rp{{ number_format($order_detail->service->price, 2) }}</td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
                 {{-- @endif --}}
             </div>
             <div class="d-flex flex-column ms-3">
                 <table class="table">
                     <tbody>
-                        @foreach ($y->orderDetail as $x)
-                            @if($x->product_id)
+                        @foreach ($order->orderDetail as $order_detail)
+                            @if($order_detail->product_id)
                                 @if($printProductOnce == false)
                                     <h5>Produk</h5>
                                     @php
@@ -119,11 +120,11 @@
                                 @endif
                                 <tr>
                                     <td>
-                                        <img src="{{ asset("storage/" . $x->product->image_path)}}" alt="" width="200px" height="200px">
+                                        <img src="{{ asset("storage/" . $order_detail->product->image_path)}}" alt="" width="200px" height="200px">
                                     </td>
-                                    <td><b>{{ $x->product->name}}</b></td>
-                                    <td> Kuantitas: {{ $x->quantity }}</td>
-                                    <td>Rp{{ number_format($x->product->price * $x->quantity, 2) }}</td>
+                                    <td><b>{{ $order_detail->product->name}}</b></td>
+                                    <td> Kuantitas: {{ $order_detail->quantity }}</td>
+                                    <td>Rp{{ number_format($order_detail->product->price * $order_detail->quantity, 2) }}</td>
                                 </tr>
                             @endif
                         @endforeach
