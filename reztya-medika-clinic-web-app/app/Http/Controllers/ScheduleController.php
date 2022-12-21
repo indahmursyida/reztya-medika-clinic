@@ -12,12 +12,12 @@ class ScheduleController extends Controller
     public function index()
     {
         $schedules = Schedule::paginate(10);
-        return view('manage_schedules')->with('schedules', $schedules);
+        return view('schedules.manage_schedules')->with('schedules', $schedules);
     }
 
     public function add()
     {
-        return view('add_schedule');
+        return view('schedules.add_schedule');
     }
 
     public function store(Request $req)
@@ -40,7 +40,7 @@ class ScheduleController extends Controller
     public function edit($id)
     {
         $schedule = Schedule::find($id);
-        return view('edit_schedule')->with('schedule', $schedule);
+        return view('schedules.edit_schedule')->with('schedule', $schedule);
     }
 
     public function update(Request $req, $id)

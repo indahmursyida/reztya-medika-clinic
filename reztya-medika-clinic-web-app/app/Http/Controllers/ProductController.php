@@ -88,7 +88,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('manage_products', [
+        return view('products.manage_products', [
             'products' => Product::all(),
             'categories' => Category::all()
         ]);
@@ -101,7 +101,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('add_product', [
+        return view('products.add_product', [
             'products' => Product::all(),
             'categories' => Category::all()
         ]);
@@ -161,7 +161,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-        return view('product_detail', [
+        return view('products.product_detail', [
             'product' => $product
         ]);
     }
@@ -175,7 +175,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        return view('edit_product', [
+        return view('products.edit_product', [
             'product' => $product,
             'categories' => Category::all()
         ]);

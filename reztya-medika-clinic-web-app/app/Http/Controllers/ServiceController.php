@@ -89,7 +89,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('manage_services', [
+        return view('services.manage_services', [
             'services' => Service::all(),
             'categories' => Category::all()
         ]);
@@ -102,7 +102,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        return view('add_service', [
+        return view('services.add_service', [
             'services' => Service::all(),
             'categories' => Category::all()
         ]);
@@ -158,7 +158,7 @@ class ServiceController extends Controller
     public function show($id)
     {
         $service = Service::find($id);
-        return view('service_detail', [
+        return view('services.service_detail', [
             'service' => $service,
             'schedules' => Schedule::all()
         ]);
@@ -173,7 +173,7 @@ class ServiceController extends Controller
     public function edit($id)
     {
         $service = Service::find($id);
-        return view('edit_service', [
+        return view('services.edit_service', [
             'service' => $service,
             'categories' => Category::all()
         ]);
