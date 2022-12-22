@@ -18,16 +18,16 @@ use Carbon\Carbon;
         <div class="d-flex mb-2">
             <h5 class="d-flex align-items-center mb-0">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h5>
             @if ($order->status == "FINISHED")
-            <p class="rounded-2 ms-3 mb-0" style="border: 2px solid #00A54F;">
-                <span class="badge" style="color: #00A54F;">{{ $order->status }}</span>
+            <p class="rounded-2 ms-3 mb-0" style="background-color: #00A54F; border: 2px solid black;">
+                <span class="badge" style="color:black">{{ $order->status }}</span>
             </p>
             @elseif($order->status == "ON GOING")
-            <p class="rounded-2 ms-3 mb-0" style="border: 2px solid orange;">
-                <span class="badge" style="color: orange;">{{ $order->status }}</span>
+            <p class="rounded-2 ms-3 mb-0" style="background-color: orange; border: 2px solid black;">
+                <span class="badge" style="color:black">{{ $order->status }}</span>
             </p>
             @else
-            <p class="rounded-2 ms-3 mb-0" style="border: 2px solid red;">
-                <span class="badge" style="color: red;">{{ $order->status }}</span>
+            <p class="rounded-2 ms-3 mb-0" style="background-color: red;border: 2px solid black;">
+                <span class="badge" style="color:black">{{ $order->status }}</span>
             </p>
             @endif
         </div>
@@ -100,11 +100,13 @@ use Carbon\Carbon;
                                     Waktu Berakhir: {{ Carbon::parse($order_detail->schedule->end_time)->translatedFormat('H.i') }}
                                 </div>
                             </div>
+                        </div>
+                        <td>
                             @if($order->status == 'ON GOING')
                             <button data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Ubah Jadwal">
-                                <i class="fa-solid fa-regular fa-pen-to-square"></i>
+                                <i class="fa-regular fa-pen-to-square"></i>
                             </button>
-                            <button class="btn btn-sm button-outline-reztya mb-4 mt-2" data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}">Ubah Jadwal</button>
+                            {{-- <button class="btn btn-sm button-outline-reztya mb-4 mt-2" data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}">Ubah Jadwal</button> --}}
                             <!-- Modal -->
                             <div class="modal fade" id="reschedulePopup-{{$order_detail->order_detail_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -146,7 +148,7 @@ use Carbon\Carbon;
                                 </div>
                             </div>
                             @endif
-                        </div>
+                        </td>
                     </td>
                     <td>Rp{{ number_format($order_detail->service->price, 2) }}</td>
                 </tr>

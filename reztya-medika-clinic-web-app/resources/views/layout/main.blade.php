@@ -125,7 +125,7 @@
         @endauth
     </div>
 </nav>
-<div class="container mt-4">@yield('container')</div>
+<div class="container m5-4">@yield('container')</div>
 <footer class="unselectable footer fixed-bottom pb-1 bg-white">
     <div class="container text-center pt-1">
         <a class="text-decoration-none text-reztya footer-text" href="/home" data-toggle="tooltip" title="Home">

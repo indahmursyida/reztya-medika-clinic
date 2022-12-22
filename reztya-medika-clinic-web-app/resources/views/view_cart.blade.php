@@ -54,10 +54,10 @@ use Carbon\Carbon;
                                 <td>Rp{{ number_format($item->service->price, 2) }}</td>
                                 <td>
                                     <button data-toggle="modal" data-target="#editSchedulePopup-{{$item->cart_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Perawatan">
-                                        <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
+                                        <i class="fa-regular fa-pen-to-square pt-1"></i>
                                     </button>
                                     <a href="/remove-cart/{{ $item->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus perawatan {{ $item->service->name }}?')" title="Hapus Perawatan">
-                                        <img src="storage/delete.png" class="align-middle" height="15px" width="15px">
+                                        <i class="fa-solid fa-trash pt-1"></i>
                                     </a>
                                     <div class="modal fade" id="editSchedulePopup-{{$item->cart_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editScheduleTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -156,10 +156,10 @@ use Carbon\Carbon;
                                 <td>Rp{{ number_format($item->product->price * $item->quantity, 2) }}</td>
                                 <td>
                                     <button type="button" data-toggle="modal" data-target="#editQuantityPopup-{{$item->cart_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
-                                        <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
+                                        <i class="fa-regular fa-pen-to-square pt-1"></i>
                                     </button>
                                     <a href="/remove-cart/{{ $item->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $item->product->name }}?')" title="Hapus Produk">
-                                        <img src="storage/delete.png" class="align-middle" height="15px" width="15px">
+                                        <i class="fa-solid fa-trash pt-1"></i>
                                     </a>
                                     <div class="modal fade" id="editQuantityPopup-{{$item->cart_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editQuantityTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -205,14 +205,20 @@ use Carbon\Carbon;
                 </tbody>
             </table>
         </div>
-        <h5 class="d-flex justify-content-end">Total Harga: Rp {{ number_format($totalPrice, 2) }}</h5>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex mt-2">
+            <div class="d-flex justify-content-between">
+                <h5 style="margin-right: 70vh">Total Harga</h5>
+                <h5 style="margin-right: 100px">Rp{{ number_format($totalPrice, 2) }}</h5>
+            </div>
             <a href="/create-order" class="btn button-outline-reztya">Buat Pesanan</a>
+        </div>
+        
+        {{-- <div class="d-flex justify-content-center">
             <!-- <form action="/create-order/{{Auth::user()->user_id}}" method="post">
                 @csrf
                 <button class="btn button-outline-reztya" type="submit">Buat Pesanan</button>
             </form> -->
-        </div>
+        </div> --}}
     @else
         Keranjang Anda masih kosong.
     @endif
