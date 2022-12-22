@@ -61,16 +61,16 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'user_role_id' => 2,
+            'user_role_id' => 1,
             'username' => 'Member2',
             'name' => 'Member2 Member2 Member2',
             'birthdate' => '2001-06-18',
             'phone' => '081285879816',
             'address' => 'Jalan KH Iskandar Tua',
-            'email' => 'member2@gmail.com',
-            'password' => bcrypt('member2'),
+            'email' => 'yesikaa02@gmail.com',
+            'password' => bcrypt('member'),
             'profile_picture' => 'profile-images/profile_picture_default.jpg',
-            'is_banned' => true,
+            'is_banned' => false,
             'email_verified_at' => now()
         ]);
 

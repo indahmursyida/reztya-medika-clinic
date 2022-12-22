@@ -91,8 +91,8 @@ use Carbon\Carbon;
 
                                                             <label for="home_service" class="my-2">Pilih Tempat Layanan</label>
                                                             <div>
-                                                                <select class="form-select @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
-                                                                    @if(old('home_service'))
+                                                                <select class="form-select" id="home_service" name="home_service">
+                                                                    @if($item->home_service == 1)
                                                                     <option value="1" selected>
                                                                         Rumah ({{ Auth::user()->address }})
                                                                     </option>
@@ -108,11 +108,6 @@ use Carbon\Carbon;
                                                                     </option>
                                                                     @endif
                                                                 </select>
-                                                                @error('home_service')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                                @enderror
                                                             </div>
                                                         </div>
                                                     </div>

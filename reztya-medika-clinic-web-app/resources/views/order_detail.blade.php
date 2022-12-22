@@ -75,7 +75,7 @@ use Carbon\Carbon;
                 @endif
                 <tr>
                     <td>
-                        <img src="{{ asset("storage/" . $order_detail->service->image_path) }}" alt="" width="100px" height="100px">
+                        <img src="{{ url('storage' . $order_detail->service->image_path) }}" alt="" width="100px" height="100px">
                     </td>
                     <td>
                         <div>
@@ -101,7 +101,10 @@ use Carbon\Carbon;
                                 </div>
                             </div>
                             @if($order->status == 'ON GOING')
-                            <button class="btn btn-sm button-outline-reztya mb-4 mt-2" data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}">Jadwal Ulang</button>
+                            <button data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Ubah Jadwal">
+                                <i class="fa-solid fa-regular fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn btn-sm button-outline-reztya mb-4 mt-2" data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}">Ubah Jadwal</button>
                             <!-- Modal -->
                             <div class="modal fade" id="reschedulePopup-{{$order_detail->order_detail_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -111,7 +114,7 @@ use Carbon\Carbon;
                                             @method('put')
                                             @csrf
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="reschedulePopupLongTitle">Jadwal Ulang</h5>
+                                                <h5 class="modal-title" id="reschedulePopupLongTitle">{{ $order_detail->service->name }}</h5>
                                             </div>
                                             <div class="modal-body container">
                                                 <div>
@@ -120,13 +123,15 @@ use Carbon\Carbon;
                                                     </div>
                                                     <input type="hidden" id="order_detail_id" name="order_detail_id" value="{{ $order_detail->order_detail_id }}">
                                                     <input type="hidden" id="old_schedule" name="old_schedule" value="{{ $order_detail->schedule->start_time }}">
-                                                    <input type="text" id="old_schedule_id" name="old_schedule_id" value="{{ $order_detail->schedule_id }}">
+                                                    <input type="hidden" id="old_schedule_id" name="old_schedule_id" value="{{ $order_detail->schedule_id }}">
                                                     <input type="hidden" id="service_name" name="service_name" value="{{ $order_detail->service->name }}">
                                                     <input type="hidden" id="order_id" name="order_id" value="{{ $order_detail->order_id }}">
                                                     <div>
                                                         <select class="form-select" name="schedule_id" id="schedule_id">
                                                             @foreach($schedules as $schedule)
-                                                            <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $order_detail->schedule_id ? 'selected' : '' }}> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d M Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                @if($schedule->schedule_id == $order_detail->schedule_id || $schedule->status == 'Available')
+                                                                    <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $order_detail->schedule_id ? 'selected' : '' }}> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d M Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                @endif
                                                             @endforeach
                                                         </select>
                                                     </div>
