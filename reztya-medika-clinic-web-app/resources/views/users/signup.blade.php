@@ -56,6 +56,31 @@
                             @enderror
                         </div>
                         <div class="form-floating mb-2">
+                            <select name="province" id="floatingProvince" class="form-select shadow-none @error('province') is-invalid @enderror" aria-label="Default select example">
+                                <option disabled selected>Provinsi</option>
+                                @foreach($provinces as $province)
+                                    <option value="{{$province['province_id']}}">{{$province['province']}}</option>
+                                @endforeach
+                            </select>
+                            <label for="floatingProvince" class="font-futura-reztya">Provinsi</label>
+                            @error('province')
+                            <div class="invalid-feedback">
+                                Provinsi wajib diisi
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-2">
+                            <select disabled name="city" id="floatingCity" class="form-select shadow-none @error('city') is-invalid @enderror" aria-label="Default select example">
+                                <option disabled selected>Kota</option>
+                            </select>
+                            <label for="floatingCity" class="font-futura-reztya">Kota</label>
+                            @error('city')
+                            <div class="invalid-feedback">
+                                Kota wajib diisi
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-2">
                             <input placeholder="Address" id="floatingAddress" class="shadow-none form-control @error('address') is-invalid @enderror" type="text" name="address" value="{{old('address')}}">
                             <label for="floatingAddress" class="font-futura-reztya">Alamat</label>
                             @error('address')
@@ -99,4 +124,30 @@
             </div>
         </div>
     </div>
+    <script>
+        var data = {{ \Illuminate\Support\Js::from($cities)}};
+        const city = JSON.parse(data);
+
+        document.getElementById('floatingProvince').onchange = function () {
+            if(this.value === '0') {
+                document.getElementById('floatingCity').disabled = true;
+            } else {
+                document.getElementById('floatingCity').disabled = false;
+
+                var option = "<option disabled selected>Kota</option>";
+                var duplicate = [];
+                const length = city.rajaongkir.results;
+
+                for(const id in length) {
+                    if(city.rajaongkir.results[id].province_id === document.getElementById('floatingProvince').value) {
+                        if(!duplicate.includes(city.rajaongkir.results[id].city_name)) {
+                            option += "<option value='"+city.rajaongkir.results[id].city_id+"'>"+city.rajaongkir.results[id].city_name+"</option>";
+                            duplicate += city.rajaongkir.results[id].city_name;
+                        }
+                    }
+                }
+                document.getElementById('floatingCity').innerHTML = option;
+            }
+        }
+    </script>
 @endsection
