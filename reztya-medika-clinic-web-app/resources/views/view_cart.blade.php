@@ -16,8 +16,8 @@ use Carbon\Carbon;
     <h2 class="my-3 text-center font-alander-reztya unselectable">Cart</h2>
         @if(!$cart->isEmpty())
         <div class="d-flex flex-column">
-            <table class="table">
-                <tbody>
+            <div class="container">
+                <div>
                     @foreach($cart as $item)
                         @if($item->service_id)
                             @if($printServiceOnce == false)
@@ -26,11 +26,11 @@ use Carbon\Carbon;
                                     $printServiceOnce = true;
                                 @endphp
                             @endif
-                            <tr>
-                                <td>
+                            <div class="row">
+                                <div class="col">
                                     <img src="{{ asset('storage/' . $item->service->image_path) }}" alt="" width="100px" height="100px">
-                                </td>
-                                <td>
+                                </div>
+                                <div class="col">
                                     <b>{{ $item->service->name }}</b>
                                     @if($item->home_service == 1)
                                     <div>
@@ -50,9 +50,10 @@ use Carbon\Carbon;
                                     <div>
                                         Waktu Berakhir: {{ Carbon::parse($item->schedule->end_time)->translatedFormat('H.i') }}
                                     </div>
-                                </td>
-                                <td>Rp{{ number_format($item->service->price, 2) }}</td>
-                                <td>
+                                </div>
+                                <div class="col"></div>
+                                <div class="col">Rp{{ number_format($item->service->price, 2) }}</div>
+                                <div class="col">
                                     <button data-toggle="modal" data-target="#editSchedulePopup-{{$item->cart_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Perawatan">
                                         <i class="fa-regular fa-pen-to-square pt-1"></i>
                                     </button>
@@ -119,7 +120,7 @@ use Carbon\Carbon;
                                             </div>
                                         </div>
                                     </div>
-                                </td>
+                                </div>
                             </tr>
                             @php
                                 $totalPrice += $item->service->price;
