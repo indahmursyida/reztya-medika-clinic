@@ -14,9 +14,9 @@
         <h2 class="pb-5 font-alander-reztya unselectable">Daftar Kategori</h2>
     </div>
     <a href="/add-category" class="btn button-outline-reztya my-3"><i class="fa-solid fa-plus"></i> Tambah Kategori</a>
-    <table class="table table-bordered table-striped outline-reztya">
+    <table class="table table-striped">
         <thead>
-            <tr class="text-center">
+            <tr class="text-center table-head-reztya">
                 <th>No.</th>
                 <th>Nama Kategori</th>
                 <th>Aksi</th>
@@ -36,7 +36,7 @@
                 <td>{{ $i }}</td>
                 <td>{{ $category->category_name }}</td>
                 <td>
-                    <a class="btn btn-outline-primary btn-sm" href="/edit-category/{{ $category->category_id }}"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a class="btn button-outline-reztya btn-sm" href="/edit-category/{{ $category->category_id }}"><i class="fa-regular fa-pen-to-square"></i></a>
                     <form method="post" action="/delete-category/{{ $category->category_id }}" class="d-inline">
                         @method('post') @csrf
                         <button class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin mengapus produk ini?')">

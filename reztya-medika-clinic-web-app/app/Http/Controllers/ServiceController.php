@@ -160,7 +160,7 @@ class ServiceController extends Controller
         $service = Service::find($id);
         return view('services.service_detail', [
             'service' => $service,
-            'schedules' => Schedule::all()
+            'schedules' => Schedule::where('status', 'Available')->get()
         ]);
     }
 

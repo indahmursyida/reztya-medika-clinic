@@ -7,7 +7,9 @@
     use Carbon\Carbon;
 @endphp
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
-    <h2 class="my-3 text-center font-alander-reztya">Jadwal Perawatan</h2>
+    <div class="py-3 text-center">
+        <h2 class="pb-5 font-alander-reztya unselectable">Jadwal Perawatan</h2>
+    </div>
     <div class="mt-2 mb-4">
         <a href="{{ url('/add-schedule') }}" class="btn btn-add rounded-2 border"  title="Tambah Jadwal">
             <img src="storage/add.png" class="align-middle" height="15px" width="15px">
@@ -15,7 +17,7 @@
     </div>
     <table class="table table-striped">
         <thead>
-            <tr class="text-center" style="background-color: #7dc241">
+            <tr class="text-center table-head-reztya">
                 <th scope="col">No.</th>
                 <th scope="col">Waktu Mulai</th>
                 <th scope="col">Waktu Berakhir</th>
