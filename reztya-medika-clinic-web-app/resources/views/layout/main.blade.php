@@ -8,8 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/alander" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/futura-md-bt" rel="stylesheet">
+    {{-- <link href="https://fonts.cdnfonts.com/css/alander" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/futura-md-bt" rel="stylesheet"> --}}
     <link href="//db.onlinewebfonts.com/c/a2f52fd2257ee7ab605c7b34b72cf70a?family=Alander" rel="stylesheet" type="text/css"/>
     <link href="//db.onlinewebfonts.com/c/e55e9079ee863276569c8a68d776ef04?family=Futura+Md+BT" rel="stylesheet" type="text/css"/>
     <!-- Index -->

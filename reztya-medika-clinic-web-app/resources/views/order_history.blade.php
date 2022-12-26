@@ -3,9 +3,13 @@
 @section('title', 'Order History')
 
 @section('container')
+@php
+use Carbon\Carbon;
+@endphp
 @if(!$orders->isEmpty())
-    <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
-        <h2 class="my-3 text-center font-alander-reztya unselectable">Riwayat Pesanan</h2>
+<div class="d-flex justify-content-center">
+    <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:90%;">
+        <h3 class="my-3 text-center font-alander-reztya unselectable fw-bold">Riwayat Pesanan</h3>
         <div class="dropdown">
             <button class="btn button-outline-reztya dropdown-toggle mt-4 mb-2" type="button" data-toggle="dropdown" aria-expanded="false">
                 Status
@@ -133,6 +137,7 @@
             </div>
         @endforeach
     </div>
+</div>
 @else
     Tidak ada histori transaksi apapun.
 @endif
