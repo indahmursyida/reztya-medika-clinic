@@ -43,6 +43,8 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('admin'),
             'profile_picture' => 'profile-images/profile_picture_default.jpg',
             'is_banned' => false,
+            'province_id' => 26,
+            'city_id' => 166,
             'email_verified_at' => now()
         ]);
 
@@ -57,6 +59,8 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('member'),
             'profile_picture' => 'profile-images/profile_picture_default.jpg',
             'is_banned' => false,
+            'province_id' => 3,
+            'city_id' => 457,
             'email_verified_at' => now()
         ]);
 
@@ -71,6 +75,8 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('member'),
             'profile_picture' => 'profile-images/profile_picture_default.jpg',
             'is_banned' => false,
+            'province_id' => 3,
+            'city_id' => 456,
             'email_verified_at' => now()
         ]);
 

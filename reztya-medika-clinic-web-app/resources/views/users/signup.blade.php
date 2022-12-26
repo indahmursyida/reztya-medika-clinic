@@ -56,27 +56,27 @@
                             @enderror
                         </div>
                         <div class="form-floating mb-2">
-                            <select name="province" id="floatingProvince" class="form-select shadow-none @error('province') is-invalid @enderror" aria-label="Default select example">
+                            <select name="province_id" id="floatingProvince" class="form-select shadow-none @error('province_id') is-invalid @enderror" aria-label="Default select example">
                                 <option disabled selected>Provinsi</option>
                                 @foreach($provinces as $province)
                                     <option value="{{$province['province_id']}}">{{$province['province']}}</option>
                                 @endforeach
                             </select>
                             <label for="floatingProvince" class="font-futura-reztya">Provinsi</label>
-                            @error('province')
+                            @error('province_id')
                             <div class="invalid-feedback">
-                                Provinsi wajib diisi
+                                Provinsi wajib dipilih
                             </div>
                             @enderror
                         </div>
                         <div class="form-floating mb-2">
-                            <select disabled name="city" id="floatingCity" class="form-select shadow-none @error('city') is-invalid @enderror" aria-label="Default select example">
-                                <option disabled selected>Kota</option>
+                            <select disabled name="city_id" id="floatingCity" class="form-select shadow-none @error('city_id') is-invalid @enderror" aria-label="Default select example">
+                                <option disabled selected>Kota / Kabupaten</option>
                             </select>
-                            <label for="floatingCity" class="font-futura-reztya">Kota</label>
-                            @error('city')
+                            <label for="floatingCity" class="font-futura-reztya">Kota / Kabupaten</label>
+                            @error('city_id')
                             <div class="invalid-feedback">
-                                Kota wajib diisi
+                                Kota / Kabupaten wajib dipilih
                             </div>
                             @enderror
                         </div>
@@ -125,8 +125,7 @@
         </div>
     </div>
     <script>
-        var data = {{ \Illuminate\Support\Js::from($cities)}};
-        const city = JSON.parse(data);
+        var city = JSON.parse({{\Illuminate\Support\Js::from($response)}});
 
         document.getElementById('floatingProvince').onchange = function () {
             if(this.value === '0') {
@@ -134,15 +133,17 @@
             } else {
                 document.getElementById('floatingCity').disabled = false;
 
-                var option = "<option disabled selected>Kota</option>";
-                var duplicate = [];
+                var option = "<option disabled selected>Kota / Kabupaten</option>";
                 const length = city.rajaongkir.results;
 
                 for(const id in length) {
                     if(city.rajaongkir.results[id].province_id === document.getElementById('floatingProvince').value) {
-                        if(!duplicate.includes(city.rajaongkir.results[id].city_name)) {
+                        if(city.rajaongkir.results[id].type === 'Kota') {
+                            option += "<option value='"+city.rajaongkir.results[id].city_id+"'>Kota "+city.rajaongkir.results[id].city_name+"</option>";
+                        } else if(city.rajaongkir.results[id].type === 'Kabupaten') {
+                            option += "<option value='"+city.rajaongkir.results[id].city_id+"'>Kab. "+city.rajaongkir.results[id].city_name+"</option>";
+                        } else {
                             option += "<option value='"+city.rajaongkir.results[id].city_id+"'>"+city.rajaongkir.results[id].city_name+"</option>";
-                            duplicate += city.rajaongkir.results[id].city_name;
                         }
                     }
                 }

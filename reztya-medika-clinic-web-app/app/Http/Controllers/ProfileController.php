@@ -81,7 +81,8 @@ class ProfileController extends Controller
             'phone' => 'required|numeric',
             'address' => 'required|max:255',
             'email' => 'required|email:rfc,dns',
-            'password' => 'required|current_password'
+            'password' => 'required|current_password',
+            'city_id' => 'required'
         ]);
 
         if ($validated) {
@@ -91,6 +92,7 @@ class ProfileController extends Controller
             $phone = strval($request->phone);
             $address = $request->address;
             $username = $request->username;
+            $city = $request->city_id;
 
             $photo = $request->file('photo');
             $profilePicture = $photo->storeAs('profile-images', time().'.'.$photo->getClientOriginalExtension());
@@ -104,7 +106,8 @@ class ProfileController extends Controller
                 'birthdate' => $birthdate,
                 'phone' => $phone,
                 'address' => $address,
-                'username' => $username
+                'username' => $username,
+                'city_id' => $city
             ]);
             return redirect()->intended('/view-profile/{username}');
         }
@@ -112,6 +115,38 @@ class ProfileController extends Controller
     }
 
     function viewEditProfile() {
-        return view('profile.edit-profile');
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.rajaongkir.com/starter/city",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "key: 460abd066bcb244bf02b1c284f49e55a"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            return redirect()->back()->with('updateError', 'Terjadi masalah dengan perubahan. Harap coba ulang.');
+        }
+
+        $provinces = [];
+        foreach (json_decode($response)->rajaongkir->results as $each) {
+            if (!in_array($each->province_id, array_column($provinces, 'province_id'))) {
+                array_push($provinces, array('province_id' => $each->province_id, 'province' => $each->province));
+            }
+        }
+        sort($provinces);
+
+        return view('profile.edit-profile')->with(compact('provinces'))->with(compact('response'));
     }
 }

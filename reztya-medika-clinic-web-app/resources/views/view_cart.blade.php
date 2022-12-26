@@ -13,7 +13,7 @@ use Carbon\Carbon;
 @endphp
 @if($cart != null)
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
-    <h2 class="my-3 text-center font-alander-reztya unselectable">Cart</h2>
+    <p class="h5 fw-bold my-3 text-center font-alander-reztya unselectable">Cart</p>
         @if(!$cart->isEmpty())
         <div class="d-flex flex-column">
             <table class="table">
@@ -205,14 +205,24 @@ use Carbon\Carbon;
                 </tbody>
             </table>
         </div>
-        <div class="d-flex mt-2">
+        <p>Tujuan: {{$origin[1]}}, {{$origin[0]}}</p>
+        <div class="mt-1 mb-2 d-flex">
+            <select onchange="includeFee()" id="origin" class="form-select shadow-none w-25">
+                <option disabled selected>Pengiriman</option>
+                @foreach($costs as $cost)
+                    <option value="{{$cost->cost[0]->value}}">JNE {{$cost->service}} - Rp{{str(number_format(($cost->cost[0]->value), 2))}}: {{$cost->cost[0]->etd}} hari</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="d-flex mt-3">
             <div class="d-flex justify-content-between">
                 <h5 style="margin-right: 70vh">Total Harga</h5>
-                <h5 style="margin-right: 100px">Rp{{ number_format($totalPrice, 2) }}</h5>
+                <h5 style="margin-right: 100px" id="totalPriceText">Rp{{ number_format($totalPrice, 2) }}</h5>
+                <input type="hidden" value="{{$totalPrice}}" id="totalPrice">
             </div>
             <a href="/create-order" class="btn button-outline-reztya">Buat Pesanan</a>
         </div>
-        
+
         {{-- <div class="d-flex justify-content-center">
             <!-- <form action="/create-order/{{Auth::user()->user_id}}" method="post">
                 @csrf
@@ -226,6 +236,7 @@ use Carbon\Carbon;
     Tidak bisa
 @endif
 </div>
+<h3>a</h3>
 <script>
     $('#update_schedule').on('change', function(){
         window.location.reload();
@@ -233,5 +244,11 @@ use Carbon\Carbon;
     $('#update_quantity').on('change', function(){
         window.location.reload();
     });
+
+    function includeFee() {
+        var total = parseInt(document.getElementById('totalPrice').value);
+        total += parseInt(document.getElementById('origin').value);
+        document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
+    }
 </script>
 @endsection

@@ -130,12 +130,6 @@ b {
     border-color: #00A54F !important;
 }
 
-.list-group-item-profile {
-    border-color: white !important;
-    margin-right: -7.5%;
-    background: none !important;
-}
-
 .img-thumbnail {
     overflow: hidden;
 }

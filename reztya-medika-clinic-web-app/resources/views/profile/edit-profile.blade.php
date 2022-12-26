@@ -30,7 +30,7 @@
                                     <div class="col-3">
                                         <label for="name" class="col-form-label">Foto</label>
                                     </div>
-                                    <div class="col-md-8 mt-1">
+                                    <div class="col-md-9 mt-1">
                                         <input type="file" name="photo" class="shadow-none form-control form-control-sm @error('photo') is-invalid @enderror" aria-describedby="photo" onchange="loadFile(event)">
                                         @error('photo')
                                         <div class="invalid-feedback">
@@ -45,7 +45,7 @@
                                     <div class="col-3">
                                         <label for="username" class="col-form-label">Username</label>
                                     </div>
-                                    <div class="col-md-8 mt-2">
+                                    <div class="col-md-9 mt-2">
                                         <input type="text" name="username" class="shadow-none form-control form-control-sm @error('username') is-invalid @enderror" aria-describedby="username" placeholder="{{auth()->user()->username}}" value="{{old('username')}}">
                                         @error('username')
                                         <div class="invalid-feedback">
@@ -60,7 +60,7 @@
                                     <div class="col-3">
                                         <label for="name" class="col-form-label">Nama Lengkap</label>
                                     </div>
-                                    <div class="col-md-8 mt-2">
+                                    <div class="col-md-9 mt-2">
                                         <input type="text" name="name" class="shadow-none form-control form-control-sm @error('name') is-invalid @enderror" aria-describedby="name" placeholder="{{auth()->user()->name}}" value="{{old('name')}}">
                                         @error('name')
                                         <div class="invalid-feedback">
@@ -90,7 +90,7 @@
                                     <div class="col-3">
                                         <label for="phone" class="col-form-label">Nomor Telepon</label>
                                     </div>
-                                    <div class="col-md-8 mt-3">
+                                    <div class="col-md-9 mt-3">
                                         <input type="number" name="phone" class="shadow-none form-control form-control-sm @error('phone') is-invalid @enderror" aria-describedby="phone" placeholder="{{auth()->user()->phone}}" value="{{old('phone')}}">
                                         @error('phone')
                                         <div class="invalid-feedback">
@@ -103,9 +103,46 @@
                             <li class="list-group-item list-group-item-profile">
                                 <div class="row">
                                     <div class="col-3">
+                                        <label for="province_id" class="col-form-label">Provinsi</label>
+                                    </div>
+                                    <div class="col-md-9 mt-1">
+                                        <select name="province_id" id="province_id" class="form-select form-select-sm shadow-none @error('province_id') is-invalid @enderror" aria-label="Default select example">
+                                            <option disabled selected>Provinsi</option>
+                                            @foreach($provinces as $province)
+                                                <option value="{{$province['province_id']}}">{{$province['province']}}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('province_id')
+                                        <div class="invalid-feedback">
+                                            Provinsi wajib dipilih
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label for="city_id" class="col-form-label">Kota / Kabupaten</label>
+                                    </div>
+                                    <div class="col-md-9 mt-1">
+                                        <select disabled name="city_id" id="city_id" class="form-select form-select-sm shadow-none @error('city_id') is-invalid @enderror" aria-label="Default select example">
+                                            <option disabled selected>Kota / Kabupaten</option>
+                                        </select>
+                                        @error('city_id')
+                                        <div class="invalid-feedback">
+                                            Kota / Kabupaten wajib dipilih
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item list-group-item-profile">
+                                <div class="row">
+                                    <div class="col-3">
                                         <label for="address" class="col-form-label">Alamat</label>
                                     </div>
-                                    <div class="col-md-8 mt-1">
+                                    <div class="col-md-9 mt-1">
                                         <textarea name="address" class="shadow-none form-control form-control-sm @error('address') is-invalid @enderror" aria-describedby="address" placeholder="{{auth()->user()->address}}">{{old('address')}}</textarea>
                                         @error('address')
                                         <div class="invalid-feedback">
@@ -120,7 +157,7 @@
                                     <div class="col-3">
                                         <label for="email" class="col-form-label">Email</label>
                                     </div>
-                                    <div class="col-md-8 mt-1">
+                                    <div class="col-md-9 mt-1">
                                         <input type="text" name="email" class="shadow-none form-control form-control-sm @error('email') is-invalid @enderror" aria-describedby="email" placeholder="{{auth()->user()->email}}" value="{{old('email')}}">
                                         @error('email')
                                         <div class="invalid-feedback">
@@ -135,7 +172,7 @@
                                     <div class="col-3">
                                         <label for="password" class="col-form-label">Kata Sandi</label>
                                     </div>
-                                    <div class="col-md-8 mt-1">
+                                    <div class="col-md-9 mt-1">
                                         <input type="password" name="password" class="shadow-none form-control form-control-sm @error('password') is-invalid @enderror" aria-describedby="password">
                                         @error('password')
                                         <div class="invalid-feedback">
@@ -230,5 +267,31 @@
                 URL.revokeObjectURL(output.src)
             }
         };
+
+        var city = JSON.parse({{\Illuminate\Support\Js::from($response)}});
+
+        document.getElementById('province_id').onchange = function () {
+            if(this.value === '0') {
+                document.getElementById('city_id').disabled = true;
+            } else {
+                document.getElementById('city_id').disabled = false;
+
+                var option = "<option disabled selected>Kota / Kabupaten</option>";
+                const length = city.rajaongkir.results;
+
+                for(const id in length) {
+                    if(city.rajaongkir.results[id].province_id === document.getElementById('province_id').value) {
+                        if(city.rajaongkir.results[id].type === 'Kota') {
+                            option += "<option value='"+city.rajaongkir.results[id].city_id+"'>Kota "+city.rajaongkir.results[id].city_name+"</option>";
+                        } else if(city.rajaongkir.results[id].type === 'Kabupaten') {
+                            option += "<option value='"+city.rajaongkir.results[id].city_id+"'>Kab. "+city.rajaongkir.results[id].city_name+"</option>";
+                        } else {
+                            option += "<option value='"+city.rajaongkir.results[id].city_id+"'>"+city.rajaongkir.results[id].city_name+"</option>";
+                        }
+                    }
+                }
+                document.getElementById('city_id').innerHTML = option;
+            }
+        }
     </script>
 @endsection
