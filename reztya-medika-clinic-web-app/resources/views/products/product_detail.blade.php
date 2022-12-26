@@ -28,6 +28,32 @@
 				<p>Expired Date: {{ date('d F Y', strtotime($product->expired_date)) }}</p>
 				<label for="quantity" class="my-2">Jumlah</label>
 				<input type="number" class="form-control form-quantity" id="quantity" name="quantity" min="1" max="{{ old('quantity') }}" value="{{ old('quantity', 1) }}">
+
+				<label for="delivery_service" class="my-2">Pilih tipe order: </label>
+				<div>
+					<select class="form-select @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
+						@if(old('delivery_service'))
+						<option value="1" selected>
+							Delivery
+						</option>
+						<option value="0">
+							Self-Pickup
+						</option>
+						@else
+						<option value="1">
+							Delivery
+						</option>
+						<option value="0" selected>
+							Self-Pickup
+						</option>
+						@endif
+					</select>
+					@error('delivery_service')
+					<div class="invalid-feedback">
+						{{ $message }}
+					</div>
+					@enderror
+				</div>
 			</div>
 		</div>
 		<div class="d-flex justify-content-center pb-5">

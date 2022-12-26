@@ -117,13 +117,15 @@ class CartController extends Controller
         $validatedData = $request->validate(
             [
                 'product_id' => 'required',
-                'quantity' => 'required|integer|min:1|max:1000'
+                'quantity' => 'required|integer|min:1|max:1000',
+                'delivery_service' => 'required'
             ],
             [
                 'product_id.required' => 'Produk wajib diisi',
                 'quantity.required' => 'Jumlah produk wajib diisi',
                 'quantity.min' => 'Jumlah produk minimal 1',
-                'quantity.max' => 'Jumlah produk maksimal 1000'
+                'quantity.max' => 'Jumlah produk maksimal 1000',
+                'delivery_service.required' => 'Tipe order wajib diisi',
             ]
         );
         $validatedData['user_id'] = $userId;
@@ -132,7 +134,7 @@ class CartController extends Controller
         ->first();
         if($currentOrder){
             $newQuantity = $currentOrder->quantity + $validatedData['quantity'];
-            DB::update('update cart set quantity = ? where product_id = ?',[$newQuantity, $validatedData['product_id']]);
+            DB::update('update carts set quantity = ? where product_id = ?',[$newQuantity, $validatedData['product_id']]);
         }else{
             Cart::create($validatedData);
         }
@@ -146,10 +148,12 @@ class CartController extends Controller
             [
                 'service_id' => 'required',
                 'schedule_id' => 'required',
+                'home_service' => 'required'
             ],
             [
                 'service_id.required' => 'Perawatan wajib diisi',
-                'schedule_id.required' => 'Jadwal wajib diisi'
+                'schedule_id.required' => 'Jadwal perawatan wajib diisi',
+                'home_service.required' => 'Tempat perawatan wajib diisi'
             ]
         );
         $validatedData['user_id'] = $userId;

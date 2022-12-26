@@ -16,7 +16,8 @@ class Cart extends Model
         'product_id',
         'schedule_id',
         'quantity',
-        'home_service'
+        'home_service',
+        'delivery_service'
     ];
 
     public function user(){
