@@ -4,11 +4,11 @@
 
 @section('container')
 <div class="d-flex justify-content-center">
-    <div class="border outline-reztya rounded-4 py-4 font-futura-reztya w-75">
-        <h3 class="my-3 text-center font-alander-reztya unselectable fw-bold">Tentang Kami</h3>
+    <div class="border outline-reztya rounded-4 py-4 p-5 font-futura-reztya" style="width: 85%;">
+        <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold">Tentang Kami</h5>
         <div class="d-flex justify-content-center">
             <div class="row">
-                <h3 class="unselectable h4 d-flex align-items-center mb-0 mt-3 mb-4">Klinik Reztya Medika</h3>
+                <h5 class="unselectable h4 d-flex align-items-center mb-0 mt-3 mb-4">Klinik Reztya Medika</h5>
                 <div class="col-7">
                     <div class="row">
                         <b class="unselectable h5 d-flex align-items-center mb-0 mt-2">Alamat</b>

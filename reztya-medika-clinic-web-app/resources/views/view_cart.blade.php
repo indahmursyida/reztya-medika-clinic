@@ -14,7 +14,7 @@ use Carbon\Carbon;
 @if($cart != null)
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:90%;">
-        <h3 class="text-center font-alander-reztya unselectable mb-3 fw-bold pt-3">Keranjang</h3>
+        <h5 class="text-center font-alander-reztya unselectable mb-3 fw-bold pt-3">Keranjang</h5>
             @if(!$cart->isEmpty())
                 <div class="d-flex flex-column">
                     <div class="container">
@@ -87,7 +87,7 @@ use Carbon\Carbon;
                                                             <input type="hidden" id="order_id" name="order_id" value="{{ $item->order_id }}">
                                                             <div>
                                                                 <div class="mb-3">
-                                                                    <select class="form-select" name="schedule_id" id="schedule_id">
+                                                                    <select class="form-select shadow-none" name="schedule_id" id="schedule_id">
                                                                         <option selected disabled hidden>Pilih Jadwal yang Tersedia</option>
                                                                         @foreach($schedules as $schedule)
                                                                             @if($schedule->schedule_id == $item->schedule_id)
@@ -100,7 +100,7 @@ use Carbon\Carbon;
                                                                 </div>
         
                                                                 <div>
-                                                                    <select class="form-select" id="home_service" name="home_service">
+                                                                    <select class="form-select shadow-none" id="home_service" name="home_service">
                                                                         <option selected disabled hidden>Pilih Tempat Layanan</option>
                                                                         @if($item->home_service == 1)
                                                                         <option value="1" disabled>
@@ -202,7 +202,7 @@ use Carbon\Carbon;
                                                             <div>
                                                                 <!-- <input type="hidden" id="cart_id" name="cart_id" value={{ $item->order_detail_id }}> -->
                                                                 <div>
-                                                                    <input type="number" class="@error('p_quantity') is-invalid @enderror form-control form-quantity" id="quantity" name="quantity" value="{{ old('quantity', $item->quantity) }}" min="1" max="{{ $item->product->stock }}">
+                                                                    <input type="number" class="@error('p_quantity') is-invalid @enderror form-control shadow-none form-quantity" id="quantity" name="quantity" value="{{ old('quantity', $item->quantity) }}" min="1" max="{{ $item->product->stock }}">
                                                                 </div>
                                                                 @error('quantity')
                                                                 <div class="invalid-feedback">
@@ -235,7 +235,7 @@ use Carbon\Carbon;
                                 <p class="mb-0 fw-bold">Opsi Pengiriman</p>
                                 <p class="m-0">Tujuan ke {{$origin[1]}}, {{$origin[0]}}</p>
                                 <div class="mt-1 mb-2 d-flex">
-                                    <select onchange="includeFee()" id="origin" class="form-select shadow-none w-75">
+                                    <select onchange="includeFee()" id="origin" class="form-select shadow-none">
                                         <option disabled selected hidden>Pilih Jasa Pengiriman</option>
                                         @foreach($costs as $cost)
                                             <option value="{{$cost->cost[0]->value}}">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari) - Rp{{str(number_format(($cost->cost[0]->value), 2))}}</option>
@@ -259,6 +259,7 @@ use Carbon\Carbon;
                         <div class="col-5">
                         </div>
                         <div class="col d-flex align-items-center">
+                            <input type="hidden" value="{{$totalPrice}}" id="totalPrice">
                             <h5 class="mb-0" id="totalPriceText">Rp{{ number_format($totalPrice, 2) }}</h5>
                         </div>
                         <div class="col d-flex justify-content-center align-items-center">
@@ -282,17 +283,21 @@ use Carbon\Carbon;
     $('#update_quantity').on('change', function(){
         window.location.reload();
     });
-    $('#origin').on('change', function() {
-        // var total = parseInt(document.getElementById('totalPrice').value);
-        // total += parseInt(document.getElementById('origin').value);
-        // document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
-        alert( this.value );
-    });
+    // $('#origin').on('change', function() {
+    //     // var total = parseInt(document.getElementById('totalPrice').value);
+    //     // total += parseInt(document.getElementById('origin').value);
+    //     // document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
+    //     alert( this.value );
+    // });
 
     function includeFee() {
+        console.log('test');
         var total = parseInt(document.getElementById('totalPrice').value);
+        console.log(total);
         total += parseInt(document.getElementById('origin').value);
+        console.log(total);
         document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
+        console.log(total);
     }
 </script>
 @endsection

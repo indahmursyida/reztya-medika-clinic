@@ -14,14 +14,11 @@ use Carbon\Carbon;
 @if($order)
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:90%;">
-        <h3 class="my-3 text-center font-alander-reztya unselectable fw-bold">Order</h3>
-        <div class="d-flex">
+        <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold">Order</h5>
             <div class="container">
-                <div class="row my-2">
-                    <div class="col d-flex">
-                        <h5 class="d-flex align-items-center mb-0">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h5>
-                    </div>
-                    <div class="col-5 d-flex align-items-center">
+                <div class="d-flex justify-content-between my-2 px-3">
+                    <div class="d-flex align-items-center">
+                        <h5 class="mb-0 me-3">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h5>
                         @if ($order->status == "FINISHED")
                         <p class="rounded-2 mb-0" style="background-color: #00A54F; ">
                             <span class="badge" style="color:black">{{ $order->status }}</span>
@@ -36,14 +33,12 @@ use Carbon\Carbon;
                         </p>
                         @endif
                     </div>
-                    <div class="col d-flex justify-content-end">
+                    <div class="d-flex justify-content-center align-items-center">
                         @if($order->status == 'ON GOING')
                         <div>
-                            <a href="/cancel-order/{{ $order->order_id }}" class="btn btn-outline-danger" type="button" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan?')">Batalkan Pesanan</a>
+                            <a href="/cancel-order/{{ $order->order_id }}" class="btn btn-outline-danger me-3" type="button" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan?')">Batal</a>
                         </div>
                         @endif
-                    </div>
-                    <div class="col">
                         @if(Auth::user()->user_role_id == 1)
                         <div>
                             <a href="/confirm-payment/{{ $order->order_id }}" class="btn btn-success" type="button">Konfirmasi Pembayaran</a>
@@ -130,7 +125,6 @@ use Carbon\Carbon;
                     $totalPrice += $order_detail->product->price * $order_detail->quantity;
             }
             @endphp
-        </div>
         @if(Auth::user()->user_role_id == 1)
         <div class="d-flex flex-column ms-5">
             <div>
@@ -156,9 +150,7 @@ use Carbon\Carbon;
                             <div class="col d-flex justify-content-center">
                                 <h5 class="mb-0">Perawatan</h5>
                             </div>
-                            <div class="col-5">
-                            </div>
-                            <div class="col">
+                            <div class="col-7">
                             </div>
                             <div class="col">
                             </div>
@@ -171,7 +163,7 @@ use Carbon\Carbon;
                             <div class="col d-flex justify-content-center align-items-center">
                                 <img src="{{ url('storage' . $order_detail->service->image_path) }}" alt="" width="100px" height="100px">
                             </div>
-                            <div class="col-5 d-flex flex-column justify-content-center">
+                            <div class="col-7 d-flex flex-column justify-content-center">
                                 <p class="fw-bold m-0">{{ $order_detail->service->name }}</p>
                                 <div style="color: #00A54F;">
                                     Tempat Perawatan
@@ -259,8 +251,6 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </div>
-                            <div class="col">
-                            </div>
                             <div class="col">Rp{{ number_format($order_detail->service->price, 2) }}</div>
                         </div>
                     @endif
@@ -276,9 +266,7 @@ use Carbon\Carbon;
                                     <div class="col d-flex justify-content-center">
                                         <h5 class="mb-0" style="padding-right: 15%">Produk</h5>
                                     </div>
-                                    <div class="col-5">
-                                    </div>
-                                    <div class="col">
+                                    <div class="col-7">
                                     </div>
                                     <div class="col">
                                     </div>
@@ -291,7 +279,7 @@ use Carbon\Carbon;
                                 <div class="col d-flex justify-content-center align-items-center">
                                     <img src="{{ asset("storage/" . $order_detail->product->image_path)}}" alt="" width="100px" height="100px">
                                 </div>
-                                <div class="col-5 d-flex flex-column justify-content-center">
+                                <div class="col-7 d-flex flex-column justify-content-center">
                                     <p class="fw-bolder m-0">{{ $order_detail->product->name }}</p> 
                                     <div style="color: #00A54F;">
                                         Harga Satuan
@@ -306,22 +294,18 @@ use Carbon\Carbon;
                                         {{ $order_detail->quantity }}
                                     </div>
                                 </div>
-                                <div class="col">
-                                </div>
                                 <div class="col">Rp{{ number_format($order_detail->product->price * $order_detail->quantity, 2) }}</div>
                             </div>
                         @endif
                     @endforeach
                 </div>
-                <hr style="width: 92%; margin-right: 4%; margin-left: 4%;"/> 
+                <hr style="width: 90%; margin-right: 5%; margin-left: 5%;"/> 
                 <div class="container">
                     <div class="row mt-2">
                         <div class="col d-flex justify-content-center">
                             <h5 class="mb-0">Total Harga</h5>
                         </div>
-                        <div class="col-5">
-                        </div>
-                        <div class="col">
+                        <div class="col-7">
                         </div>
                         <div class="col d-flex align-items-center">
                             <h5 class="mb-0">Rp{{ number_format($totalPrice, 2) }}</h5>

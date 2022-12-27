@@ -13,8 +13,8 @@ use Carbon\Carbon;
         $("#uploadTransferPopup").modal('show');
     </script>
     @endif -->
-    <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
-        <h2 class="my-3 text-center font-alander-reztya unselectable">Pesanan Aktif</h2>
+    <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="width: 90%;">
+        <h5 class="my-3 text-center font-alander-reztya fw-bold unselectable">Pesanan Aktif</h5>
         @foreach($orders as $order)
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
