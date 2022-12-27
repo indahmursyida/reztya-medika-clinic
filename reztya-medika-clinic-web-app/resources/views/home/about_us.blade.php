@@ -4,7 +4,7 @@
 
 @section('container')
 <div class="d-flex justify-content-center">
-    <div class="border outline-reztya rounded-4 py-4 p-5 font-futura-reztya" style="width: 85%;">
+    <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="width: 85%;">
         <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold">Tentang Kami</h5>
         <div class="d-flex justify-content-center">
             <div class="row">

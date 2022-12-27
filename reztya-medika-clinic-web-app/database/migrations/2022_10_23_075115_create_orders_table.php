@@ -20,7 +20,11 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->date('order_date');
             $table->string('status', 255);
-            $table->boolean('home_service')->nullable();
+            $table->boolean('delivery_service')->nullable();
+            $table->string('delivery_type')->nullable();
+            $table->string('delivery_duration')->nullable();
+            $table->string('delivery_destination')->nullable();
+            $table->integer('delivery_fee')->length(11)->nullable();
             $table->timestamps();
         });
     }

@@ -21,7 +21,6 @@ return new class extends Migration
             $table->foreignId('schedule_id')->nullable();
             $table->integer('quantity')->length(11)->nullable();
             $table->boolean('home_service')->nullable();
-            $table->boolean('delivery_service')->nullable();
             $table->timestamps();
         });
     }

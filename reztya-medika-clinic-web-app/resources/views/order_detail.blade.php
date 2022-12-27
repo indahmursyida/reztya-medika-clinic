@@ -11,10 +11,10 @@
 @php
 use Carbon\Carbon;
 @endphp
-@if($order)
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:90%;">
         <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold">Order</h5>
+        @if($order)
             <div class="container">
                 <div class="d-flex justify-content-between my-2 px-3">
                     <div class="d-flex align-items-center">
@@ -59,14 +59,14 @@ use Carbon\Carbon;
                                             <h5 class="modal-title">Bayar Pesanan</h5>
                                         </div>
                                         <div class="modal-body container">
-                                            <p>Anda dapat membayar langsung secara <b>cash</b> ke pihak klinik atau <b>transfer</b> ke nomor rekening <b>53489239 a/n Reztya Medika Clinic</b></p>
+                                            <p>Anda dapat membayar langsung secara <b>cash</b> ke pihak klinik atau <b>transfer</b> ke nomor rekening <b>53489239 a/n Reztya Medika Clinic</b>.</p>
                                             <p>Silahkan lengkapi form berikut jika sudah membayar via transfer.</p>
                                             <div>
                                                 <div>
                                                     Foto Bukti Transfer
                                                 </div>
                                                 <div>
-                                                    <input class="form-control @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path">
+                                                    <input class="form-control shadow-none @error('image_path') is-invalid @enderror" type="file" id="image_path" name="image_path">
                                                     @error('image_path')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -206,23 +206,29 @@ use Carbon\Carbon;
                                                         <input type="hidden" id="old_schedule_id" name="old_schedule_id" value="{{ $order_detail->schedule_id }}">
                                                         <input type="hidden" id="service_name" name="service_name" value="{{ $order_detail->service->name }}">
                                                         <input type="hidden" id="order_id" name="order_id" value="{{ $order_detail->order_id }}">
+                                                        
                                                         <div>
+                                                            <div class="mb-2 text-start">
+                                                                Pilih Jadwal yang Tersedia
+                                                            </div>
                                                             <div class="mb-3">
-                                                                <select class="form-select" name="schedule_id" id="schedule_id">
-                                                                    <option selected disabled hidden>Pilih Jadwal yang Tersedia</option>
+                                                                <select class="form-select shadow-none" name="schedule_id" id="schedule_id">
                                                                     @foreach($schedules as $schedule)
-                                                                        @if($schedule->schedule_id == $order_detail->schedule_id || $schedule->status == 'Available')
-                                                                            <option value="{{ $schedule->schedule_id }}" {{ $schedule->schedule_id == $order_detail->schedule_id ? 'selected' : '' }}> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                        @if($schedule->schedule_id == $order_detail->schedule_id)
+                                                                            <option disabled selected value="{{ $order_detail->schedule_id }}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                        @elseif($schedule->status == 'Available')
+                                                                            <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
                                                                         @endif
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-    
+                                                            <div class="mb-2 text-start">
+                                                                Pilih Tempat Layanan
+                                                            </div>
                                                             <div>
                                                                 <select class="form-select" id="home_service" name="home_service">
-                                                                    <option selected disabled hidden>Pilih Tempat Layanan</option>
                                                                     @if($order_detail->home_service == 1)
-                                                                    <option value="1" selected>
+                                                                    <option value="1" disabled>
                                                                         Rumah ({{ Auth::user()->address }})
                                                                     </option>
                                                                     <option value="0">
@@ -232,7 +238,7 @@ use Carbon\Carbon;
                                                                     <option value="1">
                                                                         Rumah ({{ Auth::user()->address }})
                                                                     </option>
-                                                                    <option value="0" selected>
+                                                                    <option value="0" disabled>
                                                                         Klinik Reztya Medika
                                                                     </option>
                                                                     @endif
@@ -299,6 +305,53 @@ use Carbon\Carbon;
                         @endif
                     @endforeach
                 </div>
+                <label for="delivery_service" class="my-2">Pilih tipe order: </label>
+				<div>
+					<select class="form-select @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
+						@if(old('delivery_service'))
+						<option value="1" selected>
+							Delivery
+						</option>
+						<option value="0">
+							Self-Pickup
+						</option>
+						@else
+						<option value="1">
+							Delivery
+						</option>
+						<option value="0" selected>
+							Self-Pickup
+						</option>
+						@endif
+					</select>
+					@error('delivery_service')
+					<div class="invalid-feedback">
+						{{ $message }}
+					</div>
+					@enderror
+				</div>
+                <div class="container">
+                    <div class="row mt-2">
+                        <div class="col">
+                        </div>
+                        <div class="col-5">
+                            <p class="mb-0 fw-bold">Opsi Pengiriman</p>
+                            <p class="m-0">Tujuan ke {{$origin[1]}}, {{$origin[0]}}</p>
+                            <div class="mt-1 mb-2 d-flex">
+                                <select onchange="includeFee()" id="origin" class="form-select shadow-none">
+                                    <option disabled selected hidden>Pilih Jasa Pengiriman</option>
+                                    @foreach($costs as $cost)
+                                        <option value="{{$cost->cost[0]->value}}">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari) - Rp{{str(number_format(($cost->cost[0]->value), 2))}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+                </div>
                 <hr style="width: 90%; margin-right: 5%; margin-left: 5%;"/> 
                 <div class="container">
                     <div class="row mt-2">
@@ -308,21 +361,28 @@ use Carbon\Carbon;
                         <div class="col-7">
                         </div>
                         <div class="col d-flex align-items-center">
-                            <h5 class="mb-0">Rp{{ number_format($totalPrice, 2) }}</h5>
+                            <h5 class="mb-0" id="totalPriceText">Rp{{ number_format($totalPrice, 2) }}</h5>
+                            <input type="hidden" value="{{$totalPrice}}" id="totalPrice">
                         </div>
                     </div>
                 </div>
             </div>
-            
         </div>
+        @else
+        Tidak ada pesanan yang sedang berjalan.
+        @endif
     </div>
 </div>
-@else
-Tidak ada pesanan yang sedang aktif
-@endif
+
 <script>
     $('#service_quantity').on('change', function() {
         window.location.reload();
     });
+
+    function includeFee() {
+        var total = parseInt(document.getElementById('totalPrice').value);
+        total += parseInt(document.getElementById('origin').value);
+        document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
+    }
 </script>
 @endsection

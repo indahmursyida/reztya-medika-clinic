@@ -63,10 +63,10 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="col">Rp{{ number_format($item->service->price, 2) }}</div>
                                     <div class="col text-center">
-                                        <button data-toggle="modal" data-target="#editSchedulePopup-{{$item->cart_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Perawatan">
+                                        <button data-toggle="modal" data-target="#editSchedulePopup-{{$item->cart_id}}" class="btn button-outline-reztya rounded-2 btn-sm me-3 btn-edit" title="Edit Perawatan">
                                             <i class="fa-regular fa-pen-to-square pt-1"></i>
                                         </button>
-                                        <a href="/remove-cart/{{ $item->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus perawatan {{ $item->service->name }}?')" title="Hapus Perawatan">
+                                        <a href="/remove-cart/{{ $item->cart_id }}" class="btn btn-outline-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus perawatan {{ $item->service->name }}?')" title="Hapus Perawatan">
                                             <i class="fa-solid fa-trash pt-1"></i>
                                         </a>
                                         <div class="modal fade" id="editSchedulePopup-{{$item->cart_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editScheduleTitle" aria-hidden="true">
@@ -85,25 +85,30 @@ use Carbon\Carbon;
                                                             <input type="hidden" id="old_schedule_id" name="old_schedule_id" value="{{ $item->schedule_id }}">
                                                             <input type="hidden" id="service_name" name="service_name" value="{{ $item->service->name }}">
                                                             <input type="hidden" id="order_id" name="order_id" value="{{ $item->order_id }}">
+                                                            
                                                             <div>
+                                                                <div class="mb-2 text-start">
+                                                                    Pilih Jadwal yang Tersedia
+                                                                </div>
                                                                 <div class="mb-3">
                                                                     <select class="form-select shadow-none" name="schedule_id" id="schedule_id">
-                                                                        <option selected disabled hidden>Pilih Jadwal yang Tersedia</option>
                                                                         @foreach($schedules as $schedule)
-                                                                            @if($schedule->schedule_id == $item->schedule_id)
-                                                                                <option disabled>{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
-                                                                            @elseif($schedule->status == 'Available')
-                                                                                <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
-                                                                            @endif
+                                                                        @if($schedule->schedule_id == $item->schedule_id)
+                                                                            <option disabled selected value="{{$item->schedule_id}}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                        @elseif($schedule->status == 'Available')
+                                                                            <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                        @endif
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-        
+                                                                
+                                                                <div class="mb-2 text-start">
+                                                                    Pilih Tempat Layanan
+                                                                </div>
                                                                 <div>
                                                                     <select class="form-select shadow-none" id="home_service" name="home_service">
-                                                                        <option selected disabled hidden>Pilih Tempat Layanan</option>
                                                                         @if($item->home_service == 1)
-                                                                        <option value="1" disabled>
+                                                                        <option value="1" selected disabled>
                                                                             Rumah ({{ Auth::user()->address }})
                                                                         </option>
                                                                         <option value="0">
@@ -113,7 +118,7 @@ use Carbon\Carbon;
                                                                         <option value="1">
                                                                             Rumah ({{ Auth::user()->address }})
                                                                         </option>
-                                                                        <option value="0" disabled>
+                                                                        <option value="0" selected disabled>
                                                                             Klinik Reztya Medika
                                                                         </option>
                                                                         @endif
@@ -179,10 +184,10 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="col">Rp{{ number_format($item->product->price * $item->quantity, 2) }}</div>
                                     <div class="col text-center">
-                                        <button type="button" data-toggle="modal" data-target="#editQuantityPopup-{{$item->cart_id}}" class="btn button-color rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
+                                        <button type="button" data-toggle="modal" data-target="#editQuantityPopup-{{$item->cart_id}}" class="btn button-outline-reztya rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
                                             <i class="fa-regular fa-pen-to-square pt-1"></i>
                                         </button>
-                                        <a href="/remove-cart/{{ $item->cart_id }}" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $item->product->name }}?')" title="Hapus Produk">
+                                        <a href="/remove-cart/{{ $item->cart_id }}" class="btn btn-outline-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $item->product->name }}?')" title="Hapus Produk">
                                             <i class="fa-solid fa-trash pt-1"></i>
                                         </a>
                                         <div class="modal fade" id="editQuantityPopup-{{$item->cart_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editQuantityTitle" aria-hidden="true">
@@ -227,28 +232,6 @@ use Carbon\Carbon;
                             @endif
                         @endforeach
                     </div>
-                    <div class="container">
-                        <div class="row mt-2">
-                            <div class="col">
-                            </div>
-                            <div class="col-5">
-                                <p class="mb-0 fw-bold">Opsi Pengiriman</p>
-                                <p class="m-0">Tujuan ke {{$origin[1]}}, {{$origin[0]}}</p>
-                                <div class="mt-1 mb-2 d-flex">
-                                    <select onchange="includeFee()" id="origin" class="form-select shadow-none">
-                                        <option disabled selected hidden>Pilih Jasa Pengiriman</option>
-                                        @foreach($costs as $cost)
-                                            <option value="{{$cost->cost[0]->value}}">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari) - Rp{{str(number_format(($cost->cost[0]->value), 2))}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                            </div>
-                            <div class="col">
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <hr style="width: 92%; margin-right: 4%; margin-left: 4%;"/> 
                 <div class="container">
@@ -263,7 +246,7 @@ use Carbon\Carbon;
                             <h5 class="mb-0" id="totalPriceText">Rp{{ number_format($totalPrice, 2) }}</h5>
                         </div>
                         <div class="col d-flex justify-content-center align-items-center">
-                            <a href="/create-order" class="btn button-color">Buat Pesanan</a>
+                            <a href="/create-order" class="btn button-outline-reztya">Buat Pesanan</a>
                         </div>
                     </div>
                 </div>   
@@ -275,7 +258,6 @@ use Carbon\Carbon;
 @else
     Tidak dapat mengakses halaman ini.
 @endif
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
     $('#update_schedule').on('change', function(){
         window.location.reload();
@@ -283,21 +265,5 @@ use Carbon\Carbon;
     $('#update_quantity').on('change', function(){
         window.location.reload();
     });
-    // $('#origin').on('change', function() {
-    //     // var total = parseInt(document.getElementById('totalPrice').value);
-    //     // total += parseInt(document.getElementById('origin').value);
-    //     // document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
-    //     alert( this.value );
-    // });
-
-    function includeFee() {
-        console.log('test');
-        var total = parseInt(document.getElementById('totalPrice').value);
-        console.log(total);
-        total += parseInt(document.getElementById('origin').value);
-        console.log(total);
-        document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
-        console.log(total);
-    }
 </script>
 @endsection

@@ -89,24 +89,79 @@ class OrderController extends Controller
     public function detailOrder($id)
     {
         $order = null;
-        $schedules = Schedule::where('status', 'Available')->get();
+        $schedules = Schedule::all();
         $printServiceOnce = false;
         $printProductOnce = false;
         $totalPrice = 0;
 
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "origin=166&destination=".Auth::user()->city_id."&weight=1000&courier=jne",
+            CURLOPT_HTTPHEADER => array(
+                "content-type: application/x-www-form-urlencoded",
+                "key: 460abd066bcb244bf02b1c284f49e55a"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        $costs = json_decode($response)->rajaongkir->results[0]->costs;
+
+        $origin[0] = json_decode($response)->rajaongkir->destination_details->province;
+        if (json_decode($response)->rajaongkir->destination_details->type == 'Kota') {
+            $origin[1] = "Kota ".json_decode($response)->rajaongkir->destination_details->city_name;
+        } else if (json_decode($response)->rajaongkir->destination_details->type == 'Kabupaten') {
+            $origin[1] = "Kab. ".json_decode($response)->rajaongkir->destination_details->city_name;
+        } else {
+            $origin[1] = str(json_decode($response)->rajaongkir->destination_details->city_name);
+        }
+
+        if ($err) {
+            return redirect('/home')->with('signupError', 'Terjadi masalah dengan pendaftaran. Harap coba ulang.');
+        }
+
         $order = Order::find($id);
 
-        return view('order_detail')->with('order', $order)->with('schedules', $schedules)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce)->with('totalPrice', $totalPrice);
+        return view('order_detail')
+            ->with('order', $order)
+            ->with('schedules', $schedules)
+            ->with('printServiceOnce', $printServiceOnce)
+            ->with('printProductOnce',$printProductOnce)
+            ->with('totalPrice', $totalPrice)
+            ->with(compact('costs'))
+            ->with(compact('origin'));
     }
 
     public function reschedule(Request $req, $id)
     {
         $validated_data = $req->validate([
-            'schedule_id' => 'required'
+            'schedule_id' => 'required',
+            'home_service' => 'required'
         ]);
 
+        if($req['schedule_id'] != $req['old_schedule_id'])
+        {
+            $old_schedule = Schedule::find($req['old_schedule_id']);
+            $old_schedule->status = 'Available';
+            $old_schedule->save();
+
+            $new_schedule = Schedule::find($req['schedule_id']);
+            $new_schedule->status = 'Booked';
+            $new_schedule->save();
+        }
+
         $validated_data['order_detail_id'] = $id;
-        dd($req['old_schedule_id']);
 
         $newSchedule = Schedule::find($validated_data['schedule_id']);
         $content = [

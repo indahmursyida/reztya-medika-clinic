@@ -79,13 +79,16 @@ class CartController extends Controller
             'home_service' => 'required'
         ]);
 
-        $old_schedule = Schedule::find($req['old_schedule_id']);
-        $old_schedule->status = 'Available';
-        $old_schedule->save();
+        if($req['schedule_id'] != $req['old_schedule_id'])
+        {
+            $old_schedule = Schedule::find($req['old_schedule_id']);
+            $old_schedule->status = 'Available';
+            $old_schedule->save();
 
-        $new_schedule = Schedule::find($req['schedule_id']);
-        $new_schedule->status = 'Booked';
-        $new_schedule->save();
+            $new_schedule = Schedule::find($req['schedule_id']);
+            $new_schedule->status = 'Booked';
+            $new_schedule->save();
+        }
 
         $validated_data['cart_id'] = $id;
 
