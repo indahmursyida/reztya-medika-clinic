@@ -150,7 +150,7 @@ use Carbon\Carbon;
                                 @if($printProductOnce == false)
                                 <div class="row">
                                     <div class="col d-flex justify-content-center">
-                                        <h5 class="mb-0" style="padding-right: 15%">Produk</h5>
+                                        <h5 class="mb-0" style="padding-right: 17%">Produk</h5>
                                     </div>
                                     <div class="col-5">
                                     </div>
@@ -233,23 +233,69 @@ use Carbon\Carbon;
                         @endforeach
                     </div>
                 </div>
-                <hr style="width: 92%; margin-right: 4%; margin-left: 4%;"/> 
-                <div class="container">
-                    <div class="row mt-2">
-                        <div class="col d-flex justify-content-center">
-                            <h5 class="mb-0">Total Harga</h5>
-                        </div>
-                        <div class="col-5">
-                        </div>
-                        <div class="col d-flex align-items-center">
-                            <input type="hidden" value="{{$totalPrice}}" id="totalPrice">
-                            <h5 class="mb-0" id="totalPriceText">Rp{{ number_format($totalPrice, 2) }}</h5>
-                        </div>
-                        <div class="col d-flex justify-content-center align-items-center">
-                            <a href="/create-order" class="btn button-outline-reztya">Buat Pesanan</a>
+                <form action="" method="post">
+                    <div class="container">
+                        <div class="row mt-2">
+                            <div class="col">
+                            </div>
+                            <div class="col-5">
+                                <p class="mb-0 fw-bold">Opsi Pengiriman</p>
+                                <select class="form-select @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
+                                    @if(old('delivery_service'))
+                                    <option value="1" selected>
+                                        Delivery
+                                    </option>
+                                    <option value="0">
+                                        Self-Pickup
+                                    </option>
+                                    @else
+                                    <option value="1">
+                                        Delivery
+                                    </option>
+                                    <option value="0" selected>
+                                        Self-Pickup
+                                    </option>
+                                    @endif
+                                </select>
+                                @error('delivery_service')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                                <p class="m-0">Tujuan ke {{$origin[1]}}, {{$origin[0]}}</p>
+                                <div class="mt-1 mb-2 d-flex">
+                                    <select onchange="includeFee()" id="origin" class="form-select shadow-none">
+                                        <option disabled selected hidden>Pilih Jasa Pengiriman</option>
+                                        @foreach($costs as $cost)
+                                            <option value="{{$cost->cost[0]->value}}">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari) - Rp{{str(number_format(($cost->cost[0]->value), 2))}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                            </div>
+                            <div class="col">
+                            </div>
                         </div>
                     </div>
-                </div>   
+                    <hr style="width: 92%; margin-right: 4%; margin-left: 4%;"/> 
+                    <div class="container">
+                        <div class="row mt-2">
+                            <div class="col d-flex justify-content-center">
+                                <h5 class="mb-0">Total Harga</h5>
+                            </div>
+                            <div class="col-5">
+                            </div>
+                            <div class="col d-flex align-items-center">
+                                <input type="hidden" value="{{$totalPrice}}" id="totalPrice">
+                                <h5 class="mb-0" id="totalPriceText">Rp{{ number_format($totalPrice, 2) }}</h5>
+                            </div>
+                            <div class="col d-flex justify-content-center align-items-center">
+                                <a href="/create-order" class="btn button-outline-reztya">Buat Pesanan</a>
+                            </div>
+                        </div>
+                    </div>   
+                </form>
             @else
                 Keranjang Anda masih kosong.
             @endif

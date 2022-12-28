@@ -305,53 +305,6 @@ use Carbon\Carbon;
                         @endif
                     @endforeach
                 </div>
-                <label for="delivery_service" class="my-2">Pilih tipe order: </label>
-				<div>
-					<select class="form-select @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
-						@if(old('delivery_service'))
-						<option value="1" selected>
-							Delivery
-						</option>
-						<option value="0">
-							Self-Pickup
-						</option>
-						@else
-						<option value="1">
-							Delivery
-						</option>
-						<option value="0" selected>
-							Self-Pickup
-						</option>
-						@endif
-					</select>
-					@error('delivery_service')
-					<div class="invalid-feedback">
-						{{ $message }}
-					</div>
-					@enderror
-				</div>
-                <div class="container">
-                    <div class="row mt-2">
-                        <div class="col">
-                        </div>
-                        <div class="col-5">
-                            <p class="mb-0 fw-bold">Opsi Pengiriman</p>
-                            <p class="m-0">Tujuan ke {{$origin[1]}}, {{$origin[0]}}</p>
-                            <div class="mt-1 mb-2 d-flex">
-                                <select onchange="includeFee()" id="origin" class="form-select shadow-none">
-                                    <option disabled selected hidden>Pilih Jasa Pengiriman</option>
-                                    @foreach($costs as $cost)
-                                        <option value="{{$cost->cost[0]->value}}">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari) - Rp{{str(number_format(($cost->cost[0]->value), 2))}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col">
-                        </div>
-                        <div class="col">
-                        </div>
-                    </div>
-                </div>
                 <hr style="width: 90%; margin-right: 5%; margin-left: 5%;"/> 
                 <div class="container">
                     <div class="row mt-2">
