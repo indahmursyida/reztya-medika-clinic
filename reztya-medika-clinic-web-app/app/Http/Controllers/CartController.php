@@ -120,15 +120,13 @@ class CartController extends Controller
         $validatedData = $request->validate(
             [
                 'product_id' => 'required',
-                'quantity' => 'required|integer|min:1|max:1000',
-                'delivery_service' => 'required'
+                'quantity' => 'required|integer|min:1|max:1000'
             ],
             [
                 'product_id.required' => 'Produk wajib diisi',
                 'quantity.required' => 'Jumlah produk wajib diisi',
                 'quantity.min' => 'Jumlah produk minimal 1',
                 'quantity.max' => 'Jumlah produk maksimal 1000',
-                'delivery_service.required' => 'Tipe order wajib diisi',
             ]
         );
         $validatedData['user_id'] = $userId;
