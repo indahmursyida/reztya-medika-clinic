@@ -145,6 +145,9 @@ use Carbon\Carbon;
                 </div>
                 <div class="d-flex flex-column">
                     <div class="container">
+                        @php
+                            $weight = 0;
+                        @endphp
                         @foreach ($cart as $item)
                             @if($item->product_id)
                                 @if($printProductOnce == false)
@@ -168,7 +171,9 @@ use Carbon\Carbon;
                                         <img src="{{ asset('storage/' . $item->product->image_path)}}" width="100px" height="100px">
                                     </div>
                                     <div class="col-5 d-flex flex-column justify-content-center">
-                                        <p class="fw-bolder m-0">{{ $item->product->name }}</p> 
+                                        <div class="d-flex">
+                                            <p class="fw-bold m-0">{{ $item->product->name }} {{ $item->product->size }}</p> 
+                                        </div>
                                         <div style="color: #00A54F;">
                                             Harga Satuan
                                         </div>
@@ -181,6 +186,11 @@ use Carbon\Carbon;
                                         <div>
                                             {{ $item->quantity }}
                                         </div>
+                                        @php
+                                            $size_str = explode(' ', $item->product->size);
+                                            $size_int = (int)$size_str[0];
+                                            $weight += $size_int * $item->quantity;
+                                        @endphp
                                     </div>
                                     <div class="col">Rp{{ number_format($item->product->price * $item->quantity, 2) }}</div>
                                     <div class="col text-center">
@@ -239,40 +249,42 @@ use Carbon\Carbon;
                             <div class="col">
                             </div>
                             <div class="col-5">
-                                <p class="mb-0 fw-bold">Opsi Pengiriman</p>
-                                <select class="form-select @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
-                                    @if(old('delivery_service'))
-                                    <option value="1" selected>
+                                <p class="mb-2 fw-bold">Opsi Pengiriman</p>
+                                <select class="form-select shadow-none mb-2 @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
+                                    <option selected hidden>Pilih Tipe Pengiriman</option>
+                                    <option value="1">
                                         Delivery
                                     </option>
                                     <option value="0">
                                         Self-Pickup
                                     </option>
-                                    @else
-                                    <option value="1">
-                                        Delivery
-                                    </option>
-                                    <option value="0" selected>
-                                        Self-Pickup
-                                    </option>
-                                    @endif
                                 </select>
                                 @error('delivery_service')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                                 @enderror
-                                <p class="m-0">Tujuan ke {{$origin[1]}}, {{$origin[0]}}</p>
-                                <div class="mt-1 mb-2 d-flex">
-                                    <select onchange="includeFee()" id="origin" class="form-select shadow-none">
-                                        <option disabled selected hidden>Pilih Jasa Pengiriman</option>
-                                        @foreach($costs as $cost)
-                                            <option value="{{$cost->cost[0]->value}}">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari) - Rp{{str(number_format(($cost->cost[0]->value), 2))}}</option>
-                                        @endforeach
-                                    </select>
+                                <div id="delivery_choice" style="display: none;">
+                                    <div class="d-flex">
+                                        <p class="m-0 me-1">Tujuan ke </p>
+                                        <p class="mb-0 fw-bold">{{$origin[1]}}, {{$origin[0]}}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <p class="mb-0 me-1">Total berat</p>
+                                        <p class="mb-0 fw-bold">{{$weight / 1000}}kg ≈ {{round($weight / 1000)}}kg</p>
+                                    </div>
+                                    <div class="mt-1 mb-2 d-flex">
+                                        <select onchange="includeFee(this.value)" id="origin" name="origin" class="form-select shadow-none">
+                                            <option value="0" disabled selected hidden>Pilih Jasa Pengiriman</option>
+                                            @foreach($costs as $cost)
+                                                {{-- <option value="{{$cost->service}}">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari) - Rp{{str(number_format(($cost->cost[0]->value * round($weight / 1000)), 2))}}</option> --}}
+                                            <option value="{{$cost->cost[0]->value * round($weight / 1000)}}">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari) - Rp{{str(number_format(($cost->cost[0]->value * round($weight / 1000)), 2))}}</option>
+                                            @endforeach 
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col" id="deliveryFeeText">
                             </div>
                             <div class="col">
                             </div>
@@ -305,11 +317,44 @@ use Carbon\Carbon;
     Tidak dapat mengakses halaman ini.
 @endif
 <script>
-    $('#update_schedule').on('change', function(){
-        window.location.reload();
+    $(document).ready(function () {
+
+        // $("#delivery_service").change(
+        //     function () {
+        //         alert("Textbox value is changed");
+        //     }
+        // );
+
+        // $('#update_schedule').on('change', function(){
+        //     window.location.reload();
+        // });
+        // $('#update_quantity').on('change', function(){
+        //     window.location.reload();
+        // });
+        $('#delivery_service').change(
+            function() {
+                // var optionSelected = $("option:selected", this);
+                // var valueSelected = this.value;
+                // console.log(valueSelected);
+                if(this.value == 1){
+                    $('#delivery_choice').show();
+                    document.getElementById('origin').value = 0;
+                }
+                else
+                {
+                    $('#delivery_choice').hide();
+                    var total = parseInt(document.getElementById('totalPrice').value);
+                    document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
+                }
+            }
+        );
     });
-    $('#update_quantity').on('change', function(){
-        window.location.reload();
-    });
+
+    function includeFee(delivery_fee) {
+        var total = parseInt(document.getElementById('totalPrice').value);
+        total += parseInt(document.getElementById('origin').value);
+        document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
+        document.getElementById('deliveryFeeText').innerHTML = "Rp" + delivery_fee.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
+    }
 </script>
 @endsection
