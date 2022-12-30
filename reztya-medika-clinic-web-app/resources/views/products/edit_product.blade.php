@@ -82,8 +82,13 @@
         </div>
         <div class="col-md-8">
             <input type="text" class="form-control @error('size') is-invalid @enderror" id="size" name="size" value="{{ old('size', $product->size) }}">
+            @error('size')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
         </div>
-
+        
         <div class="col-md-4">
             <label class="form-label" for="expired_date">Tanggal Kadaluarsa Produk</label>
         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
+use App\Models\Product;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\DB;
 
@@ -117,16 +118,18 @@ class CartController extends Controller
     public function buyProduct(Request $request)
     {
         $userId = Auth::user()->user_id;
+        $product = Product::find($request['product_id']);
+        $stock = $product->stock;
         $validatedData = $request->validate(
             [
                 'product_id' => 'required',
-                'quantity' => 'required|integer|min:1|max:1000'
+                'quantity' => "required|integer|min:1|max:$stock"
             ],
             [
                 'product_id.required' => 'Produk wajib diisi',
                 'quantity.required' => 'Jumlah produk wajib diisi',
                 'quantity.min' => 'Jumlah produk minimal 1',
-                'quantity.max' => 'Jumlah produk maksimal 1000',
+                'quantity.max' => "Jumlah produk maksimal $stock",
             ]
         );
         $validatedData['user_id'] = $userId;

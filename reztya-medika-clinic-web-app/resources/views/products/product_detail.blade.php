@@ -27,8 +27,11 @@
 				</div>
 				<p>Expired Date: {{ date('d F Y', strtotime($product->expired_date)) }}</p>
 				<label for="quantity" class="my-2">Jumlah</label>
-				<input type="number" class="form-control form-quantity" id="quantity" name="quantity" min="1" max="{{ old('quantity') }}" value="{{ old('quantity', 1) }}">
-
+				<input type="number" class="form-control form-quantity  @error('quantity') is-invalid  @enderror" id="quantity" name="quantity" min="1" max="{{ $product->stock }}" value="{{ old('quantity', 1) }}">
+				@error('quantity')
+				<div class="invalid-feedback">{{ $message }}</div>
+				@enderror
+				
 			</div>
 		</div>
 		<div class="d-flex justify-content-center pb-5">
