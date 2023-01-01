@@ -6,37 +6,21 @@
 @php
 use Carbon\Carbon;
 @endphp
-@if(!$orders->isEmpty())
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:90%;">
-        <h3 class="my-3 text-center font-alander-reztya unselectable fw-bold">Riwayat Pesanan</h3>
+        <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold">Riwayat Pesanan</h5>
         <div class="dropdown">
             <button class="btn button-outline-reztya dropdown-toggle mt-4 mb-2" type="button" data-toggle="dropdown" aria-expanded="false">
                 Status
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/history-order/finished" class="button-outline-reztya dropdown-item">FINISHED</a></li>
-                <li><a href="/history-order/canceled" class="button-outline-reztya dropdown-item">CANCELED</a></li>
+                <li><a href="/order/{{'finished'}}" class="button-outline-reztya dropdown-item">Selesai</a></li>
+                <li><a href="/order/{{'canceled'}}" class="button-outline-reztya dropdown-item">Dibatalkan</a></li>
             </ul>
         </div>
-        @foreach($orders as $order)
-            <div class="d-flex justify-content-between">
-                <div class="container">
-                    @if ($order->status =="FINISHED")
-                        <h4 class="col-md-4">{{ Carbon::parse($order->paymentReceipt->payment_date)->translatedFormat('d F Y') }}</h4>
-                    @else
-                        <h4 class="col-md-4">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h4>
-                    @endif
-                    @if ($order->status == "FINISHED")
-                    <p class="rounded-2 ps-2 pe-2 ms-3 col" style="border: 2px solid #00A54F; color: #00A54F; cursor: default;">
-                    @else
-                    <p class="btn rounded-2 ps-2 pe-2 ms-3 col" style="border: 2px solid red; color: red; cursor: default;">
-                    @endif
-                    {{ $order->status }}
-                    </p>
-                </div>
-                <div class="d-flex">
-                    @php
+        @if(!$orders->isEmpty())
+            @foreach($orders as $key=>$order)
+                @php
                     $totalPrice = 0;
                     foreach($order->orderDetail as $order_detail)
                     {
@@ -45,100 +29,137 @@ use Carbon\Carbon;
                         else
                             $totalPrice += $order_detail->product->price * $order_detail->quantity;
                     }
-                    @endphp
-                    Total Harga:
-                    <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
-                    @if(Auth::user()->user_role_id == 2)
-                        <a href="/repeat-order/{{ $order->order_id }}" class="btn btn-success ms-5">Pesan Lagi</a>
+                    if($order->delivery_fee)
+                        $totalPrice += $order->delivery_fee;
+                @endphp
+                <div class="d-flex justify-content-between px-3">
+                    <div class="d-flex align-items-center">
+                        @if ($order->status =="finished")
+                            <h5 class="mb-0 align-items-center">{{ Carbon::parse($order->paymentReceipt->payment_date)->translatedFormat('d F Y') }}</h5>
+                        @else
+                            <h5 class="mb-0 align-items-center">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h5>
+                        @endif
+                        @if ($order->status == "finished")
+                        <p class="rounded-2 mb-0 mx-3" style="color: #00A54F; cursor: default;">
+                            <span class="badge">SELESAI</span>
+                        </p>
+                        @else
+                        <p class="rounded-2 mb-0 mx-3" style="background-color: red; cursor: default;">
+                            <span class="badge">DIBATALKAN</span>
+                        </p>
+                        @endif
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="d-flex flex-column">
+                            <p class="mb-0 text-end">Total Harga</p>
+                            <p class="fw-bold mb-0">Rp{{ number_format($totalPrice, 2)}}</p>
+                        </div>
+                        @if(Auth::user()->user_role_id == 2)
+                        <a href="/order-detail/{{$order->order_id}}" class="btn button-outline-reztya ms-3" type="button">Detail Pesanan</a>
+                        @endif
+                    </div>
+                    {{-- <div class="d-flex">
+                        @php
+                        $totalPrice = 0;
+                        foreach($order->orderDetail as $order_detail)
+                        {
+                            if($order_detail->service_id)
+                                $totalPrice += $order_detail->service->price;
+                            else
+                                $totalPrice += $order_detail->product->price * $order_detail->quantity;
+                        }
+                        @endphp
+                        Total Harga:
+                        <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
+                    </div> --}}
+                </div>
+                @if(Auth::user()->user_role_id == 1)
+                    <div class="d-flex flex-column ms-5">
+                        <div>
+                            Nama Pelanggan:
+                            <b>{{ $order->user->name }}</b>
+                        </div>
+                        <div>
+                            No. HP Pelanggan:
+                            <b>{{ $order->user->phone }}</b>
+                        </div>
+                        <div>
+                            Alamat Pelanggan:
+                            <b>{{ $order->user->address }}</b>
+                        </div>
+                    </div>
+                @endif
+                <div class="d-flex flex-column">
+                    <div class="container">
+                        @if($order->orderDetail[0]->service_id)
+                        <div class="row">
+                            <div class="col d-flex justify-content-center">
+                                <h5 class="mb-0">Perawatan</h5>
+                            </div>
+                            <div class="col-7">
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col d-flex justify-content-center align-items-center">
+                                <img src="{{ asset('storage/' . $order->orderDetail[0]->service->image_path) }}" alt="" width="100px" height="100px">
+                            </div>
+                            <div class="col-7">
+                                <p class="fw-bold m-0">{{ $order->orderDetail[0]->service->name }}</p>
+                                Rp{{ number_format($order->orderDetail[0]->service->price, 2) }}
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                        @elseif($order->orderDetail[0]->product_id != null)
+                        <div class="row">
+                            <div class="col d-flex justify-content-center">
+                                <h5 class="mb-0" style="padding-right: 15%">Produk</h5>
+                            </div>
+                            <div class="col-7">
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col d-flex justify-content-center align-items-center">
+                                <img src="{{ asset('storage/' . $order->orderDetail[0]->product->image_path) }}" alt="" width="100px" height="100px">
+                            </div>
+                            <div class="col-7">
+                                <p class="fw-bold m-0">{{ $order->orderDetail[0]->product->name }}</p>
+                                <div>
+                                    {{ $order->orderDetail[0]->quantity }} barang x Rp{{ number_format($order->orderDetail[0]->product->price, 2) }}
+                                </div>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                        @endif
+                        @php
+                            $totalItem = count($order->orderDetail);
+                        @endphp
+                        @if ($totalItem > 1)
+                        <div class="row">
+                            <div class="col d-flex justify-content-center" style="padding-left: 3%">
+                                <p class="mb-0">+{{$totalItem - 1}} pesanan lainnya</p>
+                            </div>
+                            <div class="col-7">
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                    @if($key != count($orders) - 1)
+                        <hr style="margin-right: 1%; margin-left: 1%;"/>
                     @endif
                 </div>
-            </div>
-            @if(Auth::user()->user_role_id == 1)
-                <div class="d-flex flex-column ms-5">
-                    <div>
-                        Nama Pelanggan:
-                        <b>{{ $order->user->name }}</b>
-                    </div>
-                    <div>
-                        No. HP Pelanggan:
-                        <b>{{ $order->user->phone }}</b>
-                    </div>
-                    <div>
-                        Alamat Pelanggan:
-                        <b>{{ $order->user->address }}</b>
-                    </div>
-                </div>
-            @endif
-            <div class="d-flex flex-column ms-3">
-                <table class="table">
-                    <tbody>
-                        @foreach($order->orderDetail as $order_detail)
-                            @if($order_detail->service_id)
-                                @if($printServiceOnce == false)
-                                    <h5>Perawatan</h5>
-                                    @php
-                                        $printServiceOnce = true;
-                                    @endphp
-                                @endif
-                                <tr>
-                                    <td>
-                                        <img src="{{ asset("storage/" . $order_detail->service->image_path) }}" alt="" width="200px" height="200px">
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <b>{{ $order_detail->service->name}}</b>
-                                            <div>
-                                                <div>
-                                                    Tanggal Perawatan:
-                                                    {{ Carbon::parse( $order_detail->schedule->start_time)->translatedFormat('l, d F Y') }}
-                                                </div>
-                                                <div>
-                                                    Waktu Mulai: 
-                                                    {{ Carbon::parse( $order_detail->schedule->start_time)->translatedFormat('H.i') }}
-                                                </div>
-                                                <div>
-                                                    Waktu Berakhir: 
-                                                    {{ Carbon::parse( $order_detail->schedule->end_time)->translatedFormat('H.i') }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Rp{{ number_format($order_detail->service->price, 2) }}</td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
-                {{-- @endif --}}
-            </div>
-            <div class="d-flex flex-column ms-3">
-                <table class="table">
-                    <tbody>
-                        @foreach ($order->orderDetail as $order_detail)
-                            @if($order_detail->product_id)
-                                @if($printProductOnce == false)
-                                    <h5>Produk</h5>
-                                    @php
-                                        $printProductOnce = true;
-                                    @endphp
-                                @endif
-                                <tr>
-                                    <td>
-                                        <img src="{{ asset("storage/" . $order_detail->product->image_path)}}" alt="" width="200px" height="200px">
-                                    </td>
-                                    <td><b>{{ $order_detail->product->name}}</b></td>
-                                    <td> Kuantitas: {{ $order_detail->quantity }}</td>
-                                    <td>Rp{{ number_format($order_detail->product->price * $order_detail->quantity, 2) }}</td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @endforeach
+            @endforeach
+        @else
+        <p class="my-3">Tidak ada histori transaksi apapun.</p>
+        @endif
     </div>
 </div>
-@else
-    Tidak ada histori transaksi apapun.
-@endif
 @endsection

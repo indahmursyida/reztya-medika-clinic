@@ -10,14 +10,15 @@ class Order extends Model
     use HasFactory;
 
     protected $primaryKey = 'order_id';
-    protected $fillable = [
-        'order_detail_id',
-        'cancel_id',
-        'payment_receipt_id',
-        'user_id',
-        'order_date',
-        'status'
-    ];
+    protected $guarded = ['order_id'];
+    // protected guarded $fillable = [
+    //     'order_detail_id',
+    //     'cancel_id',
+    //     'payment_receipt_id',
+    //     'user_id',
+    //     'order_date',
+    //     'status'
+    // ];
     public function orderDetail(){
         return $this->hasMany(OrderDetail::class, 'order_id');
     }
