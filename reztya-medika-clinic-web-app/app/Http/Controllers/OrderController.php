@@ -18,22 +18,43 @@ class OrderController extends Controller
 {
     public function create(Request $req)
     {
-        // dd($req->all());
+        $order_duplicate = Order::with(['orderDetail' => function($query){
+            $all_cart = Cart::where('user_id', Auth::user()->user_id)->whereNotNull('schedule_id')->get();
+
+            $all_cart_arrays = $all_cart->map(function ($cart) {
+                return collect($cart->toArray())
+                    ->only('schedule_id')
+                    ->all();
+            })->unique();
+
+            $query->whereIn('schedule_id', $all_cart_arrays);
+        }])->where('status', 'ongoing')->orWhere('status', 'waiting')->first();
+        
+        if($order_duplicate)
+        {
+            if(count($order_duplicate->orderDetail) != 0)
+            {
+                $invalid_service = Cart::where('user_id', Auth::user()->user_id)->where('schedule_id', $order_duplicate->orderDetail()->first()->schedule_id)->first();
+                return redirect()->back()->withErrors(['msg' => 'Pesanan tidak dapat dibuat karena jadwal perawatan ' . $invalid_service->service->name . ' sudah dipesan oleh member lain. Silahkan ubah jadwal perawatan tersebut.']);
+            }
+        }
+        
+
         $orders = Order::create([
             'user_id' => Auth::user()->user_id,
             'order_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
             'status' => 'ongoing',
         ]);
-
+        
         $validated_delivery_service = $req->validate([
             'delivery_service' => 'required'
         ],[
             'delivery_service.required' => 'Tipe pengiriman wajib diisi'
         ]);
-
+        
         $orders['delivery_service'] = $validated_delivery_service['delivery_service'];
         $orders['weight'] = $req['weight'];
-
+        
         if($validated_delivery_service['delivery_service'] == 1)
         {
             $validated_cost = $req->validate([
@@ -41,12 +62,9 @@ class OrderController extends Controller
             ],[
                 'cost.required'=> 'Jasa pengiriman wajib diisi'
             ]);
-
+            
             $json_decoded = json_decode($validated_cost['cost']);
-
-            // dd($json_decoded->service);
-            // dd($req['origin']);
-
+            
             $orders['delivery_name'] = $json_decoded->service;
             $orders['delivery_duration'] = $json_decoded->cost[0]->etd;
             $orders['delivery_destination'] = $req['origin'];
@@ -55,7 +73,7 @@ class OrderController extends Controller
         $orders->save();
         
         $carts = Cart::where('user_id', Auth::user()->user_id)->get();
-
+        
         foreach($carts as $cart)
         {
             if($cart->service_id)
@@ -75,9 +93,8 @@ class OrderController extends Controller
                 ]);
             }
         }
-
+        
         Cart::where('user_id', Auth::user()->user_id)->delete();
-
         return redirect()->route('detail_order', ['id' => $orders->order_id]);
     }
 
@@ -296,42 +313,43 @@ class OrderController extends Controller
 
     public function confirmPayment($id)
     {
-        $orders = Order::find($id);
+        $order = Order::find($id);
 
-        $payment_receipt = PaymentReceipt::where('payment_receipt_id', $orders->payment_receipt_id)->first();
+        $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
 
-        // if($order->status == 'WAITING')
-        // {
-        //     return view('transfer_payment')->with('payment_receipt', $payment_receipt);
-        // }
-        // else if($order->status == 'ON GOING')
-        // {
-
-        // }
+        if($order->status == 'waiting')
+        {
+            return view('transfer_payment')->with('payment_receipt', $payment_receipt);
+        }
+        else if($order->status == 'ongoing')
+        {
+            
+        }
 
         return redirect()->route('form_payment', ['id' => $id]);
     }
 
     public function form_payment_receipt($id)
     {
-        $orders = Order::find($id);
+        $order = Order::find($id);
         $totalPrice = 0;
         $payment_receipt = null;
 
-        if($orders->payment_receipt_id)
+        if($order->payment_receipt_id)
         {
-            $payment_receipt = PaymentReceipt::where('payment_receipt_id', $orders->payment_receipt_id)->first();
+            $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
         }
 
-        foreach($orders->orderDetail as $order_detail)
+        foreach($order->orderDetail as $order_detail)
         {
             if($order_detail->service_id)
                 $totalPrice += $order_detail->service->price;
             else
                 $totalPrice += $order_detail->product->price * $order_detail->quantity;
         }
+        $totalPrice += $order->delivery_fee;
 
-        return view('payment_receipt_form')->with('orders', $orders)->with('totalPrice', $totalPrice)->with('payment_receipt', $payment_receipt);
+        return view('payment_receipt_form')->with('order', $order)->with('totalPrice', $totalPrice)->with('payment_receipt', $payment_receipt);
     }
 
     public function add_payment_receipt(Request $req, $id)
@@ -406,6 +424,10 @@ class OrderController extends Controller
         $printServiceOnce = false;
         $printProductOnce = false;
 
+        if($status == "finished" || $status == "canceled")
+        {
+            return view('order_history')->with('orders', $orders)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce);
+        }
         return view('order_active')->with('orders', $orders)->with('printServiceOnce', $printServiceOnce)->with('printProductOnce',$printProductOnce);
     }
 

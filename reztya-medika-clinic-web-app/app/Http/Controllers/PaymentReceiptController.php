@@ -25,20 +25,20 @@ class PaymentReceiptController extends Controller
         ]);
 
         $order = Order::where('order_id', $id)->first();
-        $order->status = 'WAITING';
+        $order->status = 'waiting';
         $order->save();
 
-        $order_detail = OrderDetail::where('order_id', $id)->get();
+        $order_details = OrderDetail::where('order_id', $id)->get();
 
         $totalPrice = 0;
-
-        foreach($order_detail as $x)
+        foreach($order_details as $order_detail)
         {
-            if($x->service_id)
-                $totalPrice += $x->service->price;
+            if($order_detail->service_id)
+                $totalPrice += $order_detail->service->price;
             else
-                $totalPrice += $x->product->price * $x->quantity;
+                $totalPrice += $order_detail->product->price * $order_detail->quantity;
         }
+        $totalPrice += $order->delivery_fee;
 
         $payment_receipt = PaymentReceipt::create([
             'payment_date' => Carbon::now(),

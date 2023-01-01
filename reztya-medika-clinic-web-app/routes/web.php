@@ -176,10 +176,6 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
     Route::post('/add-payment-receipt/{id}', [OrderController::class, 'add_payment_receipt'])->middleware('admin');
     Route::get('/repeat-order/{id}', [OrderController::class, 'repeatOrder'])->middleware(['auth', 'verified']);
 
-    // Route::get('/history-order/on-going', [OrderController::class, 'filterOnGoing'])->middleware(['auth', 'verified']);
-    // Route::get('/history-order/waiting', [OrderController::class, 'filterWaiting'])->middleware(['auth', 'verified']);
-    // Route::get('/history-order/finished', [OrderController::class, 'filterFinished'])->middleware(['auth', 'verified']);
-    // Route::get('/history-order/canceled', [OrderController::class, 'filterCanceled'])->middleware(['auth', 'verified']); 
     Route::get('/order/{status}', [OrderController::class, 'statusFilter'])->middleware(['auth', 'verified']); 
 
     Route::put('/upload-transfer-receipt/{id}', [PaymentReceiptController::class, 'transferReceipt'])->middleware(['auth', 'verified']);

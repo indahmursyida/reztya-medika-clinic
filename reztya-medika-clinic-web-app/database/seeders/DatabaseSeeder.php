@@ -63,13 +63,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'user_role_id' => 1,
+            'user_role_id' => 2,
             'username' => 'Member2',
             'name' => 'Member2 Member2 Member2',
             'birthdate' => '2001-06-18',
             'phone' => '081285879816',
             'address' => 'Jalan KH Iskandar Tua',
-            'email' => 'yesikaa02@gmail.com',
+            'email' => 'member@gmail.com',
             'password' => bcrypt('member'),
             'profile_picture' => 'profile-images/profile_picture_default.jpg',
             'is_banned' => false,
@@ -132,6 +132,19 @@ class DatabaseSeeder extends Seeder
 
         Cart::create([
             'user_id' => 2,
+            'product_id' => 2,
+            'quantity' => 3
+        ]);
+
+        Cart::create([
+            'user_id' => 3,
+            'service_id' => 2,
+            'schedule_id' => 2,
+            'home_service' => 1,
+        ]);
+
+        Cart::create([
+            'user_id' => 3,
             'product_id' => 2,
             'quantity' => 3
         ]);
