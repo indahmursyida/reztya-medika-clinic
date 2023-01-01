@@ -2,6 +2,9 @@
 @section('title', 'Profil')
 
 @section('container')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="unselectable container bg-white">
         @if(session()->has('updateError'))
             <div class="alert alert-danger alert-dismissible fade show font-futura-reztya" role="alert">
@@ -58,96 +61,157 @@
                 <div class="row mt-5 ms-1-5 mb-4">
                     <div class="col-6 active-order-box">
                         <div class="card outline-reztya">
-                            <button href="/active-order" class="card-header text-white btn button-outline-reztya button-active-order">
+                            <a href="/active-order" class="card-header text-white btn button-outline-reztya button-active-order">
                                 <h5 class="mt-1 d-flex justify-content-start">Pemesanan Aktif</h5>
-                            </button>
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <h6 class="fw-bold">Order Date</h6>
-                                </li>
-                                <li class="list-group-item">
-                                    <ul class="row list-unstyled">
-                                        <li class="h6 col-6 fw-bold list-unstyled">Services</li>
-                                        <li class="col-6 fw-bold list-unstyled">Rp 300,000</li>
-                                    </ul>
-                                    <ul class="list-group mb-2">
-                                        <li class="list-group-item list-group-flush">
-                                            Service Name
+                            </a>
+                            @if(!$orders->isEmpty())
+                                @foreach($orders as $order)
+                                    <ul class="list-group mt-1">
+                                        <li class="list-group-item">
+                                            <h6 class="fw-bold">Tanggal Pemesanan:</h6>
+                                            <h6 class="fw-bold">{{Carbon::parse($order->order_date)->translatedFormat('d F Y')}}</h6>
                                         </li>
                                         <li class="list-group-item">
-                                            Quantity
-                                        </li>
-                                        <li class="list-group-item">
-                                            Schedule
+                                            <ul class="row list-unstyled">
+                                                <li class="h6 col-6 fw-bold list-unstyled">Perawatan</li>
+                                                <li class="col-6 fw-bold list-unstyled">Rp{{ number_format($servicePrice, 2) }}</li>
+                                            </ul>
+                                            @foreach($order->orderDetail as $order_detail)
+                                                @if($order_detail->service_id)
+                                                    @if($printOnce == false)
+                                                        <ul class="list-group mb-2">
+                                                            <li class="list-group-item list-group-flush">
+                                                                {{$order_detail->service->name}}
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                @php
+                                                                    $printOnce = true;
+                                                                @endphp
+                                                                <p>+{{$totalItemService - 1}} pesanan lainnya</p>
+                                                            </li>
+                                                        </ul>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                            <ul class="list-group">
+                                                <ul class="row list-unstyled">
+                                                    <li class="h6 col-6 fw-bold list-unstyled">Produk</li>
+                                                    <li class="col-6 fw-bold list-unstyled">Rp{{ number_format($productPrice, 2) }}</li>
+                                                </ul>
+                                                @php
+                                                    $printOnce = false;
+                                                @endphp
+                                                @foreach($order->orderDetail as $order_detail)
+                                                    @if($order_detail->product_id)
+                                                        @if($printOnce == false)
+                                                            <ul class="list-group">
+                                                                <li class="list-group-item list-group-flush">
+                                                                    {{$order_detail->product->name}}
+                                                                </li>
+                                                                <li class="list-group-item">
+                                                                    @php
+                                                                        $printOnce = true;
+                                                                    @endphp
+                                                                    <p>+{{$totalItemProduct - 1}} pesanan lainnya</p>
+                                                                </li>
+                                                            </ul>
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                            </ul>
+                                            <ul class="list-group">
+                                                <ul class="row list-unstyled">
+                                                    <li class="h6 col-6 fw-bold list-unstyled">Total Biaya</li>
+                                                    <li class="col-6 fw-bold list-unstyled">Rp{{ number_format($totalPrice, 2) }}</li>
+                                                    <li class="list-unstyled">Belum termasuk biaya pengiriman</li>
+                                                </ul>
+                                            </ul>
                                         </li>
                                     </ul>
-                                    <ul class="list-group mb-3">
-                                        <ul class="row list-unstyled">
-                                            <li class="h6 col-6 fw-bold list-unstyled">Products</li>
-                                            <li class="col-6 fw-bold list-unstyled">Rp 300,000</li>
-                                        </ul>
-                                        <li class="list-group-item">
-                                            Product Name
-                                        </li>
-                                        <li class="list-group-item">
-                                            Quantity
-                                        </li>
-                                    </ul>
-                                    <ul class="list-group">
-                                        <ul class="row list-unstyled">
-                                            <li class="h6 col-6 fw-bold list-unstyled">Total Cost</li>
-                                            <li class="col-6 fw-bold list-unstyled">Rp 600,000</li>
-                                        </ul>
-                                    </ul>
-                                </li>
-                            </ul>
+                                @endforeach
+                            @else
+                                <ul class="list-group mt-1">
+                                    <li class="list-group-item">
+                                        <h6 class="fw-bold">Tidak ada pesanan yang sedang aktif</h6>
+                                    </li>
+                                </ul>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6 me-2-5">
                         <div class="card outline-reztya">
-                            <button href="/order-history" class="card-header text-white btn button-outline-reztya button-history-order">
+                            <a href="/history-order" class="card-header text-white btn button-outline-reztya button-history-order">
                                 <h5 class="mt-1 d-flex justify-content-start">Riwayat Pemesanan</h5>
-                            </button>
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <h6 class="fw-bold">Order Date</h6>
-                                </li>
-                                <li class="list-group-item">
-                                    <ul class="row list-unstyled">
-                                        <li class="h6 col-6 fw-bold list-unstyled">Services</li>
-                                        <li class="col-6 fw-bold list-unstyled">Rp 300,000</li>
-                                    </ul>
-                                    <ul class="list-group mb-2">
-                                        <li class="list-group-item list-group-flush">
-                                            Service Name
+                            </a>
+                            @if(!$order_history->isEmpty())
+                                @foreach($order_history as $order)
+                                    <ul class="list-group mt-1">
+                                        <li class="list-group-item">
+                                            <h6 class="fw-bold">Tanggal Pemesanan:</h6>
+                                            <h6 class="fw-bold">{{Carbon::parse($order->order_date)->translatedFormat('d F Y')}}</h6>
                                         </li>
                                         <li class="list-group-item">
-                                            Quantity
-                                        </li>
-                                        <li class="list-group-item">
-                                            Schedule
+                                            <ul class="row list-unstyled">
+                                                <li class="h6 col-6 fw-bold list-unstyled">Perawatan</li>
+                                                <li class="col-6 fw-bold list-unstyled">Rp{{ number_format($servicePriceHistory, 2) }}</li>
+                                            </ul>
+                                            @foreach($order->orderDetail as $order_detail)
+                                                @if($order_detail->service_id)
+                                                    @if($printServiceOnce == false)
+                                                        <ul class="list-group mb-2">
+                                                            <li class="list-group-item list-group-flush">
+                                                                {{$order_detail->service->name}}
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                @php
+                                                                    $printServiceOnce = true;
+                                                                @endphp
+                                                                <p>+{{$serviceItemHistory - 1}} pesanan lainnya</p>
+                                                            </li>
+                                                        </ul>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                            <ul class="list-group">
+                                                <ul class="row list-unstyled">
+                                                    <li class="h6 col-6 fw-bold list-unstyled">Produk</li>
+                                                    <li class="col-6 fw-bold list-unstyled">Rp{{ number_format($productPriceHistory, 2) }}</li>
+                                                </ul>
+                                                @foreach($order->orderDetail as $order_detail)
+                                                    @if($order_detail->product_id)
+                                                        @if($printProductOnce == false)
+                                                            <ul class="list-group">
+                                                                <li class="list-group-item list-group-flush">
+                                                                    {{$order_detail->product->name}}
+                                                                </li>
+                                                                <li class="list-group-item">
+                                                                    @php
+                                                                        $printProductOnce = true;
+                                                                    @endphp
+                                                                    <p>+{{$productItemHistory - 1}} pesanan lainnya</p>
+                                                                </li>
+                                                            </ul>
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                            </ul>
+                                            <ul class="list-group">
+                                                <ul class="row list-unstyled">
+                                                    <li class="h6 col-6 fw-bold list-unstyled">Total Biaya</li>
+                                                    <li class="col-6 fw-bold list-unstyled">Rp{{ number_format($totalPriceHistory, 2) }}</li>
+                                                    <li class="list-unstyled">Belum termasuk biaya pengiriman</li>
+                                                </ul>
+                                            </ul>
                                         </li>
                                     </ul>
-                                    <ul class="list-group mb-3">
-                                        <ul class="row list-unstyled">
-                                            <li class="h6 col-6 fw-bold list-unstyled">Products</li>
-                                            <li class="col-6 fw-bold list-unstyled">Rp 300,000</li>
-                                        </ul>
-                                        <li class="list-group-item">
-                                            Product Name
-                                        </li>
-                                        <li class="list-group-item">
-                                            Quantity
-                                        </li>
-                                    </ul>
-                                    <ul class="list-group">
-                                        <ul class="row list-unstyled">
-                                            <li class="h6 col-6 fw-bold list-unstyled">Total Cost</li>
-                                            <li class="col-6 fw-bold list-unstyled">Rp 600,000</li>
-                                        </ul>
-                                    </ul>
-                                </li>
-                            </ul>
+                                @endforeach
+                            @else
+                                <ul class="list-group mt-1">
+                                    <li class="list-group-item">
+                                        <h6 class="fw-bold">Tidak ada riwayat pemesanan</h6>
+                                    </li>
+                                </ul>
+                            @endif
                         </div>
                     </div>
                 </div>
