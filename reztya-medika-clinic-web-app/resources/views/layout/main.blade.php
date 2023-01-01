@@ -97,8 +97,8 @@
                         </p>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                             <li><a class="button-outline-reztya dropdown-item" href="/view-profile/{{auth()->user()->username}}">Lihat Profil</a></li>
-                            <li><a class="button-outline-reztya dropdown-item" href="/active-order">Lihat Pemesanan Aktif</a></li>
-                            <li><a class="button-outline-reztya dropdown-item" href="/history-order">Lihat Riwayat Pemesanan</a></li>
+                            <li><a class="button-outline-reztya dropdown-item" href="/active-order">Lihat Pesanan Aktif</a></li>
+                            <li><a class="button-outline-reztya dropdown-item" href="/history-order">Lihat Riwayat Pesanan</a></li>
                             @if(auth()->user()->user_role_id == 1)
                                 <li><a class="button-outline-reztya dropdown-item" href="/view-users">Ban / Unban Akun</a></li>
                             @endif

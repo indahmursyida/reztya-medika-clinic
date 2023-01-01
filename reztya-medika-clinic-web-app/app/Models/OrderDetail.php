@@ -10,13 +10,7 @@ class OrderDetail extends Model
     use HasFactory;
 
     protected $primaryKey = 'order_detail_id';
-    protected $fillable = [
-        'order_id',
-        'service_id', 
-        'product_id',
-        'schedule_id',
-        'quantity'
-    ];
+    protected $guarded = ['order_detail_id'];
     public function service(){
         return $this->belongsTo(Service::class, 'service_id');
     }

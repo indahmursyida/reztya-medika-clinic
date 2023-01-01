@@ -11,14 +11,7 @@ class Service extends Model
 
     public $timestamps = false;
     protected $primaryKey = 'service_id';
-    protected $fillable = [
-        'category_id', 
-        'name', 
-        'description', 
-        'duration', 
-        'price', 
-        'image_path'
-    ];
+    protected $guarded = ['service_id'];
     public function category(){
         return $this->belongsTo(Category::class, 'category_id');
     }

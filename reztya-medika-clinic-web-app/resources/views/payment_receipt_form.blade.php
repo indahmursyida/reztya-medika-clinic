@@ -14,7 +14,7 @@ use Carbon\Carbon;
                 @method('post')
                 @csrf
 
-                @if($order->status == 'WAITING')
+                @if($order->status == 'waiting')
                 <div class="d-flex justify-content-center my-4">
                     <img class="img-preview img-fluid img-responsive img-thumbnail" width="300" height="300">
                 </div>
@@ -54,7 +54,7 @@ use Carbon\Carbon;
                     <label for="payment_amount" class="font-futura-reztya">Total Transfer</label>
                 </div>
 
-                @elseif($order->status == 'ON GOING')
+                @elseif($order->status == 'ongoing')
                 <div class="form-floating mb-2">
                     <input placeholder="order_date" disabled id="floating_order_date" class="shadow-none form-control" type="date" name="order_date" value="{{ old('order_date', $order->order_date)}}">
                     <label for="floating_order_date" class="font-futura-reztya">Tanggal Pesanan (Bulan/Tanggal/Tahun)</label>

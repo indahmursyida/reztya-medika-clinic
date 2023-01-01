@@ -16,6 +16,7 @@ class CartController extends Controller
         if (Auth::user()->user_role_id != 1) {
             $cart = null;
             $schedules = Schedule::all();
+            $weight = 0;
             $printServiceOnce = false;
             $printProductOnce = false;
             $totalPrice = 0;
@@ -64,6 +65,7 @@ class CartController extends Controller
             return view('view_cart')
                 ->with('cart', $cart)
                 ->with('schedules', $schedules)
+                ->with('weight',$weight)
                 ->with('printServiceOnce', $printServiceOnce)
                 ->with('printProductOnce',$printProductOnce)
                 ->with('totalPrice', $totalPrice)
@@ -83,15 +85,16 @@ class CartController extends Controller
         if($req['schedule_id'] != $req['old_schedule_id'])
         {
             $old_schedule = Schedule::find($req['old_schedule_id']);
-            $old_schedule->status = 'Available';
+            $old_schedule->status = 'available';
             $old_schedule->save();
 
             $new_schedule = Schedule::find($req['schedule_id']);
-            $new_schedule->status = 'Booked';
+            $new_schedule->status = 'unavailable';
             $new_schedule->save();
         }
 
         $validated_data['cart_id'] = $id;
+
 
         Cart::find($id)->update($validated_data);
 

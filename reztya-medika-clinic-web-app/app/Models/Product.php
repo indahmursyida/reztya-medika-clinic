@@ -11,16 +11,8 @@ class Product extends Model
     
     public $timestamps = false;
     protected $primaryKey = 'product_id';
-    protected $fillable = [
-        'category_id', 
-        'name', 
-        'description', 
-        'size', 
-        'price', 
-        'expired_date',
-        'stock',
-        'image_path'
-    ];
+    protected $guarded = ['product_id'];
+    
     public function category(){
         return $this->belongsTo(Category::class, 'category_id');
     }

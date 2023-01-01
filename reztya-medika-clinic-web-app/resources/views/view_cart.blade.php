@@ -94,8 +94,8 @@ use Carbon\Carbon;
                                                                     <select class="form-select shadow-none" name="schedule_id" id="schedule_id">
                                                                         @foreach($schedules as $schedule)
                                                                         @if($schedule->schedule_id == $item->schedule_id)
-                                                                            <option disabled selected value="{{$item->schedule_id}}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
-                                                                        @elseif($schedule->status == 'Available')
+                                                                            <option hidden selected value="{{$item->schedule_id}}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                        @elseif($schedule->status == 'available')
                                                                             <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
                                                                         @endif
                                                                         @endforeach
@@ -108,7 +108,7 @@ use Carbon\Carbon;
                                                                 <div>
                                                                     <select class="form-select shadow-none" id="home_service" name="home_service">
                                                                         @if($item->home_service == 1)
-                                                                        <option value="1" selected disabled>
+                                                                        <option value="1" selected hidden>
                                                                             Rumah ({{ Auth::user()->address }})
                                                                         </option>
                                                                         <option value="0">
@@ -118,7 +118,7 @@ use Carbon\Carbon;
                                                                         <option value="1">
                                                                             Rumah ({{ Auth::user()->address }})
                                                                         </option>
-                                                                        <option value="0" selected disabled>
+                                                                        <option value="0" selected hidden>
                                                                             Klinik Reztya Medika
                                                                         </option>
                                                                         @endif
@@ -143,13 +143,16 @@ use Carbon\Carbon;
                         @endforeach
                     </div>
                 </div>
+                @php
+                $product_exist = 0
+                @endphp
                 <div class="d-flex flex-column">
                     <div class="container">
-                        @php
-                            $weight = 0;
-                        @endphp
                         @foreach ($cart as $item)
                             @if($item->product_id)
+                                @php
+                                $product_exist = 1
+                                @endphp
                                 @if($printProductOnce == false)
                                 <div class="row">
                                     <div class="col d-flex justify-content-center">
@@ -197,7 +200,7 @@ use Carbon\Carbon;
                                         <button type="button" data-toggle="modal" data-target="#editQuantityPopup-{{$item->cart_id}}" class="btn button-outline-reztya rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
                                             <i class="fa-regular fa-pen-to-square pt-1"></i>
                                         </button>
-                                        <a href="/remove-cart/{{ $item->cart_id }}" class="btn btn-outline-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $item->product->name }}?')" title="Hapus Produk">
+                                        <a href="/remove-cart/{{ $item->cart_id }}" id="delete-button" class="btn btn-outline-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $item->product->name }}?')" title="Hapus Produk">
                                             <i class="fa-solid fa-trash pt-1"></i>
                                         </a>
                                         <div class="modal fade" id="editQuantityPopup-{{$item->cart_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editQuantityTitle" aria-hidden="true">
@@ -243,44 +246,75 @@ use Carbon\Carbon;
                         @endforeach
                     </div>
                 </div>
-                <form action="" method="post">
+                @if ($product_exist == 1) 
+                <form action="/create-order" method="post" enctype="multipart/form-data">
+                    @csrf
                     <div class="container">
                         <div class="row mt-2">
                             <div class="col">
                             </div>
                             <div class="col-5">
                                 <p class="mb-2 fw-bold">Opsi Pengiriman</p>
-                                <select class="form-select shadow-none mb-2 @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
-                                    <option selected hidden>Pilih Tipe Pengiriman</option>
+                                <select class="form-select shadow-none w-75 @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
+                                    @if (old('delivery_service'))
+                                        @if(old('delivery_service') == 1)
+                                        <option value="1" selected>
+                                            Delivery
+                                        </option>
+                                        <option value="0">
+                                            Self-Pickup
+                                        </option>
+                                        @elseif(old('delivery_service') == 0)
+                                        <option value="1">
+                                            Delivery
+                                        </option>
+                                        <option value="0" selected>
+                                            Self-Pickup
+                                        </option>
+                                        @endif
+                                    @else
+                                    <option value="" selected hidden>Pilih Tipe Pengiriman</option>
                                     <option value="1">
                                         Delivery
                                     </option>
                                     <option value="0">
                                         Self-Pickup
                                     </option>
+                                    @endif
                                 </select>
                                 @error('delivery_service')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                                 @enderror
-                                <div id="delivery_choice" style="display: none;">
-                                    <div class="d-flex">
-                                        <p class="m-0 me-1">Tujuan ke </p>
+                                <div id="delivery_choice" style="{{old('delivery_service') == 1 ? 'display: block;' : 'display: none;'}}">
+                                    <div class="d-flex mt-2">
+                                        <p class="m-0 me-1">Tujuan ke</p>
                                         <p class="mb-0 fw-bold">{{$origin[1]}}, {{$origin[0]}}</p>
+                                        <input type="hidden" name="origin" value="{{$origin[1]}}, {{$origin[0]}}">
                                     </div>
                                     <div class="d-flex">
                                         <p class="mb-0 me-1">Total berat</p>
-                                        <p class="mb-0 fw-bold">{{$weight / 1000}}kg ≈ {{round($weight / 1000)}}kg</p>
+                                        @if ($weight / 1000 != ceil($weight / 1000))
+                                        <p class="mb-0 fw-bold">{{$weight / 1000}}kg ≈ {{ceil($weight / 1000)}}kg</p>
+                                        @else
+                                        <p class="mb-0 fw-bold">{{$weight / 1000}}kg</p>
+                                        @endif
+                                        <input type="hidden" name="weight" value="{{ceil($weight / 1000)}}">
                                     </div>
-                                    <div class="mt-1 mb-2 d-flex">
-                                        <select onchange="includeFee(this.value)" id="origin" name="origin" class="form-select shadow-none">
-                                            <option value="0" disabled selected hidden>Pilih Jasa Pengiriman</option>
+                                    <div class="mt-1 mb-2">
+                                        <select onchange="includeFee(this.value)" id="cost" name="cost" class="form-select shadow-none w-75  @error('cost') is-invalid @enderror">
+                                            
                                             @foreach($costs as $cost)
-                                                {{-- <option value="{{$cost->service}}">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari) - Rp{{str(number_format(($cost->cost[0]->value * round($weight / 1000)), 2))}}</option> --}}
-                                            <option value="{{$cost->cost[0]->value * round($weight / 1000)}}">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari) - Rp{{str(number_format(($cost->cost[0]->value * round($weight / 1000)), 2))}}</option>
+                                            <option value="" disabled selected hidden>Pilih Jasa Pengiriman</option>
+                                            <option value="{{ json_encode($cost) }} ">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari)</option>
                                             @endforeach 
                                         </select>
+                                        @error('cost')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -303,11 +337,30 @@ use Carbon\Carbon;
                                 <h5 class="mb-0" id="totalPriceText">Rp{{ number_format($totalPrice, 2) }}</h5>
                             </div>
                             <div class="col d-flex justify-content-center align-items-center">
-                                <a href="/create-order" class="btn button-outline-reztya">Buat Pesanan</a>
+                                <button type="submit" class="btn button-outline-reztya">Buat Pesanan</button>
                             </div>
                         </div>
                     </div>   
                 </form>
+                @else
+                <hr style="width: 92%; margin-right: 4%; margin-left: 4%;"/> 
+                <div class="container">
+                    <div class="row mt-2">
+                        <div class="col d-flex justify-content-center">
+                            <h5 class="mb-0">Total Harga</h5>
+                        </div>
+                        <div class="col-5">
+                        </div>
+                        <div class="col d-flex align-items-center">
+                            <input type="hidden" value="{{$totalPrice}}" id="totalPrice">
+                            <h5 class="mb-0" id="totalPriceText">Rp{{ number_format($totalPrice, 2) }}</h5>
+                        </div>
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <a href="/create-order" class="btn button-outline-reztya">Buat Pesanan</a>
+                        </div>
+                    </div>
+                </div>
+                @endif
             @else
                 Keranjang Anda masih kosong.
             @endif
@@ -333,28 +386,39 @@ use Carbon\Carbon;
         // });
         $('#delivery_service').change(
             function() {
-                // var optionSelected = $("option:selected", this);
-                // var valueSelected = this.value;
-                // console.log(valueSelected);
                 if(this.value == 1){
                     $('#delivery_choice').show();
-                    document.getElementById('origin').value = 0;
+                    document.getElementById('cost').value = "";
                 }
                 else
                 {
                     $('#delivery_choice').hide();
                     var total = parseInt(document.getElementById('totalPrice').value);
                     document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
+                    document.getElementById('deliveryFeeText').innerHTML = "";
                 }
             }
         );
     });
 
-    function includeFee(delivery_fee) {
+    function includeFee(json_string) {
+        let json = JSON.parse(json_string);
+        let weight = {!! json_encode(ceil($weight / 1000)) !!};
+        let delivery_fee = json.cost[0].value * parseInt(weight);
+
         var total = parseInt(document.getElementById('totalPrice').value);
-        total += parseInt(document.getElementById('origin').value);
+        total += delivery_fee;
         document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
         document.getElementById('deliveryFeeText').innerHTML = "Rp" + delivery_fee.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
     }
+
+    // document.getElementById('delete-button').addEventListener('click', function(e) {
+    //     e.preventDefault();
+
+    //     axios.delete('/remove-cart/' + this.dataset.id)
+    //         .then(response => {
+        
+    //         });
+    //     });
 </script>
 @endsection
