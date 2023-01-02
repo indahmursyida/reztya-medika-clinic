@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -69,7 +72,103 @@ class ProfileController extends Controller
     }
 
     public function viewProfile() {
-        return view('profile.view-profile');
+        // Pemesanan Aktif
+        $orders = null;
+        $totalPrice = 0;
+        $servicePrice = 0;
+        $productPrice = 0;
+        $totalItemProduct = 0;
+        $totalItemService = 0;
+        $schedules = Schedule::all();
+        $printOnce = false;
+
+
+        if(Auth::user()){
+            if(Auth::user()->user_role_id == 1)
+            {
+                $orders = Order::where('status', 'ON GOING')->orWhere('status', 'WAITING')->get();
+            }
+            else
+            {
+                $orders = Order::where('user_id', Auth::user()->user_id)->where('status', 'WAITING')->orWhere('status', 'ON GOING')->get();
+            }
+        }
+
+        if(!$orders->isEmpty())
+        {
+            foreach($orders as $order)
+            {
+                foreach($order->orderDetail as $order_detail)
+                {
+                    if($order_detail->service_id) {
+                        $totalPrice += $order_detail->service->price;
+                        $servicePrice += $order_detail->service->price;
+                        $totalItemService += 1;
+                    }
+                    else {
+                        $totalPrice += $order_detail->product->price * $order_detail->quantity;
+                        $productPrice += $order_detail->product->price * $order_detail->quantity;
+                        $totalItemProduct += 1;
+                    }
+                }
+            }
+        }
+
+        // Riwayat Pemesanan
+        $order_history = null;
+        $printServiceOnce = false;
+        $printProductOnce = false;
+        $serviceItemHistory = 0;
+        $productItemHistory = 0;
+        $totalPriceHistory = 0;
+        $productPriceHistory = 0;
+        $servicePriceHistory = 0;
+
+        if(Auth::user()->user_role_id == 1)
+        {
+            $order_history = Order::where('status','FINISHED')->orWhere('status','CANCELED')->get();
+        }
+        else
+        {
+            $order_history = Order::where('user_id', Auth::user()->user_id)->where('status','FINISHED')->orWhere('status','CANCELED')->get();
+        }
+
+        if(!$order_history->isEmpty())
+        {
+            foreach($order_history as $order)
+            {
+                foreach($order->orderDetail as $order_detail)
+                {
+                    if($order_detail->service_id) {
+                        $totalPriceHistory += $order_detail->service->price;
+                        $servicePriceHistory += $order_detail->service->price;
+                        $serviceItemHistory += 1;
+                    }
+                    else {
+                        $totalPriceHistory += $order_detail->product->price * $order_detail->quantity;
+                        $productPriceHistory += $order_detail->product->price * $order_detail->quantity;
+                        $productItemHistory += 1;
+                    }
+                }
+            }
+        }
+
+        return view('profile.view-profile')
+            ->with(compact('printOnce'))
+            ->with(compact('orders'))
+            ->with(compact('totalPrice'))
+            ->with(compact('servicePrice'))
+            ->with(compact('productPrice'))
+            ->with(compact('totalItemService'))
+            ->with(compact('totalItemProduct'))
+            ->with(compact('order_history'))
+            ->with(compact('printServiceOnce'))
+            ->with(compact('printProductOnce'))
+            ->with(compact('totalPriceHistory'))
+            ->with(compact('productPriceHistory'))
+            ->with(compact('servicePriceHistory'))
+            ->with(compact('productItemHistory'))
+            ->with(compact('serviceItemHistory'));
     }
 
     public function editProfile(Request $request) {

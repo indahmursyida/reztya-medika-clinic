@@ -21,6 +21,18 @@ class CartController extends Controller
             $printProductOnce = false;
             $totalPrice = 0;
 
+            if(Auth::user()->user_role_id == 2){
+                $cart = Cart::where('user_id', Auth::user()->user_id)->get();
+            }
+
+            foreach ($cart as $item) {
+                if ($item->product_id) {
+                    $size_str = explode(' ', $item->product->size);
+                    $size_int = (int)$size_str[0];
+                    $weight += $size_int * $item->quantity;
+                }
+            }
+
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -31,7 +43,7 @@ class CartController extends Controller
                 CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => "origin=166&destination=".Auth::user()->city_id."&weight=1000&courier=jne",
+                CURLOPT_POSTFIELDS => "origin=166&destination=".Auth::user()->city_id."&weight=".$weight."&courier=jne",
                 CURLOPT_HTTPHEADER => array(
                     "content-type: application/x-www-form-urlencoded",
                     "key: 460abd066bcb244bf02b1c284f49e55a"
@@ -56,10 +68,6 @@ class CartController extends Controller
 
             if ($err) {
                 return redirect('/home')->with('signupError', 'Terjadi masalah dengan pendaftaran. Harap coba ulang.');
-            }
-
-            if(Auth::user()->user_role_id == 2){
-                $cart = Cart::where('user_id', Auth::user()->user_id)->get();
             }
 
             return view('view_cart')

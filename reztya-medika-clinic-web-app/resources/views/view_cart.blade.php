@@ -92,7 +92,7 @@ use Carbon\Carbon;
                                                             <input type="hidden" id="old_schedule_id" name="old_schedule_id" value="{{ $item->schedule_id }}">
                                                             <input type="hidden" id="service_name" name="service_name" value="{{ $item->service->name }}">
                                                             <input type="hidden" id="order_id" name="order_id" value="{{ $item->order_id }}">
-                                                            
+
                                                             <div>
                                                                 <div class="mb-2 text-start">
                                                                     Pilih Jadwal yang Tersedia
@@ -108,7 +108,7 @@ use Carbon\Carbon;
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                                                                
+
                                                                 <div class="mb-2 text-start">
                                                                     Pilih Tempat Layanan
                                                                 </div>
@@ -182,7 +182,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="col-5 d-flex flex-column justify-content-center">
                                         <div class="d-flex">
-                                            <p class="fw-bold m-0">{{ $item->product->name }} {{ $item->product->size }}</p> 
+                                            <p class="fw-bold m-0">{{ $item->product->name }} {{ $item->product->size }}</p>
                                         </div>
                                         <div style="color: #00A54F;">
                                             Harga Satuan
@@ -196,11 +196,6 @@ use Carbon\Carbon;
                                         <div>
                                             {{ $item->quantity }}
                                         </div>
-                                        @php
-                                            $size_str = explode(' ', $item->product->size);
-                                            $size_int = (int)$size_str[0];
-                                            $weight += $size_int * $item->quantity;
-                                        @endphp
                                     </div>
                                     <div class="col">Rp{{ number_format($item->product->price * $item->quantity, 2) }}</div>
                                     <div class="col text-center">
@@ -253,7 +248,7 @@ use Carbon\Carbon;
                         @endforeach
                     </div>
                 </div>
-                @if ($product_exist == 1) 
+                @if ($product_exist == 1)
                 <form action="/create-order" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="container">
@@ -303,19 +298,19 @@ use Carbon\Carbon;
                                     <div class="d-flex">
                                         <p class="mb-0 me-1">Total berat</p>
                                         @if ($weight / 1000 != ceil($weight / 1000))
-                                        <p class="mb-0 fw-bold">{{$weight / 1000}}kg ≈ {{ceil($weight / 1000)}}kg</p>
+                                            <p class="mb-0 fw-bold">{{$weight / 1000}}kg ≈ {{ceil($weight / 1000)}}kg</p>
                                         @else
-                                        <p class="mb-0 fw-bold">{{$weight / 1000}}kg</p>
+                                            <p class="mb-0 fw-bold">{{$weight / 1000}}kg</p>
                                         @endif
                                         <input type="hidden" name="weight" value="{{ceil($weight / 1000)}}">
                                     </div>
                                     <div class="mt-1 mb-2">
                                         <select onchange="includeFee(this.value)" id="cost" name="cost" class="form-select shadow-none w-75  @error('cost') is-invalid @enderror">
-                                            
+
                                             @foreach($costs as $cost)
                                             <option value="" disabled selected hidden>Pilih Jasa Pengiriman</option>
                                             <option value="{{ json_encode($cost) }} ">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari)</option>
-                                            @endforeach 
+                                            @endforeach
                                         </select>
                                         @error('cost')
                                         <div class="invalid-feedback">
@@ -331,7 +326,7 @@ use Carbon\Carbon;
                             </div>
                         </div>
                     </div>
-                    <hr style="width: 92%; margin-right: 4%; margin-left: 4%;"/> 
+                    <hr style="width: 92%; margin-right: 4%; margin-left: 4%;"/>
                     <div class="container">
                         <div class="row mt-2">
                             <div class="col d-flex justify-content-center">
@@ -347,10 +342,10 @@ use Carbon\Carbon;
                                 <button type="submit" class="btn button-outline-reztya">Buat Pesanan</button>
                             </div>
                         </div>
-                    </div>   
+                    </div>
                 </form>
                 @else
-                <hr style="width: 92%; margin-right: 4%; margin-left: 4%;"/> 
+                <hr style="width: 92%; margin-right: 4%; margin-left: 4%;"/>
                 <div class="container">
                     <div class="row mt-2">
                         <div class="col d-flex justify-content-center">
@@ -424,7 +419,7 @@ use Carbon\Carbon;
 
     //     axios.delete('/remove-cart/' + this.dataset.id)
     //         .then(response => {
-        
+
     //         });
     //     });
 </script>
