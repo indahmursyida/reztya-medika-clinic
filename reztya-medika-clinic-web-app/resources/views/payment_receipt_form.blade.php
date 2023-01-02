@@ -100,9 +100,9 @@ use Carbon\Carbon;
                     @enderror
                 </div>
                 <div class="form-floating mb-2">
-                    <input placeholder="Password Admin" id="floating_admin_password" class="shadow-none form-control @error('admin_password') is-invalid @enderror" type="password" name="admin_password" value="{{old('password')}}">
-                    <label for="floating_admin_password" class="font-futura-reztya">Kata Sandi</label>
-                    @error('admin_password')
+                    <input placeholder="Password Admin" id="floating_password" class="shadow-none form-control @error('password') is-invalid @enderror" type="password" name="password" value="{{old('password')}}">
+                    <label for="floating_password" class="font-futura-reztya">Kata Sandi</label>
+                    @error('password')
                     <div class="invalid-feedback">
                         Kata Sandi wajib diisi
                     </div>

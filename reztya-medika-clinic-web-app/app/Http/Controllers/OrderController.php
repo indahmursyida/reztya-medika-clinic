@@ -8,6 +8,7 @@ use App\Models\OrderDetail;
 use App\Models\Schedule;
 use App\Models\PaymentReceipt;
 use App\Models\Cart;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -146,7 +147,9 @@ class OrderController extends Controller
             }
             else
             {
-                $orders = Order::where('user_id', Auth::user()->user_id)->where('status', 'waiting')->orWhere('status', 'ongoing')->get();
+                $orders = Order::where('user_id', Auth::user()->user_id)->where(function ($query) {
+                    $query->where('status', 'waiting')->orWhere('status', 'ongoing');
+                })->get();
             }
         }
 
@@ -365,48 +368,38 @@ class OrderController extends Controller
                 $totalPrice += $order_detail->product->price * $order_detail->quantity;
         }
 
-        if($orders->status == 'ongoing')
+        $payment_receipt = $req->validate([
+            'confirmed_by' => 'required',
+            'password' => 'required'
+        ]);
+
+        $user = User::where('username', $payment_receipt['confirmed_by'])->first();
+
+        dd(Auth::once($user));
+
+        if(Auth::attempt($user))
         {
-            $validated_data = $req->validate([
-                // 'order_date' => 'required',
-                // 'customer_name' => 'required',
-                // 'payment_date' => 'required',
-                // 'payment_amount' => 'required',
-                // 'payment_method' => 'required|in:Cash',
-                'confirmed_by' => 'required',
-                'admin_password' => 'required'
-            ]);
-
-            $payment_receipt = PaymentReceipt::create([
-                'confirmed_by' => $validated_data['confirmed_by'],
-                'payment_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
-                'payment_amount' => $totalPrice,
-                'payment_method' => 'Cash'
-            ]);
-
-            $orders->payment_receipt_id = $payment_receipt->payment_receipt_id;
+            if($orders->status == 'ongoing')
+            {
+                $payment_receipt = PaymentReceipt::create([
+                    'confirmed_by' => $validated_data['confirmed_by'],
+                    'payment_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
+                    'payment_amount' => $totalPrice,
+                    'payment_method' => 'Cash'
+                ]);
+    
+                $orders->payment_receipt_id = $payment_receipt->payment_receipt_id;
+                $orders->save();   
+            }
+            else if($orders->status == 'waiting'){
+                $payment_receipt = PaymentReceipt::where('payment_receipt_id', $orders->payment_receipt_id)->first();
+                
+                $payment_receipt->confirmed_by = $validated_data['confirmed_by'];
+                $payment_receipt->save();
+            }
+            $orders->status = 'finished';
             $orders->save();
         }
-        else if($orders->status == 'waiting'){
-            $payment_receipt = PaymentReceipt::where('payment_receipt_id', $orders->payment_receipt_id)->first();
-            $validated_data = $req->validate([
-                // 'order_date' => 'required',
-                // 'customer_name' => 'required',
-                // 'payment_date' => 'required',
-                // 'payment_amount' => 'required',
-                // 'payment_method' => 'required|in:Transfer',
-                // 'account_number' => 'numeric',
-                'confirmed_by' => 'required',
-                'admin_password' => 'required'
-            ]);
-
-            $payment_receipt->confirmed_by = $validated_data['confirmed_by'];
-            $payment_receipt->save();
-        }
-
-        $orders->status = 'finished';
-        $orders->save();
-
         return redirect('/history-order');
     }
 
