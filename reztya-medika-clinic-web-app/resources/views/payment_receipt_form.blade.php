@@ -6,8 +6,8 @@
 @php
 use Carbon\Carbon;
 @endphp
-<h2 class="my-3 text-center unselectable font-alander-reztya">Konfirmasi Pembayaran</h2>
-<div class="unselectable d-flex justify-content-center mt-3 mb-5">
+<h5 class="mt-5 text-center unselectable font-alander-reztya fw-bold">Konfirmasi Pembayaran</h5>
+<div class="unselectable d-flex justify-content-center mt-3">
     <div class="card card-sign bg-white outline-reztya">
         <div class="card-body">
             <form action="/add-payment-receipt/{{$order->order_id}}" method="POST" enctype="multipart/form-data" class="needs-validation">
@@ -16,7 +16,7 @@ use Carbon\Carbon;
 
                 @if($order->status == 'waiting')
                 <div class="d-flex justify-content-center my-4">
-                    <img class="img-preview img-fluid img-responsive img-thumbnail" width="300" height="300">
+                    <img class="img-preview img-fluid img-responsive img-thumbnail" width="200px" height="200px">
                 </div>
 
                 <div class="form-floating mb-2">

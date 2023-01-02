@@ -7,7 +7,7 @@
 use Carbon\Carbon;
 @endphp
 <div class="d-flex justify-content-center">
-    <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:90%;">
+    <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:85%;">
         <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold">Riwayat Pesanan</h5>
         <div class="dropdown">
             <button class="btn button-outline-reztya dropdown-toggle mt-4 mb-2" type="button" data-toggle="dropdown" aria-expanded="false">
@@ -32,7 +32,7 @@ use Carbon\Carbon;
                     if($order->delivery_fee)
                         $totalPrice += $order->delivery_fee;
                 @endphp
-                <div class="d-flex justify-content-between px-3">
+                <div class="d-flex justify-content-between">
                     <div class="d-flex align-items-center">
                         @if ($order->status =="finished")
                             <h5 class="mb-0 align-items-center">{{ Carbon::parse($order->paymentReceipt->payment_date)->translatedFormat('d F Y') }}</h5>
@@ -40,11 +40,11 @@ use Carbon\Carbon;
                             <h5 class="mb-0 align-items-center">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h5>
                         @endif
                         @if ($order->status == "finished")
-                        <p class="rounded-2 mb-0 mx-3" style="color: #00A54F; cursor: default;">
+                        <p class="rounded-2 mb-0 ms-4" style="background-color: #00A54F; cursor: default;">
                             <span class="badge">SELESAI</span>
                         </p>
                         @else
-                        <p class="rounded-2 mb-0 mx-3" style="background-color: red; cursor: default;">
+                        <p class="rounded-2 mb-0 ms-4" style="background-color: red; cursor: default;">
                             <span class="badge">DIBATALKAN</span>
                         </p>
                         @endif
@@ -55,40 +55,44 @@ use Carbon\Carbon;
                             <p class="mb-0 text-end">Total Harga</p>
                             <p class="fw-bold mb-0">Rp{{ number_format($totalPrice, 2)}}</p>
                         </div>
-                        @if(Auth::user()->user_role_id == 2)
                         <a href="/order-detail/{{$order->order_id}}" class="btn button-outline-reztya ms-3" type="button">Detail Pesanan</a>
-                        @endif
                     </div>
-                    {{-- <div class="d-flex">
-                        @php
-                        $totalPrice = 0;
-                        foreach($order->orderDetail as $order_detail)
-                        {
-                            if($order_detail->service_id)
-                                $totalPrice += $order_detail->service->price;
-                            else
-                                $totalPrice += $order_detail->product->price * $order_detail->quantity;
-                        }
-                        @endphp
-                        Total Harga:
-                        <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
-                    </div> --}}
                 </div>
                 @if(Auth::user()->user_role_id == 1)
-                    <div class="d-flex flex-column ms-5">
-                        <div>
-                            Nama Pelanggan:
-                            <b>{{ $order->user->name }}</b>
+                <div class="d-flex flex-column mb-3">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-2">
+                                Nama Pemesan
+                            </div>
+                            <div class="col-7 fw-bold">
+                                {{ $order->user->name }}
+                            </div>
+                            <div class="col-3">
+                            </div>
                         </div>
-                        <div>
-                            No. HP Pelanggan:
-                            <b>{{ $order->user->phone }}</b>
+                        <div class="row">
+                            <div class="col-2">
+                                No. HP Pemesan
+                            </div>
+                            <div class="col-7 fw-bold">
+                                {{ $order->user->phone }}
+                            </div>
+                            <div class="col-3">
+                            </div>
                         </div>
-                        <div>
-                            Alamat Pelanggan:
-                            <b>{{ $order->user->address }}</b>
+                        <div class="row">
+                            <div class="col-2">
+                                Alamat Pemesan
+                            </div>
+                            <div class="col-7 fw-bold">
+                                {{ $order->user->address }}
+                            </div>
+                            <div class="col-3">
+                            </div>
                         </div>
                     </div>
+                </div>
                 @endif
                 <div class="d-flex flex-column">
                     <div class="container">
@@ -99,7 +103,7 @@ use Carbon\Carbon;
                             </div>
                             <div class="col-7">
                             </div>
-                            <div class="col">
+                            <div class="col-3">
                             </div>
                         </div>
                         <div class="row my-2">
@@ -110,17 +114,17 @@ use Carbon\Carbon;
                                 <p class="fw-bold m-0">{{ $order->orderDetail[0]->service->name }}</p>
                                 Rp{{ number_format($order->orderDetail[0]->service->price, 2) }}
                             </div>
-                            <div class="col">
+                            <div class="col-3">
                             </div>
                         </div>
                         @elseif($order->orderDetail[0]->product_id != null)
                         <div class="row">
                             <div class="col d-flex justify-content-center">
-                                <h5 class="mb-0" style="padding-right: 15%">Produk</h5>
+                                <h5 class="mb-0">Produk</h5>
                             </div>
                             <div class="col-7">
                             </div>
-                            <div class="col">
+                            <div class="col-3">
                             </div>
                         </div>
                         <div class="row my-2">
@@ -133,7 +137,7 @@ use Carbon\Carbon;
                                     {{ $order->orderDetail[0]->quantity }} barang x Rp{{ number_format($order->orderDetail[0]->product->price, 2) }}
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-3">
                             </div>
                         </div>
                         @endif
@@ -142,7 +146,7 @@ use Carbon\Carbon;
                         @endphp
                         @if ($totalItem > 1)
                         <div class="row">
-                            <div class="col d-flex justify-content-center" style="padding-left: 3%">
+                            <div class="col d-flex justify-content-center">
                                 <p class="mb-0">+{{$totalItem - 1}} pesanan lainnya</p>
                             </div>
                             <div class="col-7">

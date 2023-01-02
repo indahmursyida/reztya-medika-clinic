@@ -3,6 +3,13 @@
 @section('title', 'Cart')
 
 @section('container')
+@if($errors->any())
+<div class="d-flex justify-content-center">
+    <div class="alert alert-danger" style="width:90%;" role="alert">
+        <strong> {{$errors->first()}} </strong>
+    </div>
+</div>
+@endif
 <!-- @if (session('success'))
 <div class="alert alert-success" id="success-alert">
     <strong> {{session()->get('message')}} </strong>
