@@ -87,7 +87,9 @@
                                                                 @php
                                                                     $printOnce = true;
                                                                 @endphp
-                                                                <p>+{{$totalItemService - 1}} pesanan lainnya</p>
+                                                                @if($totalItemService > 1)
+                                                                    <p>+{{$totalItemService - 1}} pesanan lainnya</p>
+                                                                @endif
                                                             </li>
                                                         </ul>
                                                     @endif
@@ -112,7 +114,9 @@
                                                                     @php
                                                                         $printOnce = true;
                                                                     @endphp
-                                                                    <p>+{{$totalItemProduct - 1}} pesanan lainnya</p>
+                                                                    @if($totalItemProduct > 1)
+                                                                        <p>+{{$totalItemProduct - 1}} pesanan lainnya</p>
+                                                                    @endif
                                                                 </li>
                                                             </ul>
                                                         @endif
@@ -166,7 +170,9 @@
                                                                 @php
                                                                     $printServiceOnce = true;
                                                                 @endphp
-                                                                <p>+{{$serviceItemHistory - 1}} pesanan lainnya</p>
+                                                                @if($serviceItemHistory > 1)
+                                                                    <p>+{{$serviceItemHistory - 1}} pesanan lainnya</p>
+                                                                @endif
                                                             </li>
                                                         </ul>
                                                     @endif
@@ -188,7 +194,9 @@
                                                                     @php
                                                                         $printProductOnce = true;
                                                                     @endphp
-                                                                    <p>+{{$productItemHistory - 1}} pesanan lainnya</p>
+                                                                    @if($productItemHistory > 1)
+                                                                        <p>+{{$productItemHistory - 1}} pesanan lainnya</p>
+                                                                    @endif
                                                                 </li>
                                                             </ul>
                                                         @endif
