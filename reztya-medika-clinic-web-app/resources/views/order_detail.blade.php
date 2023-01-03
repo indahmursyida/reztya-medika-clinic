@@ -16,7 +16,7 @@ use Carbon\Carbon;
         <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold">Order</h5>
         @if($order)
             <div class="container">
-                <div class="d-flex justify-content-between my-2">
+                <div class="d-flex justify-content-between my-2 ms-2">
                     <div class="d-flex align-items-center">
                         <h5 class="mb-0">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h5>
                         @if ($order->status == "finished")
@@ -131,7 +131,7 @@ use Carbon\Carbon;
             <div class="d-flex flex-column mb-3">
                 <div class="container">
                     <div class="row">
-                        <div class="col-1">
+                        <div class="col-2">
                             Pemesan
                         </div>
                         <div class="col-1 text-end">
@@ -144,7 +144,7 @@ use Carbon\Carbon;
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-1">
+                        <div class="col-2">
                             No. HP
                         </div>
                         <div class="col-1 text-end">
@@ -157,7 +157,7 @@ use Carbon\Carbon;
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-1">
+                        <div class="col-2">
                             Alamat
                         </div>
                         <div class="col-1 text-end">
@@ -237,7 +237,9 @@ use Carbon\Carbon;
                                                             <input type="hidden" id="old_schedule_id" name="old_schedule_id" value="{{ $order_detail->schedule_id }}">
                                                             <input type="hidden" id="service_name" name="service_name" value="{{ $order_detail->service->name }}">
                                                             <input type="hidden" id="order_id" name="order_id" value="{{ $order_detail->order_id }}">
-                                                            
+                                                            <input type="hidden" id="username" name="email" value="{{ $order->user->username }}">
+                                                            <input type="hidden" id="name" name="name" value="{{ $order->user->name }}">
+                                                            <input type="hidden" id="email" name="email" value="{{ $order->user->email }}">
                                                             <div>
                                                                 <div class="mb-2 text-start">
                                                                     Pilih Jadwal yang Tersedia

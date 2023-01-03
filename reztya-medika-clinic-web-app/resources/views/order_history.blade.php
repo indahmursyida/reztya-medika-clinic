@@ -32,7 +32,7 @@ use Carbon\Carbon;
                     if($order->delivery_fee)
                         $totalPrice += $order->delivery_fee;
                 @endphp
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between ms-2">
                     <div class="d-flex align-items-center">
                         @if ($order->status =="finished")
                             <h5 class="mb-0 align-items-center">{{ Carbon::parse($order->paymentReceipt->payment_date)->translatedFormat('d F Y') }}</h5>
@@ -62,7 +62,7 @@ use Carbon\Carbon;
                 <div class="d-flex flex-column mb-3">
                     <div class="container">
                         <div class="row">
-                            <div class="col-1">
+                            <div class="col-2">
                                 Pemesan
                             </div>
                             <div class="col-1 text-end">
@@ -75,7 +75,7 @@ use Carbon\Carbon;
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-1">
+                            <div class="col-2">
                                 No. HP
                             </div>
                             <div class="col-1 text-end">
@@ -88,7 +88,7 @@ use Carbon\Carbon;
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-1">
+                            <div class="col-2">
                                 Alamat
                             </div>
                             <div class="col-1 text-end">
