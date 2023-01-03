@@ -16,7 +16,7 @@ use Carbon\Carbon;
         <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold">Order</h5>
         @if($order)
             <div class="container">
-                <div class="d-flex justify-content-between my-2 ms-2">
+                <div class="d-flex justify-content-between my-2">
                     <div class="d-flex align-items-center">
                         <h5 class="mb-0">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h5>
                         @if ($order->status == "finished")

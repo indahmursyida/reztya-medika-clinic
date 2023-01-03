@@ -305,6 +305,7 @@ class OrderController extends Controller
         if(Auth::user()->user_role_id == 1)
         {
             $orders = Order::where('status','finished')->orWhere('status','canceled')->get();
+            // dd($orders);
         }
         else
         {
@@ -328,11 +329,6 @@ class OrderController extends Controller
         {
             return view('transfer_payment')->with('payment_receipt', $payment_receipt);
         }
-        else if($order->status == 'ongoing')
-        {
-            
-        }
-
         return redirect()->route('form_payment', ['id' => $id]);
     }
 
@@ -361,16 +357,17 @@ class OrderController extends Controller
 
     public function add_payment_receipt(Request $req, $id)
     {
-        $orders = Order::find($id);
+        $order = Order::find($id);
         $totalPrice = 0;
 
-        foreach($orders->orderDetail as $order_detail)
+        foreach($order->orderDetail as $order_detail)
         {
             if($order_detail->service_id)
                 $totalPrice += $order_detail->service->price;
             else
                 $totalPrice += $order_detail->product->price * $order_detail->quantity;
         }
+        $totalPrice += $order->delivery_fee;
 
         $validated_data = $req->validate([
             'confirmed_by' => 'required',
@@ -386,7 +383,7 @@ class OrderController extends Controller
         {
             if(password_verify($validated_data['password'], $user->password))
             {
-                if($orders->status == 'ongoing')
+                if($order->status == 'ongoing')
                 {
                     $payment_receipt = PaymentReceipt::create([
                         'confirmed_by' => $validated_data['confirmed_by'],
@@ -394,18 +391,16 @@ class OrderController extends Controller
                         'payment_amount' => $totalPrice,
                         'payment_method' => 'Cash'
                     ]);
-        
-                    $orders->payment_receipt_id = $payment_receipt->payment_receipt_id;
-                    $orders->save();   
+                    $order->payment_receipt_id = $payment_receipt->payment_receipt_id;
+                    $order->save();   
                 }
-                else if($orders->status == 'waiting'){
-                    $payment_receipt = PaymentReceipt::where('payment_receipt_id', $orders->payment_receipt_id)->first();
-                    
+                else if($order->status == 'waiting'){
+                    $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
                     $payment_receipt->confirmed_by = $validated_data['confirmed_by'];
                     $payment_receipt->save();
                 }
-                $orders->status = 'finished';
-                $orders->save();
+                $order->status = 'finished';
+                $order->save();
                 return redirect('/history-order');
             }
         }

@@ -28,65 +28,68 @@ class CartController extends Controller
                 $cart = Cart::where('user_id', Auth::user()->user_id)->get();
             }
 
-            foreach ($cart as $item) {
-                if ($item->product_id) {
-                    $size_str = explode(' ', $item->product->size);
-                    $size_int = (int)$size_str[0];
-                    $weight += $size_int * $item->quantity;
+            if(!$cart->isEmpty())
+            {
+                foreach ($cart as $item) {
+                    if ($item->product_id) {
+                        $size_str = explode(' ', $item->product->size);
+                        $size_int = (int)$size_str[0];
+                        $weight += $size_int * $item->quantity;
                     $productExists = true;
+                    }
                 }
-            }
-
+    
             if (!$cart->isEmpty() && $productExists == true) {
-                $curl = curl_init();
-
-                curl_setopt_array($curl, array(
-                    CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => "",
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 30,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => "POST",
-                    CURLOPT_POSTFIELDS => "origin=166&destination=".Auth::user()->city_id."&weight=".$weight."&courier=jne",
-                    CURLOPT_HTTPHEADER => array(
-                        "content-type: application/x-www-form-urlencoded",
-                        "key: 460abd066bcb244bf02b1c284f49e55a"
-                    ),
-                ));
-
-                $response = curl_exec($curl);
-                $err = curl_error($curl);
-
-                curl_close($curl);
-
-                $costs = json_decode($response)->rajaongkir->results[0]->costs;
-
-                $origin[0] = json_decode($response)->rajaongkir->destination_details->province;
-                if (json_decode($response)->rajaongkir->destination_details->type == 'Kota') {
-                    $origin[1] = "Kota ".json_decode($response)->rajaongkir->destination_details->city_name;
-                } else if (json_decode($response)->rajaongkir->destination_details->type == 'Kabupaten') {
-                    $origin[1] = "Kab. ".json_decode($response)->rajaongkir->destination_details->city_name;
-                } else {
-                    $origin[1] = str(json_decode($response)->rajaongkir->destination_details->city_name);
-                }
-
-                if ($err) {
-                    return redirect('/home')->with('signupError', 'Terjadi masalah dengan pendaftaran. Harap coba ulang.');
-                }
+                    $curl = curl_init();
+    
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => "",
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 30,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => "POST",
+                        CURLOPT_POSTFIELDS => "origin=166&destination=".Auth::user()->city_id."&weight=".$weight."&courier=jne",
+                        CURLOPT_HTTPHEADER => array(
+                            "content-type: application/x-www-form-urlencoded",
+                            "key: 460abd066bcb244bf02b1c284f49e55a"
+                        ),
+                    ));
+    
+                    $response = curl_exec($curl);
+                    $err = curl_error($curl);
+    
+                    curl_close($curl);
+    
+                    $costs = json_decode($response)->rajaongkir->results[0]->costs;
+    
+                    $origin[0] = json_decode($response)->rajaongkir->destination_details->province;
+                    if (json_decode($response)->rajaongkir->destination_details->type == 'Kota') {
+                        $origin[1] = "Kota ".json_decode($response)->rajaongkir->destination_details->city_name;
+                    } else if (json_decode($response)->rajaongkir->destination_details->type == 'Kabupaten') {
+                        $origin[1] = "Kab. ".json_decode($response)->rajaongkir->destination_details->city_name;
+                    } else {
+                        $origin[1] = str(json_decode($response)->rajaongkir->destination_details->city_name);
+                    }
+    
+                    if ($err) {
+                        return redirect('/home')->with('signupError', 'Terjadi masalah dengan pendaftaran. Harap coba ulang.');
+                    }
             }
-
-            return view('view_cart')
-                ->with('cart', $cart)
-                ->with('schedules', $schedules)
-                ->with('weight',$weight)
-                ->with('printServiceOnce', $printServiceOnce)
-                ->with('printProductOnce',$printProductOnce)
-                ->with('totalPrice', $totalPrice)
-                ->with(compact('costs'))
-                ->with(compact('origin'));
+    
+                return view('view_cart')
+                    ->with('cart', $cart)
+                    ->with('schedules', $schedules)
+                    ->with('weight',$weight)
+                    ->with('printServiceOnce', $printServiceOnce)
+                    ->with('printProductOnce',$printProductOnce)
+                    ->with('totalPrice', $totalPrice)
+                    ->with(compact('costs'))
+                    ->with(compact('origin'));
+            }
         }
-        return redirect('/home');
+        return view('view_cart')->with('cart', $cart)->with('weight',$weight);
     }
 
     public function updateCartSchedule(Request $req, $id)
@@ -163,7 +166,7 @@ class CartController extends Controller
         }else{
             Cart::create($validatedData);
         }
-        return redirect('/home')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+        return redirect('/cart')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
 
     public function bookService(Request $request)
@@ -183,6 +186,6 @@ class CartController extends Controller
         );
         $validatedData['user_id'] = $userId;
         Cart::create($validatedData);
-        return redirect('/home')->with('success', 'Perawatan berhasil ditambahkan ke keranjang!');
+        return redirect('/cart')->with('success', 'Perawatan berhasil ditambahkan ke keranjang!');
     }
 }
