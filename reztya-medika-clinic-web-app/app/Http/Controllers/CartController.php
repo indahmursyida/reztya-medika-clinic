@@ -20,6 +20,9 @@ class CartController extends Controller
             $printServiceOnce = false;
             $printProductOnce = false;
             $totalPrice = 0;
+            $costs = 0;
+            $origin = null;
+            $productExists = false;
 
             if(Auth::user()->user_role_id == 2){
                 $cart = Cart::where('user_id', Auth::user()->user_id)->get();
@@ -30,44 +33,47 @@ class CartController extends Controller
                     $size_str = explode(' ', $item->product->size);
                     $size_int = (int)$size_str[0];
                     $weight += $size_int * $item->quantity;
+                    $productExists = true;
                 }
             }
 
-            $curl = curl_init();
+            if (!$cart->isEmpty() && $productExists == true) {
+                $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => "origin=166&destination=".Auth::user()->city_id."&weight=".$weight."&courier=jne",
-                CURLOPT_HTTPHEADER => array(
-                    "content-type: application/x-www-form-urlencoded",
-                    "key: 460abd066bcb244bf02b1c284f49e55a"
-                ),
-            ));
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "origin=166&destination=".Auth::user()->city_id."&weight=".$weight."&courier=jne",
+                    CURLOPT_HTTPHEADER => array(
+                        "content-type: application/x-www-form-urlencoded",
+                        "key: 460abd066bcb244bf02b1c284f49e55a"
+                    ),
+                ));
 
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
+                $response = curl_exec($curl);
+                $err = curl_error($curl);
 
-            curl_close($curl);
+                curl_close($curl);
 
-            $costs = json_decode($response)->rajaongkir->results[0]->costs;
+                $costs = json_decode($response)->rajaongkir->results[0]->costs;
 
-            $origin[0] = json_decode($response)->rajaongkir->destination_details->province;
-            if (json_decode($response)->rajaongkir->destination_details->type == 'Kota') {
-                $origin[1] = "Kota ".json_decode($response)->rajaongkir->destination_details->city_name;
-            } else if (json_decode($response)->rajaongkir->destination_details->type == 'Kabupaten') {
-                $origin[1] = "Kab. ".json_decode($response)->rajaongkir->destination_details->city_name;
-            } else {
-                $origin[1] = str(json_decode($response)->rajaongkir->destination_details->city_name);
-            }
+                $origin[0] = json_decode($response)->rajaongkir->destination_details->province;
+                if (json_decode($response)->rajaongkir->destination_details->type == 'Kota') {
+                    $origin[1] = "Kota ".json_decode($response)->rajaongkir->destination_details->city_name;
+                } else if (json_decode($response)->rajaongkir->destination_details->type == 'Kabupaten') {
+                    $origin[1] = "Kab. ".json_decode($response)->rajaongkir->destination_details->city_name;
+                } else {
+                    $origin[1] = str(json_decode($response)->rajaongkir->destination_details->city_name);
+                }
 
-            if ($err) {
-                return redirect('/home')->with('signupError', 'Terjadi masalah dengan pendaftaran. Harap coba ulang.');
+                if ($err) {
+                    return redirect('/home')->with('signupError', 'Terjadi masalah dengan pendaftaran. Harap coba ulang.');
+                }
             }
 
             return view('view_cart')
@@ -122,7 +128,7 @@ class CartController extends Controller
     public function removeCart($id)
     {
         $cart = Cart::find($id);
-        
+
         $schedules = Schedule::where('schedule_id', $cart->schedule_id)->first();
         dd($schedules);
         Cart::find($id)->delete();
