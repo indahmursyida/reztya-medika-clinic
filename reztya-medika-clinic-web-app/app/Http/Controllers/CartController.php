@@ -131,12 +131,10 @@ class CartController extends Controller
     public function removeCart($id)
     {
         $cart = Cart::find($id);
-
-        $schedules = Schedule::where('schedule_id', $cart->schedule_id)->first();
-        dd($schedules);
+        
         Cart::find($id)->delete();
 
-        return redirect('/cart')->with('success','Item successfully deleted!');
+        return redirect('/cart')->with('success','Pesanan telah dihapus!');
     }
 
     public function buyProduct(Request $request)

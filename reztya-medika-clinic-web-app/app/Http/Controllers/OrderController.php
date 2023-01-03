@@ -9,6 +9,7 @@ use App\Models\Schedule;
 use App\Models\PaymentReceipt;
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -86,6 +87,11 @@ class OrderController extends Controller
             }
             else
             {
+                $product = Product::where('product_id', $cart->product_id)->first();
+                
+                $product->stock -= $cart->quantity;
+                $product->save();
+                
                 OrderDetail::create([
                     'order_id' => $orders->order_id,
                     'product_id' => $cart->product_id,
@@ -305,7 +311,6 @@ class OrderController extends Controller
         if(Auth::user()->user_role_id == 1)
         {
             $orders = Order::where('status','finished')->orWhere('status','canceled')->get();
-            // dd($orders);
         }
         else
         {
@@ -436,22 +441,52 @@ class OrderController extends Controller
         {
             if($order_detail->service_id)
             {
-                Cart::create([
-                    'user_id' => Auth::user()->user_id,
-                    'service_id' => $order_detail->service_id,
-                    'schedule_id' => $order_detail->schedule_id
-                ]);
+                $carts = Cart::where('user_id', Auth::user()->user_id)->where('service_id', $order_detail->service_id)->get();
+
+                if($carts->isEmpty())
+                {
+                    Cart::create([
+                        'user_id' => Auth::user()->user_id,
+                        'service_id' => $order_detail->service_id,
+                        'schedule_id' => $order_detail->schedule_id
+                    ]);
+                }
             }
             else
             {
-                Cart::create([
-                    'user_id' => Auth::user()->user_id,
-                    'product_id' => $order_detail->product_id,
-                    'quantity' => $order_detail->quantity
-                ]);
+                $carts = Cart::where('user_id', Auth::user()->user_id)->where('product_id', $order_detail->product_id)->get();
+                $product = Product::find($order_detail->product_id);
+
+                if(!$carts->isEmpty())
+                {
+                    foreach($carts as $cart)
+                    {
+                        $cart->quantity += $order_detail->quantity;
+                        $product->stock -= $order_detail->quantity;
+                        $product->save();
+                        if($cart->quantity > $product->stock){
+                            $cart->quantity = $product->stock;
+                            $cart->save();
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    if($order_detail->quantity <= $product->stock)
+                    {
+                        Cart::create([
+                            'user_id' => Auth::user()->user_id,
+                            'product_id' => $order_detail->product_id,
+                            'quantity' => $order_detail->quantity
+                        ]);
+                        return redirect('/cart')->withSuccess('repeatOrder', 'Berhasil ditambahkan ke keranjang');
+                    }
+                }
+                return redirect('/cart')->withErrors('repeatOrderFailed', 'Berhasil ditambahkan ke keranjang');
             }
         }
-
+        return redirect('/cart')->withSuccess('repeatOrder', 'Stok produk ' . $product->name . ' hanya tersisa ' . $product->stock . ' produk');
         return redirect('/cart');
     }
 }
