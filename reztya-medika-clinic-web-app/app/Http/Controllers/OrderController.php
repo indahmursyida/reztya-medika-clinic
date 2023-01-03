@@ -234,9 +234,9 @@ class OrderController extends Controller
 
         $newSchedule = Schedule::find($validated_data['schedule_id']);
         $content = [
-            'title' => 'Informasi Perubahan Jadwal pada Perawatan Anda',
-            'username' => Auth::user()->username,
-            'name' => Auth::user()->name,
+            'title' => 'Informasi Perubahan Jadwal Perawatan di Klinik Reztya Medika',
+            'username' => $req['username'],
+            'name' => $req['name'],
             'old_schedule' => Carbon::parse($req['old_schedule'])->translatedFormat('l, d F Y, H:i'),
             'old_schedule_id' => $req['old_schedule_id'],
             'order_id' => $req['order_id'],
@@ -244,8 +244,13 @@ class OrderController extends Controller
             'new_schedule' => Carbon::parse($newSchedule->start_time)->translatedFormat('l, d F Y, H:i')
         ];
 
-        // $emailAddress = Auth::user()->email;;
-        // Mail::to($emailAddress)->send(new SendEmail($content));
+        if(Auth::user()->user_role_id == 2){
+            $emailAddress = "klinikreztya@gmail.com";
+            Mail::to($emailAddress)->send(new SendEmail($content));
+        }else{
+            $emailAddress = $req['email'];
+            Mail::to($emailAddress)->send(new SendEmail($content));
+        }
         OrderDetail::find($id)->update($validated_data);
         $order_detail = OrderDetail::find($id);
 

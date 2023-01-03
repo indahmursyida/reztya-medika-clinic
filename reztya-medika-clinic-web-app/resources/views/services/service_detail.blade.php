@@ -46,6 +46,7 @@
 
 				<label for="home_service" class="my-2">Pilih tempat: </label>
 				<div>
+					@if(Auth::user()->city_id == 350)
 					<select class="form-select @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
 						@if(old('home_service'))
 						<option value="1" selected>
@@ -63,6 +64,16 @@
 						</option>
 						@endif
 					</select>
+					@else
+					<select class="form-select @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+						<option value="0" selected>
+							Klinik Reztya Medika
+						</option>
+						<option value="1" disabled>
+							Rumah di luar jangkauan
+						</option>
+					</select>
+					@endif
 					@error('home_service')
 					<div class="invalid-feedback">
 						{{ $message }}
