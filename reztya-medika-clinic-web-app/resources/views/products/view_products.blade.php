@@ -2,14 +2,14 @@
 @section('title', 'Produk')
 
 @section('container')
-    <div class="container mb-5 mt-5">
+    <div class="container mb-5">
         @if($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{$errors}}
                 <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <div class="box-up pt-4">
+        <div class="pt-4">
             <div class="d-flex justify-content-center">
                 <p class="h5 fw-bold unselectable font-alander-reztya">Produk</p>
             </div>
@@ -48,26 +48,49 @@
         <div class="unselectable d-flex justify-content-center mt-2">
             <div class="row">
                 @foreach($products as $product)
-                    <div class="col-3 mb-4 font-futura-reztya">
-                        <a href="/product-detail/{{$product->product_id}}" class="text-decoration-none">
-                            <div class="card bg-white outline-reztya">
-                                <div class="card-header">
-                                    <img class="card-img-top img-thumbnail img-fluid img-thumbnail-home" src="{{asset('storage/Service Reztya.jpg')}}">
-                                </div>
-                                <div class="card-body">
-                                    <div class="card-title text-reztya">
-                                        <b>{{$product->name}}</b>
+                    @if($product->stock > 1)
+                        <div class="col-3 mb-4 font-futura-reztya">
+                            <a href="/product-detail/{{$product->product_id}}" class="text-decoration-none">
+                                <div class="card bg-white outline-reztya">
+                                    <div class="card-header">
+                                        <img class="card-img-top img-thumbnail img-fluid img-thumbnail-home" src="{{asset('storage/Service Reztya.jpg')}}">
                                     </div>
-                                    <div class="card-description text-black">
-                                        Rp {{$product->price}}
+                                    <div class="card-body">
+                                        <div class="card-title text-reztya">
+                                            <b>{{$product->name}}</b>
+                                        </div>
+                                        <div class="card-description text-black">
+                                            Rp{{ number_format($product->price, 2) }}
+                                        </div>
+                                        <a href="/product-detail/{{$product->product_id}}" class="btn button-outline-reztya float-end">
+                                            Lihat Produk
+                                        </a>
                                     </div>
-                                    <a href="/product-detail/{{$product->product_id}}" class="btn button-outline-reztya float-end">
-                                        Order
-                                    </a>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
+                    @else
+                        <div class="col-3 mb-4 font-futura-reztya">
+                            <a href="/product-detail/{{$product->product_id}}" class="disabled text-decoration-none text-reztya">
+                                <div class="card disabled bg-white outline-reztya">
+                                    <div class="card-header">
+                                        <img class="card-img-top img-thumbnail img-fluid img-thumbnail-home" src="{{asset('storage/Service Reztya.jpg')}}">
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="card-title">
+                                            <b>{{$product->name}}</b>
+                                        </div>
+                                        <div class="card-description text-black">
+                                            Rp{{ number_format($product->price, 2) }}
+                                        </div>
+                                        <a href="/product-detail/{{$product->product_id}}" class="disabled btn btn-outline-dark float-end">
+                                            Produk Habis
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endif
                 @endforeach
             </div>
         </div>

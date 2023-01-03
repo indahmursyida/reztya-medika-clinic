@@ -21,22 +21,30 @@
 				@if(!is_null($product->size))
 				<p>Ukuran: {{ $product->size }}</p>
 				@endif
-				<h5>Rp. {{ number_format($product->price, 0, '', '.') }}</h5>
+				<h5>Rp{{ number_format($product->price, 2) }}</h5>
 				<div class="my-5">
 					<p>{{ $product->description }}</p>
 				</div>
-				<p>Expired Date: {{ date('d F Y', strtotime($product->expired_date)) }}</p>
-				<label for="quantity" class="my-2">Jumlah</label>
-				<input type="number" class="form-control form-quantity  @error('quantity') is-invalid  @enderror" id="quantity" name="quantity" min="1" max="{{ $product->stock }}" value="{{ old('quantity', 1) }}">
-				@error('quantity')
-				<div class="invalid-feedback">{{ $message }}</div>
-				@enderror
-				
+                @if($product->stock > 1)
+				    <p>Expired Date: {{ date('d F Y', strtotime($product->expired_date)) }}</p>
+                    <p class="my-2">Stok tersedia: {{$product->stock}} pcs</p>
+                    <label for="quantity" class="my-2">Jumlah</label>
+                    <input type="number" class="form-control form-quantity  @error('quantity') is-invalid  @enderror" id="quantity" name="quantity" min="1" max="{{ $product->stock }}" value="{{ old('quantity', 1) }}">
+                    @error('quantity')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                @endif
 			</div>
 		</div>
-		<div class="d-flex justify-content-center pb-5">
-			<button class="btn btn-success" type="submit"><i class="fa-solid fa-cart-shopping"></i> Tambahkan ke keranjang</button>
-		</div>
+        @if($product->stock > 1)
+            <div class="d-flex justify-content-center pb-5">
+                <button class="btn btn-success" type="submit"><i class="fa-solid fa-cart-shopping"></i> Tambahkan ke keranjang</button>
+            </div>
+        @else
+            <div class="d-flex justify-content-center pb-5">
+                <button class="btn btn-dark disabled"><i class="fa-solid fa-cart-shopping"></i> Stok Habis</button>
+            </div>
+        @endif
 	</form>
 </div>
 @endsection

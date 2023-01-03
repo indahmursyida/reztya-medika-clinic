@@ -76,10 +76,17 @@ class ServiceController extends Controller
     }
 
     public function view() {
+        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $noSchedule = false;
+
+        if ($schedules->isEmpty()) {
+            $noSchedule = true;
+        }
+
         return view('services.view_services', [
             'services' => Service::all(),
             'categories' => Category::all()
-        ]);
+        ])->with(compact('noSchedule'));
     }
 
     /**
