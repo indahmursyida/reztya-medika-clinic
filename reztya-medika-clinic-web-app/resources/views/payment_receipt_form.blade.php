@@ -7,8 +7,14 @@
 use Carbon\Carbon;
 @endphp
 <h5 class="mt-5 text-center unselectable font-alander-reztya fw-bold">Konfirmasi Pembayaran</h5>
-<div class="unselectable d-flex justify-content-center mt-3">
-    <div class="card card-sign bg-white outline-reztya">
+<div class="unselectable d-flex flex-column justify-content-center align-items-center mt-3">
+    @if(session()->has('invalid'))
+    <div class="alert alert-danger alert-dismissible fade show font-futura-reztya" style="width:80%;" role="alert">
+        {{session('invalid')}}
+        <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    <div class="card card-sign bg-white outline-reztya mb-5">
         <div class="card-body">
             <form action="/add-payment-receipt/{{$order->order_id}}" method="POST" enctype="multipart/form-data" class="needs-validation">
                 @method('post')
@@ -91,11 +97,11 @@ use Carbon\Carbon;
                     Verifikasi Admin
                 </div>
                 <div class="form-floating mb-2">
-                    <input placeholder="Username Admin" id="floating_confirmed_by" class="shadow-none form-control" type="text" name="confirmed_by" value="{{old('username', Auth::user()->username)}}">
-                    <label for="floating_confirmed_by" class="font-futura-reztya">Username Admin</label>
+                    <input placeholder="Username" id="floating_confirmed_by" class="shadow-none form-control @error('confirmed_by') is-invalid @enderror" type="text" name="confirmed_by" value="{{old('username', Auth::user()->username)}}">
+                    <label for="floating_confirmed_by" class="font-futura-reztya">Username</label>
                     @error('confirmed_by')
                     <div class="invalid-feedback">
-                        Username Admin wajib diisi
+                        {{ $message }}
                     </div>
                     @enderror
                 </div>
@@ -104,7 +110,7 @@ use Carbon\Carbon;
                     <label for="floating_password" class="font-futura-reztya">Kata Sandi</label>
                     @error('password')
                     <div class="invalid-feedback">
-                        Kata Sandi wajib diisi
+                        {{ $message }}
                     </div>
                     @enderror
                 </div>

@@ -35,12 +35,11 @@ class OrderController extends Controller
         {
             if(count($order_duplicate->orderDetail) != 0)
             {
-                $invalid_service = Cart::where('user_id', Auth::user()->user_id)->where('schedule_id', $order_duplicate->orderDetail()->first()->schedule_id)->first();
-                return redirect()->back()->withErrors(['msg' => 'Pesanan tidak dapat dibuat karena jadwal perawatan ' . $invalid_service->service->name . ' sudah dipesan oleh member lain. Silahkan ubah jadwal perawatan tersebut.']);
+                $invalid_schedule = Cart::where('user_id', Auth::user()->user_id)->where('schedule_id', $order_duplicate->orderDetail()->first()->schedule_id)->first();
+                return redirect()->back()->withErrors(['msg' => 'Pesanan tidak dapat dibuat karena jadwal perawatan ' . $invalid_schedule->service->name . ' sudah dipesan oleh member lain. Silahkan ubah jadwal perawatan tersebut.']);
             }
         }
         
-
         $orders = Order::create([
             'user_id' => Auth::user()->user_id,
             'order_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
@@ -368,39 +367,44 @@ class OrderController extends Controller
                 $totalPrice += $order_detail->product->price * $order_detail->quantity;
         }
 
-        $payment_receipt = $req->validate([
+        $validated_data = $req->validate([
             'confirmed_by' => 'required',
             'password' => 'required'
+        ],[
+            'confirmed_by.required' => 'Username wajib diisi',
+            'password.required' => 'Kata sandi wajib diisi'
         ]);
 
-        $user = User::where('username', $payment_receipt['confirmed_by'])->first();
+        $user = User::where('username', $validated_data['confirmed_by'])->first();
 
-        dd(Auth::once($user));
-
-        if(Auth::attempt($user))
+        if($user)
         {
-            if($orders->status == 'ongoing')
+            if(password_verify($validated_data['password'], $user->password))
             {
-                $payment_receipt = PaymentReceipt::create([
-                    'confirmed_by' => $validated_data['confirmed_by'],
-                    'payment_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
-                    'payment_amount' => $totalPrice,
-                    'payment_method' => 'Cash'
-                ]);
-    
-                $orders->payment_receipt_id = $payment_receipt->payment_receipt_id;
-                $orders->save();   
+                if($orders->status == 'ongoing')
+                {
+                    $payment_receipt = PaymentReceipt::create([
+                        'confirmed_by' => $validated_data['confirmed_by'],
+                        'payment_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
+                        'payment_amount' => $totalPrice,
+                        'payment_method' => 'Cash'
+                    ]);
+        
+                    $orders->payment_receipt_id = $payment_receipt->payment_receipt_id;
+                    $orders->save();   
+                }
+                else if($orders->status == 'waiting'){
+                    $payment_receipt = PaymentReceipt::where('payment_receipt_id', $orders->payment_receipt_id)->first();
+                    
+                    $payment_receipt->confirmed_by = $validated_data['confirmed_by'];
+                    $payment_receipt->save();
+                }
+                $orders->status = 'finished';
+                $orders->save();
+                return redirect('/history-order');
             }
-            else if($orders->status == 'waiting'){
-                $payment_receipt = PaymentReceipt::where('payment_receipt_id', $orders->payment_receipt_id)->first();
-                
-                $payment_receipt->confirmed_by = $validated_data['confirmed_by'];
-                $payment_receipt->save();
-            }
-            $orders->status = 'finished';
-            $orders->save();
         }
-        return redirect('/history-order');
+        return redirect()->back()->withErrors(['invalid' => 'Informasi yang dimasukkan salah!']);
     }
 
     public function statusFilter($status)
