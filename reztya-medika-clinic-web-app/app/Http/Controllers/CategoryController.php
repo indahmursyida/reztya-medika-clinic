@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Product;
 use App\Models\Category;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -95,8 +96,20 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::destroy($id);
+        $category = Category::find($id);
+        $isExist = true;
+        if($category){
+            if(Product::where('category_id', $id)->count() == 0 && Service::where('category_id', $id)->count() == 0 ){
+                $isExist = false;
+            }
+        }
 
-        return redirect('/manage-categories')->with('Kategori berhasil dihapus!');
+        if(!$isExist){
+            Category::destroy($id);
+        }else{
+            return redirect('/manage-categories')->with('error', 'Kategori tidak dapat dihapus karena sedang digunakan oleh perawatan atau produk yang tersedia!');
+        }
+
+        return redirect('/manage-categories')->with('success','Kategori berhasil dihapus!');
     }
 }

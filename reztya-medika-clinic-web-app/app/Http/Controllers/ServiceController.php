@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Schedule;
 use App\Models\Service;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -239,11 +240,22 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         $service = Service::find($id);
-        if ($service->image_path) {
-            Storage::delete($service->image_path);
+        $isExist = true;
+        if($service){
+            if(OrderDetail::where('service_id', $id)->count() == 0){
+                $isExist = false;
+            }
         }
 
-        Service::destroy($id);
+        if(!$isExist){
+            if($service->image_path){
+                Storage::delete($service->image_path);
+            }
+    
+            Service::destroy($id);
+        }else{
+            return redirect('/manage-services')->with('error', 'Perawatan tidak dapat dihapus karena masih berada pada order yang aktif!');
+        }
 
         return redirect('/manage-services')->with('success', 'Perawatan berhasil dihapus!');
     }

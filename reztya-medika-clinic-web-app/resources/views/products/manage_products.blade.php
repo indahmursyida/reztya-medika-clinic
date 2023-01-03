@@ -9,6 +9,12 @@
     <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if(session()->has('error'))
+<div class="alert alert-danger alert-dismissible fade show font-futura-reztya" role="alert">
+    {{session('error')}}
+    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
     <div class="py-3 text-center">
         <h2 class="pb-5 font-alander-reztya unselectable">Daftar Produk</h2>
@@ -40,7 +46,7 @@
                 <td><img src="{{ asset('storage/' . $product->image_path) }}" width="150" height="150" class="img-preview img-fluid img-thumbnail"></td>
                 <td class="td-name">{{ $product->name }}</td>
                 <td>{{ $product->stock }} buah</td>
-                <td>Rp. {{  number_format($product->price, 0, '', '.') }}</td>
+                <td>Rp. {{ number_format($product->price, 0, '', '.') }}</td>
                 <td>
                     <a class="btn btn-outline-secondary btn-sm" href="/product-detail/{{ $product->product_id }}"><i class="fa-solid fa-circle-info"></i> Detail</a>
                     <a class="btn button-outline-reztya btn-sm" href="/edit-product/{{ $product->product_id }}"><i class="fa-regular fa-pen-to-square"></i></a>
