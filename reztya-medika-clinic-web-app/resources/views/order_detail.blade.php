@@ -131,33 +131,42 @@ use Carbon\Carbon;
             <div class="d-flex flex-column mb-3">
                 <div class="container">
                     <div class="row">
-                        <div class="col-2">
-                            Nama Pemesan
+                        <div class="col-1">
+                            Pemesan
+                        </div>
+                        <div class="col-1 text-end">
+                            :
                         </div>
                         <div class="col-7 fw-bold">
                             {{ $order->user->name }}
                         </div>
-                        <div class="col">
+                        <div class="col-3">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-2">
-                            No. HP Pemesan
+                        <div class="col-1">
+                            No. HP
+                        </div>
+                        <div class="col-1 text-end">
+                            :
                         </div>
                         <div class="col-7 fw-bold">
                             {{ $order->user->phone }}
                         </div>
-                        <div class="col">
+                        <div class="col-3">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-2">
-                            Alamat Pemesan
+                        <div class="col-1">
+                            Alamat
+                        </div>
+                        <div class="col-1 text-end">
+                            :
                         </div>
                         <div class="col-7 fw-bold">
                             {{ $order->user->address }}
                         </div>
-                        <div class="col">
+                        <div class="col-3">
                         </div>
                     </div>
                 </div>

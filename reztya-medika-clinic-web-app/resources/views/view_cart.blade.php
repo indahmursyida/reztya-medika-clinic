@@ -5,16 +5,12 @@
 @section('container')
 @if($errors->any())
 <div class="d-flex justify-content-center">
-    <div class="alert alert-danger" style="width:90%;" role="alert">
-        <strong> {{$errors->first()}} </strong>
+    <div class="alert alert-danger alert-dismissible fade show font-futura-reztya" role="alert">
+        {{$errors->first()}}
+        <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </div>
 @endif
-<!-- @if (session('success'))
-<div class="alert alert-success" id="success-alert">
-    <strong> {{session()->get('message')}} </strong>
-</div>
-@endif -->
 @php
 use Carbon\Carbon;
 @endphp
