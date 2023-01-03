@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Schedule;
+use App\Models\OrderDetail;
 use Illuminate\Console\Scheduling\ScheduleWorkCommand;
 use Illuminate\Support\Facades\Validator;
 
@@ -61,7 +62,19 @@ class ScheduleController extends Controller
     
     public function delete($id)
     {
-        Schedule::find($id)->delete();
+        $schedule = Schedule::find($id);
+        $isExist = true;
+        if($schedule){
+            if(OrderDetail::where('schedule_id', $id)->count() == 0){
+                $isExist = false;
+            }
+        }
+
+        if(!$isExist){
+            Schedule::destroy($id);
+        }else{
+            return redirect('/manage-schedules')->with('error', 'Jadwal tidak dapat dihapus karena masih berada pada order yang aktif!');
+        }
         return redirect('/manage-schedules')->with('success','Jadwal berhasil dihapus!');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -237,12 +238,23 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        if($product->image_path){
-            Storage::delete($product->image_path);
+        $isExist = true;
+        if($product){
+            if(OrderDetail::where('product_id', $id)->count() == 0){
+                $isExist = false;
+            }
         }
 
-        Product::destroy($id);
-
+        if(!$isExist){
+            if($product->image_path){
+                Storage::delete($product->image_path);
+            }
+    
+            Product::destroy($id);
+        }else{
+            return redirect('/manage-products')->with('error', 'Produk tidak dapat dihapus karena masih berada pada order yang aktif!');
+        }
+        
         return redirect('/manage-products')->with('success', 'Produk berhasil dihapus!');
     }
 }
