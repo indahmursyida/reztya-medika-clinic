@@ -28,10 +28,10 @@
                                 </div>
                                 <div class="col-9 mt-4 ms-3">
                                     <div class="row">
-                                        <div class="col-auto mb-1">
+                                        <div class="col-9 mb-1">
                                             <a class="row text-reztya text-decoration-none edit-icon" href="/edit-profile/{{auth()->user()->username}}">
                                                 <h5 class="col-10 fw-bold">{{auth()->user()->name}}</h5>
-                                                <i class="col-2 fa-regular fa-pen-to-square mt-1"></i>
+                                                <i class="col-1 fa-regular fa-pen-to-square mt-1"></i>
                                             </a>
                                         </div>
                                         <div class="row">

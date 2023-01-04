@@ -238,14 +238,24 @@ class ProfileController extends Controller
             return redirect()->back()->with('updateError', 'Terjadi masalah dengan perubahan. Harap coba ulang.');
         }
 
+        $provinceOrigin = "Provinsi";
+        $cityOrigin = "Kota / Kabupaten";
         $provinces = [];
         foreach (json_decode($response)->rajaongkir->results as $each) {
             if (!in_array($each->province_id, array_column($provinces, 'province_id'))) {
                 array_push($provinces, array('province_id' => $each->province_id, 'province' => $each->province));
             }
+            if ($each->city_id == \auth()->user()->city_id) {
+                $cityOrigin = $each->city_name;
+                $provinceOrigin = $each->province;
+            }
         }
         sort($provinces);
 
-        return view('profile.edit-profile')->with(compact('provinces'))->with(compact('response'));
+        return view('profile.edit-profile')
+            ->with(compact('provinces'))
+            ->with(compact('response'))
+            ->with(compact('cityOrigin'))
+            ->with(compact('provinceOrigin'));
     }
 }
