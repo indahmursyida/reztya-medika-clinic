@@ -14,7 +14,6 @@ class CartController extends Controller
     public function index()
     {
         if (Auth::user()->user_role_id != 1) {
-            $cart = null;
             $schedules = Schedule::all();
             $weight = 0;
             $printServiceOnce = false;
@@ -30,10 +29,16 @@ class CartController extends Controller
 
             foreach ($cart as $item) {
                 if ($item->product_id) {
-                    $size_str = explode(' ', $item->product->size);
-                    $size_int = (int)$size_str[0];
-                    $weight += $size_int * $item->quantity;
-                    $productExists = true;
+                    if (preg_match('/[A-Za-z]/', $item->product->size) && preg_match('/[0-9]/', $item->product->size)) {
+                        if ($item->product->size == trim($item->product->size) && str_contains($item->product->size, ' ')) {
+                            $size_str = explode(' ', $item->product->size);
+                            $size_int = (int)$size_str[0];
+                            $weight += $size_int * $item->quantity;
+                            $productExists = true;
+                        }
+                    } else {
+                        $weight += 50;
+                    }
                 }
             }
 
