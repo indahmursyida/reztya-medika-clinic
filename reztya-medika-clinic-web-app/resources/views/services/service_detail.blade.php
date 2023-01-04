@@ -4,6 +4,10 @@
 
 @section('container')
 
+@php
+    use Carbon\Carbon;
+@endphp
+
 <div class="container-product border outline-reztya rounded-4 font-futura-reztya py-5">
     <div class="pt-4">
         <div class="py-3 d-flex justify-content-center">
@@ -32,11 +36,11 @@
                         <select class="form-select @error('schedule_id') is-invalid @enderror" id="schedule_id" name="schedule_id">
                             @foreach($schedules as $schedule) @if(old('schedule_id') == $schedule->schedule_id)
                                 <option value="{{ $schedule->schedule_id }}" selected>
-                                    {{date('l, d F Y H:i', strtotime( $schedule->start_time ))}}
+                                {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}
                                 </option>
                             @else
                                 <option value="{{ $schedule->schedule_id }}">
-                                    {{date('l, d F Y H:i', strtotime( $schedule->start_time ))}}
+                                {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}
                                 </option>
                             @endif @endforeach
                         </select>
