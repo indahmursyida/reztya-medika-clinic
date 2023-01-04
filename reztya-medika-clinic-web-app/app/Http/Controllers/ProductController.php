@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\OrderDetail;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -249,7 +250,7 @@ class ProductController extends Controller
             if($product->image_path){
                 Storage::delete($product->image_path);
             }
-    
+            Cart::where('product_id', $id)->delete();
             Product::destroy($id);
         }else{
             return redirect('/manage-products')->with('error', 'Produk tidak dapat dihapus karena masih berada pada order yang aktif!');

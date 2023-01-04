@@ -250,6 +250,15 @@ class OrderController extends Controller
             'new_schedule' => Carbon::parse($newSchedule->start_time)->translatedFormat('l, d F Y, H:i')
         ];
 
+        OrderDetail::find($id)->update($validated_data);
+        $order_detail = OrderDetail::find($id);
+
+        if(OrderDetail::where('schedule_id', $validated_data['schedule_id'])->count() == 0){
+            return redirect()
+            ->route('detail_order', ['id' => $order_detail->order_id])
+            ->with('error', 'Jadwal ulang gagal karena terdapat perawatan di keranjang yang mempunyai jadwal yang sama!');
+        }
+
         if(Auth::user()->user_role_id == 2){
             $emailAddress = "klinikreztya@gmail.com";
             Mail::to($emailAddress)->send(new SendEmail($content));
@@ -257,17 +266,17 @@ class OrderController extends Controller
             $emailAddress = $req['email'];
             Mail::to($emailAddress)->send(new SendEmail($content));
         }
-        OrderDetail::find($id)->update($validated_data);
-        $order_detail = OrderDetail::find($id);
-
-        return redirect()->route('detail_order', ['id' => $order_detail->order_id]);
+        
+        return redirect()
+        ->route('detail_order', ['id' => $order_detail->order_id])
+        ->with('success', 'Jadwal ulang perawatan berhasil!');
     }
 
     public function delete_order_item($id)
     {
         OrderDetail::find($id)->delete();
 
-        return redirect('/order')->with('success','Item successfully deleted!');
+        return redirect('/order')->with('success','Order berhasil dihapus!');
     }
 
     public function update_order_status_on_going($id)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Schedule;
 use App\Models\Service;
@@ -251,7 +252,7 @@ class ServiceController extends Controller
             if($service->image_path){
                 Storage::delete($service->image_path);
             }
-    
+            Cart::where('service_id', $id)->delete();
             Service::destroy($id);
         }else{
             return redirect('/manage-services')->with('error', 'Perawatan tidak dapat dihapus karena masih berada pada order yang aktif!');
