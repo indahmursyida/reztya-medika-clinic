@@ -1,6 +1,6 @@
 @extends('layout/main')
 
-@section('title', 'Detail Layanan Perawatan')
+@section('title', 'Detail Perawatan')
 
 @section('container')
 

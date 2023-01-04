@@ -268,12 +268,7 @@
         }
     };
 
-    var city = JSON.parse({
-        {
-            \
-            Illuminate\ Support\ Js::from($response)
-        }
-    });
+    var city = JSON.parse({{\Illuminate\Support\Js::from($response)}});
 
     document.getElementById('province_id').onchange = function() {
         if (this.value === '0') {

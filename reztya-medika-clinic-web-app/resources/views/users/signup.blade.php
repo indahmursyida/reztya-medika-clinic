@@ -125,12 +125,7 @@
     </div>
 </div>
 <script>
-    var city = JSON.parse({
-        {
-            \
-            Illuminate\ Support\ Js::from($response)
-        }
-    });
+    var city = JSON.parse({{\Illuminate\Support\Js::from($response)}});
 
     document.getElementById('floatingProvince').onchange = function() {
         if (this.value === '0') {

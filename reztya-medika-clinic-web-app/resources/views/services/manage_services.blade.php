@@ -1,6 +1,6 @@
 @extends('layout/main')
 
-@section('title', 'Daftar Layanan Perawatan')
+@section('title', 'Daftar Perawatan')
 
 @section('container')
 @if(session()->has('success'))
