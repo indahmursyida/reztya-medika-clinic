@@ -5,8 +5,10 @@
 @section('container')
 
 <div class="container-product border outline-reztya rounded-4 font-futura-reztya py-5">
-    <div class="py-3 text-center">
-        <h2 class="py-3 font-alander-reztya unselectable">Edit Produk</h2>
+    <div class="pt-4">
+        <div class="py-3 d-flex justify-content-center">
+            <p class="h5 fw-bold unselectable font-alander-reztya">Edit Produk</p>
+        </div>
     </div>
 
     @if($product->image_path)
@@ -88,7 +90,7 @@
             </div>
             @enderror
         </div>
-        
+
         <div class="col-md-4">
             <label class="form-label" for="expired_date">Tanggal Kadaluarsa Produk</label>
         </div>
@@ -128,7 +130,7 @@
             @enderror
         </div>
         <div class="col-12 d-flex justify-content-center pb-5">
-            <button class="btn button-color" type="submit">Update Produk</button>
+            <button class="btn button-color" type="submit">Simpan</button>
         </div>
     </form>
 </div>

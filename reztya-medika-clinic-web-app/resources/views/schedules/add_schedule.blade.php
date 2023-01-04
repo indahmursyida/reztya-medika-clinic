@@ -5,7 +5,11 @@
 @section('container')
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya d-flex flex-column add-schedule align-self-center">
-        <h2 class="my-4 mx-4 text-center font-alander-reztya">Tambah Jadwal</h2>
+        <div class="pt-4">
+            <div class="py-3 d-flex justify-content-center">
+                <p class="h5 fw-bold unselectable font-alander-reztya">Tambah Jadwal</p>
+            </div>
+        </div>
         <form action="/add-schedule" method="POST">
             @csrf
             <div class="container">

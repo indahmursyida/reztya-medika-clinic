@@ -15,8 +15,8 @@
             </div>
         @endif
         <div class="pt-4">
-            <div class="d-flex justify-content-center">
-                <p class="h5 fw-bold unselectable font-alander-reztya">Layanan Perawatan</p>
+            <div class="py-3 d-flex justify-content-center">
+                <p class="h5 fw-bold unselectable font-alander-reztya">Perawatan</p>
             </div>
         </div>
         <div class="mt-5 d-flex justify-content-center">

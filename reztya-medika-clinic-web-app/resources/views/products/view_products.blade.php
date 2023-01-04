@@ -10,7 +10,7 @@
             </div>
         @endif
         <div class="pt-4">
-            <div class="d-flex justify-content-center">
+            <div class="py-3 d-flex justify-content-center">
                 <p class="h5 fw-bold unselectable font-alander-reztya">Produk</p>
             </div>
         </div>

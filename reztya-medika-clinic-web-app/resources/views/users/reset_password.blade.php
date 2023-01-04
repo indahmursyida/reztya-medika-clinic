@@ -9,11 +9,11 @@
                 <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <div class="box-up pt-4">
-            <div class="d-flex justify-content-center">
-                <p class="h5 fw-bold unselectable font-alander-reztya">Setel Ulang Sandi</p>
-            </div>
+        <div class="pt-4">
+        <div class="py-3 d-flex justify-content-center">
+            <p class="h5 fw-bold unselectable font-alander-reztya">Setel Ulang Kata Sandu</p>
         </div>
+    </div>
         <div class="unselectable d-flex justify-content-center mt-2">
             <div class="card card-sign bg-white outline-reztya">
                 <div class="card-body">
@@ -30,19 +30,19 @@
                         </div>
                         <div class="form-floating mb-2">
                             <input placeholder="Password" id="floatingPassword" class="shadow-none form-control @error('password') is-invalid @enderror" type="password" name="password" value="{{old('password')}}">
-                            <label for="floatingPassword" class="font-futura-reztya">Kata Sandi</label>
+                            <label for="floatingPassword" class="font-futura-reztya">Kata Sandi Baru</label>
                             @error('password')
                             <div class="invalid-feedback">
-                                Kata sandi wajib diisi
+                                Kata sandi baru wajib diisi
                             </div>
                             @enderror
                         </div>
                         <div class="form-floating mb-2">
                             <input placeholder="ConfirmPassword" id="floatingConfirmPassword" class="shadow-none form-control @error('confirm_password') is-invalid @enderror" type="password" name="confirm_password" value="{{old('confirm_password')}}">
-                            <label for="floatingConfirmPassword" class="font-futura-reztya">Konfirmasi Kata Sandi</label>
+                            <label for="floatingConfirmPassword" class="font-futura-reztya">Konfirmasi Kata Sandi Baru</label>
                             @error('confirm_password')
                             <div class="invalid-feedback">
-                                Konfirmasi kata sandi wajib diisi
+                                Konfirmasi kata sandi baru wajib diisi
                             </div>
                             @enderror
                         </div>

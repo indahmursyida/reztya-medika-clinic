@@ -5,9 +5,11 @@
 @section('container')
 
 <div class="container-product border outline-reztya rounded-4 font-futura-reztya py-5">
-	<div class="py-3 text-center">
-		<h2 class="pb-3 font-alander-reztya unselectable">Detail Layanan Perawatan</h2>
-	</div>
+    <div class="pt-4">
+        <div class="py-3 d-flex justify-content-center">
+            <p class="h5 fw-bold unselectable font-alander-reztya">Detail Perawatan</p>
+        </div>
+    </div>
 	<form method="post" action="/book-service" enctype="multipart/form-data" novalidate>
 		@method('post') @csrf
 		<input type="hidden" value="{{ $service->service_id }}" name="service_id" id="service_id">

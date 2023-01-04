@@ -19,13 +19,13 @@
 </div>
 @endif
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
-    <div class="py-3 text-center">
-        <h2 class="pb-5 font-alander-reztya unselectable">Jadwal Perawatan</h2>
+    <div class="pt-4">
+        <div class="py-3 d-flex justify-content-center">
+            <p class="h5 fw-bold unselectable font-alander-reztya">Daftar Jadwal Perawatan</p>
+        </div>
     </div>
     <div class="mt-2 mb-4">
-        <a href="{{ url('/add-schedule') }}" class="btn btn-add rounded-2 border"  title="Tambah Jadwal">
-            <img src="storage/add.png" class="align-middle" height="15px" width="15px">
-        </a>
+    <a href="{{ url('/add-schedule') }}" class="btn button-outline-reztya my-3"><i class="fa-solid fa-plus"></i> Tambah Jadwal</a>
     </div>
     <table class="table table-striped">
         <thead>
@@ -53,11 +53,11 @@
                 <td>{{ Carbon::parse($schedule->end_time)->toDayDateTimeString() }} </td>
                 <td>{{ $schedule->status }} </td>
                 <td>
-                    <a href="/edit-schedule/{{$schedule->schedule_id}}" type="button" class="btn button-color rounded-2 btn-sm me-2 btn-edit" title="Edit Jadwal">
-                        <img src="storage/edit.png" class="align-middle" height="15px" width="15px">
+                    <a href="/edit-schedule/{{$schedule->schedule_id}}" type="button" class="btn button-outline-reztya btn-sm" title="Edit Jadwal">
+                        <i class="fa-regular fa-pen-to-square"></i>
                     </a>
-                    <a href="/delete-schedule/{{$schedule->schedule_id}}" type="button" class="btn btn-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')" title="Hapus Jadwal">
-                        <img src="storage/delete.png" class="align-middle" height="15px" width="15px">
+                    <a href="/delete-schedule/{{$schedule->schedule_id}}" type="button" class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')" title="Hapus Jadwal">
+                        <i class="fa-solid fa-trash"></i>
                     </a>
                 </td>
               </tr>
