@@ -49,8 +49,8 @@
             @foreach($schedules as $schedule)
             <tr class="align-middle text-center">
                 <td>{{ $i++ }}</td>
-                <td>{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} </td>
-                <td>{{ Carbon::parse($schedule->end_time)->translatedFormat('l, d F Y') }} </td>
+                <td>{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y | H:i') }} </td>
+                <td>{{ Carbon::parse($schedule->end_time)->translatedFormat('l, d F Y | H:i') }} </td>
                 <td>{{ $schedule->status }} </td>
                 <td>
                     <a href="/edit-schedule/{{$schedule->schedule_id}}" type="button" class="btn button-outline-reztya btn-sm" title="Edit Jadwal">
