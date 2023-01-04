@@ -3,14 +3,21 @@
 @section('title', 'Cart')
 
 @section('container')
-@if($errors->any())
+
 <div class="d-flex justify-content-center">
-    <div class="alert alert-danger alert-dismissible fade show font-futura-reztya" role="alert">
+    @if($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show font-futura-reztya" style="width:90%;" role="alert">
         {{$errors->first()}}
         <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    @endif
+    @if(session()->has('success'))
+    <div class="alert alert-success alert-dismissible fade show font-futura-reztya" style="width:90%; role="alert">
+        {{session('success')}}
+        <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
 </div>
-@endif
 @php
 use Carbon\Carbon;
 @endphp

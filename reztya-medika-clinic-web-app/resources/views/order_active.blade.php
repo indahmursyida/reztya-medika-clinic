@@ -32,7 +32,7 @@ use Carbon\Carbon;
                     if($order->delivery_fee)
                         $totalPrice += $order->delivery_fee;
                 @endphp
-                <div class="d-flex justify-content-between ms-2">
+                <div class="d-flex justify-content-between">
                     <div class="d-flex align-items-center">
                         <h5 class="mb-0 align-items-center">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h5>
                         @if($order->status == "ongoing")
@@ -54,7 +54,7 @@ use Carbon\Carbon;
                     </div>
                 </div>
                 @if(Auth::user()->user_role_id == 1)
-                <div class="d-flex flex-column mb-3">
+                <div class="d-flex flex-column mb-3" style="margin-left: -1%;">
                     <div class="container">
                         <div class="row">
                             <div class="col-2">
@@ -161,7 +161,7 @@ use Carbon\Carbon;
                         @endif
                     </div>
                     @if($key != count($orders) - 1)
-                        <hr style="margin-right: 1%; margin-left: 1%;"/>
+                        <hr/>
                     @endif
                 </div>
             @endforeach

@@ -32,6 +32,6 @@ class Order extends Model
     }
 
     public function paymentReceipt(){
-        return $this->hasOne(PaymentReceipt::class, 'payment_receipt_id');
+        return $this->belongsTo(PaymentReceipt::class, 'payment_receipt_id');
     }
 }

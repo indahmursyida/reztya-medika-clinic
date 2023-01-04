@@ -9,6 +9,7 @@ use App\Models\Schedule;
 use App\Models\PaymentReceipt;
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -86,6 +87,11 @@ class OrderController extends Controller
             }
             else
             {
+                $product = Product::where('product_id', $cart->product_id)->first();
+                
+                $product->stock -= $cart->quantity;
+                $product->save();
+                
                 OrderDetail::create([
                     'order_id' => $orders->order_id,
                     'product_id' => $cart->product_id,
@@ -328,11 +334,6 @@ class OrderController extends Controller
         {
             return view('transfer_payment')->with('payment_receipt', $payment_receipt);
         }
-        else if($order->status == 'ongoing')
-        {
-            
-        }
-
         return redirect()->route('form_payment', ['id' => $id]);
     }
 
@@ -361,16 +362,17 @@ class OrderController extends Controller
 
     public function add_payment_receipt(Request $req, $id)
     {
-        $orders = Order::find($id);
+        $order = Order::find($id);
         $totalPrice = 0;
 
-        foreach($orders->orderDetail as $order_detail)
+        foreach($order->orderDetail as $order_detail)
         {
             if($order_detail->service_id)
                 $totalPrice += $order_detail->service->price;
             else
                 $totalPrice += $order_detail->product->price * $order_detail->quantity;
         }
+        $totalPrice += $order->delivery_fee;
 
         $validated_data = $req->validate([
             'confirmed_by' => 'required',
@@ -386,7 +388,7 @@ class OrderController extends Controller
         {
             if(password_verify($validated_data['password'], $user->password))
             {
-                if($orders->status == 'ongoing')
+                if($order->status == 'ongoing')
                 {
                     $payment_receipt = PaymentReceipt::create([
                         'confirmed_by' => $validated_data['confirmed_by'],
@@ -394,18 +396,16 @@ class OrderController extends Controller
                         'payment_amount' => $totalPrice,
                         'payment_method' => 'Cash'
                     ]);
-        
-                    $orders->payment_receipt_id = $payment_receipt->payment_receipt_id;
-                    $orders->save();   
+                    $order->payment_receipt_id = $payment_receipt->payment_receipt_id;
+                    $order->save();   
                 }
-                else if($orders->status == 'waiting'){
-                    $payment_receipt = PaymentReceipt::where('payment_receipt_id', $orders->payment_receipt_id)->first();
-                    
+                else if($order->status == 'waiting'){
+                    $payment_receipt = PaymentReceipt::where('payment_receipt_id', $order->payment_receipt_id)->first();
                     $payment_receipt->confirmed_by = $validated_data['confirmed_by'];
                     $payment_receipt->save();
                 }
-                $orders->status = 'finished';
-                $orders->save();
+                $order->status = 'finished';
+                $order->save();
                 return redirect('/history-order');
             }
         }
@@ -441,22 +441,52 @@ class OrderController extends Controller
         {
             if($order_detail->service_id)
             {
-                Cart::create([
-                    'user_id' => Auth::user()->user_id,
-                    'service_id' => $order_detail->service_id,
-                    'schedule_id' => $order_detail->schedule_id
-                ]);
+                $carts = Cart::where('user_id', Auth::user()->user_id)->where('service_id', $order_detail->service_id)->get();
+
+                if($carts->isEmpty())
+                {
+                    Cart::create([
+                        'user_id' => Auth::user()->user_id,
+                        'service_id' => $order_detail->service_id,
+                        'schedule_id' => $order_detail->schedule_id
+                    ]);
+                }
             }
             else
             {
-                Cart::create([
-                    'user_id' => Auth::user()->user_id,
-                    'product_id' => $order_detail->product_id,
-                    'quantity' => $order_detail->quantity
-                ]);
+                $carts = Cart::where('user_id', Auth::user()->user_id)->where('product_id', $order_detail->product_id)->get();
+                $product = Product::find($order_detail->product_id);
+
+                if(!$carts->isEmpty())
+                {
+                    foreach($carts as $cart)
+                    {
+                        $cart->quantity += $order_detail->quantity;
+                        $product->stock -= $order_detail->quantity;
+                        $product->save();
+                        if($cart->quantity > $product->stock){
+                            $cart->quantity = $product->stock;
+                            $cart->save();
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    if($order_detail->quantity <= $product->stock)
+                    {
+                        Cart::create([
+                            'user_id' => Auth::user()->user_id,
+                            'product_id' => $order_detail->product_id,
+                            'quantity' => $order_detail->quantity
+                        ]);
+                        return redirect('/cart')->withSuccess('repeatOrder', 'Berhasil ditambahkan ke keranjang');
+                    }
+                }
+                return redirect('/cart')->withErrors('repeatOrderFailed', 'Berhasil ditambahkan ke keranjang');
             }
         }
-
+        return redirect('/cart')->withSuccess('repeatOrder', 'Stok produk ' . $product->name . ' hanya tersisa ' . $product->stock . ' produk');
         return redirect('/cart');
     }
 }

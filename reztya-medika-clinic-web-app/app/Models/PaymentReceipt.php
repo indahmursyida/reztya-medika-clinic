@@ -13,7 +13,7 @@ class PaymentReceipt extends Model
     protected $guarded = ['payment_receipt_id'];
 
     public function order(){
-        return $this->belongsTo(Order::class, 'payment_receipt_id');
+        return $this->hasOne(Order::class, 'payment_receipt_id');
     }
 
     public function feedback(){
