@@ -184,9 +184,11 @@
                         </li>
                     </ul>
                 </div>
-                <div class="d-flex justify-content-center mt-3 mb-5">
-                    <button class="btn button-outline-reztya" onclick="return confirm('Apakah anda yakin mengubah profil?')" type="submit">Simpan</button>
+                <div class="d-flex justify-content-center mt-4 mb-5">
+                    <a href="/view-profile/{{auth()->user()->username}}" type="button" class="btn btn-outline-danger mx-3">Batal</a>
+                    <button type="submit" class="btn button-outline-reztya me-2"  onclick="return confirm('Apakah anda yakin mengubah profil?')">Simpan</button>
                 </div>
+                    
             </form>
             <form action="/change-password/{{auth()->user()->username}}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -253,7 +255,8 @@
                     </ul>
                 </div>
                 <div class="d-flex justify-content-center mt-3 mb-5">
-                    <button class="btn button-outline-reztya" type="submit" onclick="return confirm('Apakah anda yakin mengubah kata sandi?')">Ubah</button>
+                    <a href="/view-profile/{{auth()->user()->username}}" type="button" class="btn btn-outline-danger mx-3">Batal</a>
+                    <button class="btn button-outline-reztya" type="submit" onclick="return confirm('Apakah anda yakin mengubah kata sandi?')">Simpan</button>
                 </div>
             </form>
         </div>

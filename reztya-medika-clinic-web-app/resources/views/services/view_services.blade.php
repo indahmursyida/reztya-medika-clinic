@@ -72,7 +72,7 @@
                                         </a>
                                     @else
                                         <a href="/service-detail/{{$service->service_id}}" class="btn button-outline-reztya float-end">
-                                            Lihat Layanan
+                                            Lihat Perawatan
                                         </a>
                                     @endif
                                 </div>

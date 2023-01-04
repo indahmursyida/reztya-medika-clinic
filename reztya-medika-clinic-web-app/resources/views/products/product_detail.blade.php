@@ -40,7 +40,7 @@
 		</div>
         @if($product->stock > 1)
             <div class="d-flex justify-content-center pb-5">
-                <button class="btn btn-success" type="submit"><i class="fa-solid fa-cart-shopping"></i> Tambahkan ke keranjang</button>
+                <button class="btn button-outline-reztya" type="submit"><i class="fa-solid fa-cart-shopping"></i> Tambahkan ke keranjang</button>
             </div>
         @else
             <div class="d-flex justify-content-center pb-5">

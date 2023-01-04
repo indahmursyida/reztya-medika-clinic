@@ -129,8 +129,9 @@
             </div>
             @enderror
         </div>
-        <div class="col-12 d-flex justify-content-center pb-5">
-            <button class="btn button-color" type="submit">Simpan</button>
+        <div class="d-flex justify-content-center mt-4">
+            <a href="/manage-products" type="button" class="btn btn-outline-danger mx-3">Batal</a>
+            <button type="submit" class="btn button-outline-reztya me-2">Simpan</button>
         </div>
     </form>
 </div>

@@ -142,7 +142,7 @@ use Carbon\Carbon;
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-outline-danger me-3" data-dismiss="modal">Batal</button>
-                                            <button type="submit" id="update_schedule" class="btn btn-success">Simpan</button>
+                                            <button type="submit" id="update_schedule" class="btn button-outline-reztya">Simpan</button>
                                         </div>
                                     </form>
                                 </div>
@@ -240,7 +240,7 @@ use Carbon\Carbon;
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-outline-danger me-3" data-dismiss="modal">Batal</button>
-                                            <button type="submit" id="update_quantity" class="btn btn-success">Simpan</button>
+                                            <button type="submit" id="update_quantity" class="btn button-outline-reztya">Simpan</button>
                                         </div>
                                     </form>
                                 </div>

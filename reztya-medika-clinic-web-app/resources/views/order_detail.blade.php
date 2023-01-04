@@ -106,7 +106,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-success">OK</button>
+                                        <button type="submit" class="btn button-outline-reztya">OK</button>
                                     </div>
                                 </form>
                             </div>
@@ -284,8 +284,8 @@ use Carbon\Carbon;
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn btn-success">Simpan</button>
+                                                <button type="button" class="btn btn-outline-danger mx-3" data-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn button-outline-reztya">Simpan</button>
                                             </div>
                                         </form>
                                     </div>

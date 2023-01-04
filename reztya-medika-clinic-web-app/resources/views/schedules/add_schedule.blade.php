@@ -33,8 +33,8 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-4">
+                <a href="/manage-schedules" type="button" class="btn btn-outline-danger mx-3">Batal</a>
                 <button type="submit" class="btn btn-outline-success me-2">Simpan</button>
-                <a href="/manage-schedules" type="button" class="btn btn-outline-danger">Batal</a>
             </div>
         </form>
     </div>
