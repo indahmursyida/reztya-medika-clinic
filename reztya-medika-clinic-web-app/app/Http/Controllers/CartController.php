@@ -13,9 +13,11 @@ class CartController extends Controller
 {
     public function index()
     {
+        $weight = 0;
+        $cart = null;
+
         if (Auth::user()->user_role_id != 1) {
             $schedules = Schedule::all();
-            $weight = 0;
             $printServiceOnce = false;
             $printProductOnce = false;
             $totalPrice = 0;
@@ -93,7 +95,6 @@ class CartController extends Controller
                     ->with('totalPrice', $totalPrice)
                     ->with(compact('costs'))
                     ->with(compact('origin'));
-            }
         }
         return view('view_cart')->with('cart', $cart)->with('weight',$weight);
     }
