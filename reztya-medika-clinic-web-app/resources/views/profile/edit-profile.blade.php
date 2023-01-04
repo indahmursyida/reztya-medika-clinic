@@ -46,7 +46,7 @@
                                         <label for="username" class="col-form-label">Username</label>
                                     </div>
                                     <div class="col-md-9 mt-2">
-                                        <input type="text" name="username" class="shadow-none form-control form-control-sm @error('username') is-invalid @enderror" aria-describedby="username" placeholder="{{auth()->user()->username}}" value="{{old('username')}}">
+                                        <input type="text" name="username" class="shadow-none form-control form-control-sm @error('username') is-invalid @enderror" aria-describedby="username" value="{{old('username', auth()->user()->username)}}">
                                         @error('username')
                                         <div class="invalid-feedback">
                                             Username wajib diisi
@@ -61,7 +61,7 @@
                                         <label for="name" class="col-form-label">Nama Lengkap</label>
                                     </div>
                                     <div class="col-md-9 mt-2">
-                                        <input type="text" name="name" class="shadow-none form-control form-control-sm @error('name') is-invalid @enderror" aria-describedby="name" placeholder="{{auth()->user()->name}}" value="{{old('name')}}">
+                                        <input type="text" name="name" class="shadow-none form-control form-control-sm @error('name') is-invalid @enderror" aria-describedby="name" value="{{old('name', auth()->user()->name)}}">
                                         @error('name')
                                         <div class="invalid-feedback">
                                             Nama lengkap wajib diisi
@@ -76,7 +76,7 @@
                                         <label for="birthdate" class="col-form-label">Tanggal Lahir</label>
                                     </div>
                                     <div class="col-md-5 mt-2">
-                                        <input type="date" name="birthdate" class="shadow-none form-control form-control-sm @error('birthdate') is-invalid @enderror" aria-describedby="birthdate" placeholder="{{auth()->user()->birthdate}}" value="{{old('birthdate')}}">
+                                        <input type="date" name="birthdate" class="shadow-none form-control form-control-sm @error('birthdate') is-invalid @enderror" aria-describedby="birthdate" value="{{old('birthdate', auth()->user()->birthdate)}}">
                                         @error('birthdate')
                                         <div class="invalid-feedback">
                                             Tanggal lahir wajib diisi
@@ -91,7 +91,7 @@
                                         <label for="phone" class="col-form-label">Nomor Telepon</label>
                                     </div>
                                     <div class="col-md-9 mt-3">
-                                        <input type="number" name="phone" class="shadow-none form-control form-control-sm @error('phone') is-invalid @enderror" aria-describedby="phone" placeholder="{{auth()->user()->phone}}" value="{{old('phone')}}">
+                                        <input type="number" name="phone" class="shadow-none form-control form-control-sm @error('phone') is-invalid @enderror" aria-describedby="phone" value="{{old('phone', auth()->user()->phone)}}">
                                         @error('phone')
                                         <div class="invalid-feedback">
                                             Nomor telepon wajib diisi
@@ -107,7 +107,7 @@
                                     </div>
                                     <div class="col-md-9 mt-1">
                                         <select name="province_id" id="province_id" class="form-select form-select-sm shadow-none @error('province_id') is-invalid @enderror" aria-label="Default select example">
-                                            <option disabled selected>Provinsi</option>
+                                            <option disabled selected>{{$provinceOrigin}}</option>
                                             @foreach($provinces as $province)
                                                 <option value="{{$province['province_id']}}">{{$province['province']}}</option>
                                             @endforeach
@@ -127,7 +127,7 @@
                                     </div>
                                     <div class="col-md-9 mt-1">
                                         <select disabled name="city_id" id="city_id" class="form-select form-select-sm shadow-none @error('city_id') is-invalid @enderror" aria-label="Default select example">
-                                            <option disabled selected>Kota / Kabupaten</option>
+                                            <option disabled selected>{{$cityOrigin}}</option>
                                         </select>
                                         @error('city_id')
                                         <div class="invalid-feedback">
@@ -143,7 +143,7 @@
                                         <label for="address" class="col-form-label">Alamat</label>
                                     </div>
                                     <div class="col-md-9 mt-1">
-                                        <textarea name="address" class="shadow-none form-control form-control-sm @error('address') is-invalid @enderror" aria-describedby="address" placeholder="{{auth()->user()->address}}">{{old('address')}}</textarea>
+                                        <textarea name="address" class="shadow-none form-control form-control-sm @error('address') is-invalid @enderror" aria-describedby="address">{{old('address', auth()->user()->address)}}</textarea>
                                         @error('address')
                                         <div class="invalid-feedback">
                                             Alamat wajib diisi
@@ -158,7 +158,7 @@
                                         <label for="email" class="col-form-label">Email</label>
                                     </div>
                                     <div class="col-md-9 mt-1">
-                                        <input type="text" name="email" class="shadow-none form-control form-control-sm @error('email') is-invalid @enderror" aria-describedby="email" placeholder="{{auth()->user()->email}}" value="{{old('email')}}">
+                                        <input type="text" name="email" class="shadow-none form-control form-control-sm @error('email') is-invalid @enderror" aria-describedby="email" value="{{old('email', auth()->user()->email)}}">
                                         @error('email')
                                         <div class="invalid-feedback">
                                             Email wajib diisi
