@@ -82,7 +82,7 @@
             <div class="col-6">
                 <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Services</p>
                 <div class="card border-reztya border border-4 h-75 justify-content-center bg-reztya">
-                    <a href="#" class="overflow-hidden">
+                    <a href="/service-detail/{{$service->service_id}}" class="overflow-hidden">
                         <img src="{{url('storage/Service Reztya.jpg')}}" class="d-block w-100" alt="Service Image">
                     </a>
                 </div>

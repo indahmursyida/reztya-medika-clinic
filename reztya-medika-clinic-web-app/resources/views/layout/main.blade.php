@@ -58,7 +58,7 @@
                     </a>
                 </div>
             @else
-                <div class="col-2 mb-2">
+                <div class="col-1 mb-2">
                     <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-services">
                         Perawatan
                     </a>
@@ -75,7 +75,7 @@
                 </div>
             @endif
         @else
-            <div class="col-2 mb-2">
+            <div class="col-1 mb-2">
                 <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-services">
                     Perawatan
                 </a>
