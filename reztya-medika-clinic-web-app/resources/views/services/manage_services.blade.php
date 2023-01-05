@@ -1,6 +1,6 @@
 @extends('layout/main')
 
-@section('title', 'Daftar Layanan Perawatan')
+@section('title', 'Daftar Perawatan')
 
 @section('container')
 @if(session()->has('success'))
@@ -16,8 +16,10 @@
 </div>
 @endif
 <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
-    <div class="py-3 text-center">
-        <h2 class="pb-5 font-alander-reztya unselectable">Daftar Layanan Perawatan</h1>
+<div class="pt-4">
+        <div class="py-3 d-flex justify-content-center">
+            <p class="h5 fw-bold unselectable font-alander-reztya">Daftar Perawatan</p>
+        </div>
     </div>
     <a href="/add-service" class="btn button-outline-reztya my-3"><i class="fa-solid fa-plus"></i> Tambah Perawatan</a>
     <table class="table table-striped">

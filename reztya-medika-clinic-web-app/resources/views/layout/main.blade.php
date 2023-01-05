@@ -29,7 +29,7 @@
             @if(auth()->user()->user_role_id == 1)
                 <div class="col-1 mb-2">
                     <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-services">
-                        Layanan Perawatan
+                        Perawatan
                     </a>
                 </div>
                 <div class="col-1 mb-2">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-2 mb-2">
                     <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/manage-services">
-                        Kelola Layanan Perawatan
+                        Kelola Perawatan
                     </a>
                 </div>
                 <div class="col-1 mb-2">
@@ -60,7 +60,7 @@
             @else
                 <div class="col-2 mb-2">
                     <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-services">
-                        Layanan Perawatan
+                        Perawatan
                     </a>
                 </div>
                 <div class="col-1 mb-2">
@@ -77,7 +77,7 @@
         @else
             <div class="col-2 mb-2">
                 <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/view-services">
-                    Layanan Perawatan
+                    Perawatan
                 </a>
             </div>
             <div class="col-1 mb-2">

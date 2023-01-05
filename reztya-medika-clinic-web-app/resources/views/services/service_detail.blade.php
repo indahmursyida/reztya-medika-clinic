@@ -1,13 +1,19 @@
 @extends('layout/main')
 
-@section('title', 'Detail Layanan Perawatan')
+@section('title', 'Detail Perawatan')
 
 @section('container')
 
+@php
+    use Carbon\Carbon;
+@endphp
+
 <div class="container-product border outline-reztya rounded-4 font-futura-reztya py-5">
-	<div class="py-3 text-center">
-		<h2 class="pb-3 font-alander-reztya unselectable">Detail Layanan Perawatan</h2>
-	</div>
+    <div class="pt-4">
+        <div class="py-3 d-flex justify-content-center">
+            <p class="h5 fw-bold unselectable font-alander-reztya">Detail Perawatan</p>
+        </div>
+    </div>
 	<form method="post" action="/book-service" enctype="multipart/form-data" novalidate>
 		@method('post') @csrf
 		<input type="hidden" value="{{ $service->service_id }}" name="service_id" id="service_id">
@@ -30,11 +36,11 @@
                         <select class="form-select @error('schedule_id') is-invalid @enderror" id="schedule_id" name="schedule_id">
                             @foreach($schedules as $schedule) @if(old('schedule_id') == $schedule->schedule_id)
                                 <option value="{{ $schedule->schedule_id }}" selected>
-                                    {{date('l, d F Y H:i', strtotime( $schedule->start_time ))}}
+                                {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}
                                 </option>
                             @else
                                 <option value="{{ $schedule->schedule_id }}">
-                                    {{date('l, d F Y H:i', strtotime( $schedule->start_time ))}}
+                                {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}
                                 </option>
                             @endif @endforeach
                         </select>
@@ -98,7 +104,7 @@
 			</div>
             @if(!$schedules->isEmpty())
                 <div class="d-flex justify-content-center pb-5 my-5">
-                    <button class="btn btn-success" type="submit"><i class="fa-solid fa-cart-shopping"></i> Tambahkan ke keranjang</button>
+                    <button class="btn button-outline-reztya" type="submit"><i class="fa-solid fa-cart-shopping"></i> Tambahkan ke keranjang</button>
                 </div>
             @else
                 <div class="d-flex justify-content-center pb-5 my-5">

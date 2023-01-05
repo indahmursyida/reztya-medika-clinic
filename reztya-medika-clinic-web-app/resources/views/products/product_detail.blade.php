@@ -4,9 +4,11 @@
 
 @section('container')
 <div class="container-product border outline-reztya rounded-4 font-futura-reztya py-5">
-	<div class="py-3 text-center">
-		<h2 class="pb-3 font-alander-reztya unselectable">Detail Produk</h2>
-	</div>
+	<div class="pt-4">
+        <div class="py-3 d-flex justify-content-center">
+            <p class="h5 fw-bold unselectable font-alander-reztya">Detail Produk</p>
+        </div>
+    </div>
 	<form method="post" action="/buy-product" enctype="multipart/form-data" novalidate>
 		@method('post') @csrf
 		<input type="hidden" value="{{ $product->product_id }}" name="product_id" id="product_id">
@@ -38,7 +40,7 @@
 		</div>
         @if($product->stock > 1)
             <div class="d-flex justify-content-center pb-5">
-                <button class="btn btn-success" type="submit"><i class="fa-solid fa-cart-shopping"></i> Tambahkan ke keranjang</button>
+                <button class="btn button-outline-reztya" type="submit"><i class="fa-solid fa-cart-shopping"></i> Tambahkan ke keranjang</button>
             </div>
         @else
             <div class="d-flex justify-content-center pb-5">

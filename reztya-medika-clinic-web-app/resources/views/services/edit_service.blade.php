@@ -5,8 +5,10 @@
 @section('container')
 
 <div class="container-product border outline-reztya rounded-4 font-futura-reztya py-5">
-    <div class="py-3 text-center">
-        <h2 class="py-3 font-alander-reztya unselectable">Edit Perawatan</h2>
+    <div class="pt-4">
+        <div class="py-3 d-flex justify-content-center">
+            <p class="h5 fw-bold unselectable font-alander-reztya">Edit Perawatan</p>
+        </div>
     </div>
 
     @if($service->image_path)
@@ -78,7 +80,7 @@
         </div>
 
         <div class="col-md-4">
-            <label class="form-label" for="duration">Durasi Layanan Perawatan</label>
+            <label class="form-label" for="duration">Durasi Perawatan</label>
         </div>
         <div class="col-md-8">
             <div class="input-group">
@@ -94,7 +96,7 @@
         </div>
 
         <div class="col-md-4">
-            <label class="form-label" for="price">Harga Layanan Perawatan</label>
+            <label class="form-label" for="price">Harga Perawatan</label>
         </div>
         <div class="col-md-8">
             <div class="input-group">
@@ -108,8 +110,9 @@
             @enderror
         </div>
 
-        <div class="col-12 d-flex justify-content-center pb-5">
-            <button class="btn button-color" type="submit">Update Perawatan</button>
+        <div class="d-flex justify-content-center mt-4">
+            <a href="/manage-services" type="button" class="btn btn-outline-danger mx-3">Batal</a>
+            <button type="submit" class="btn button-outline-reztya me-2">Simpan</button>
         </div>
     </form>
 </div>

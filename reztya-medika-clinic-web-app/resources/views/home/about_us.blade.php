@@ -5,7 +5,11 @@
 @section('container')
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="width: 85%;">
-        <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold">Tentang Kami</h5>
+        <div class="pt-4">
+            <div class="py-3 d-flex justify-content-center">
+                <p class="h5 fw-bold unselectable font-alander-reztya">Tentang Kami</p>
+            </div>
+        </div>
         <div class="d-flex justify-content-center">
             <div class="row">
                 <h5 class="unselectable h4 d-flex align-items-center mb-0 mt-3 mb-4">Klinik Reztya Medika</h5>

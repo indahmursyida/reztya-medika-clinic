@@ -1,5 +1,5 @@
 @extends('layout/main')
-@section('title', 'Layanan Perawatan')
+@section('title', 'Perawatan')
 
 @section('container')
     <div class="container mb-5">
@@ -15,8 +15,8 @@
             </div>
         @endif
         <div class="pt-4">
-            <div class="d-flex justify-content-center">
-                <p class="h5 fw-bold unselectable font-alander-reztya">Layanan Perawatan</p>
+            <div class="py-3 d-flex justify-content-center">
+                <p class="h5 fw-bold unselectable font-alander-reztya">Perawatan</p>
             </div>
         </div>
         <div class="mt-5 d-flex justify-content-center">
@@ -72,7 +72,7 @@
                                         </a>
                                     @else
                                         <a href="/service-detail/{{$service->service_id}}" class="btn button-outline-reztya float-end">
-                                            Lihat Layanan
+                                            Lihat Perawatan
                                         </a>
                                     @endif
                                 </div>
