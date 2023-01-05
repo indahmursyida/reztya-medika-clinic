@@ -11,7 +11,7 @@
         @endif
         <div class="pt-4">
         <div class="py-3 d-flex justify-content-center">
-            <p class="h5 fw-bold unselectable font-alander-reztya">Setel Ulang Kata Sandu</p>
+            <p class="h5 fw-bold unselectable font-alander-reztya">Setel Ulang Kata Sandi</p>
         </div>
     </div>
         <div class="unselectable d-flex justify-content-center mt-2">
@@ -46,8 +46,9 @@
                             </div>
                             @enderror
                         </div>
-                        <div class="d-grid gap-2">
-                            <button class="btn button-outline-reztya font-futura-reztya" type="submit">Setel Ulang</button>
+                        <div class="d-grid gap-2 my-4">
+                            <a href="/signin" type="button" class="btn btn-outline-danger font-futura-reztya">Batal</a>
+                            <button class="btn button-outline-reztya font-futura-reztya" type="submit">Simpan</button>
                         </div>
                     </form>
                 </div>
