@@ -10,7 +10,7 @@
             </div>
         @endif
         @if($noSchedule == true)
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-warning text-center" role="alert">
                 Mohon maaf, jadwal sedang tidak tersedia
             </div>
         @endif

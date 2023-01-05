@@ -9,6 +9,7 @@ use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Jenssegers\Agent\Facades\Agent;
 
 class ServiceController extends Controller
 {
@@ -18,9 +19,18 @@ class ServiceController extends Controller
             ->where('category_id', '=', $category_id)
             ->paginate()
             ->appends(['category' => $category_id]);
+
+        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $noSchedule = false;
+
+        if ($schedules->isEmpty()) {
+            $noSchedule = true;
+        }
+
         return view('services.view_services', [
             'services' => $services,
             'categories' => Category::all(),
+            'noSchedule' => $noSchedule
         ]);
     }
 
@@ -28,9 +38,18 @@ class ServiceController extends Controller
         $services = DB::table('services')
             ->orderBy('price', 'desc')
             ->get();
+
+        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $noSchedule = false;
+
+        if ($schedules->isEmpty()) {
+            $noSchedule = true;
+        }
+
         return view('services.view_services', [
             'services' => $services,
             'categories' => Category::all(),
+            'noSchedule' => $noSchedule
         ]);
     }
 
@@ -38,9 +57,18 @@ class ServiceController extends Controller
         $services = DB::table('services')
             ->orderBy('price')
             ->get();
+
+        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $noSchedule = false;
+
+        if ($schedules->isEmpty()) {
+            $noSchedule = true;
+        }
+
         return view('services.view_services', [
             'services' => $services,
             'categories' => Category::all(),
+            'noSchedule' => $noSchedule
         ]);
     }
 
@@ -48,9 +76,18 @@ class ServiceController extends Controller
         $services = DB::table('services')
             ->orderBy('name', 'desc')
             ->get();
+
+        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $noSchedule = false;
+
+        if ($schedules->isEmpty()) {
+            $noSchedule = true;
+        }
+
         return view('services.view_services', [
             'services' => $services,
             'categories' => Category::all(),
+            'noSchedule' => $noSchedule
         ]);
     }
 
@@ -58,9 +95,18 @@ class ServiceController extends Controller
         $services = DB::table('services')
             ->orderBy('name')
             ->get();
+
+        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $noSchedule = false;
+
+        if ($schedules->isEmpty()) {
+            $noSchedule = true;
+        }
+
         return view('services.view_services', [
             'services' => $services,
             'categories' => Category::all(),
+            'noSchedule' => $noSchedule
         ]);
     }
 
@@ -70,9 +116,18 @@ class ServiceController extends Controller
             ->where('name', 'LIKE', "%$keyword%")
             ->paginate()
             ->appends(['keyword' => $keyword]);
+
+        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $noSchedule = false;
+
+        if ($schedules->isEmpty()) {
+            $noSchedule = true;
+        }
+
         return view('services.view_services', [
             'services' => $services,
             'categories' => Category::all(),
+            'noSchedule' => $noSchedule
         ]);
     }
 
@@ -251,7 +306,7 @@ class ServiceController extends Controller
             if($service->image_path){
                 Storage::delete($service->image_path);
             }
-    
+
             Service::destroy($id);
         }else{
             return redirect('/manage-services')->with('error', 'Perawatan tidak dapat dihapus karena masih berada pada order yang aktif!');

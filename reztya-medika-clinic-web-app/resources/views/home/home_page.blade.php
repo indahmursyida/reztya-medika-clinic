@@ -16,7 +16,7 @@
             </div>
         @endif
         <div class="row">
-            <div id="carouselExampleIndicators" class="carousel carousel-reztya slide" data-bs-ride="true">
+            <div id="carouselExampleIndicators" class="carousel carousel-reztya slide card border-reztya border border-4" style="height: 400px !important;" data-bs-ride="true">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -29,13 +29,13 @@
                         </a>
                     </div>
                     <div class="carousel-item">
-                        <a href="#">
-                            <img src="{{url('storage/reztya_logo_banner.jpg')}}" class="d-block w-100" alt="...">
+                        <a class="d-flex justify-content-center" href="#">
+                            <img src="{{url('storage/reztya_logo_banner.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
                         </a>
                     </div>
                     <div class="carousel-item">
-                        <a href="#">
-                            <img src="{{url('storage/reztya_logo_banner.jpg')}}" class="d-block w-100" alt="...">
+                        <a class="d-flex justify-content-center" href="#">
+                            <img src="{{url('storage/reztya_logo_banner.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
                         </a>
                     </div>
                 </div>
@@ -55,37 +55,43 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center mt-4">
-            <div class="col-4">
-                <a href="#">
-                    <img src="{{url('storage/Service Reztya.jpg')}}" class="img-thumbnail img-thumbnail-home d-block w-100" alt="...">
-                </a>
+            <div class="col-4 mb--1">
+                <div class="card border-reztya border border-4 h-75">
+                    <a href="#" class="overflow-hidden">
+                        <img src="{{url('storage/product-images/granola honey1.jpg')}}" class="d-block w-100" alt="...">
+                    </a>
+                </div>
             </div>
-            <div class="col-4">
-                <a href="#">
-                    <img src="{{url('storage/Service Reztya.jpg')}}" class="img-thumbnail img-thumbnail-home d-block w-100" alt="...">
-                </a>
+            <div class="col-4 mb--1">
+                <div class="card border-reztya border border-4 h-75">
+                    <a href="#" class="overflow-hidden">
+                        <img src="{{url('storage/product-images/susu almond1.jpg')}}" class="d-block w-100" alt="...">
+                    </a>
+                </div>
             </div>
-            <div class="col-4">
-                <a href="#">
-                    <img src="{{url('storage/Service Reztya.jpg')}}" class="img-thumbnail img-thumbnail-home d-block w-100" alt="...">
-                </a>
+            <div class="col-4 mb--1">
+                <div class="card border-reztya border border-4 h-75">
+                    <a href="#" class="overflow-hidden">
+                        <img src="{{url('storage/product-images/saffron afghanistan.jpg')}}" class="d-block w-100" alt="...">
+                    </a>
+                </div>
             </div>
         </div>
         <hr class="mt-5">
-        <div class="row d-flex justify-content-center mt-5 mb-5">
+        <div class="row d-flex justify-content-center mt-5">
             <div class="col-6">
-                <div class="row">
-                    <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Services</p>
-                    <a href="/service-detail/{{$service->service_id}}">
-                        <img src="{{url('storage/Service Reztya.jpg')}}" class="img-thumbnail img-thumbnail-home d-block w-100" alt="...">
+                <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Services</p>
+                <div class="card border-reztya border border-4 h-75 justify-content-center bg-reztya">
+                    <a href="#" class="overflow-hidden">
+                        <img src="{{url('storage/Service Reztya.jpg')}}" class="d-block w-100" alt="Service Image">
                     </a>
                 </div>
             </div>
             <div class="col-6">
-                <div class="row">
-                    <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Products</p>
-                    <a href="#">
-                        <img src="{{url('storage/Service Reztya.jpg')}}" class="img-thumbnail img-thumbnail-home d-block w-100" alt="...">
+                <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Products</p>
+                <div class="card border-reztya border border-4 h-75 justify-content-center bg-reztya">
+                    <a href="#" class="overflow-hidden">
+                        <img src="{{url('storage/product-images/granola honey.jpg')}}" class="d-block w-100" alt="Product Image">
                     </a>
                 </div>
             </div>

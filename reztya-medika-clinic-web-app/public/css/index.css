@@ -191,10 +191,6 @@ b {
     color: #00A54F;
 }
 
-.img-thumbnail-home {
-    background: #00A54F;
-}
-
 .edit-icon {
     margin-right: -3%;
 }
@@ -223,4 +219,16 @@ b {
 
 .td-name{
     width: 302px;
+}
+
+.border-reztya {
+    border-color: #00A54F !important;
+}
+
+.bg-reztya {
+    background-color: #00A54F !important;
+}
+
+.mb--1 {
+    margin-bottom: -10%;
 }
