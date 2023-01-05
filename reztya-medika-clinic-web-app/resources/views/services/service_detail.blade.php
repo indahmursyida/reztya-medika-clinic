@@ -28,7 +28,7 @@
 				<p>Durasi: {{ $service->duration }} menit</p>
 				<h5>Rp{{ number_format($service->price, 2) }}</h5>
 				<div class="my-5">
-					<p>{{ $service->description }}</p>
+					<pre class="font-futura-reztya fs-6">{{ $service->description }}</pre>
 				</div>
                 <label class="form-label" for="schedule_id" class="my-2">Pilih jadwal: </label>
 				@if(!$schedules->isEmpty())

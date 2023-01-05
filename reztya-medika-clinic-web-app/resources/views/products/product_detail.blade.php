@@ -25,7 +25,7 @@
 				@endif
 				<h5>Rp{{ number_format($product->price, 2) }}</h5>
 				<div class="my-5">
-					<p>{{ $product->description }}</p>
+                    <pre class="font-futura-reztya fs-6" style="width: 150%">{{ $product->description }}</pre>
 				</div>
                 @if($product->stock > 1)
 				    <p>Expired Date: {{ date('d F Y', strtotime($product->expired_date)) }}</p>
