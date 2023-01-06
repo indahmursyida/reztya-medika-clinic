@@ -37,25 +37,20 @@
                         Produk
                     </a>
                 </div>
-                <div class="col-2 mb-2">
-                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/manage-services">
-                        Kelola Perawatan
-                    </a>
-                </div>
-                <div class="col-1 mb-2">
-                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/manage-schedules">
-                        Kelola Jadwal
-                    </a>
-                </div>
-                <div class="col-1 mb-2">
-                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/manage-products">
-                        Kelola Produk
-                    </a>
-                </div>
-                <div class="col-2 mb-2">
-                    <a class="text-reztya font-futura-reztya fs-6 text-decoration-none" href="/manage-categories">
-                        Kelola Kategori
-                    </a>
+                <div class="col-4 mt-2">
+                    <div class="row align-items-start">
+                        <div class="font-futura-reztya text-reztya dropdown">
+                            <p class="fs-6 dropdown-toggle" type="button" id="dropdownToggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Kelola
+                            </p>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                <li><a class="button-outline-reztya dropdown-item" href="/manage-services">Kelola Perawatan</a></li>
+                                <li><a class="button-outline-reztya dropdown-item" href="/manage-schedules">Kelola Jadwal</a></li>
+                                <li><a class="button-outline-reztya dropdown-item" href="/manage-products">Kelola Produk</a></li>
+                                <li><a class="button-outline-reztya dropdown-item" href="/manage-categories">Kelola Kategori</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             @else
                 <div class="col-1 mb-2">
