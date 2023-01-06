@@ -25,13 +25,19 @@
 				@endif
 				<h5>Rp{{ number_format($product->price, 2) }}</h5>
 				<div class="my-5">
-                    <pre class="font-futura-reztya fs-6" style="width: 150%">{{ $product->description }}</pre>
+                    @foreach($description as $desc)
+                        @if(str_starts_with($desc, 'Manfaat'))
+                            <p class="font-futura-reztya fs-6 text-wrap fw-bold">{{ $desc }}:</p>
+                        @else
+                            <p class="font-futura-reztya fs-6 lh-sm text-wrap">{{ $desc }}</p>
+                        @endif
+                    @endforeach
 				</div>
                 @if($product->stock > 1)
 				    <p>Expired Date: {{ date('d F Y', strtotime($product->expired_date)) }}</p>
                     <p class="my-2">Stok tersedia: {{$product->stock}} pcs</p>
-                    <label for="quantity" class="my-2">Jumlah</label>
-                    <input type="number" class="form-control form-quantity  @error('quantity') is-invalid  @enderror" id="quantity" name="quantity" min="1" max="{{ $product->stock }}" value="{{ old('quantity', 1) }}">
+                    <label for="quantity" class="my-2">Jumlah:</label>
+                    <input type="number" class="form-control form-quantity shadow-none @error('quantity') is-invalid  @enderror" id="quantity" name="quantity" min="1" max="{{ $product->stock }}" value="{{ old('quantity', 1) }}">
                     @error('quantity')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

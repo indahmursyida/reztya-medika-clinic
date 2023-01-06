@@ -163,8 +163,11 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
+        $description = explode("\r\n", $product->description);
+
         return view('products.product_detail', [
-            'product' => $product
+            'product' => $product,
+            'description' => $description
         ]);
     }
 
@@ -255,7 +258,7 @@ class ProductController extends Controller
         }else{
             return redirect('/manage-products')->with('error', 'Produk tidak dapat dihapus karena masih berada pada order yang aktif!');
         }
-        
+
         return redirect('/manage-products')->with('success', 'Produk berhasil dihapus!');
     }
 }

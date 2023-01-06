@@ -47,11 +47,14 @@
                         <input class="form-check-input shadow-none outline-reztya" type="checkbox" id="remember_me" name="remember_me">
                         <label class="form-check-label" for="rememberMe">Ingat saya</label>
                     </div>
-                    <div class="mt-3 mb-3 me-3 form-check text-center ">
+                    <div class="mt-3 mb-3 me-3 form-check text-center">
                         <a class="h6 font-futura-reztya text-reztya text-decoration-none" href="/reset-password">Lupa Kata Sandi</a>
                     </div>
                     <div class="d-grid gap-2">
                         <button class="btn button-outline-reztya font-futura-reztya" type="submit">Masuk</button>
+                    </div>
+                    <div class="mt-3 me-3 form-check text-center">
+                        <a class="small font-futura-reztya text-reztya text-decoration-none" href="/signup">Belum Mempunyai Akun?</a>
                     </div>
                 </form>
             </div>

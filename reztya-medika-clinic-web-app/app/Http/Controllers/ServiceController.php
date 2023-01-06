@@ -221,9 +221,12 @@ class ServiceController extends Controller
     public function show($id)
     {
         $service = Service::find($id);
+        $description = explode("\r\n", $service->description);
+
         return view('services.service_detail', [
             'service' => $service,
-            'schedules' => Schedule::where('status', 'Available')->get()
+            'schedules' => Schedule::where('status', 'Available')->get(),
+            'description' => $description
         ]);
     }
 

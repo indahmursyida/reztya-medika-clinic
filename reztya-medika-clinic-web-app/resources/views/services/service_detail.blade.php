@@ -28,12 +28,18 @@
 				<p>Durasi: {{ $service->duration }} menit</p>
 				<h5>Rp{{ number_format($service->price, 2) }}</h5>
 				<div class="my-5">
-					<pre class="font-futura-reztya fs-6">{{ $service->description }}</pre>
+                    @foreach($description as $desc)
+                        @if(str_starts_with($desc, 'Manfaat'))
+                            <p class="font-futura-reztya fs-6 text-wrap fw-bold">{{ $desc }}:</p>
+                        @else
+                            <p class="font-futura-reztya fs-6 lh-sm text-wrap">{{ $desc }}</p>
+                        @endif
+                    @endforeach
 				</div>
-                <label class="form-label" for="schedule_id" class="my-2">Pilih jadwal: </label>
+                <label class="form-label my-2" for="schedule_id">Pilih jadwal: </label>
 				@if(!$schedules->isEmpty())
                     <div>
-                        <select class="form-select @error('schedule_id') is-invalid @enderror" id="schedule_id" name="schedule_id">
+                        <select class="form-select shadow-none @error('schedule_id') is-invalid @enderror" id="schedule_id" name="schedule_id">
                             @foreach($schedules as $schedule) @if(old('schedule_id') == $schedule->schedule_id)
                                 <option value="{{ $schedule->schedule_id }}" selected>
                                 {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}
@@ -53,34 +59,45 @@
 
                     <label for="home_service" class="my-2">Pilih tempat: </label>
                     <div>
-                        @if(Auth::user()->city_id == 350)
-                            <select class="form-select @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
-                                @if(old('home_service'))
-                                    <option value="1" selected>
-                                        Rumah ({{ Auth::user()->address }})
-                                    </option>
-                                    <option value="0">
-                                        Klinik Reztya Medika
-                                    </option>
-                                @else
-                                    <option value="1">
-                                        Rumah ({{ Auth::user()->address }})
-                                    </option>
+                        @auth
+                            @if(auth()->user()->city_id == 350)
+                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                    @if(old('home_service'))
+                                        <option value="1" selected>
+                                            Rumah ({{ Auth::user()->address }})
+                                        </option>
+                                        <option value="0">
+                                            Klinik Reztya Medika
+                                        </option>
+                                    @else
+                                        <option value="1">
+                                            Rumah ({{ Auth::user()->address }})
+                                        </option>
+                                        <option value="0" selected>
+                                            Klinik Reztya Medika
+                                        </option>
+                                    @endif
+                                </select>
+                            @else
+                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
                                     <option value="0" selected>
                                         Klinik Reztya Medika
                                     </option>
-                                @endif
-                            </select>
+                                    <option value="1" disabled>
+                                        Rumah di luar jangkauan
+                                    </option>
+                                </select>
+                            @endif
                         @else
-                            <select class="form-select @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                            <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
                                 <option value="0" selected>
                                     Klinik Reztya Medika
                                 </option>
                                 <option value="1" disabled>
-                                    Rumah di luar jangkauan
+                                    Masuk / Daftar terlebih dahulu
                                 </option>
                             </select>
-                        @endif
+                        @endauth
                         @error('home_service')
                         <div class="invalid-feedback">
                             {{ $message }}
