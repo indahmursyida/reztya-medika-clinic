@@ -19,7 +19,7 @@ use Carbon\Carbon;
             </ul>
         </div>
         @if(!$orders->isEmpty())
-            @foreach($orders as $key=>$order)
+            @foreach($orders as $key=> $order)
                 @php
                     $totalPrice = 0;
                     foreach($order->orderDetail as $order_detail)

@@ -5,15 +5,27 @@
 @section('container')
 
 <div class="d-flex justify-content-center">
-    @if($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show font-futura-reztya" style="width:90%;" role="alert">
-        {{$errors->first()}}
+    @if(session()->has('service_invalid'))
+    <div class="alert alert-warning alert-dismissible fade show font-futura-reztya" style="width:90%;" role="alert">
+        {{session('service_invalid')}}
+        <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    @if(session()->has('product_invalid'))
+    <div class="alert alert-warning alert-dismissible fade show font-futura-reztya" style="width:90%;" role="alert">
+        {{session('product_invalid')}}
         <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
     @if(session()->has('success'))
     <div class="alert alert-success alert-dismissible fade show font-futura-reztya" style="width:90%; role=" alert">
         {{session('success')}}
+        <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    @if(session()->has('error'))
+    <div class="alert alert-success alert-dismissible fade show font-futura-reztya" style="width:90%; role=" alert">
+        {{session('error')}}
         <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
@@ -24,7 +36,7 @@ use Carbon\Carbon;
 @if($cart != null)
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:90%;">
-        <div class="pt-4">
+        <div>
             <div class="py-3 d-flex justify-content-center">
                 <p class="h5 fw-bold unselectable font-alander-reztya">Keranjang</p>
             </div>
@@ -54,26 +66,42 @@ use Carbon\Carbon;
                     <div class="col d-flex justify-content-center align-items-center">
                         <img src="{{ asset('storage/' . $item->service->image_path) }}" alt="" width="100px" height="100px">
                     </div>
-                    <div class="col-5 d-flex flex-column justify-content-center">
+                    <div class="col-5 d-flex flex-column justify-content-start">
                         <p class="fw-bold m-0">{{ $item->service->name }}</p>
+                        @if ($item->schedule_id)
+                            <div style="color: #00A54F;">
+                                Tempat Perawatan
+                            </div>
+                            @if($item->home_service == 1)
+                                <div class="">
+                                    Rumah | {{ Auth::user()->address }}
+                                </div>
+                            @else
+                                <div class="">
+                                    Klinik Reztya Medika
+                                </div>
+                            @endif
+                            <div style="color: #00A54F;">
+                                Jadwal Perawatan
+                            </div>
+                            <div class="">
+                                {{ Carbon::parse($item->schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($item->schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($item->schedule->end_time)->translatedFormat('H.i') }}
+                            </div>
+                        @else
                         <div style="color: #00A54F;">
                             Tempat Perawatan
                         </div>
-                        @if($item->home_service == 1)
                         <div class="">
-                            Rumah | {{ Auth::user()->address }}
+                            -
                         </div>
-                        @else
-                        <div class="">
-                            Klinik Reztya Medika
-                        </div>
-                        @endif
                         <div style="color: #00A54F;">
                             Jadwal Perawatan
                         </div>
                         <div class="">
-                            {{ Carbon::parse($item->schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($item->schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($item->schedule->end_time)->translatedFormat('H.i') }}
+                            -
                         </div>
+                        @endif
+                        
                     </div>
                     <div class="col">Rp{{ number_format($item->service->price, 2) }}</div>
                     <div class="col text-center">
@@ -95,9 +123,11 @@ use Carbon\Carbon;
                                         </div>
                                         <div class="modal-body">
                                             <input type="hidden" id="cart_id" name="cart_id" value="{{ $item->cart_id }}">
+                                            @if ($item->schedule_id)
                                             <input type="hidden" id="old_schedule" name="old_schedule" value="{{ $item->schedule->start_time }}">
                                             <input type="hidden" id="old_schedule_id" name="old_schedule_id" value="{{ $item->schedule_id }}">
                                             <input type="hidden" id="service_name" name="service_name" value="{{ $item->service->name }}">
+                                            @endif
                                             <input type="hidden" id="order_id" name="order_id" value="{{ $item->order_id }}">
 
                                             <div>
@@ -107,11 +137,19 @@ use Carbon\Carbon;
                                                 <div class="mb-3">
                                                     <select class="form-select shadow-none" name="schedule_id" id="schedule_id">
                                                         @foreach($schedules as $schedule)
-                                                        @if($schedule->schedule_id == $item->schedule_id)
-                                                        <option hidden selected value="{{$item->schedule_id}}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
-                                                        @elseif($schedule->status == 'available')
-                                                        <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
-                                                        @endif
+                                                            @if ($item->schedule_id)
+                                                                @if($schedule->schedule_id == $item->schedule_id)
+                                                                <option hidden selected value="{{$item->schedule_id}}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                @endif
+                                                            {{-- @else --}}
+                                                                {{-- <option hidden selected value="0">---Pilih Jadwal---</option> --}}
+                                                                {{-- @if($schedule->status == 'available')
+                                                                <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                @endif --}}
+                                                            @endif
+                                                            @if($schedule->status == 'available')
+                                                            <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                            @endif
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -120,23 +158,62 @@ use Carbon\Carbon;
                                                     Pilih Tempat Layanan
                                                 </div>
                                                 <div>
-                                                    <select class="form-select shadow-none" id="home_service" name="home_service">
+                                                    @auth
+                            @if(auth()->user()->city_id == 350)
+                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                    @if(old('home_service'))
+                                        <option value="1" selected>
+                                            Rumah ({{ Auth::user()->address }})
+                                        </option>
+                                        <option value="0">
+                                            Klinik Reztya Medika
+                                        </option>
+                                    @else
+                                        <option value="1">
+                                            Rumah ({{ Auth::user()->address }})
+                                        </option>
+                                        <option value="0" selected>
+                                            Klinik Reztya Medika
+                                        </option>
+                                    @endif
+                                </select>
+                            @else
+                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                    <option value="0" selected>
+                                        Klinik Reztya Medika
+                                    </option>
+                                    <option value="1" disabled>
+                                        Rumah di luar jangkauan
+                                    </option>
+                                </select>
+                            @endif
+                        @else
+                            <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                <option value="0" selected>
+                                    Klinik Reztya Medika
+                                </option>
+                                <option value="1" disabled>
+                                    Masuk / Daftar terlebih dahulu
+                                </option>
+                            </select>
+                        @endauth
+                                                    {{-- <select class="form-select shadow-none" id="home_service" name="home_service">
                                                         @if($item->home_service == 1)
-                                                        <option value="1" selected hidden>
-                                                            Rumah ({{ Auth::user()->address }})
-                                                        </option>
-                                                        <option value="0">
-                                                            Klinik Reztya Medika
-                                                        </option>
+                                                            <option value="1" selected hidden>
+                                                                Rumah ({{ Auth::user()->address }})
+                                                            </option>
+                                                            <option value="0">
+                                                                Klinik Reztya Medika
+                                                            </option>
                                                         @else
-                                                        <option value="1">
-                                                            Rumah ({{ Auth::user()->address }})
-                                                        </option>
-                                                        <option value="0" selected hidden>
-                                                            Klinik Reztya Medika
-                                                        </option>
+                                                            <option value="1">
+                                                                Rumah ({{ Auth::user()->address }})
+                                                            </option>
+                                                            <option value="0" selected hidden>
+                                                                Klinik Reztya Medika
+                                                            </option>
                                                         @endif
-                                                    </select>
+                                                    </select> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -206,7 +283,7 @@ use Carbon\Carbon;
                     </div>
                     <div class="col">Rp{{ number_format($item->product->price * $item->quantity, 2) }}</div>
                     <div class="col text-center">
-                        <button type="button" data-toggle="modal" data-target="#editQuantityPopup-{{$item->cart_id}}" class="btn button-outline-reztya rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
+                        <button type="button" data-toggle="modal" id="button_modal" data-target="#editQuantityPopup-{{$item->cart_id}}" class="btn button-outline-reztya rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
                             <i class="fa-regular fa-pen-to-square pt-1"></i>
                         </button>
                         <a href="/remove-cart/{{ $item->cart_id }}" id="delete-button" class="btn btn-outline-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $item->product->name }}?')" title="Hapus Produk">
@@ -223,17 +300,18 @@ use Carbon\Carbon;
                                             <h5 class="modal-title" id="editQuantityPopupLongTitle">{{ $item->product->name }}</h5>
                                         </div>
                                         <div class="modal-body container d-flex align-items-center">
-                                            <div class="me-5">
+                                            <label class="me-5 form-label" for="quantity">
                                                 Kuantitas
-                                            </div>
+                                            </label>
+                                            <!-- <input type="hidden" id="cart_id" name="cart_id" value={{ $item->order_detail_id }}> -->
                                             <div>
-                                                <!-- <input type="hidden" id="cart_id" name="cart_id" value={{ $item->order_detail_id }}> -->
-                                                <div>
-                                                    <input type="number" class="@error('p_quantity') is-invalid @enderror form-control shadow-none form-quantity" id="quantity" name="quantity" value="{{ old('quantity', $item->quantity) }}" min="1" max="{{ $item->product->stock }}">
-                                                </div>
+                                                <input type="number" class="@error('quantity') is-invalid @enderror form-control shadow-none form-quantity" id="quantity" name="quantity" value="{{ old('quantity', $item->quantity) }}">
                                                 @error('quantity')
                                                 <div class="invalid-feedback">
-                                                    Kuantitas harus diisi dengan angka
+                                                    {{$message}}
+                                                    {{-- @php
+                                                        dd($errors);
+                                                    @endphp --}}
                                                 </div>
                                                 @enderror
                                             </div>
@@ -266,23 +344,23 @@ use Carbon\Carbon;
                         <p class="mb-2 fw-bold">Opsi Pengiriman</p>
                         <select class="form-select shadow-none w-75 @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
                             @if (old('delivery_service'))
-                            @if(old('delivery_service') == 1)
-                            <option value="1" selected>
-                                Delivery
-                            </option>
-                            <option value="0">
-                                Self-Pickup
-                            </option>
-                            @elseif(old('delivery_service') == 0)
-                            <option value="1">
-                                Delivery
-                            </option>
-                            <option value="0" selected>
-                                Self-Pickup
-                            </option>
-                            @endif
+                                @if(old('delivery_service') == 1)
+                                <option value="1" selected>
+                                    Delivery
+                                </option>
+                                <option value="0">
+                                    Self-Pickup
+                                </option>
+                                @elseif(old('delivery_service') == 0)
+                                <option value="1">
+                                    Delivery
+                                </option>
+                                <option value="0" selected>
+                                    Self-Pickup
+                                </option>
+                                @endif
                             @else
-                            <option value="" selected hidden>Pilih Tipe Pengiriman</option>
+                            <option value="-1" hidden>Pilih Tipe Pengiriman</option>
                             <option value="1">
                                 Delivery
                             </option>
@@ -371,7 +449,7 @@ use Carbon\Carbon;
         </div>
         @endif
         @else
-        Keranjang Anda masih kosong.
+        Keranjang Anda kosong.
         @endif
     </div>
 </div>
@@ -393,6 +471,13 @@ Tidak dapat mengakses halaman ini.
         // $('#update_quantity').on('change', function(){
         //     window.location.reload();
         // });
+
+        let count = '<?php echo count($errors); ?>';
+        let error = '<?php echo $errors->first(); ?>';
+
+        if(count > 0 && error)
+            document.getElementById("button_modal").click();
+
         $('#delivery_service').change(
             function() {
                 if (this.value == 1) {
@@ -410,9 +495,8 @@ Tidak dapat mengakses halaman ini.
 
     function includeFee(json_string) {
         let json = JSON.parse(json_string);
-        let weight = {
-            !!json_encode(ceil($weight / 1000)) !!
-        };
+        // let weight = { !!json_encode(ceil($weight / 1000)) !! };
+        let weight = "<?php echo ceil($weight / 1000); ?>";
         let delivery_fee = json.cost[0].value * parseInt(weight);
 
         var total = parseInt(document.getElementById('totalPrice').value);

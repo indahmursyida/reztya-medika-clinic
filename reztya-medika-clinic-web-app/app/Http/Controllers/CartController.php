@@ -24,6 +24,7 @@ class CartController extends Controller
             $costs = 0;
             $origin = null;
             $productExists = false;
+            $serviceIncomplete = false;
 
             if(Auth::user()->user_role_id == 2){
                 $cart = Cart::where('user_id', Auth::user()->user_id)->get();
@@ -42,6 +43,13 @@ class CartController extends Controller
                             }
                         } else {
                             $weight += 50;
+                        }
+                    }
+                    else
+                    {
+                        if(!$item->schedule_id || !$item->home_service)
+                        {
+                            $serviceIncomplete = true;
                         }
                     }
                 }
@@ -86,6 +94,8 @@ class CartController extends Controller
                     }
             }
 
+            if($serviceIncomplete)
+            {
                 return view('view_cart')
                     ->with('cart', $cart)
                     ->with('schedules', $schedules)
@@ -94,7 +104,19 @@ class CartController extends Controller
                     ->with('printProductOnce',$printProductOnce)
                     ->with('totalPrice', $totalPrice)
                     ->with(compact('costs'))
-                    ->with(compact('origin'));
+                    ->with(compact('origin'))
+                    ->with('error', 'Ada tempat dan jadwal perawatan yang masih kosong. Silahkan lengkapi melalui tombol edit.');
+            }
+
+            return view('view_cart')
+                ->with('cart', $cart)
+                ->with('schedules', $schedules)
+                ->with('weight',$weight)
+                ->with('printServiceOnce', $printServiceOnce)
+                ->with('printProductOnce',$printProductOnce)
+                ->with('totalPrice', $totalPrice)
+                ->with(compact('costs'))
+                ->with(compact('origin'));
         }
         return view('view_cart')->with('cart', $cart)->with('weight',$weight);
     }
@@ -106,19 +128,21 @@ class CartController extends Controller
             'home_service' => 'required'
         ]);
 
-        if($req['schedule_id'] != $req['old_schedule_id'])
+        if($req['old_schedule_id'])
         {
-            $old_schedule = Schedule::find($req['old_schedule_id']);
-            $old_schedule->status = 'available';
-            $old_schedule->save();
+            if($req['schedule_id'] != $req['old_schedule_id'])
+            {
+                $old_schedule = Schedule::find($req['old_schedule_id']);
+                $old_schedule->status = 'available';
+                $old_schedule->save();
 
-            $new_schedule = Schedule::find($req['schedule_id']);
-            $new_schedule->status = 'unavailable';
-            $new_schedule->save();
+                $new_schedule = Schedule::find($req['schedule_id']);
+                $new_schedule->status = 'unavailable';
+                $new_schedule->save();
+            }
         }
 
         $validated_data['cart_id'] = $id;
-
 
         Cart::find($id)->update($validated_data);
 
@@ -127,12 +151,20 @@ class CartController extends Controller
 
     public function updateCartQuantity(Request $req, $id)
     {
+        $cart = Cart::find($id);
+        $product = Product::find($cart->product_id);
+        $stock = $product->stock;
+
         $validated_data = $req->validate([
-            'quantity' => 'numeric'
+            'quantity' => "required|integer|min:1|max:$stock"
+        ],[
+            'quantity.required' => 'Jumlah produk wajib diisi',
+            'quantity.min' => 'Jumlah produk minimal 1',
+            'quantity.max' => "Jumlah produk maksimal $stock",
         ]);
 
         Cart::find($id)->update($validated_data);
-        return redirect('/cart');
+        return redirect('/cart')->withErrors('');
     }
 
     public function removeCart($id)

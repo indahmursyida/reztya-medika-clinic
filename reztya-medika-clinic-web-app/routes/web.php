@@ -137,10 +137,6 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
     Route::put('/update-schedule/{id}', [ScheduleController::class, 'update'])->middleware('admin');
     Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete'])->middleware('admin');
 
-    //OrderDetail
-    Route::post('/buy-product', [CartController::class, 'buyProduct'])->middleware(['auth', 'verified']);
-    Route::post('/book-service', [CartController::class, 'bookService'])->middleware(['auth', 'verified']);
-
     // Ban and Unban User
     Route::get('/view-users', [BanController::class, 'viewUsers'])->middleware('admin');
     Route::post('/ban-user/{username}', [BanController::class, 'banUser'])->middleware('admin');
@@ -156,27 +152,28 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
 
     // Cart
     Route::get('/cart', [CartController::class, 'index'])->middleware(['auth', 'verified']);
+    Route::post('/buy-product', [CartController::class, 'buyProduct'])->middleware(['auth', 'verified']);
+    Route::post('/book-service', [CartController::class, 'bookService'])->middleware(['auth', 'verified']);
     Route::put('/update-schedule/{id}', [CartController::class, 'updateCartSchedule'])->middleware(['auth', 'verified']);
     Route::put('/update-quantity/{id}', [CartController::class, 'updateCartQuantity'])->middleware(['auth', 'verified']);
     Route::get('/remove-cart/{id}', [CartController::class, 'removeCart'])->middleware(['auth', 'verified']);
 
     //Order
-    Route::get('/create-order', [OrderController::class, 'createServiceOrder'])->middleware(['auth', 'verified']);
+    Route::get('/order/{status}', [OrderController::class, 'statusFilter'])->middleware(['auth', 'verified']); 
+    Route::get('/create-order', [OrderController::class, 'createOrderWithoutProduct'])->middleware(['auth', 'verified']);
     Route::post('/create-order', [OrderController::class, 'create'])->middleware(['auth', 'verified']);
     Route::get('/active-order', [OrderController::class, 'activeOrder'])->middleware(['auth', 'verified']);
-
-    Route::get('/order-detail/{id}', [OrderController::class, 'detailOrder'])->name('detail_order')->middleware(['auth', 'verified']);
-    Route::put('/reschedule/{id}', [OrderController::class, 'reschedule'])->middleware(['auth', 'verified']);
-    Route::get('/cancel-order/{id}', [OrderController::class, 'cancel_order'])->middleware(['auth', 'verified']);
-    Route::get('/confirm-payment/{id}', [OrderController::class, 'confirmPayment'])->middleware('admin');
-    Route::post('/update-payment-receipt/{id}', [OrderController::class, 'updatePaymentReceipt'])->middleware('admin');
+    Route::get('/cancel-order/{id}', [OrderController::class, 'cancelOrder'])->middleware(['auth', 'verified']);
     Route::get('/history-order', [OrderController::class, 'historyOrder'])->middleware(['auth', 'verified']);
-    Route::get('/payment-receipt-form/{id}', [OrderController::class, 'form_payment_receipt'])->name('form_payment')->middleware('admin');
-
-    Route::post('/add-payment-receipt/{id}', [OrderController::class, 'add_payment_receipt'])->middleware('admin');
     Route::get('/repeat-order/{id}', [OrderController::class, 'repeatOrder'])->middleware(['auth', 'verified']);
 
-    Route::get('/order/{status}', [OrderController::class, 'statusFilter'])->middleware(['auth', 'verified']); 
+    //Order Detail
+    Route::get('/order-detail/{id}', [OrderDetailController::class, 'detailOrder'])->name('detail_order')->middleware(['auth', 'verified']);
+    Route::put('/reschedule/{id}', [OrderDetailController::class, 'reschedule'])->middleware(['auth', 'verified']);
 
-    Route::put('/upload-transfer-receipt/{id}', [PaymentReceiptController::class, 'transferReceipt'])->middleware(['auth', 'verified']);
+    //Payment Receipt
+    Route::put('/upload-transfer-receipt/{id}', [PaymentReceiptController::class, 'uploadTransferReceipt'])->middleware(['auth', 'verified']);
+    Route::post('/add-payment-receipt/{id}', [PaymentReceiptController::class, 'addPaymentReceipt'])->middleware('admin');
+    Route::get('/form-payment-receipt/{id}', [PaymentReceiptController::class, 'formPaymentReceipt'])->name('form_payment')->middleware('admin');
+    Route::post('/upsert-payment-receipt/{id}', [PaymentReceiptController::class, 'upsertPaymentReceipt'])->middleware('admin');
 });

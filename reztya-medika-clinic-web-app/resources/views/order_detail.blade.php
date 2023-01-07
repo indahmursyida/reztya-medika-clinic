@@ -3,11 +3,19 @@
 @section('title', 'Order')
 
 @section('container')
-@if (session('success'))
+{{-- @if (session('success'))
 <div class="alert alert-success" id="success-alert">
     <strong> {{session()->get('success')}} </strong>
 </div>
+@endif --}}
+<div class="d-flex justify-content-center">
+@if(session()->has('success'))
+    <div class="alert alert-success alert-dismissible fade show font-futura-reztya" style="width:90%; role=" alert">
+        {{session('success')}}
+        <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 @endif
+</div>
 @php
 use Carbon\Carbon;
 @endphp
@@ -50,7 +58,7 @@ use Carbon\Carbon;
                     @if(Auth::user()->user_role_id == 1)
                     @if ($order->status == 'waiting' || $order->status == 'ongoing')
                     <div>
-                        <a href="/confirm-payment/{{ $order->order_id }}" class="btn button-outline-reztya" type="button">Konfirmasi Pembayaran</a>
+                        <a href="/form-payment-receipt/{{ $order->order_id }}" class="btn button-outline-reztya" type="button">Konfirmasi Pembayaran</a>
                     </div>
                     @endif
                     @else
@@ -126,9 +134,9 @@ use Carbon\Carbon;
         foreach($order->orderDetail as $order_detail)
         {
         if($order_detail->service_id)
-        $totalPrice += $order_detail->service->price;
+            $totalPrice += $order_detail->service->price;
         else
-        $totalPrice += $order_detail->product->price * $order_detail->quantity;
+            $totalPrice += $order_detail->product->price * $order_detail->quantity;
         }
         @endphp
         @if(Auth::user()->user_role_id == 1)
@@ -216,7 +224,9 @@ use Carbon\Carbon;
                             Jadwal Perawatan
                         </div>
                         <div class="">
+                            @if ($order_detail->schedule)
                             {{ Carbon::parse($order_detail->schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($order_detail->schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($order_detail->schedule->end_time)->translatedFormat('H.i') }}
+                            @endif
                         </div>
                         <div>
                             @if($order->status == 'ongoing')
@@ -237,8 +247,10 @@ use Carbon\Carbon;
                                             </div>
                                             <div class="modal-body container">
                                                 <input type="hidden" id="cart_id" name="cart_id" value="{{ $order_detail->cart_id }}">
+                                                @if ($order_detail->schedule_id)
                                                 <input type="hidden" id="old_schedule" name="old_schedule" value="{{ $order_detail->schedule->start_time }}">
                                                 <input type="hidden" id="old_schedule_id" name="old_schedule_id" value="{{ $order_detail->schedule_id }}">
+                                                @endif
                                                 <input type="hidden" id="service_name" name="service_name" value="{{ $order_detail->service->name }}">
                                                 <input type="hidden" id="order_id" name="order_id" value="{{ $order_detail->order_id }}">
                                                 <input type="hidden" id="username" name="email" value="{{ $order->user->username }}">
@@ -263,7 +275,46 @@ use Carbon\Carbon;
                                                         Pilih Tempat Layanan
                                                     </div>
                                                     <div>
-                                                        <select class="form-select" id="home_service" name="home_service">
+                                                        @auth
+                                                            @if(auth()->user()->city_id == 350)
+                                                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                                                    @if(old('home_service'))
+                                                                        <option value="1" selected>
+                                                                            Rumah ({{ Auth::user()->address }})
+                                                                        </option>
+                                                                        <option value="0">
+                                                                            Klinik Reztya Medika
+                                                                        </option>
+                                                                    @else
+                                                                        <option value="1">
+                                                                            Rumah ({{ Auth::user()->address }})
+                                                                        </option>
+                                                                        <option value="0" selected>
+                                                                            Klinik Reztya Medika
+                                                                        </option>
+                                                                    @endif
+                                                                </select>
+                                                            @else
+                                                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                                                    <option value="0" selected>
+                                                                        Klinik Reztya Medika
+                                                                    </option>
+                                                                    <option value="1" disabled>
+                                                                        Rumah di luar jangkauan
+                                                                    </option>
+                                                                </select>
+                                                            @endif
+                                                        @else
+                                                            <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                                                <option value="0" selected>
+                                                                    Klinik Reztya Medika
+                                                                </option>
+                                                                <option value="1" disabled>
+                                                                    Masuk / Daftar terlebih dahulu
+                                                                </option>
+                                                            </select>
+                                                        @endauth
+                                                        {{-- <select class="form-select" id="home_service" name="home_service">
                                                             @if($order_detail->home_service == 1)
                                                             <option value="1" hidden selected>
                                                                 Rumah ({{ Auth::user()->address }})
@@ -279,7 +330,7 @@ use Carbon\Carbon;
                                                                 Klinik Reztya Medika
                                                             </option>
                                                             @endif
-                                                        </select>
+                                                        </select> --}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -392,7 +443,10 @@ use Carbon\Carbon;
     });
     $(document).ready(
         function() {
-            document.getElementById("button_modal").click();
+            let count = '<?php echo count($errors); ?>';
+            
+            if(count > 0)
+                document.getElementById("button_modal").click();
         })
 </script>
 @endsection

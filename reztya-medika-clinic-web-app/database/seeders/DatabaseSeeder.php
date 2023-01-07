@@ -153,16 +153,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Susu Almond (Small)',
             'category_id' => '1',
             'description' => "Manfaat Susu Almond\r\n
-1. Mengurangi resiko penyakit jantung\r\n
-2. Mencegah kanker\r\n
-3. Menurunkan kadar kolestrol jahat\r\n
-4. Meningkatkan kinerja dan kecerdasan otak\r\n
-5. Menguatkan tulang\r\n
-6. Tinggi antioksidan\r\n
-7. Mengurangi resiko penyakit diabetes\r\n
-8. Baik untuk diet\r\n
-9. Tinggi kandungan vitamin E\r\n
-10. Sangat baik dikonsumsi bumil dan busui untuk tumbuh kembang si kecil",
+                                1. Mengurangi resiko penyakit jantung\r\n
+                                2. Mencegah kanker\r\n
+                                3. Menurunkan kadar kolestrol jahat\r\n
+                                4. Meningkatkan kinerja dan kecerdasan otak\r\n
+                                5. Menguatkan tulang\r\n
+                                6. Tinggi antioksidan\r\n
+                                7. Mengurangi resiko penyakit diabetes\r\n
+                                8. Baik untuk diet\r\n
+                                9. Tinggi kandungan vitamin E\r\n
+                                10. Sangat baik dikonsumsi bumil dan busui untuk tumbuh kembang si kecil\r\n",
             'size' => '250 ml',
             'price' => '27000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -174,16 +174,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Susu Almond (Medium)',
             'category_id' => '1',
             'description' => "Manfaat Susu Almond\r\n
-1. Mengurangi resiko penyakit jantung\r\n
-2. Mencegah kanker\r\n
-3. Menurunkan kadar kolestrol jahat\r\n
-4. Meningkatkan kinerja dan kecerdasan otak\r\n
-5. Menguatkan tulang\r\n
-6. Tinggi antioksidan\r\n
-7. Mengurangi resiko penyakit diabetes\r\n
-8. Baik untuk diet\r\n
-9. Tinggi kandungan vitamin E\r\n
-10. Sangat baik dikonsumsi bumil dan busui untuk tumbuh kembang si kecil",
+                                1. Mengurangi resiko penyakit jantung\r\n
+                                2. Mencegah kanker\r\n
+                                3. Menurunkan kadar kolestrol jahat\r\n
+                                4. Meningkatkan kinerja dan kecerdasan otak\r\n
+                                5. Menguatkan tulang\r\n
+                                6. Tinggi antioksidan\r\n
+                                7. Mengurangi resiko penyakit diabetes\r\n
+                                8. Baik untuk diet\r\n
+                                9. Tinggi kandungan vitamin E\r\n
+                                10. Sangat baik dikonsumsi bumil dan busui untuk tumbuh kembang si kecil\r\n",
             'size' => '500 ml',
             'price' => '50000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -195,16 +195,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Susu Almond (Large)',
             'category_id' => '1',
             'description' => "Manfaat Susu Almond\r\n
-1. Mengurangi resiko penyakit jantung\r\n
-2. Mencegah kanker\r\n
-3. Menurunkan kadar kolestrol jahat\r\n
-4. Meningkatkan kinerja dan kecerdasan otak\r\n
-5. Menguatkan tulang\r\n
-6. Tinggi antioksidan\r\n
-7. Mengurangi resiko penyakit diabetes\r\n
-8. Baik untuk diet\r\n
-9. Tinggi kandungan vitamin E\r\n
-10. Sangat baik dikonsumsi bumil dan busui untuk tumbuh kembang si kecil",
+                                1. Mengurangi resiko penyakit jantung\r\n
+                                2. Mencegah kanker\r\n
+                                3. Menurunkan kadar kolestrol jahat\r\n
+                                4. Meningkatkan kinerja dan kecerdasan otak\r\n
+                                5. Menguatkan tulang\r\n
+                                6. Tinggi antioksidan\r\n
+                                7. Mengurangi resiko penyakit diabetes\r\n
+                                8. Baik untuk diet\r\n
+                                9. Tinggi kandungan vitamin E\r\n
+                                10. Sangat baik dikonsumsi bumil dan busui untuk tumbuh kembang si kecil\r\n",
             'size' => '1000 ml',
             'price' => '95000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -216,15 +216,15 @@ class DatabaseSeeder extends Seeder
             'name' => 'Sari Lemon California (Small)',
             'category_id' => '1',
             'description' => "Manfaat Sari Lemon California\r\n
-1. Proses detox (racun) dalam tubuh\r\n
-2. Menurunkan berat badan\r\n
-3. Mencerahkan wajah dan menghilangkan jerawat\r\n
-4. Menurunkan kolestrol, diabetes dan asam urat\r\n
-5. Mengobati sakit tenggorokan & batuk\r\n
-6. Mengobati maag\r\n
-7. Mengatasi sembelit\r\n
-8. Mencegah timbulnya sakit kanker\r\n
-9. Mencegah bau mulut",
+                                1. Proses detox (racun) dalam tubuh\r\n
+                                2. Menurunkan berat badan\r\n
+                                3. Mencerahkan wajah dan menghilangkan jerawat\r\n
+                                4. Menurunkan kolestrol, diabetes dan asam urat\r\n
+                                5. Mengobati sakit tenggorokan & batuk\r\n
+                                6. Mengobati maag\r\n
+                                7. Mengatasi sembelit\r\n
+                                8. Mencegah timbulnya sakit kanker\r\n
+                                9. Mencegah bau mulut\r\n",
             'size' => '250 ml',
             'price' => '60000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -236,15 +236,15 @@ class DatabaseSeeder extends Seeder
             'name' => 'Sari Lemon California (Medium)',
             'category_id' => '1',
             'description' => "Manfaat Sari Lemon California\r\n
-1. Proses detox (racun) dalam tubuh\r\n
-2. Menurunkan berat badan\r\n
-3. Mencerahkan wajah dan menghilangkan jerawat\r\n
-4. Menurunkan kolestrol, diabetes dan asam urat\r\n
-5. Mengobati sakit tenggorokan & batuk\r\n
-6. Mengobati maag\r\n
-7. Mengatasi sembelit\r\n
-8. Mencegah timbulnya sakit kanker\r\n
-9. Mencegah bau mulut",
+                                1. Proses detox (racun) dalam tubuh\r\n
+                                2. Menurunkan berat badan\r\n
+                                3. Mencerahkan wajah dan menghilangkan jerawat\r\n
+                                4. Menurunkan kolestrol, diabetes dan asam urat\r\n
+                                5. Mengobati sakit tenggorokan & batuk\r\n
+                                6. Mengobati maag\r\n
+                                7. Mengatasi sembelit\r\n
+                                8. Mencegah timbulnya sakit kanker\r\n
+                                9. Mencegah bau mulut\r\n",
             'size' => '500 ml',
             'price' => '100000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -256,16 +256,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Safron',
             'category_id' => '1',
             'description' => "Manfaat Safron Afghanistan\r\n
-* Melancarkan peredaran darah\r\n
-* Mencegah pertumbuhan sel kanker\r\n
-* Mengatasi sistem gangguan pencernaan\r\n
-* Mencegah stress & depresi\r\n
-* Mempercepat pengeringan luka\r\n
-* Meringankan batuk\r\n
-* Menghilangkan jerawat\r\n
-* Mencegah peradangan paru-paru mengurangi penyakit insomnia\r\n
-* Menurunkan kadar kolestrol dalam darah\r\n
-* Mengembalikan stamina tubuh menguatkan sistem imun sebagai anti aging",
+                                * Melancarkan peredaran darah\r\n
+                                * Mencegah pertumbuhan sel kanker\r\n
+                                * Mengatasi sistem gangguan pencernaan\r\n
+                                * Mencegah stress & depresi\r\n
+                                * Mempercepat pengeringan luka\r\n
+                                * Meringankan batuk\r\n
+                                * Menghilangkan jerawat\r\n
+                                * Mencegah peradangan paru-paru mengurangi penyakit insomnia\r\n
+                                * Menurunkan kadar kolestrol dalam darah\r\n
+                                * Mengembalikan stamina tubuh menguatkan sistem imun sebagai anti aging\r\n",
             'size' => '1 gr',
             'price' => '110000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -277,16 +277,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Chiaseed (Small)',
             'category_id' => '1',
             'description' => "Manfaat Chiaseed\r\n
-* Memberikan tambahan energi bagi tubuh\r\n
-* Membantu proses pembentukan tulang dan gigi\r\n
-* Kaya akan asam lemak dan omega-3\r\n
-* Memerangi kanker payudara dan kanker lainnya\r\n
-* Mencegah penuaan dini\r\n
-* Membantu proses detoksivikasi\r\n
-* Membantu menyeimbangkan berat badan\r\n
-* Membantu menurunkan kolestrol\r\n
-* Menurunkan resiko penyakit diabetes\r\n
-* Menstabilkan tekanan darah",
+                                * Memberikan tambahan energi bagi tubuh\r\n
+                                * Membantu proses pembentukan tulang dan gigi\r\n
+                                * Kaya akan asam lemak dan omega-3\r\n
+                                * Memerangi kanker payudara dan kanker lainnya\r\n
+                                * Mencegah penuaan dini\r\n
+                                * Membantu proses detoksivikasi\r\n
+                                * Membantu menyeimbangkan berat badan\r\n
+                                * Membantu menurunkan kolestrol\r\n
+                                * Menurunkan resiko penyakit diabetes\r\n
+                                * Menstabilkan tekanan darah\r\n",
             'size' => '100 gr',
             'price' => '25000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -298,16 +298,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Chiaseed (Medium)',
             'category_id' => '1',
             'description' => "Manfaat Chiaseed\r\n
-* Memberikan tambahan energi bagi tubuh\r\n
-* Membantu proses pembentukan tulang dan gigi\r\n
-* Kaya akan asam lemak dan omega-3\r\n
-* Memerangi kanker payudara dan kanker lainnya\r\n
-* Mencegah penuaan dini\r\n
-* Membantu proses detoksivikasi\r\n
-* Membantu menyeimbangkan berat badan\r\n
-* Membantu menurunkan kolestrol\r\n
-* Menurunkan resiko penyakit diabetes\r\n
-* Menstabilkan tekanan darah",
+                                * Memberikan tambahan energi bagi tubuh\r\n
+                                * Membantu proses pembentukan tulang dan gigi\r\n
+                                * Kaya akan asam lemak dan omega-3\r\n
+                                * Memerangi kanker payudara dan kanker lainnya\r\n
+                                * Mencegah penuaan dini\r\n
+                                * Membantu proses detoksivikasi\r\n
+                                * Membantu menyeimbangkan berat badan\r\n
+                                * Membantu menurunkan kolestrol\r\n
+                                * Menurunkan resiko penyakit diabetes\r\n
+                                * Menstabilkan tekanan darah\r\n",
             'size' => '250 gr',
             'price' => '50000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -319,17 +319,17 @@ class DatabaseSeeder extends Seeder
             'name' => 'Granola Honey',
             'category_id' => '1',
             'description' => "Komposisi:\r\n
-Almond, mede, cranberry, rolled oat, kismis kuning, kismis hitam, pumpkin, sunflower\r\n
-Manfaat Granola Honey\r\n
-* Memperbaiki sistem pencernaan\r\n
-* Meningkatkan sistem kekebalan tubuh\r\n
-* Membantu menurunkan berat badan\r\n
-* Meningkatkan energi\r\n
-* Menurunkan kolestrol\r\n
-* Mendukung kehamilan yang sehat\r\n
-* Mengatur tekanan darah\r\n
-* Mengatasi beberapa kondisi medis\r\n
-* Mengandung protein nabati yang tinggi",
+                                Almond, mede, cranberry, rolled oat, kismis kuning, kismis hitam, pumpkin, sunflower\r\n
+                                Manfaat Granola Honey\r\n
+                                * Memperbaiki sistem pencernaan\r\n
+                                * Meningkatkan sistem kekebalan tubuh\r\n
+                                * Membantu menurunkan berat badan\r\n
+                                * Meningkatkan energi\r\n
+                                * Menurunkan kolestrol\r\n
+                                * Mendukung kehamilan yang sehat\r\n
+                                * Mengatur tekanan darah\r\n
+                                * Mengatasi beberapa kondisi medis\r\n
+                                * Mengandung protein nabati yang tinggi\r\n",
             'size' => ' gr',
             'price' => '65000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -341,10 +341,10 @@ Manfaat Granola Honey\r\n
             'name' => 'Madu Hutan (Small)',
             'category_id' => '1',
             'description' => "Fungsi madu ternyata tidak sebatas menjadi pemanis alami bagi makanan ataupun bahan masker untuk memperhalus kulit wajah. Tak hanya itu, madu juga memiliki untuk penyembuhan luka karena:\r\n
-1 Senyawa antibakteri\r\n
-2. PH rendah\r\n
-3. Kandungan qula alami\r\n
-4. Antioksidan",
+                                1 Senyawa antibakteri\r\n
+                                2. PH rendah\r\n
+                                3. Kandungan qula alami\r\n
+                                4. Antioksidan\r\n",
             'size' => '250 gr',
             'price' => '50000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -356,10 +356,10 @@ Manfaat Granola Honey\r\n
             'name' => 'Madu Hutan (Medium)',
             'category_id' => '1',
             'description' => "Fungsi madu ternyata tidak sebatas menjadi pemanis alami bagi makanan ataupun bahan masker untuk memperhalus kulit wajah. Tak hanya itu, madu juga memiliki untuk penyembuhan luka karena:\r\n
-1 Senyawa antibakteri\r\n
-2. PH rendah\r\n
-3. Kandungan qula alami\r\n
-4. Antioksidan",
+                            1 Senyawa antibakteri\r\n
+                            2. PH rendah\r\n
+                            3. Kandungan qula alami\r\n
+                            4. Antioksidan\r\n",
             'size' => '500 gr',
             'price' => '95000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -371,10 +371,10 @@ Manfaat Granola Honey\r\n
             'name' => 'Madu Hutan (Large)',
             'category_id' => '1',
             'description' => "Fungsi madu ternyata tidak sebatas menjadi pemanis alami bagi makanan ataupun bahan masker untuk memperhalus kulit wajah. Tak hanya itu, madu juga memiliki untuk penyembuhan luka karena:\r\n
-1 Senyawa antibakteri\r\n
-2. PH rendah\r\n
-3. Kandungan qula alami\r\n
-4. Antioksidan",
+                                1 Senyawa antibakteri\r\n
+                                2. PH rendah\r\n
+                                3. Kandungan qula alami\r\n
+                                4. Antioksidan\r\n",
             'size' => '1000 gr',
             'price' => '180000',
             'expired_date' => Carbon::create('2024', '08', '23'),
@@ -386,39 +386,78 @@ Manfaat Granola Honey\r\n
             'name' => 'Bekam',
             'category_id' => '2',
             'description' => "Manfaat Bekam (Sunnah dan Steril)\r\n
-ㆍ Membuang sel-sel darah yang mati\r\n
-ㆍ Menstabilkan tekanan darah\r\n
-ㆍ Melancarkan peredaran darah\r\n
-ㆍ Mengeluarkan toksin dalam tubuh\r\n
-ㆍ Menghilangkan angin dalam badan\r\n
-ㆍ Mengurangi kolestrol dalam tubuh\r\n
-ㆍ Meringankan tubuh\r\n
-ㆍ Melegakan sakit kepala\r\n
-ㆍ Mengatasi kelelahan",
+                            ㆍ Membuang sel-sel darah yang mati\r\n
+                            ㆍ Menstabilkan tekanan darah\r\n
+                            ㆍ Melancarkan peredaran darah\r\n
+                            ㆍ Mengeluarkan toksin dalam tubuh\r\n
+                            ㆍ Menghilangkan angin dalam badan\r\n
+                            ㆍ Mengurangi kolestrol dalam tubuh\r\n
+                            ㆍ Meringankan tubuh\r\n
+                            ㆍ Melegakan sakit kepala\r\n
+                            ㆍ Mengatasi kelelahan\r\n",
             'duration' => '30',
             'price' => '150000',
             'image_path' => '/service-images/bekam.jpg'
         ]);
 
         Service::create([
+            'name' => 'Paket Pijat Stres Wajah, Setrika Wajah, dan Masker',
+            'category_id' => '2',
+            'description' => "Manfaat Pijat Stres Wajah\r\n
+                                ㆍMencegah penuaan dini\r\n
+                                ㆍMelancarkan peredaran darah\r\n
+                                ㆍMerelaksasi otot wajah\r\n
+                                ㆍMenghilangkan stress\r\n
+                                ㆍMengatasi sinusitis\r\n
+                                ㆍMengecilkan pori-pori\r\n
+                                ㆍDetox kulit secara alami\r\n
+                                ㆍMembuat wajah lebih bercahaya\r\n
+                                Manfaat Setrika Wajah\r\n
+                                ㆍMengencangkan kulit wajah yang sudah mulai mengendur\r\n
+                                ㆍMembantu menghilangkan garis-garis halus dan keriput\r\n
+                                ㆍMenghilangkan flek hitam yang membandel bertahan di wajah anda\r\n
+                                ㆍMembantu mengecilkan pori-pori sehingga anda tidak mudah berjerawat dan berkomedo.\r\n
+                                ㆍWajah akan menjadi lebih cerah karena sel-sel kulit mati akan diangkat dengan menggunakan alat setrika wajah ini\r\n
+                                ㆍUntuk menghilangkan masalah pada kantung mata\r\n
+                                Manfaat Setrika Wajah\r\n
+                                ㆍMengencangkan kulit wajah yang sudah mulai mengendur\r\n
+                                ㆍMembantu menghilangkan garis-garis halus dan keriput\r\n
+                                ㆍMenghilangkan flek hitam yang membandel bertahan di wajah anda\r\n
+                                ㆍMembantu mengecilkan pori-pori sehingga anda tidak mudah berjerawat dan berkomedo.\r\n
+                                ㆍWajah akan menjadi lebih cerah karena sel-sel kulit mati akan diangkat dengan menggunakan alat setrika wajah ini\r\n
+                                ㆍUntuk menghilangkan masalah pada kantung mata\r\n
+                                Manfaat Masker\r\n
+                                ㆍMemberi nutrisi ke kulit wajah\r\n
+                                ㆍMelembabkan kulit wajah\r\n
+                                ㆍMengencangkan kulit wajah\r\n
+                                ㆍMenghaluskan kulit wajah\r\n
+                                ㆍMencerahkan kulit wajah\r\n
+                                ㆍEksfoliasi kulif wajah\r\n
+                                ㆍMeredakan masalah kulit wajah\r\n",
+            'duration' => '60',
+            'price' => '250000',
+            'image_path' => '/service-images/psm.jpg'
+        ]);
+
+        Service::create([
             'name' => 'Paket Pijat Stres Wajah dan Setrika Wajah',
             'category_id' => '2',
             'description' => "Manfaat Pijat Stres Wajah\r\n
-ㆍMencegah penuaan dini\r\n
-ㆍMelancarkan peredaran darah\r\n
-ㆍMerelaksasi otot wajah\r\n
-ㆍMenghilangkan stress\r\n
-ㆍMengatasi sinusitis\r\n
-ㆍMengecilkan pori-pori\r\n
-ㆍDetox kulit secara alami\r\n
-ㆍMembuat wajah lebih bercahaya\r\n
-Manfaat Setrika Wajah\r\n
-ㆍMengencangkan kulit wajah yang sudah mulai mengendur\r\n
-ㆍMembantu menghilangkan garis-garis halus dan keriput\r\n
-ㆍMenghilangkan flek hitam yang membandel bertahan di wajah anda\r\n
-ㆍMembantu mengecilkan pori-pori sehingga anda tidak mudah berjerawat dan berkomedo.\r\n
-ㆍWajah akan menjadi lebih cerah karena sel-sel kulit mati akan diangkat dengan menggunakan alat setrika wajah ini\r\n
-ㆍUntuk menghilangkan masalah pada kantung mata",
+                            ㆍMencegah penuaan dini\r\n
+                            ㆍMelancarkan peredaran darah\r\n
+                            ㆍMerelaksasi otot wajah\r\n
+                            ㆍMenghilangkan stress\r\n
+                            ㆍMengatasi sinusitis\r\n
+                            ㆍMengecilkan pori-pori\r\n
+                            ㆍDetox kulit secara alami\r\n
+                            ㆍMembuat wajah lebih bercahaya\r\n
+                            Manfaat Setrika Wajah\r\n
+                            ㆍMengencangkan kulit wajah yang sudah mulai mengendur\r\n
+                            ㆍMembantu menghilangkan garis-garis halus dan keriput\r\n
+                            ㆍMenghilangkan flek hitam yang membandel bertahan di wajah anda\r\n
+                            ㆍMembantu mengecilkan pori-pori sehingga anda tidak mudah berjerawat dan berkomedo.\r\n
+                            ㆍWajah akan menjadi lebih cerah karena sel-sel kulit mati akan diangkat dengan menggunakan alat setrika wajah ini\r\n
+                            ㆍUntuk menghilangkan masalah pada kantung mata\r\n",
             'duration' => '60',
             'price' => '225000',
             'image_path' => '/service-images/ps.jpg'
@@ -428,41 +467,41 @@ Manfaat Setrika Wajah\r\n
             'name' => 'Paket Pijat Stres Wajah, Lumi SPA, Setrika Wajah, Masker',
             'category_id' => '2',
             'description' => "Manfaat Pijat Stres Wajah\r\n
-ㆍMencegah penuaan dini\r\n
-ㆍMelancarkan peredaran darah\r\n
-ㆍMerelaksasi otot wajah\r\n
-ㆍMenghilangkan stress\r\n
-ㆍMengatasi sinusitis\r\n
-ㆍMengecilkan pori-pori\r\n
-ㆍDetox kulit secara alami\r\n
-ㆍMembuat wajah lebih bercahaya\r\n
+                                ㆍMencegah penuaan dini\r\n
+                                ㆍMelancarkan peredaran darah\r\n
+                                ㆍMerelaksasi otot wajah\r\n
+                                ㆍMenghilangkan stress\r\n
+                                ㆍMengatasi sinusitis\r\n
+                                ㆍMengecilkan pori-pori\r\n
+                                ㆍDetox kulit secara alami\r\n
+                                ㆍMembuat wajah lebih bercahaya\r\n
 
-Manfaat Lumi SPA\r\n
-ㆍMembersihkan pori-pori dengan sempurna\r\n
-ㆍTeknologi Oscillation mampu mengangkat kotoran dan minyak di wajah\r\n
-ㆍMengangkat sel-sel kulit mati\r\n
-ㆍMampu meningkatkan kesehatan kulit wajah\r\n
-ㆍDapat mengurangi tanda-tanda penuaan\r\n
-ㆍTeknologi putaran silikon head LumiSpa mampu secara nyata menghasilkean sistem pembersih wajah yang maksimal\r\n
-ㆍMengatasijerawat dan masalah kulit wajah\r\n
-ㆍMerangsang produksi kolagen\r\n
+                                Manfaat Lumi SPA\r\n
+                                ㆍMembersihkan pori-pori dengan sempurna\r\n
+                                ㆍTeknologi Oscillation mampu mengangkat kotoran dan minyak di wajah\r\n
+                                ㆍMengangkat sel-sel kulit mati\r\n
+                                ㆍMampu meningkatkan kesehatan kulit wajah\r\n
+                                ㆍDapat mengurangi tanda-tanda penuaan\r\n
+                                ㆍTeknologi putaran silikon head LumiSpa mampu secara nyata menghasilkean sistem pembersih wajah yang maksimal\r\n
+                                ㆍMengatasijerawat dan masalah kulit wajah\r\n
+                                ㆍMerangsang produksi kolagen\r\n
 
-Manfaat Setrika Wajah\r\n
-ㆍMengencangkan kulit wajah yang sudah mulai mengendur\r\n
-ㆍMembantu menghilangkan garis-garis halus dan keriput\r\n
-ㆍMenghilangkan flek hitam yang membandel bertahan di wajah anda\r\n
-ㆍMembantu mengecilkan pori-pori sehingga anda tidak mudah berjerawat dan berkomedo.\r\n
-ㆍWajah akan menjadi lebih cerah karena sel-sel kulit mati akan diangkat dengan menggunakan alat setrika wajah ini\r\n
-ㆍUntuk menghilangkan masalah pada kantung mata\r\n
+                                Manfaat Setrika Wajah\r\n
+                                ㆍMengencangkan kulit wajah yang sudah mulai mengendur\r\n
+                                ㆍMembantu menghilangkan garis-garis halus dan keriput\r\n
+                                ㆍMenghilangkan flek hitam yang membandel bertahan di wajah anda\r\n
+                                ㆍMembantu mengecilkan pori-pori sehingga anda tidak mudah berjerawat dan berkomedo.\r\n
+                                ㆍWajah akan menjadi lebih cerah karena sel-sel kulit mati akan diangkat dengan menggunakan alat setrika wajah ini\r\n
+                                ㆍUntuk menghilangkan masalah pada kantung mata\r\n
 
-Manfaat Masker\r\n
-ㆍMemberi nutrisi ke kulit wajah\r\n
-ㆍMelembabkan kulit wajah\r\n
-ㆍMengencangkan kulit wajah\r\n
-ㆍMenghaluskan kulit wajah\r\n
-ㆍMencerahkan kulit wajah\r\n
-ㆍEksfoliasi kulif wajah\r\n
-ㆍMeredakan masalah kulit wajah",
+                                Manfaat Masker\r\n
+                                ㆍMemberi nutrisi ke kulit wajah\r\n
+                                ㆍMelembabkan kulit wajah\r\n
+                                ㆍMengencangkan kulit wajah\r\n
+                                ㆍMenghaluskan kulit wajah\r\n
+                                ㆍMencerahkan kulit wajah\r\n
+                                ㆍEksfoliasi kulif wajah\r\n
+                                ㆍMeredakan masalah kulit wajah\r\n",
             'duration' => '50',
             'price' => '325000',
             'image_path' => '/service-images/plsm.jpg'
@@ -472,24 +511,24 @@ Manfaat Masker\r\n
             'name' => 'Paket Pijat Stres Wajah dan Lumi SPA',
             'category_id' => '2',
             'description' => "Manfaat Pijat Stres Wajah\r\n
-ㆍMencegah penuaan dini\r\n
-ㆍMelancarkan peredaran darah\r\n
-ㆍMerelaksasi otot wajah\r\n
-ㆍMenghilangkan stress\r\n
-ㆍMengatasi sinusitis\r\n
-ㆍMengecilkan pori-pori\r\n
-ㆍDetox kulit secara alami\r\n
-ㆍMembuat wajah lebih bercahaya\r\n
+                                ㆍMencegah penuaan dini\r\n
+                                ㆍMelancarkan peredaran darah\r\n
+                                ㆍMerelaksasi otot wajah\r\n
+                                ㆍMenghilangkan stress\r\n
+                                ㆍMengatasi sinusitis\r\n
+                                ㆍMengecilkan pori-pori\r\n
+                                ㆍDetox kulit secara alami\r\n
+                                ㆍMembuat wajah lebih bercahaya\r\n
 
-Manfaat Lumi SPA\r\n
-ㆍMembersihkan pori-pori dengan sempurna\r\n
-ㆍTeknologi Oscillation mampu mengangkat kotoran dan minyak di wajah\r\n
-ㆍMengangkat sel-sel kulit mati\r\n
-ㆍMampu meningkatkan kesehatan kulit wajah\r\n
-ㆍDapat mengurangi tanda-tanda penuaan\r\n
-ㆍTeknologi putaran silikon head LumiSpa mampu secara nyata menghasilkean sistem pembersih wajah yang maksimal\r\n
-ㆍMengatasijerawat dan masalah kulit wajah\r\n
-ㆍMerangsang produksi kolagen\r\n",
+                                Manfaat Lumi SPA\r\n
+                                ㆍMembersihkan pori-pori dengan sempurna\r\n
+                                ㆍTeknologi Oscillation mampu mengangkat kotoran dan minyak di wajah\r\n
+                                ㆍMengangkat sel-sel kulit mati\r\n
+                                ㆍMampu meningkatkan kesehatan kulit wajah\r\n
+                                ㆍDapat mengurangi tanda-tanda penuaan\r\n
+                                ㆍTeknologi putaran silikon head LumiSpa mampu secara nyata menghasilkean sistem pembersih wajah yang maksimal\r\n
+                                ㆍMengatasijerawat dan masalah kulit wajah\r\n
+                                ㆍMerangsang produksi kolagen\r\n",
             'duration' => '50',
             'price' => '175000',
             'image_path' => '/service-images/pl.jpg'
@@ -499,31 +538,31 @@ Manfaat Lumi SPA\r\n
             'name' => 'Paket Pijat Stres Wajah, Lumi SPA, dan Setrika Wajah',
             'category_id' => '2',
             'description' => "Manfaat Pijat Stres Wajah\r\n
-            ㆍMencegah penuaan dini\r\n
-            ㆍMelancarkan peredaran darah\r\n
-            ㆍMerelaksasi otot wajah\r\n
-            ㆍMenghilangkan stress\r\n
-            ㆍMengatasi sinusitis\r\n
-            ㆍMengecilkan pori-pori\r\n
-            ㆍDetox kulit secara alami\r\n
-            ㆍMembuat wajah lebih bercahaya\r\n
-            Manfaat Lumi SPA\r\n
-            ㆍMembersihkan pori-pori dengan sempurna\r\n
-            ㆍTeknologi Oscillation mampu mengangkat kotoran dan minyak di wajah\r\n
-            ㆍMengangkat sel-sel kulit mati\r\n
-            ㆍMampu meningkatkan kesehatan kulit wajah\r\n
-            ㆍDapat mengurangi tanda-tanda penuaan\r\n
-            ㆍTeknologi putaran silikon head LumiSpa mampu secara nyata menghasilkean sistem pembersih wajah yang maksimal\r\n
-            ㆍMengatasijerawat dan masalah kulit wajah\r\n
-            ㆍMerangsang produksi kolagen\r\n
+                                ㆍMencegah penuaan dini\r\n
+                                ㆍMelancarkan peredaran darah\r\n
+                                ㆍMerelaksasi otot wajah\r\n
+                                ㆍMenghilangkan stress\r\n
+                                ㆍMengatasi sinusitis\r\n
+                                ㆍMengecilkan pori-pori\r\n
+                                ㆍDetox kulit secara alami\r\n
+                                ㆍMembuat wajah lebih bercahaya\r\n
+                                Manfaat Lumi SPA\r\n
+                                ㆍMembersihkan pori-pori dengan sempurna\r\n
+                                ㆍTeknologi Oscillation mampu mengangkat kotoran dan minyak di wajah\r\n
+                                ㆍMengangkat sel-sel kulit mati\r\n
+                                ㆍMampu meningkatkan kesehatan kulit wajah\r\n
+                                ㆍDapat mengurangi tanda-tanda penuaan\r\n
+                                ㆍTeknologi putaran silikon head LumiSpa mampu secara nyata menghasilkean sistem pembersih wajah yang maksimal\r\n
+                                ㆍMengatasijerawat dan masalah kulit wajah\r\n
+                                ㆍMerangsang produksi kolagen\r\n
 
-            Manfaat Setrika Wajah\r\n
-            ㆍMengencangkan kulit wajah yang sudah mulai mengendur\r\n
-            ㆍMembantu menghilangkan garis-garis halus dan keriput\r\n
-            ㆍMenghilangkan flek hitam yang membandel bertahan di wajah anda\r\n
-            ㆍMembantu mengecilkan pori-pori sehingga anda tidak mudah berjerawat dan berkomedo.\r\n
-            ㆍWajah akan menjadi lebih cerah karena sel-sel kulit mati akan diangkat dengan menggunakan alat setrika wajah ini\r\n
-            ㆍUntuk menghilangkan masalah pada kantung mata\r\n",
+                                Manfaat Setrika Wajah\r\n
+                                ㆍMengencangkan kulit wajah yang sudah mulai mengendur\r\n
+                                ㆍMembantu menghilangkan garis-garis halus dan keriput\r\n
+                                ㆍMenghilangkan flek hitam yang membandel bertahan di wajah anda\r\n
+                                ㆍMembantu mengecilkan pori-pori sehingga anda tidak mudah berjerawat dan berkomedo.\r\n
+                                ㆍWajah akan menjadi lebih cerah karena sel-sel kulit mati akan diangkat dengan menggunakan alat setrika wajah ini\r\n
+                                ㆍUntuk menghilangkan masalah pada kantung mata\r\n",
             'duration' => '50',
             'price' => '275000',
             'image_path' => '/service-images/pls.jpg'
@@ -533,41 +572,41 @@ Manfaat Lumi SPA\r\n
             'name' => 'Paket Pijat Stres Wajah, Lumi SPA, Setrika Wajah, Masker, Totok Inner Beauty',
             'category_id' => '2',
             'description' => "Manfaat Pijat Stres Wajah\r\n
-            ㆍMencegah penuaan dini\r\n
-            ㆍMelancarkan peredaran darah\r\n
-            ㆍMerelaksasi otot wajah\r\n
-            ㆍMenghilangkan stress\r\n
-            ㆍMengatasi sinusitis\r\n
-            ㆍMengecilkan pori-pori\r\n
-            ㆍDetox kulit secara alami\r\n
-            ㆍMembuat wajah lebih bercahaya\r\n
+                                ㆍMencegah penuaan dini\r\n
+                                ㆍMelancarkan peredaran darah\r\n
+                                ㆍMerelaksasi otot wajah\r\n
+                                ㆍMenghilangkan stress\r\n
+                                ㆍMengatasi sinusitis\r\n
+                                ㆍMengecilkan pori-pori\r\n
+                                ㆍDetox kulit secara alami\r\n
+                                ㆍMembuat wajah lebih bercahaya\r\n
 
-            Manfaat Lumi SPA\r\n
-            ㆍMembersihkan pori-pori dengan sempurna\r\n
-            ㆍTeknologi Oscillation mampu mengangkat kotoran dan minyak di wajah\r\n
-            ㆍMengangkat sel-sel kulit mati\r\n
-            ㆍMampu meningkatkan kesehatan kulit wajah\r\n
-            ㆍDapat mengurangi tanda-tanda penuaan\r\n
-            ㆍTeknologi putaran silikon head LumiSpa mampu secara nyata menghasilkean sistem pembersih wajah yang maksimal\r\n
-            ㆍMengatasijerawat dan masalah kulit wajah\r\n
-            ㆍMerangsang produksi kolagen\r\n
+                                Manfaat Lumi SPA\r\n
+                                ㆍMembersihkan pori-pori dengan sempurna\r\n
+                                ㆍTeknologi Oscillation mampu mengangkat kotoran dan minyak di wajah\r\n
+                                ㆍMengangkat sel-sel kulit mati\r\n
+                                ㆍMampu meningkatkan kesehatan kulit wajah\r\n
+                                ㆍDapat mengurangi tanda-tanda penuaan\r\n
+                                ㆍTeknologi putaran silikon head LumiSpa mampu secara nyata menghasilkean sistem pembersih wajah yang maksimal\r\n
+                                ㆍMengatasijerawat dan masalah kulit wajah\r\n
+                                ㆍMerangsang produksi kolagen\r\n
 
-            Manfaat Setrika Wajah\r\n
-            ㆍMengencangkan kulit wajah yang sudah mulai mengendur\r\n
-            ㆍMembantu menghilangkan garis-garis halus dan keriput\r\n
-            ㆍMenghilangkan flek hitam yang membandel bertahan di wajah anda\r\n
-            ㆍMembantu mengecilkan pori-pori sehingga anda tidak mudah berjerawat dan berkomedo.\r\n
-            ㆍWajah akan menjadi lebih cerah karena sel-sel kulit mati akan diangkat dengan menggunakan alat setrika wajah ini\r\n
-            ㆍUntuk menghilangkan masalah pada kantung mata\r\n
+                                Manfaat Setrika Wajah\r\n
+                                ㆍMengencangkan kulit wajah yang sudah mulai mengendur\r\n
+                                ㆍMembantu menghilangkan garis-garis halus dan keriput\r\n
+                                ㆍMenghilangkan flek hitam yang membandel bertahan di wajah anda\r\n
+                                ㆍMembantu mengecilkan pori-pori sehingga anda tidak mudah berjerawat dan berkomedo.\r\n
+                                ㆍWajah akan menjadi lebih cerah karena sel-sel kulit mati akan diangkat dengan menggunakan alat setrika wajah ini\r\n
+                                ㆍUntuk menghilangkan masalah pada kantung mata\r\n
 
-            Manfaat Masker\r\n
-            ㆍMemberi nutrisi ke kulit wajah\r\n
-            ㆍMelembabkan kulit wajah\r\n
-            ㆍMengencangkan kulit wajah\r\n
-            ㆍMenghaluskan kulit wajah\r\n
-            ㆍMencerahkan kulit wajah\r\n
-            ㆍEksfoliasi kulif wajah\r\n
-            ㆍMeredakan masalah kulit wajah",
+                                Manfaat Masker\r\n
+                                ㆍMemberi nutrisi ke kulit wajah\r\n
+                                ㆍMelembabkan kulit wajah\r\n
+                                ㆍMengencangkan kulit wajah\r\n
+                                ㆍMenghaluskan kulit wajah\r\n
+                                ㆍMencerahkan kulit wajah\r\n
+                                ㆍEksfoliasi kulif wajah\r\n
+                                ㆍMeredakan masalah kulit wajah",
             'duration' => '120',
             'price' => '385000',
             'image_path' => '/service-images/plsmt.jpeg'
@@ -577,23 +616,23 @@ Manfaat Lumi SPA\r\n
             'name' => 'Paket Totok Punggung dan Bekam',
             'category_id' => '2',
             'description' => "Manfaat Totok Punggung\r\n
-Metode pengobatan yang dilakukan dengan\r\n
-menggunakan jari untuk memberikan stimulan pada\r\n
-titik /simpul syaraf tertentu yang terpusat di area\r\n
-tulang belakang, yang mana titik /simpul tersebut itu\r\n
-terkoneksi langsung dengan keluhan penyakit atau\r\n
-organ yang sedang mengalami gangguan.\r\n
+                                Metode pengobatan yang dilakukan dengan\r\n
+                                menggunakan jari untuk memberikan stimulan pada\r\n
+                                titik /simpul syaraf tertentu yang terpusat di area\r\n
+                                tulang belakang, yang mana titik /simpul tersebut itu\r\n
+                                terkoneksi langsung dengan keluhan penyakit atau\r\n
+                                organ yang sedang mengalami gangguan.\r\n
 
-Manfaat Bekam (Sunnah dan Steril)\r\n
-ㆍ Membuang sel-sel darah yang mati\r\n
-ㆍ Menstabilkan tekanan darah\r\n
-ㆍ Melancarkan peredaran darah\r\n
-ㆍ Mengeluarkan toksin dalam tubuh\r\n
-ㆍ Menghilangkan angin dalam badan\r\n
-ㆍ Mengurangi kolestrol dalam tubuh\r\n
-ㆍ Meringankan tubuh\r\n
-ㆍ Melegakan sakit kepala\r\n
-ㆍ Mengatasi kelelahan",
+                                Manfaat Bekam (Sunnah dan Steril)\r\n
+                                ㆍ Membuang sel-sel darah yang mati\r\n
+                                ㆍ Menstabilkan tekanan darah\r\n
+                                ㆍ Melancarkan peredaran darah\r\n
+                                ㆍ Mengeluarkan toksin dalam tubuh\r\n
+                                ㆍ Menghilangkan angin dalam badan\r\n
+                                ㆍ Mengurangi kolestrol dalam tubuh\r\n
+                                ㆍ Meringankan tubuh\r\n
+                                ㆍ Melegakan sakit kepala\r\n
+                                ㆍ Mengatasi kelelahan",
             'duration' => '80',
             'price' => '250000',
             'image_path' => '/service-images/ps.jpg'
@@ -603,12 +642,12 @@ Manfaat Bekam (Sunnah dan Steril)\r\n
             'name' => 'Totok Punggung',
             'category_id' => '2',
             'description' => "Manfaat Totok Punggung\r\n
-Metode pengobatan yang dilakukan dengan\r\n
-menggunakan jari untuk memberikan stimulan pada\r\n
-titik /simpul syaraf tertentu yang terpusat di area\r\n
-tulang belakang, yang mana titik /simpul tersebut itu\r\n
-terkoneksi langsung dengan keluhan penyakit atau\r\n
-organ yang sedang mengalami gangguan.\r\n",
+                                Metode pengobatan yang dilakukan dengan\r\n
+                                menggunakan jari untuk memberikan stimulan pada\r\n
+                                titik /simpul syaraf tertentu yang terpusat di area\r\n
+                                tulang belakang, yang mana titik /simpul tersebut itu\r\n
+                                terkoneksi langsung dengan keluhan penyakit atau\r\n
+                                organ yang sedang mengalami gangguan.\r\n",
             'duration' => '30',
             'price' => '100000',
             'image_path' => '/service-images/totokpunggung.jpg'
@@ -620,7 +659,7 @@ organ yang sedang mengalami gangguan.\r\n",
             'description' => 'Deskripsi Akupuntur Kecantikan & Kesehatan',
             'duration' => '30',
             'price' => '125000',
-            'image_path' => '/service-images/.jpg'
+            'image_path' => '/service-images/akupuntur.jpg'
         ]);
 
         Service::create([
@@ -629,7 +668,7 @@ organ yang sedang mengalami gangguan.\r\n",
             'description' => 'Deskripsi Fashdu',
             'duration' => '30',
             'price' => '100000',
-            'image_path' => '/service-images/.jpg'
+            'image_path' => '/service-images/fashdu.jpg'
         ]);
     }
 }
