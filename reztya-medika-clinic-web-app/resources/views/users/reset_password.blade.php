@@ -29,6 +29,24 @@
                             @enderror
                         </div>
                         <div class="form-floating mb-2">
+                            <input autofocus placeholder="Username" id="floatingUsername" class="shadow-none form-control @error('username') is-invalid @enderror" type="text" name="username" value="{{old('username')}}">
+                            <label for="floatingUsername" class="font-futura-reztya">Username</label>
+                            @error('username')
+                            <div class="invalid-feedback">
+                                Username wajib diisi / email sudah terdaftarkan
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input placeholder="Birthdate" id="floatingBirthdate" class="shadow-none form-control @error('birthdate') is-invalid @enderror" type="date" name="birthdate" value="{{old('birthdate')}}">
+                            <label for="floatingBirthdate" class="font-futura-reztya">Tanggal Lahir</label>
+                            @error('birthdate')
+                            <div class="invalid-feedback">
+                                Tanggal lahir wajib diisi
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-2">
                             <input placeholder="Password" id="floatingPassword" class="shadow-none form-control @error('password') is-invalid @enderror" type="password" name="password" value="{{old('password')}}">
                             <label for="floatingPassword" class="font-futura-reztya">Kata Sandi Baru</label>
                             @error('password')
@@ -46,7 +64,7 @@
                             </div>
                             @enderror
                         </div>
-                        <div class="d-grid gap-2 my-4">
+                        <div class="d-grid gap-2 mt-4">
                             <a href="/signin" type="button" class="btn btn-outline-danger font-futura-reztya">Batal</a>
                             <button class="btn button-outline-reztya font-futura-reztya" type="submit">Simpan</button>
                         </div>

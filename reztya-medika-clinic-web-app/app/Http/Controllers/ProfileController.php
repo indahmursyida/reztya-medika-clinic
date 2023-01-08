@@ -14,6 +14,8 @@ class ProfileController extends Controller
     public function resetPassword(Request $request) {
         $reset = $request->validate([
             'email' => 'required',
+            'username' => 'required',
+            'birthdate' => 'required',
             'password' => 'required',
             'confirm_password' => 'required'
         ]);
@@ -23,8 +25,14 @@ class ProfileController extends Controller
 
         if (Hash::check($reset['password'], $confirm_new_pass) && Hash::check($reset['confirm_password'], $new_pass)) {
             $email = $request['email'];
+            $username = $request['username'];
+            $birthdate = $request['birthdate'];
 
-            $user = DB::table('users')->where('email', $email)->first();
+            $user = DB::table('users')
+                ->where('email', $email)
+                ->where('username', $username)
+                ->where('birthdate', $birthdate)
+                ->first();
 
             if($user) {
                 if (!Hash::check($reset['confirm_password'], $user->password)) {
@@ -86,30 +94,34 @@ class ProfileController extends Controller
         if(Auth::user()){
             if(Auth::user()->user_role_id == 1)
             {
-                $orders = Order::where('status', 'ON GOING')->orWhere('status', 'WAITING')->get();
+                $orders = Order::where('status', 'ONGOING')->orWhere('status', 'WAITING')->get();
             }
             else
             {
-                $orders = Order::where('user_id', Auth::user()->user_id)->where('status', 'WAITING')->orWhere('status', 'ON GOING')->get();
+                $orders = Order::where('user_id', Auth::user()->user_id)->where('status', 'WAITING')->orWhere('status', 'ONGOING')->get();
             }
         }
 
+        $once = false;
         if(!$orders->isEmpty())
         {
             foreach($orders as $order)
             {
-                foreach($order->orderDetail as $order_detail)
-                {
-                    if($order_detail->service_id) {
-                        $totalPrice += $order_detail->service->price;
-                        $servicePrice += $order_detail->service->price;
-                        $totalItemService += 1;
+                if ($once == false) {
+                    foreach($order->orderDetail as $order_detail)
+                    {
+                        if($order_detail->service_id) {
+                            $totalPrice += $order_detail->service->price;
+                            $servicePrice += $order_detail->service->price;
+                            $totalItemService += 1;
+                        }
+                        else {
+                            $totalPrice += $order_detail->product->price * $order_detail->quantity;
+                            $productPrice += $order_detail->product->price * $order_detail->quantity;
+                            $totalItemProduct += 1;
+                        }
                     }
-                    else {
-                        $totalPrice += $order_detail->product->price * $order_detail->quantity;
-                        $productPrice += $order_detail->product->price * $order_detail->quantity;
-                        $totalItemProduct += 1;
-                    }
+                    $once = true;
                 }
             }
         }
@@ -124,34 +136,38 @@ class ProfileController extends Controller
         $productPriceHistory = 0;
         $servicePriceHistory = 0;
 
-        if(Auth::user()->user_role_id == 1)
-        {
-            $order_history = Order::where('status','FINISHED')->orWhere('status','CANCELED')->get();
-        }
-        else
-        {
-            $order_history = Order::where('user_id', Auth::user()->user_id)->where('status','FINISHED')->orWhere('status','CANCELED')->get();
+        if(Auth::user()) {
+            if (Auth::user()->user_role_id == 1) {
+                $order_history = Order::where('status', 'FINISHED')->orWhere('status', 'CANCELED')->get();
+            } else {
+                $order_history = Order::where('user_id', Auth::user()->user_id)->where('status', 'FINISHED')->orWhere('status', 'CANCELED')->get();
+            }
         }
 
+        $once = false;
         if(!$order_history->isEmpty())
         {
             foreach($order_history as $order)
             {
-                foreach($order->orderDetail as $order_detail)
-                {
-                    if($order_detail->service_id) {
-                        $totalPriceHistory += $order_detail->service->price;
-                        $servicePriceHistory += $order_detail->service->price;
-                        $serviceItemHistory += 1;
+                if ($once == false) {
+                    foreach ($order->orderDetail as $order_detail) {
+                        if ($order_detail->service_id) {
+                            $totalPriceHistory += $order_detail->service->price;
+                            $servicePriceHistory += $order_detail->service->price;
+                            $serviceItemHistory += 1;
+                        } else {
+                            $totalPriceHistory += $order_detail->product->price * $order_detail->quantity;
+                            $productPriceHistory += $order_detail->product->price * $order_detail->quantity;
+                            $productItemHistory += 1;
+                        }
                     }
-                    else {
-                        $totalPriceHistory += $order_detail->product->price * $order_detail->quantity;
-                        $productPriceHistory += $order_detail->product->price * $order_detail->quantity;
-                        $productItemHistory += 1;
-                    }
+                    $once = true;
                 }
             }
         }
+
+        $orders = $orders[0];
+        $order_history = $order_history[0];
 
         return view('profile.view-profile')
             ->with(compact('printOnce'))
