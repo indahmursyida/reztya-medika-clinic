@@ -53,7 +53,7 @@
         <div class="unselectable d-flex justify-content-center mt-2">
             <div class="row">
                 @foreach($services as $service)
-                    <div class="col-3 mb-4 font-futura-reztya">
+                    <div class="col-3 mb-3 font-futura-reztya d-flex">
                         <a href="/service-detail/{{$service->service_id}}" class="text-decoration-none">
                             <div class="card bg-white outline-reztya">
                                 <div class="card-header">
