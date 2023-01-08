@@ -49,11 +49,26 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             'user_role_id' => 2,
-            'username' => 'indahmursyida',
-            'name' => 'Indah Mursyida Bahrina',
+            'username' => 'harishsaid',
+            'name' => 'Harish Said Bustomi',
             'birthdate' => '2001-06-18',
             'phone' => '081285879816',
-            'address' => 'Jalan KH Iskandar Muda',
+            'address' => 'Jalan KH. Soleh Iskandar',
+            'email' => 'harishsaid37@gmail.com',
+            'password' => bcrypt('member'),
+            'profile_picture' => 'profile-images/profile_picture_default.jpg',
+            'is_banned' => false,
+            'city_id' => 457,
+            'email_verified_at' => now()
+        ]);
+
+        DB::table('users')->insert([
+            'user_role_id' => 2,
+            'username' => 'indahmursyida',
+            'name' => 'Indah Mursyida Bahrina',
+            'birthdate' => '2001-05-31',
+            'phone' => '082173132215',
+            'address' => 'Jalan Fedora VIII',
             'email' => 'indahbahrina@gmail.com',
             'password' => bcrypt('member'),
             'profile_picture' => 'profile-images/profile_picture_default.jpg',
@@ -64,19 +79,18 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             'user_role_id' => 2,
-            'username' => 'Member2',
-            'name' => 'Member2 Member2 Member2',
-            'birthdate' => '2001-06-18',
-            'phone' => '081285879816',
-            'address' => 'Jalan KH Iskandar Tua',
-            'email' => 'member@gmail.com',
+            'username' => 'yesika',
+            'name' => 'Yesika',
+            'birthdate' => '2001-11-02',
+            'phone' => '085162647060',
+            'address' => 'Jalan Manggala IV',
+            'email' => 'yesikaa02@gmail.com',
             'password' => bcrypt('member'),
             'profile_picture' => 'profile-images/profile_picture_default.jpg',
             'is_banned' => false,
             'city_id' => 456,
             'email_verified_at' => now()
         ]);
-
         Category::create([
             'category_name' => 'Healthy Food'
         ]);
