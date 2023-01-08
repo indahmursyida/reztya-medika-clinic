@@ -189,7 +189,7 @@
                     </div>
                     @if($feedback == null || $feedback->isEmpty())
                         <button id="reviewButton" type="button" class="d-flex justify-content-end btn button-outline-reztya ms-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                            Reviu Klinik
+                            Tambahkan Reviu
                         </button>
                     @else
                         <button id="reviewButton" type="button" class="d-flex justify-content-end btn button-outline-reztya ms-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
