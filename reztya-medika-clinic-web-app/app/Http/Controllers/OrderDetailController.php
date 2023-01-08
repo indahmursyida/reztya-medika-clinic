@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
 
@@ -59,6 +61,10 @@ class OrderDetailController extends Controller
         }
 
         $order = Order::find($id);
+        $feedback = null;
+        if ($order->status == 'finished') {
+            $feedback = DB::table('feedback')->where('payment_receipt_id', 'LIKE', $order->payment_receipt_id)->get();
+        }
 
         return view('order_detail')
             ->with('order', $order)
@@ -67,7 +73,8 @@ class OrderDetailController extends Controller
             ->with('printProductOnce',$printProductOnce)
             ->with('totalPrice', $totalPrice)
             ->with(compact('costs'))
-            ->with(compact('origin'));
+            ->with(compact('origin'))
+            ->with(compact('feedback'));
     }
 
     public function reschedule(Request $req, $id)
@@ -118,7 +125,7 @@ class OrderDetailController extends Controller
         //     $emailAddress = $req['email'];
         //     Mail::to($emailAddress)->send(new SendEmail($content));
         // }
-        
+
         return redirect()
         ->route('detail_order', ['id' => $order_detail->order_id])
         ->with('success', 'Jadwal ulang perawatan berhasil');

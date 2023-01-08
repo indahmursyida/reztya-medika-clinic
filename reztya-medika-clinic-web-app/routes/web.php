@@ -3,6 +3,7 @@
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
@@ -159,7 +160,7 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
     Route::get('/remove-cart/{id}', [CartController::class, 'removeCart'])->middleware(['auth', 'verified']);
 
     //Order
-    Route::get('/order/{status}', [OrderController::class, 'statusFilter'])->middleware(['auth', 'verified']); 
+    Route::get('/order/{status}', [OrderController::class, 'statusFilter'])->middleware(['auth', 'verified']);
     Route::get('/create-order', [OrderController::class, 'createOrderWithoutProduct'])->middleware(['auth', 'verified']);
     Route::post('/create-order', [OrderController::class, 'create'])->middleware(['auth', 'verified']);
     Route::get('/active-order', [OrderController::class, 'activeOrder'])->middleware(['auth', 'verified']);
@@ -176,4 +177,7 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
     Route::post('/add-payment-receipt/{id}', [PaymentReceiptController::class, 'addPaymentReceipt'])->middleware('admin');
     Route::get('/form-payment-receipt/{id}', [PaymentReceiptController::class, 'formPaymentReceipt'])->name('form_payment')->middleware('admin');
     Route::post('/upsert-payment-receipt/{id}', [PaymentReceiptController::class, 'upsertPaymentReceipt'])->middleware('admin');
+
+    // Review
+    Route::post('/order-detail/{order_id}/add-clinic-review', [ReviewController::class, 'addClinicReview'])->middleware(['auth', 'verified']);
 });
