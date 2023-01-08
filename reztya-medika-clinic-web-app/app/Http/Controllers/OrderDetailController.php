@@ -118,13 +118,13 @@ class OrderDetailController extends Controller
             ->with('error', 'Jadwal ulang gagal karena terdapat perawatan di keranjang yang mempunyai jadwal yang sama');
         }
 
-        // if(Auth::user()->user_role_id == 2){
-        //     $emailAddress = "klinikreztya@gmail.com";
-        //     Mail::to($emailAddress)->send(new SendEmail($content));
-        // }else{
-        //     $emailAddress = $req['email'];
-        //     Mail::to($emailAddress)->send(new SendEmail($content));
-        // }
+        if(Auth::user()->user_role_id == 2){
+            $emailAddress = "klinikreztya@gmail.com";
+            Mail::to($emailAddress)->send(new SendEmail($content));
+        }else{
+            $emailAddress = $req['email'];
+            Mail::to($emailAddress)->send(new SendEmail($content));
+        }
 
         return redirect()
         ->route('detail_order', ['id' => $order_detail->order_id])

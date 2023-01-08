@@ -31,7 +31,7 @@
                     <div class="my-3">
                         @foreach($description as $desc)
                             @if(str_starts_with($desc, 'Manfaat'))
-                                <p class="font-futura-reztya fs-6 text-wrap fw-bold">{{ $desc }}:</p>
+                                <p class="font-futura-reztya fs-6 text-wrap fw-bold">{{ $desc }}</p>
                             @else
                                 <p class="font-futura-reztya fs-6 lh-sm text-wrap">{{ $desc }}</p>
                             @endif
