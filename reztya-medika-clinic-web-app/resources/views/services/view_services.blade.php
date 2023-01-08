@@ -57,7 +57,7 @@
                         <a href="/service-detail/{{$service->service_id}}" class="text-decoration-none">
                             <div class="card bg-white outline-reztya">
                                 <div class="card-header">
-                                    <img class="card-img-top img-thumbnail img-fluid img-thumbnail-home" src="{{asset('storage/Service Reztya.jpg')}}">
+                                    <img class="card-img-top img-thumbnail img-fluid img-thumbnail-home" src="{{ asset('storage/' . $service->image_path) }}">
                                 </div>
                                 <div class="card-body">
                                     <div class="card-title text-reztya">

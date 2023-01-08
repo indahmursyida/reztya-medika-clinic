@@ -167,7 +167,7 @@ class DatabaseSeeder extends Seeder
             'price' => '27000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/susualmond.jpg'
+            'image_path' => '/product-images/susu-almond.jpg'
         ]);
 
         Product::create([
@@ -188,7 +188,7 @@ class DatabaseSeeder extends Seeder
             'price' => '50000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/susualmond.jpg'
+            'image_path' => '/product-images/susu-almond.jpg'
         ]);
 
         Product::create([
@@ -209,7 +209,7 @@ class DatabaseSeeder extends Seeder
             'price' => '95000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/susualmond.jpg'
+            'image_path' => '/product-images/susu-almond.jpg'
         ]);
 
         Product::create([
@@ -349,7 +349,7 @@ class DatabaseSeeder extends Seeder
             'price' => '50000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/madu.jpg'
+            'image_path' => '/product-images/maduhutan.jpg'
         ]);
 
         Product::create([
@@ -364,7 +364,7 @@ class DatabaseSeeder extends Seeder
             'price' => '95000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/madu.jpg'
+            'image_path' => '/product-images/maduhutan.jpg'
         ]);
 
         Product::create([
@@ -379,7 +379,7 @@ class DatabaseSeeder extends Seeder
             'price' => '180000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/madu.jpg'
+            'image_path' => '/product-images/maduhutan.jpg'
         ]);
 
         Service::create([
