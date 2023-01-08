@@ -19,28 +19,7 @@
         });
     </script>
 @enderror
-@if(!$feedback->isEmpty())
-    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5 font-alander-reztya mt-3" id="reviewModalLabel">Reviu Klinik</h1>
-                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5 class="font-futura-reztya text-wrap">"{{$feedback[0]->feedback_body}}"</h5>
-                    <br>
-                    <br>
-                    <p class="font-futura-reztya text-wrap fw-bold">Reviu dibuat pada tanggal:</p>
-                    <p class="font-futura-reztya text-wrap">{{ Carbon::parse($feedback[0]->created_at)->translatedFormat('d F Y') }}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn button-outline-ban-reztya font-futura-reztya" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
-@else
+@if($feedback == null || $feedback->isEmpty())
     <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -64,6 +43,27 @@
                         <button type="submit" class="btn button-outline-reztya font-futura-reztya">Kirim Reviu</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+@else
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 font-alander-reztya mt-3" id="reviewModalLabel">Reviu Klinik</h1>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="font-futura-reztya text-wrap">"{{$feedback[0]->feedback_body}}"</h5>
+                    <br>
+                    <br>
+                    <p class="font-futura-reztya text-wrap fw-bold">Reviu dibuat pada tanggal:</p>
+                    <p class="font-futura-reztya text-wrap">{{ Carbon::parse($feedback[0]->created_at)->translatedFormat('d F Y') }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn button-outline-ban-reztya font-futura-reztya" data-bs-dismiss="modal">Tutup</button>
+                </div>
             </div>
         </div>
     </div>
@@ -187,13 +187,13 @@
                     <div class="d-flex justify-content-end">
                         <a href="/repeat-order/{{ $order->order_id }}" class="btn button-outline-reztya ms-5">Pesan Lagi</a>
                     </div>
-                    @if(!$feedback->isEmpty())
+                    @if($feedback == null || $feedback->isEmpty())
                         <button id="reviewButton" type="button" class="d-flex justify-content-end btn button-outline-reztya ms-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                            Lihat Reviu
+                            Reviu Klinik
                         </button>
                     @else
                         <button id="reviewButton" type="button" class="d-flex justify-content-end btn button-outline-reztya ms-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                            Reviu Klinik
+                            Lihat Reviu
                         </button>
                     @endif
                     @endif
