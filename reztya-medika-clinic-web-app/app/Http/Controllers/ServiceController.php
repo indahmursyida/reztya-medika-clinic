@@ -7,7 +7,9 @@ use App\Models\Category;
 use App\Models\Schedule;
 use App\Models\Service;
 use App\Models\OrderDetail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -225,7 +227,7 @@ class ServiceController extends Controller
 
         return view('services.service_detail', [
             'service' => $service,
-            'schedules' => Schedule::where('status', 'Available')->get(),
+            'schedules' => Schedule::where('status', 'Available')->where('start_time', '>', Carbon::now())->get(),
             'description' => $description
         ]);
     }

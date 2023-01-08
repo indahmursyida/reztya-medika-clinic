@@ -101,26 +101,26 @@ class DatabaseSeeder extends Seeder
 
 
         Schedule::create([
-            'start_time' => Carbon::createFromFormat('d-m-Y H.i', '01-11-2022 10.00'),
-            'end_time' => Carbon::createFromFormat('d-m-Y H.i', '01-11-2022 11.00'),
-            'status' => 'unavailable'
-        ]);
-
-        Schedule::create([
-            'start_time' => Carbon::createFromFormat('d-m-Y H.i', '02-11-2022 11.00'),
-            'end_time' => Carbon::createFromFormat('d-m-Y H.i', '02-11-2022 12.00'),
-            'status' => 'unavailable'
-        ]);
-
-        Schedule::create([
-            'start_time' => Carbon::createFromFormat('d-m-Y H.i', '03-11-2022 13.00'),
-            'end_time' => Carbon::createFromFormat('d-m-Y H.i', '03-11-2022 14.00'),
+            'start_time' => Carbon::createFromFormat('d-m-Y H.i', '13-11-2022 10.00'),
+            'end_time' => Carbon::createFromFormat('d-m-Y H.i', '13-11-2022 11.00'),
             'status' => 'available'
         ]);
 
         Schedule::create([
-            'start_time' => Carbon::createFromFormat('d-m-Y H.i', '04-11-2022 13.00'),
-            'end_time' => Carbon::createFromFormat('d-m-Y H.i', '04-11-2022 14.00'),
+            'start_time' => Carbon::createFromFormat('d-m-Y H.i', '13-01-2023 14.00'),
+            'end_time' => Carbon::createFromFormat('d-m-Y H.i', '13-01-2023 15.00'),
+            'status' => 'available'
+        ]);
+
+        Schedule::create([
+            'start_time' => Carbon::createFromFormat('d-m-Y H.i', '14-01-2023 10.00'),
+            'end_time' => Carbon::createFromFormat('d-m-Y H.i', '14-01-2023 11.00'),
+            'status' => 'available'
+        ]);
+
+        Schedule::create([
+            'start_time' => Carbon::createFromFormat('d-m-Y H.i', '14-01-2023 15.00'),
+            'end_time' => Carbon::createFromFormat('d-m-Y H.i', '14-01-2023 16.00'),
             'status' => 'available'
         ]);
 

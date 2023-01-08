@@ -18,7 +18,7 @@ class OrderDetailController extends Controller
     public function detailOrder($id)
     {
         $order = null;
-        $schedules = Schedule::all();
+        $schedules = Schedule::where('start_time', '>', Carbon::now())->get();
         $printServiceOnce = false;
         $printProductOnce = false;
         $totalPrice = 0;

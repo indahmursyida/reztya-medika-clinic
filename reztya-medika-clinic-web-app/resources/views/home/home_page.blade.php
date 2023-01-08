@@ -25,17 +25,17 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <a href="/home">
-                            <img src="{{url('storage/reztya_logo_banner.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
+                            <img src="{{url('storage/banner1.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
                         </a>
                     </div>
                     <div class="carousel-item">
                         <a class="d-flex justify-content-center" href="#">
-                            <img src="{{url('storage/reztya_logo_banner.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
+                            <img src="{{url('storage/banner2.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
                         </a>
                     </div>
                     <div class="carousel-item">
                         <a class="d-flex justify-content-center" href="#">
-                            <img src="{{url('storage/reztya_logo_banner.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
+                            <img src="{{url('storage/banner3.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
                         </a>
                     </div>
                 </div>

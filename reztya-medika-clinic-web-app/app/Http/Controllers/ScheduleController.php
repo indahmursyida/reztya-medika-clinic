@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\OrderDetail;
 use App\Models\Cart;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\ScheduleWorkCommand;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,7 +14,7 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        $schedules = Schedule::paginate(10);
+        $schedules = Schedule::where('start_time', '>', Carbon::now())->paginate(10);
         return view('schedules.manage_schedules')->with('schedules', $schedules);
     }
 
