@@ -49,7 +49,7 @@
             <div class="row">
                 @foreach($products as $product)
                     @if($product->stock > 1)
-                        <div class="col-3 mb-4 font-futura-reztya">
+                        <div class="col-3 mb-3 font-futura-reztya d-flex">
                             <a href="/product-detail/{{$product->product_id}}" class="text-decoration-none">
                                 <div class="card bg-white outline-reztya">
                                     <div class="card-header">
@@ -70,11 +70,11 @@
                             </a>
                         </div>
                     @else
-                        <div class="col-3 mb-4 font-futura-reztya">
+                        <div class="col-3 mb-4 font-futura-reztya d-flex">
                             <a href="/product-detail/{{$product->product_id}}" class="disabled text-decoration-none text-reztya">
                                 <div class="card disabled bg-white outline-reztya">
                                     <div class="card-header">
-                                        <img class="card-img-top img-thumbnail img-fluid img-thumbnail-home" src="{{asset('storage/Service Reztya.jpg')}}">
+                                        <img class="card-img-top img-thumbnail img-fluid img-thumbnail-home" src="{{asset('storage/pl.jpg')}}">
                                     </div>
                                     <div class="card-body">
                                         <div class="card-title">
