@@ -281,6 +281,14 @@
                     <div class="col-7 d-flex flex-column justify-content-center">
                         <p class="fw-bold m-0">{{ $order_detail->service->name }}</p>
                         <div style="color: #00A54F;">
+                            Jadwal Perawatan
+                        </div>
+                        <div class="">
+                            @if ($order_detail->schedule)
+                            {{ Carbon::parse($order_detail->schedule->start_time)->translatedFormat('l, d F Y') }}, {{ Carbon::parse($order_detail->schedule->start_time)->translatedFormat('H.i') }} s.d. {{ Carbon::parse($order_detail->schedule->end_time)->translatedFormat('H.i') }} WIB
+                            @endif
+                        </div>
+                        <div style="color: #00A54F;">
                             Tempat Perawatan
                         </div>
                         @if($order_detail->home_service == 1)
@@ -292,14 +300,6 @@
                             Klinik Reztya Medika
                         </div>
                         @endif
-                        <div style="color: #00A54F;">
-                            Jadwal Perawatan
-                        </div>
-                        <div class="">
-                            @if ($order_detail->schedule)
-                            {{ Carbon::parse($order_detail->schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($order_detail->schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($order_detail->schedule->end_time)->translatedFormat('H.i') }}
-                            @endif
-                        </div>
                         <div>
                             @if($order->status == 'ongoing')
                             <button data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}" class="btn button-color rounded-2 btn-sm mt-1 pt-1 btn-edit">
@@ -336,9 +336,9 @@
                                                         <select class="form-select shadow-none" name="schedule_id" id="schedule_id">
                                                             @foreach($schedules as $schedule)
                                                             @if($schedule->schedule_id == $order_detail->schedule_id)
-                                                            <option hidden selected value="{{ $order_detail->schedule_id }}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                            <option hidden selected value="{{ $order_detail->schedule_id }}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }}, {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} s.d. {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }} WIB</option>
                                                             @elseif($schedule->status == 'available')
-                                                            <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                            <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }}, {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} s.d. {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }} WIB</option>
                                                             @endif
                                                             @endforeach
                                                         </select>
@@ -489,10 +489,10 @@
             </div>
             @endif
             <hr style="margin-right: 3%; margin-left: 3%;" />
-            <div class="container">
+            <div class="container mb-4">
                 <div class="row mt-2">
                     <div class="col d-flex justify-content-center">
-                        <h5 class="mb-0">Total Harga</h5>
+                        <h5 class="mb-4">Total Harga</h5>
                     </div>
                     <div class="col-7">
                     </div>

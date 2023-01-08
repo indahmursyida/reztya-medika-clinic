@@ -5,10 +5,8 @@
 @section('container')
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="width: 85%;">
-        <div class="pt-4">
-            <div class="py-3 d-flex justify-content-center">
-                <p class="h5 fw-bold unselectable font-alander-reztya">Tentang Kami</p>
-            </div>
+        <div class="py-3 d-flex justify-content-center pt-4">
+            <p class="h5 fw-bold unselectable font-alander-reztya">Tentang Kami</p>
         </div>
         <div class="d-flex justify-content-center">
             <div class="row">
@@ -33,8 +31,8 @@
                         <h6 class="d-flex align-items-center mb-0 mt-2"><a class="text-reztya text-decoration-none" href="mailto:klinikreztya@gmail.com">klinikreztya@gmail.com</a></h6>
                     </div>
                 </div>
-                <div class="col-auto">
-                    <div class="row mb-2">
+                <div class="col-auto mb-4">
+                    <div class="row mb-4">
                         <b class="unselectable h5 d-flex align-items-center mb-0 mt-2">Google Maps</b>
                     </div>
                     <div class="row unselectable">

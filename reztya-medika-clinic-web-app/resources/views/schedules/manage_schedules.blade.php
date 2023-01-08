@@ -31,6 +31,7 @@
         <thead>
             <tr class="text-center table-head-reztya">
                 <th scope="col">No.</th>
+                <th scope="col">Hari, Tanggal</th>
                 <th scope="col">Waktu Mulai</th>
                 <th scope="col">Waktu Berakhir</th>
                 <th scope="col">Status</th>
@@ -49,9 +50,14 @@
             @foreach($schedules as $schedule)
             <tr class="align-middle text-center">
                 <td>{{ $i++ }}</td>
-                <td>{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y | H:i') }} </td>
-                <td>{{ Carbon::parse($schedule->end_time)->translatedFormat('l, d F Y | H:i') }} </td>
-                <td>{{ $schedule->status }} </td>
+                <td>{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} </td>
+                <td>{{ Carbon::parse($schedule->start_time)->translatedFormat('H:i') }} WIB</td>
+                <td>{{ Carbon::parse($schedule->end_time)->translatedFormat('H:i') }} WIB</td>
+                @if ($schedule->status == 'available')
+                    <td>Tersedia</td>
+                @else
+                    <td>Tidak Tersedia</td>
+                @endif
                 <td>
                     <a href="/edit-schedule/{{$schedule->schedule_id}}" type="button" class="btn button-outline-reztya btn-sm" title="Edit Jadwal">
                         <i class="fa-regular fa-pen-to-square"></i>

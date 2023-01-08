@@ -8,7 +8,7 @@ use Carbon\Carbon;
 @endphp
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:85%;">
-        <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold">Riwayat Pesanan</h5>
+        <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold pt-4">Riwayat Pesanan</h5>
         <div class="dropdown">
             <button class="btn button-outline-reztya dropdown-toggle mt-4 mb-2" type="button" data-toggle="dropdown" aria-expanded="false">
                 Status
@@ -135,7 +135,7 @@ use Carbon\Carbon;
                                 <img src="{{ asset('storage/' . $order->orderDetail[0]->product->image_path) }}" alt="" width="100px" height="100px">
                             </div>
                             <div class="col-7">
-                                <p class="fw-bold m-0">{{ $order->orderDetail[0]->product->name }}</p>
+                                <p class="fw-bold mb-4">{{ $order->orderDetail[0]->product->name }}</p>
                                 <div>
                                     {{ $order->orderDetail[0]->quantity }} barang x Rp{{ number_format($order->orderDetail[0]->product->price, 2) }}
                                 </div>
@@ -150,7 +150,7 @@ use Carbon\Carbon;
                         @if ($totalItem > 1)
                         <div class="row">
                             <div class="col d-flex justify-content-center">
-                                <p class="mb-0">+{{$totalItem - 1}} pesanan lainnya</p>
+                                <p class="mb-4">+{{$totalItem - 1}} pesanan lainnya</p>
                             </div>
                             <div class="col-7">
                             </div>

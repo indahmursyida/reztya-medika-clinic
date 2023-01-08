@@ -36,7 +36,7 @@ use Carbon\Carbon;
 @if($cart != null)
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:90%;">
-        <div>
+        <div class="pt-4">
             <div class="py-3 d-flex justify-content-center">
                 <p class="h5 fw-bold unselectable font-alander-reztya">Keranjang</p>
             </div>
@@ -70,6 +70,12 @@ use Carbon\Carbon;
                         <p class="fw-bold m-0">{{ $item->service->name }}</p>
                         @if ($item->schedule_id)
                             <div style="color: #00A54F;">
+                                Jadwal Perawatan
+                            </div>
+                            <div class="">
+                                {{ Carbon::parse($item->schedule->start_time)->translatedFormat('l, d F Y') }}, {{ Carbon::parse($item->schedule->start_time)->translatedFormat('H.i') }} s.d. {{ Carbon::parse($item->schedule->end_time)->translatedFormat('H.i') }} WIB
+                            </div>
+                            <div style="color: #00A54F;">
                                 Tempat Perawatan
                             </div>
                             @if($item->home_service == 1)
@@ -81,21 +87,15 @@ use Carbon\Carbon;
                                     Klinik Reztya Medika
                                 </div>
                             @endif
-                            <div style="color: #00A54F;">
-                                Jadwal Perawatan
-                            </div>
-                            <div class="">
-                                {{ Carbon::parse($item->schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($item->schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($item->schedule->end_time)->translatedFormat('H.i') }}
-                            </div>
                         @else
                         <div style="color: #00A54F;">
-                            Tempat Perawatan
+                            Jadwal Perawatan
                         </div>
                         <div class="">
                             -
                         </div>
                         <div style="color: #00A54F;">
-                            Jadwal Perawatan
+                            Tempat Perawatan
                         </div>
                         <div class="">
                             -
@@ -139,7 +139,7 @@ use Carbon\Carbon;
                                                         @foreach($schedules as $schedule)
                                                             @if ($item->schedule_id)
                                                                 @if($schedule->schedule_id == $item->schedule_id)
-                                                                <option hidden selected value="{{$item->schedule_id}}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                                <option hidden selected value="{{$item->schedule_id}}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }}, {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} s.d. {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }} WIB</option>
                                                                 @endif
                                                             {{-- @else --}}
                                                                 {{-- <option hidden selected value="0">---Pilih Jadwal---</option> --}}
@@ -148,7 +148,7 @@ use Carbon\Carbon;
                                                                 @endif --}}
                                                             @endif
                                                             @if($schedule->status == 'available')
-                                                            <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }} | {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} - {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }}</option>
+                                                            <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }}, {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} s.d. {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }} WIB</option>
                                                             @endif
                                                         @endforeach
                                                     </select>
@@ -415,7 +415,7 @@ use Carbon\Carbon;
             <div class="container">
                 <div class="row mt-2">
                     <div class="col d-flex justify-content-center">
-                        <h5 class="mb-0">Total Harga</h5>
+                        <h5 class="mb-4">Total Harga</h5>
                     </div>
                     <div class="col-5">
                     </div>
@@ -434,7 +434,7 @@ use Carbon\Carbon;
         <div class="container">
             <div class="row mt-2">
                 <div class="col d-flex justify-content-center">
-                    <h5 class="mb-0">Total Harga</h5>
+                    <h5 class="mb-4">Total Harga</h5>
                 </div>
                 <div class="col-5">
                 </div>
