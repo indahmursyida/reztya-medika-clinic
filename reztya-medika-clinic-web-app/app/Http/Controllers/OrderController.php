@@ -62,8 +62,6 @@ class OrderController extends Controller
         //         return redirect()->back()->withErrors(['schedule_invalid' => 'Pesanan tidak dapat dibuat karena jadwal perawatan ' . $invalid_schedule->service->name . ' sudah dipesan oleh member lain. Silahkan ubah jadwal perawatan tersebut.']);
         //     }
         // }
-
-        $carts = Cart::where('user_id', Auth::user()->user_id)->get();
         
         $orders = Order::create([
             'user_id' => Auth::user()->user_id,
@@ -96,6 +94,8 @@ class OrderController extends Controller
             $orders['delivery_fee'] = $json_decoded->cost[0]->value * $orders['weight'];
         }
         $orders->save();
+
+        $carts = Cart::where('user_id', Auth::user()->user_id)->get();
         
         foreach($carts as $cart)
         {
@@ -124,7 +124,7 @@ class OrderController extends Controller
                     $cart->quantity = $product->stock;
                     $product->stock = 0;
                 }
-                else if($cart->quantity = $product->stock)
+                else if($cart->quantity == $product->stock)
                 {
                     $product->stock = 0;
                 }
@@ -281,6 +281,7 @@ class OrderController extends Controller
                     foreach($carts as $cart)
                     {
                         $cart->quantity += $order_detail->quantity;
+                        
                         if($cart->quantity >= $product->stock){
                             if($cart->quantity > $product->stock){
                                 $insufficientStockProductId = true;

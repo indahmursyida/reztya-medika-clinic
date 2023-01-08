@@ -344,7 +344,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="mb-2 text-start">
-                                                        Pilih Tempat Layanan
+                                                        Pilih Tempat Perawatan
                                                     </div>
                                                     <div>
                                                         @auth
