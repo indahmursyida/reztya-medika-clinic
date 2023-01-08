@@ -11,12 +11,12 @@ class Feedback extends Model
 
     protected $primaryKey = 'feedback_id';
     protected $fillable = [
-        'order_detail_id',
+        'payment_receipt_id',
         'feedback_body'
     ];
 
-    public function feedback(){
-        return $this->belongsTo(OrderDetail::class, 'feedback_id', 'feedback_id');
+    public function paymentReceipt(){
+        return $this->belongsTo(PaymentReceipt::class, 'feedback_id', 'feedback_id');
     }
 
 }

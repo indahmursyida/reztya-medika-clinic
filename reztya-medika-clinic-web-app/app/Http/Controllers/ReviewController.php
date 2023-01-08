@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,23 +12,25 @@ class ReviewController extends Controller
         $review = $request->validate([
             'review' => 'required'
         ]);
-        $order_detail_id = $request->order_detail_id;
 
-        $feedback_id = DB::table('feedback')->insert([
-            'order_detail_id' => $order_detail_id,
-            'feedback_body' => $review
-        ]);
+        $payment_receipt_id = $request->payment_receipt_id;
 
-        DB::table('order_details')
-            ->where('order_detail_id', $order_detail_id)->insert([
-            'feedback_id' => $feedback_id->feedback_id
-        ]);
+        $exists = DB::table('feedback')->where('payment_receipt_id', 'LIKE', $payment_receipt_id)->get();
 
-        return redirect('/home');
-    }
+        if ($exists->isEmpty()){
+            $feedback_id = Feedback::create([
+                'payment_receipt_id' => $payment_receipt_id,
+                'feedback_body' => $review['review']
+            ]);
 
-    public function clinicReview() {
-        $orderDetail = DB::table('order_details')->get();
-        return view('users.clinic_review')->with(compact('orderDetail'));
+            DB::table('payment_receipts')
+                ->where('payment_receipt_id', $payment_receipt_id)->insert([
+                    'feedback_id' => $feedback_id->feedback_id
+            ]);
+
+            return back()->with('success', 'Reviu berhasil dikirim!');
+        }
+
+        return back()->with('success', 'Sudah pernah mengirim reviu!');
     }
 }

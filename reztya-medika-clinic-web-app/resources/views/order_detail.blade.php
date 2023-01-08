@@ -8,6 +8,68 @@
     <strong> {{session()->get('success')}} </strong>
 </div>
 @endif --}}
+@php
+    use Carbon\Carbon;
+@endphp
+{{-- Start Modal Review Clinic --}}
+@error('review')
+    <script>
+        $( document ).ready(function() {
+            document.getElementById('reviewButton').click();
+        });
+    </script>
+@enderror
+@if(!$feedback->isEmpty())
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 font-alander-reztya mt-3" id="reviewModalLabel">Reviu Klinik</h1>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="font-futura-reztya text-wrap">"{{$feedback[0]->feedback_body}}"</h5>
+                    <br>
+                    <br>
+                    <p class="font-futura-reztya text-wrap fw-bold">Reviu dibuat pada tanggal:</p>
+                    <p class="font-futura-reztya text-wrap">{{ Carbon::parse($feedback[0]->created_at)->translatedFormat('d F Y') }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn button-outline-ban-reztya font-futura-reztya" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@else
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 font-alander-reztya mt-3" id="reviewModalLabel">Reviu Klinik</h1>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/order-detail/{{ $order->order_id }}/add-clinic-review" method="POST">
+                    <div class="modal-body">
+                        @csrf
+                        <textarea id="reviewText" class="font-futura-reztya shadow-none form-control @error('review') is-invalid @enderror" name="review">{{old('review')}}</textarea>
+                        @error('review')
+                        <div class="invalid-feedback">
+                            Tinjauan klinik wajib diisi
+                        </div>
+                        @enderror
+                    </div>
+                    <input hidden name="payment_receipt_id" value="{{$order->payment_receipt_id}}">
+                    <div class="modal-footer">
+                        <button type="button" class="btn button-outline-ban-reztya font-futura-reztya" data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn button-outline-reztya font-futura-reztya">Kirim Reviu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endif
+{{-- End Modal Review Clinic --}}
+
 <div class="d-flex justify-content-center">
 @if(session()->has('success'))
     <div class="alert alert-success alert-dismissible fade show font-futura-reztya" style="width:90%; role=" alert">
@@ -16,9 +78,6 @@
     </div>
 @endif
 </div>
-@php
-use Carbon\Carbon;
-@endphp
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:90%;">
         <div class="pt-4">
@@ -57,14 +116,18 @@ use Carbon\Carbon;
                     @endif
                     @if(Auth::user()->user_role_id == 1)
                     @if ($order->status == 'waiting' || $order->status == 'ongoing')
-                    <div>
-                        <a href="/form-payment-receipt/{{ $order->order_id }}" class="btn button-outline-reztya" type="button">Konfirmasi Pembayaran</a>
-                    </div>
+                        <div>
+                            <a href="/form-payment-receipt/{{ $order->order_id }}" class="btn button-outline-reztya" type="button">Konfirmasi Pembayaran</a>
+                        </div>
+                    @elseif($order->status == 'finished' && !$feedback->isEmpty())
+                        <button id="reviewButton" type="button" class="d-flex justify-content-end btn button-outline-reztya ms-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                            Lihat Reviu Pengguna
+                        </button>
                     @endif
                     @else
                     @if($order->status == 'ongoing')
                     <div>
-                        <button class="btn button-outline-reztya" id="button_modal" data-toggle="modal" data-target="#uploadTransferPopup" type="button">Bayar Pesanan</a>
+                        <button class="btn button-outline-reztya" id="button_modal" data-toggle="modal" data-target="#uploadTransferPopup" type="button">Bayar Pesanan</button>
                     </div>
                     <div class="modal fade" id="uploadTransferPopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="uploadTransferPopupPopupTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -121,9 +184,18 @@ use Carbon\Carbon;
                         </div>
                     </div>
                     @elseif($order->status == 'canceled' || $order->status == 'finished')
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-end">
                         <a href="/repeat-order/{{ $order->order_id }}" class="btn button-outline-reztya ms-5">Pesan Lagi</a>
                     </div>
+                    @if(!$feedback->isEmpty())
+                        <button id="reviewButton" type="button" class="d-flex justify-content-end btn button-outline-reztya ms-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                            Lihat Reviu
+                        </button>
+                    @else
+                        <button id="reviewButton" type="button" class="d-flex justify-content-end btn button-outline-reztya ms-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                            Reviu Klinik
+                        </button>
+                    @endif
                     @endif
                     @endif
                 </div>
@@ -444,9 +516,17 @@ use Carbon\Carbon;
     $(document).ready(
         function() {
             let count = '<?php echo count($errors); ?>';
-            
+
             if(count > 0)
                 document.getElementById("button_modal").click();
         })
+</script>
+<script>
+    const myModal = document.getElementById('reviewModal')
+    const myInput = document.getElementById('reviewText')
+
+    myModal.addEventListener('shown.bs.modal', () => {
+        myInput.focus()
+    })
 </script>
 @endsection

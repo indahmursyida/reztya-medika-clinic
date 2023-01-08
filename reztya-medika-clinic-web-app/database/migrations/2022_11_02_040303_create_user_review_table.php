@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('feedback', function (Blueprint $table) {
             $table->id('feedback_id');
-            $table->foreignId('order_detail_id');
+            $table->foreignId('payment_receipt_id');
             $table->string('feedback_body');
             $table->timestamps();
         });

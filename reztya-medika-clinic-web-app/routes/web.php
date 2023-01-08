@@ -177,8 +177,7 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
     Route::post('/add-payment-receipt/{id}', [PaymentReceiptController::class, 'addPaymentReceipt'])->middleware('admin');
     Route::get('/form-payment-receipt/{id}', [PaymentReceiptController::class, 'formPaymentReceipt'])->name('form_payment')->middleware('admin');
     Route::post('/upsert-payment-receipt/{id}', [PaymentReceiptController::class, 'upsertPaymentReceipt'])->middleware('admin');
-});
 
-// Review
-Route::get('/order-detail/{order_detail_id}/add-clinic-review', [ReviewController::class, 'clinicReview']);
-Route::post('/order-detail/{order_detail_id}/add-clinic-review', [ReviewController::class, 'addClinicReview']);
+    // Review
+    Route::post('/order-detail/{order_id}/add-clinic-review', [ReviewController::class, 'addClinicReview'])->middleware(['auth', 'verified']);
+});
