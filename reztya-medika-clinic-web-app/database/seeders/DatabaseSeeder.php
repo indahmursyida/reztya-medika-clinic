@@ -609,7 +609,7 @@ class DatabaseSeeder extends Seeder
                                 ㆍMeredakan masalah kulit wajah",
             'duration' => '120',
             'price' => '385000',
-            'image_path' => '/service-images/plsmt.jpeg'
+            'image_path' => '/service-images/plsmt.jpg'
         ]);
 
         Service::create([
