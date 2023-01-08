@@ -167,7 +167,7 @@ class DatabaseSeeder extends Seeder
             'price' => '27000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/susu-almond.jpg'
+            'image_path' => '/product-images/susu-almond-small.jpg'
         ]);
 
         Product::create([
@@ -188,7 +188,7 @@ class DatabaseSeeder extends Seeder
             'price' => '50000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/susu-almond.jpg'
+            'image_path' => '/product-images/susu-almond-medium.jpg'
         ]);
 
         Product::create([
@@ -209,7 +209,7 @@ class DatabaseSeeder extends Seeder
             'price' => '95000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/susu-almond.jpg'
+            'image_path' => '/product-images/susu-almond-large.jpg'
         ]);
 
         Product::create([
@@ -229,7 +229,7 @@ class DatabaseSeeder extends Seeder
             'price' => '60000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/lemon.jpg'
+            'image_path' => '/product-images/lemonsmall.jpg'
         ]);
 
         Product::create([
@@ -249,7 +249,7 @@ class DatabaseSeeder extends Seeder
             'price' => '100000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/lemon.jpg'
+            'image_path' => '/product-images/lemonmedium.jpg'
         ]);
 
         Product::create([
@@ -291,7 +291,7 @@ class DatabaseSeeder extends Seeder
             'price' => '25000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/chiaseed.jpg'
+            'image_path' => '/product-images/chiaseedsmall.jpg'
         ]);
 
         Product::create([
@@ -312,7 +312,7 @@ class DatabaseSeeder extends Seeder
             'price' => '50000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/chiaseed.jpg'
+            'image_path' => '/product-images/chiaseedmedium.jpg'
         ]);
 
         Product::create([
@@ -349,7 +349,7 @@ class DatabaseSeeder extends Seeder
             'price' => '50000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/maduhutan.jpg'
+            'image_path' => '/product-images/maduhutansmall.jpg'
         ]);
 
         Product::create([
@@ -364,7 +364,7 @@ class DatabaseSeeder extends Seeder
             'price' => '95000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/maduhutan.jpg'
+            'image_path' => '/product-images/maduhutanmedium.jpg'
         ]);
 
         Product::create([
@@ -379,7 +379,7 @@ class DatabaseSeeder extends Seeder
             'price' => '180000',
             'expired_date' => Carbon::create('2024', '08', '23'),
             'stock' => '20',
-            'image_path' => '/product-images/maduhutan.jpg'
+            'image_path' => '/product-images/maduhutanlarge.jpg'
         ]);
 
         Service::create([
@@ -616,12 +616,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Paket Totok Punggung dan Bekam',
             'category_id' => '2',
             'description' => "Manfaat Totok Punggung\r\n
-                                Metode pengobatan yang dilakukan dengan\r\n
-                                menggunakan jari untuk memberikan stimulan pada\r\n
-                                titik /simpul syaraf tertentu yang terpusat di area\r\n
-                                tulang belakang, yang mana titik /simpul tersebut itu\r\n
-                                terkoneksi langsung dengan keluhan penyakit atau\r\n
-                                organ yang sedang mengalami gangguan.\r\n
+            Metode pengobatan yang dilakukan dengan menggunakan jari untuk memberikan stimulan pada titik / simpul syaraf tertentu yang terpusat di area tulang belakang, yang mana titik / simpul tersebut itu terkoneksi langsung dengan keluhan penyakit atau organ yang sedang mengalami gangguan.\r\n
 
                                 Manfaat Bekam (Sunnah dan Steril)\r\n
                                 ㆍ Membuang sel-sel darah yang mati\r\n
@@ -641,13 +636,8 @@ class DatabaseSeeder extends Seeder
         Service::create([
             'name' => 'Totok Punggung',
             'category_id' => '2',
-            'description' => "Manfaat Totok Punggung\r\n
-                                Metode pengobatan yang dilakukan dengan\r\n
-                                menggunakan jari untuk memberikan stimulan pada\r\n
-                                titik /simpul syaraf tertentu yang terpusat di area\r\n
-                                tulang belakang, yang mana titik /simpul tersebut itu\r\n
-                                terkoneksi langsung dengan keluhan penyakit atau\r\n
-                                organ yang sedang mengalami gangguan.\r\n",
+            'description' => "Manfaat Totok Punggung\r\n 
+            Metode pengobatan yang dilakukan dengan menggunakan jari untuk memberikan stimulan pada titik / simpul syaraf tertentu yang terpusat di area tulang belakang, yang mana titik / simpul tersebut itu terkoneksi langsung dengan keluhan penyakit atau organ yang sedang mengalami gangguan.\r\n",
             'duration' => '30',
             'price' => '100000',
             'image_path' => '/service-images/totokpunggung.jpg'
