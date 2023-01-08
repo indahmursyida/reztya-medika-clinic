@@ -4,11 +4,85 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\OrderDetail;
+use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function filterCategory(Request $request) {
+        $category_id = $request->category_id;
+        $products = DB::table('products')
+            ->where('category_id', '=', $category_id)
+            ->paginate()
+            ->appends(['category' => $category_id]);
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterPriceHightoLow() {
+        $products = DB::table('products')
+            ->orderBy('price', 'desc')
+            ->get();
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterPriceLowtoHigh() {
+        $products = DB::table('products')
+            ->orderBy('price')
+            ->get();
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterZtoA() {
+        $products = DB::table('products')
+            ->orderBy('name', 'desc')
+            ->get();
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function filterAtoZ() {
+        $products = DB::table('products')
+            ->orderBy('name')
+            ->get();
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function search(Request $request) {
+        $keyword = $request->keyword;
+        $products = DB::table('products')
+            ->where('name', 'LIKE', "%$keyword%")
+            ->paginate()
+            ->appends(['keyword' => $keyword]);
+        return view('products.view_products', [
+            'products' => $products,
+            'categories' => Category::all(),
+            ]);
+    }
+
+    public function view() {
+        return view('products.view_products', [
+            'products' => Product::all(),
+            'categories' => Category::all(),
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +90,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('manage_products', [
+        return view('products.manage_products', [
             'products' => Product::all(),
             'categories' => Category::all()
         ]);
@@ -29,7 +103,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('add_product', [
+        return view('products.add_product', [
             'products' => Product::all(),
             'categories' => Category::all()
         ]);
@@ -74,10 +148,10 @@ class ProductController extends Controller
         if($request->file('image_path')){
             $validatedData['image_path'] = $request->file('image_path')->store('product-images');
         }
-        
+
         Product::create($validatedData);
 
-        return redirect('manage-products')->with('success','Product succsessfully added!');
+        return redirect('manage-products')->with('success','Produk berhasil ditambahkan!');
     }
 
     /**
@@ -89,8 +163,11 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-        return view('product_detail', [
-            'product' => $product
+        $description = explode("\r\n", $product->description);
+
+        return view('products.product_detail', [
+            'product' => $product,
+            'description' => $description
         ]);
     }
 
@@ -103,7 +180,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        return view('edit_product', [
+        return view('products.edit_product', [
             'product' => $product,
             'categories' => Category::all()
         ]);
@@ -120,7 +197,7 @@ class ProductController extends Controller
     {
         $validatedData = $request->validate([
             'category_id' => 'required',
-            'name' => 'required|unique:products|max:255',
+            'name' => 'required|max:255',
             'description' => 'required',
             'size' => 'nullable',
             'price' => 'required|numeric',
@@ -130,7 +207,6 @@ class ProductController extends Controller
         ],[
             'category_id.required' => 'Kategori produk wajib diisi',
             'name.required' => 'Nama produk wajib diisi',
-            'name.unique' => 'Nama produk tidak boleh sama dengan nama produk lainnya',
             'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter',
             'description.required'=> 'Deskripsi produk produk wajib diisi',
             'price.required' => 'Harga produk wajib diisi',
@@ -154,7 +230,7 @@ class ProductController extends Controller
         Product::find($id)
             ->update($validatedData);
 
-        return redirect('/manage-products')->with('success','Product succsessfully updated!');
+        return redirect('/manage-products')->with('success','Produk berhasil diubah!');
     }
 
     /**
@@ -166,12 +242,23 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        if($product->image_path){
-            Storage::delete($product->image_path);
+        $isExist = true;
+        if($product){
+            if(OrderDetail::where('product_id', $id)->count() == 0){
+                $isExist = false;
+            }
         }
-        
-        Product::destroy($id);
 
-        return redirect('/manage-products')->with('Product successfully deleted');
+        if(!$isExist){
+            if($product->image_path){
+                Storage::delete($product->image_path);
+            }
+            Cart::where('product_id', $id)->delete();
+            Product::destroy($id);
+        }else{
+            return redirect('/manage-products')->with('error', 'Produk tidak dapat dihapus karena masih berada pada order yang aktif!');
+        }
+
+        return redirect('/manage-products')->with('success', 'Produk berhasil dihapus!');
     }
 }

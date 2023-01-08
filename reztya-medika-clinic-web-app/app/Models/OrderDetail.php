@@ -10,18 +10,7 @@ class OrderDetail extends Model
     use HasFactory;
 
     protected $primaryKey = 'order_detail_id';
-    protected $fillable = [
-        'service_id',
-        'product_id',
-        'schedule_id',
-        'feedback_id',
-        'quantity'
-    ];
-
-    public function feedback(){
-        return $this->hasOne(Feedback::class, 'feedback_id', 'feedback_id');
-    }
-
+    protected $guarded = ['order_detail_id'];
     public function service(){
         return $this->belongsTo(Service::class, 'service_id');
     }
@@ -31,7 +20,7 @@ class OrderDetail extends Model
     }
 
     public function schedule(){
-        return $this->hasOne(Schedule::class, 'schedule_id');
+        return $this->belongsTo(Schedule::class, 'schedule_id');
     }
 
     public function order(){

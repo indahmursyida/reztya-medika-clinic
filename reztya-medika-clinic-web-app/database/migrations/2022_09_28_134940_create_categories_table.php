@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
-            $table->id('schedule_id');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->increments('category_id')->primaryKey();
+            $table->string('category_name', 255);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('categories');
     }
 };

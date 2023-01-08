@@ -9,15 +9,9 @@ class Service extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $primaryKey = 'service_id';
-    protected $fillable = [
-        'category_id', 
-        'name', 
-        'description', 
-        'duration', 
-        'price', 
-        'image_path'
-    ];
+    protected $guarded = ['service_id'];
     public function category(){
         return $this->belongsTo(Category::class, 'category_id');
     }
@@ -27,6 +21,10 @@ class Service extends Model
     }
 
     public function orderDetail(){
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class, 'service_id');
+    }
+
+    public function cart(){
+        return $this->hasMany(Cart::class, 'service_id');
     }
 }

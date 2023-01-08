@@ -9,8 +9,10 @@ class Category extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $primaryKey = 'category_id';
-    protected $fillable = ['category_name'];
+    protected $guarded = ['category_id'];
+
     public function service(){
         return $this->hasMany(Service::class);
     }
