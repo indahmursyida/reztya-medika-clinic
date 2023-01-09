@@ -48,7 +48,7 @@
                 <td><img src="{{ asset('storage/' . $service->image_path) }}" width="150" height="150" class="img-preview img-fluid img-thumbnail"></td>
                 <td class="td-name">{{ $service->name }}</td>
                 <td>{{ $service->duration }} menit</td>
-                <td>Rp.{{ number_format($service->price, 0, '', '.') }}</td>
+                <td>Rp{{ number_format($service->price, 0, '', '.') }}</td>
                 <td>
                     <a class="btn btn-outline-secondary btn-sm" href="/service-detail/{{ $service->service_id }}"><i class="fa-solid fa-circle-info"></i> Detail</a>
                     <a class="btn  button-outline-reztya btn-sm" href="/edit-service/{{ $service->service_id }}"><i class="fa-regular fa-pen-to-square"></i></a>

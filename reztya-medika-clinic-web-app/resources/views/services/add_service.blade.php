@@ -75,7 +75,10 @@
             <label class="form-label" for="duration">Durasi Perawatan</label>
         </div>
         <div class="col-md-8">
-            <input type="number" class="form-control @error('duration') is-invalid @enderror form-quantity" id="duration" name="duration" value="{{ old('duration', 1) }}" min="1" max="1000">
+            <div class="input-group">
+                <input type="number" class="form-control @error('duration') is-invalid @enderror form-quantity" id="duration" name="duration" value="{{ old('duration', 1) }}" min="1" max="1000">
+                <span class="input-group-text">Menit</span>
+            </div>
             @error('duration')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -88,7 +91,7 @@
         </div>
         <div class="col-md-8">
             <div class="input-group">
-                <span class="input-group-text">Rp. </span>
+                <span class="input-group-text">Rp</span>
                 <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}">
             </div>
 
