@@ -166,8 +166,6 @@ class ProfileController extends Controller
             }
         }
 
-        $orders = $orders[0];
-        $order_history = $order_history[0];
 
         return view('profile.view-profile')
             ->with(compact('printOnce'))
