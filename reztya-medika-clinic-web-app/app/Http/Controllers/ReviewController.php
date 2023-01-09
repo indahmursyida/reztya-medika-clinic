@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotifySuggestionsAndCritics;
+use App\Mail\SendEmail;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ReviewController extends Controller
 {
     public function addClinicReview(Request $request) {
         $review = $request->validate([
-            'review' => 'required'
+            'review' => 'required|min:10',
+            'order_id' => 'required',
+            'order_date' => 'required|date'
+        ],
+        [
+            'review.required' => 'Kritik dan Saran tidak boleh kosong.',
+            'review.min' => 'Kritik dan Saran harus lebih dari 10 karakter.'
         ]);
 
         $payment_receipt_id = $request->payment_receipt_id;
@@ -28,9 +38,21 @@ class ReviewController extends Controller
                     'feedback_id' => $feedback_id->feedback_id
             ]);
 
-            return back()->with('success', 'Reviu berhasil dikirim!');
+            if(Auth::user()->user_role_id == 2){
+                $emailAddress = 'harishsaid37@gmail.com';
+                $content = [
+                    'review' => $review['review'],
+                    'username' => Auth::user()->username,
+                    'name' => Auth::user()->name,
+                    'order_id' => $review['order_id'],
+                    'order_date' => $review['order_date']
+                ];
+                Mail::to($emailAddress)->send(new NotifySuggestionsAndCritics($content));
+            }
+
+            return back()->with('success', 'Kritik dan Saran berhasil dikirim!');
         }
 
-        return back()->with('success', 'Sudah pernah mengirim reviu!');
+        return back()->with('success', 'Sudah pernah mengirim Kritik dan Saran!');
     }
 }

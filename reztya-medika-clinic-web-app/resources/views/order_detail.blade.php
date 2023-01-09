@@ -24,23 +24,25 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 font-alander-reztya mt-3" id="reviewModalLabel">Reviu Klinik</h1>
+                    <h1 class="modal-title fs-5 font-alander-reztya mt-3" id="reviewModalLabel">Kritik dan Saran</h1>
                     <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="/order-detail/{{ $order->order_id }}/add-clinic-review" method="POST">
                     <div class="modal-body">
                         @csrf
+                        <input hidden value="{{ $order->order_id }}" name="order_id">
+                        <input hidden value="{{ $order->order_date }}" name="order_date">
                         <textarea id="reviewText" class="font-futura-reztya shadow-none form-control @error('review') is-invalid @enderror" name="review">{{old('review')}}</textarea>
                         @error('review')
                         <div class="invalid-feedback">
-                            Tinjauan klinik wajib diisi
+                            {{$message}}
                         </div>
                         @enderror
                     </div>
                     <input hidden name="payment_receipt_id" value="{{$order->payment_receipt_id}}">
                     <div class="modal-footer">
                         <button type="button" class="btn button-outline-ban-reztya font-futura-reztya" data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn button-outline-reztya font-futura-reztya">Kirim Reviu</button>
+                        <button type="submit" class="btn button-outline-reztya font-futura-reztya">Kirim Kritik dan Saran</button>
                     </div>
                 </form>
             </div>
@@ -51,14 +53,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 font-alander-reztya mt-3" id="reviewModalLabel">Reviu Klinik</h1>
+                    <h1 class="modal-title fs-5 font-alander-reztya mt-3" id="reviewModalLabel">Kritik dan Saran</h1>
                     <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <h5 class="font-futura-reztya text-wrap">"{{$feedback[0]->feedback_body}}"</h5>
                     <br>
                     <br>
-                    <p class="font-futura-reztya text-wrap fw-bold">Reviu dibuat pada tanggal:</p>
+                    <p class="font-futura-reztya text-wrap fw-bold">Kritik dan Saran dibuat pada tanggal:</p>
                     <p class="font-futura-reztya text-wrap">{{ Carbon::parse($feedback[0]->created_at)->translatedFormat('d F Y') }}</p>
                 </div>
                 <div class="modal-footer">
@@ -74,7 +76,7 @@
 @if(session()->has('success'))
     <div class="alert alert-success alert-dismissible fade show font-futura-reztya" style="width:90%; role=" alert">
         {{session('success')}}
-        <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 </div>
@@ -120,8 +122,8 @@
                             <a href="/form-payment-receipt/{{ $order->order_id }}" class="btn button-outline-reztya" type="button">Konfirmasi Pembayaran</a>
                         </div>
                     @elseif($order->status == 'finished' && !$feedback->isEmpty())
-                        <button id="reviewButton" type="button" class="d-flex justify-content-end btn button-outline-reztya ms-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                            Lihat Reviu Pengguna
+                        <button id="reviewButton" type="button" class="btn button-outline-reztya ms-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                            Lihat Kritik dan Saran Pengguna
                         </button>
                     @endif
                     @else
@@ -184,16 +186,16 @@
                         </div>
                     </div>
                     @elseif($order->status == 'canceled' || $order->status == 'finished')
-                    <div class="d-flex justify-content-end">
-                        <a href="/repeat-order/{{ $order->order_id }}" class="btn button-outline-reztya ms-5">Pesan Lagi</a>
+                    <div class="d-flex justify-content-center">
+                        <a href="/repeat-order/{{ $order->order_id }}" class="btn button-outline-reztya me-2">Pesan Lagi</a>
                     </div>
                     @if($feedback == null || $feedback->isEmpty())
-                        <button id="reviewButton" type="button" class="d-flex justify-content-end btn button-outline-reztya ms-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                            Tambahkan Reviu
+                        <button id="reviewButton" type="button" class="btn button-outline-reztya" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                            Tambahkan Kritik dan Saran
                         </button>
                     @else
-                        <button id="reviewButton" type="button" class="d-flex justify-content-end btn button-outline-reztya ms-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                            Lihat Reviu
+                        <button id="reviewButton" type="button" class="btn button-outline-reztya" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                            Lihat Kritik dan Saran
                         </button>
                     @endif
                     @endif

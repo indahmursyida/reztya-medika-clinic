@@ -57,7 +57,7 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
     Route::post('/signup', [SignUpController::class, 'userRegister']);
 
     Route::get('/email/verify', function () {
-        return view('users.verify-email');
+        return view('email.verify-email');
     })->middleware('auth')->name('verification.notice');
 
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {

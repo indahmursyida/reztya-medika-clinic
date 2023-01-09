@@ -1,4 +1,4 @@
-@extends('layout/main')
+@extends('layout.main')
 @section('title', 'Verifikasi Email')
 
 @section('container')
