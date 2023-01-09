@@ -31,12 +31,12 @@
                         </div>
                         <div class="carousel-item">
                             <a class="d-flex justify-content-center" href="#">
-                                <img src="{{url('storage/reztya_logo_banner.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
+                                <img src="{{url('storage/banner2.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
                             </a>
                         </div>
                         <div class="carousel-item">
                             <a class="d-flex justify-content-center" href="#">
-                                <img src="{{url('storage/reztya_logo_banner.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
+                                <img src="{{url('storage/banner3.jpg')}}" class="d-block w-100" alt="Klinik Reztya Medika">
                             </a>
                         </div>
                     </div>
@@ -60,21 +60,21 @@
             <div class="col-4 mb--1">
                 <div class="card border-reztya border border-4 h-75">
                     <a href="#" class="overflow-hidden">
-                        <img src="{{url('storage/product-images/lemon.jpg')}}" class="d-block w-100" alt="...">
+                        <img src="{{url('storage/lemon.jpg')}}" class="d-block w-100" alt="...">
                     </a>
                 </div>
             </div>
             <div class="col-4 mb--1">
                 <div class="card border-reztya border border-4 h-75">
                     <a href="#" class="overflow-hidden">
-                        <img src="{{url('storage/product-images/susu-almond.jpg')}}" class="d-block w-100" alt="...">
+                        <img src="{{url('storage/madu.jpg')}}" class="d-block w-100" alt="...">
                     </a>
                 </div>
             </div>
             <div class="col-4 mb--1">
                 <div class="card border-reztya border border-4 h-75">
                     <a href="#" class="overflow-hidden">
-                        <img src="{{url('storage/product-images/safron.jpg')}}" class="d-block w-100" alt="...">
+                        <img src="{{url('storage/granola.jpg')}}" class="d-block w-100" alt="...">
                     </a>
                 </div>
             </div>
@@ -82,18 +82,18 @@
         <hr class="mt-5">
         <div class="row d-flex justify-content-center mt-5">
             <div class="col-6">
-                <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Services</p>
-                <div class="card border-reztya border border-4 h-75 justify-content-center bg-reztya">
+                <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Perawatan</p>
+                <div class="card border-reztya border border-4 h-75 justify-content-center bg-reztya" width="526" height="439">
                     <a href="/service-detail/{{$service->service_id}}" class="overflow-hidden">
-                        <img src="{{url('storage/service-images/pl.jpg')}}" class="d-block w-100" alt="Service Image">
+                        <img src="{{url('storage/service-images/pl.jpg')}}" class="d-block w-100" >
                     </a>
                 </div>
             </div>
             <div class="col-6">
-                <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Products</p>
+                <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Produk</p>
                 <div class="card border-reztya border border-4 h-75 justify-content-center bg-reztya">
                     <a href="#" class="overflow-hidden">
-                        <img src="{{url('storage/product-images/granola.jpg')}}" class="d-block w-100" alt="Product Image">
+                        <img src="{{url('storage/product.png')}}" class="d-block w-100" alt="Product Image">
                     </a>
                 </div>
             </div>
