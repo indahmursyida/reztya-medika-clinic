@@ -47,7 +47,7 @@
                     <a class="btn button-outline-reztya btn-sm" href="/edit-category/{{ $category->category_id }}"><i class="fa-regular fa-pen-to-square"></i></a>
                     <form method="post" action="/delete-category/{{ $category->category_id }}" class="d-inline">
                         @method('post') @csrf
-                        <button class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin mengapus produk ini?')">
+                        <button class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin mengapus kategori ini?')">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </form>

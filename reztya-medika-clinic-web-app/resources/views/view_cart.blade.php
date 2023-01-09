@@ -286,7 +286,7 @@ use Carbon\Carbon;
                         <button type="button" data-toggle="modal" id="button_modal" data-target="#editQuantityPopup-{{$item->cart_id}}" class="btn button-outline-reztya rounded-2 btn-sm me-3 btn-edit" title="Edit Produk">
                             <i class="fa-regular fa-pen-to-square pt-1"></i>
                         </button>
-                        <a href="/remove-cart/{{ $item->cart_id }}" id="delete-button" class="btn btn-outline-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $item->product->name }}?')" title="Hapus Produk">
+                        <a href="/remove-cart/{{ $item->cart_id }}" id="delete-button" class="btn btn-outline-danger rounded-2 btn-sm btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $item->product->name }} dari keranjang?')" title="Hapus Produk">
                             <i class="fa-solid fa-trash pt-1"></i>
                         </a>
                         <div class="modal fade" id="editQuantityPopup-{{$item->cart_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="editQuantityTitle" aria-hidden="true">

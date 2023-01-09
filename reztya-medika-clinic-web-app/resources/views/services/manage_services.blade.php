@@ -54,7 +54,7 @@
                     <a class="btn  button-outline-reztya btn-sm" href="/edit-service/{{ $service->service_id }}"><i class="fa-regular fa-pen-to-square"></i></a>
                     <form method="post" action="/delete-service/{{ $service->service_id }}" class="d-inline">
                         @method('post') @csrf
-                        <button class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')">
+                        <button class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus perawatan ini?')">
                         <i class="fa-solid fa-trash"></i>
                         </button>
                     </form>
