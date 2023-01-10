@@ -203,6 +203,7 @@ class CartController extends Controller
         }else{
             Cart::create($validatedData);
         }
+
         return redirect('/cart')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
 

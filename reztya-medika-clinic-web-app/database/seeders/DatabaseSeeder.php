@@ -124,44 +124,44 @@ class DatabaseSeeder extends Seeder
             'status' => 'available'
         ]);
 
-        Cart::create([
-            'user_id' => 2,
-            'service_id' => 2,
-            'schedule_id' => 2,
-            'home_service' => 1,
-        ]);
+        // Cart::create([
+        //     'user_id' => 2,
+        //     'service_id' => 2,
+        //     'schedule_id' => 2,
+        //     'home_service' => 1,
+        // ]);
 
-        Cart::create([
-            'user_id' => 2,
-            'service_id' => 1,
-            'schedule_id' => 1,
-            'home_service' => 0
-        ]);
+        // Cart::create([
+        //     'user_id' => 2,
+        //     'service_id' => 1,
+        //     'schedule_id' => 1,
+        //     'home_service' => 0
+        // ]);
 
-        Cart::create([
-            'user_id' => 2,
-            'product_id' => 1,
-            'quantity' => 1
-        ]);
+        // Cart::create([
+        //     'user_id' => 2,
+        //     'product_id' => 1,
+        //     'quantity' => 1
+        // ]);
 
-        Cart::create([
-            'user_id' => 2,
-            'product_id' => 2,
-            'quantity' => 3
-        ]);
+        // Cart::create([
+        //     'user_id' => 2,
+        //     'product_id' => 2,
+        //     'quantity' => 3
+        // ]);
 
-        Cart::create([
-            'user_id' => 3,
-            'service_id' => 2,
-            'schedule_id' => 2,
-            'home_service' => 1,
-        ]);
+        // Cart::create([
+        //     'user_id' => 3,
+        //     'service_id' => 2,
+        //     'schedule_id' => 2,
+        //     'home_service' => 1,
+        // ]);
 
-        Cart::create([
-            'user_id' => 3,
-            'product_id' => 2,
-            'quantity' => 3
-        ]);
+        // Cart::create([
+        //     'user_id' => 3,
+        //     'product_id' => 2,
+        //     'quantity' => 3
+        // ]);
 
         Product::create([
             'name' => 'Susu Almond (Small)',
