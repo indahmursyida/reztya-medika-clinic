@@ -3,7 +3,7 @@
 @endphp
 
 <h3>Halo Klinik Reztya Medika,</h3>
-<p>Pengguna {{$content['username']}} memberikan Kritik dan Saran pada pesanan dengan informasi sebagai berikut:</p>
+<p>Pengguna <strong>{{$content['username']}}</strong> memberikan Kritik dan Saran pada pesanan dengan informasi sebagai berikut:</p>
 
 <br>
 <div class="container">

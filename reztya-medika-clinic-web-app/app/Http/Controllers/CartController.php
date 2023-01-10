@@ -42,7 +42,7 @@ class CartController extends Controller
                                 $productExists = true;
                             }
                         } else {
-                            $weight += 50;
+                            $weight += 10 * $item->quantity; // 10 grams
                         }
                     }
                     else
