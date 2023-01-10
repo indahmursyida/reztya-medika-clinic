@@ -39,7 +39,7 @@ class ReviewController extends Controller
             ]);
 
             if(Auth::user()->user_role_id == 2){
-                $emailAddress = 'harishsaid37@gmail.com';
+                $emailAddress = 'klinikreztya@gmail.com';
                 $content = [
                     'review' => $review['review'],
                     'username' => Auth::user()->username,
