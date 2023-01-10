@@ -627,27 +627,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Service::create([
-            'name' => 'Paket Totok Punggung dan Bekam',
-            'category_id' => '2',
-            'description' => "Manfaat Totok Punggung\r\n
-            Metode pengobatan yang dilakukan dengan menggunakan jari untuk memberikan stimulan pada titik / simpul syaraf tertentu yang terpusat di area tulang belakang, yang mana titik / simpul tersebut itu terkoneksi langsung dengan keluhan penyakit atau organ yang sedang mengalami gangguan.\r\n
-
-                                Manfaat Bekam (Sunnah dan Steril)\r\n
-                                ㆍ Membuang sel-sel darah yang mati\r\n
-                                ㆍ Menstabilkan tekanan darah\r\n
-                                ㆍ Melancarkan peredaran darah\r\n
-                                ㆍ Mengeluarkan toksin dalam tubuh\r\n
-                                ㆍ Menghilangkan angin dalam badan\r\n
-                                ㆍ Mengurangi kolestrol dalam tubuh\r\n
-                                ㆍ Meringankan tubuh\r\n
-                                ㆍ Melegakan sakit kepala\r\n
-                                ㆍ Mengatasi kelelahan",
-            'duration' => '80',
-            'price' => '250000',
-            'image_path' => '/service-images/ps.jpg'
-        ]);
-
-        Service::create([
             'name' => 'Totok Punggung',
             'category_id' => '2',
             'description' => "Manfaat Totok Punggung\r\n 
