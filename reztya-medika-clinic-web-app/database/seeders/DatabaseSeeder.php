@@ -665,14 +665,5 @@ class DatabaseSeeder extends Seeder
             'price' => '125000',
             'image_path' => '/service-images/akupuntur.jpg'
         ]);
-
-        Service::create([
-            'name' => 'Fashdu',
-            'category_id' => '2',
-            'description' => 'Deskripsi Fashdu',
-            'duration' => '30',
-            'price' => '100000',
-            'image_path' => '/service-images/fashdu.jpg'
-        ]);
     }
 }
