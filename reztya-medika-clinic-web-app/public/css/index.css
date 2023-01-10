@@ -134,6 +134,14 @@ b {
     overflow: hidden;
 }
 
+.h-240 {
+    height: 240px !important;
+}
+
+.h-300 {
+    height: 300px !important;
+}
+
 .view-profile-img {
     margin-right: -7%;
 }

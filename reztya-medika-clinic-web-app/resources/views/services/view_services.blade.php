@@ -53,28 +53,30 @@
         <div class="unselectable d-flex justify-content-center mt-2">
             <div class="row">
                 @foreach($services as $service)
-                    <div class="col-3 mb-3 font-futura-reztya d-flex">
+                    <div class="col-3 mb-3 font-futura-reztya">
                         <a href="/service-detail/{{$service->service_id}}" class="text-decoration-none">
-                            <div class="card bg-white outline-reztya">
-                                <div class="card-header">
-                                    <img class="card-img-top img-thumbnail img-fluid img-thumbnail-home" src="{{ asset('storage/' . $service->image_path) }}">
+                            <div class="card bg-white outline-reztya h-100">
+                                <div class="card-header d-flex h-240">
+                                    <img class="rounded img-fluid m-auto mh-100" src="{{ asset('storage/' . $service->image_path) }}">
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body d-flex flex-column">
                                     <div class="card-title text-reztya">
                                         <b>{{$service->name}}</b>
                                     </div>
                                     <div class="card-description text-black">
                                         Rp{{ number_format($service->price, 2) }}
                                     </div>
-                                    @if($noSchedule == true)
-                                        <a href="/service-detail/{{$service->service_id}}" class="mt-2 disabled btn btn-outline-dark float-end">
-                                            Jadwal Tidak Tersedia
-                                        </a>
-                                    @else
-                                        <a href="/service-detail/{{$service->service_id}}" class="btn button-outline-reztya float-end">
-                                            Lihat Perawatan
-                                        </a>
-                                    @endif
+                                    <div class="mt-auto">
+                                        @if($noSchedule == true)
+                                            <a href="/service-detail/{{$service->service_id}}" class="mt-2 disabled btn btn-outline-dark float-end">
+                                                Jadwal Tidak Tersedia
+                                            </a>
+                                        @else
+                                            <a href="/service-detail/{{$service->service_id}}" class="mt-2 btn button-outline-reztya float-end">
+                                                Lihat Perawatan
+                                            </a>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </a>
