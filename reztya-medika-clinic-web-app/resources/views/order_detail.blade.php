@@ -3,11 +3,6 @@
 @section('title', 'Order')
 
 @section('container')
-{{-- @if (session('success'))
-<div class="alert alert-success" id="success-alert">
-    <strong> {{session()->get('success')}} </strong>
-</div>
-@endif --}}
 @php
     use Carbon\Carbon;
 @endphp

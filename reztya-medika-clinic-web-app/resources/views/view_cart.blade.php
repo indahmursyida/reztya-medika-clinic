@@ -159,44 +159,44 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div>
                                                     @auth
-                            @if(auth()->user()->city_id == 350)
-                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
-                                    @if(old('home_service'))
-                                        <option value="1" selected>
-                                            Rumah ({{ Auth::user()->address }})
-                                        </option>
-                                        <option value="0">
-                                            Klinik Reztya Medika
-                                        </option>
-                                    @else
-                                        <option value="1">
-                                            Rumah ({{ Auth::user()->address }})
-                                        </option>
-                                        <option value="0" selected>
-                                            Klinik Reztya Medika
-                                        </option>
-                                    @endif
-                                </select>
-                            @else
-                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
-                                    <option value="0" selected>
-                                        Klinik Reztya Medika
-                                    </option>
-                                    <option value="1" disabled>
-                                        Rumah di luar jangkauan
-                                    </option>
-                                </select>
-                            @endif
-                        @else
-                            <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
-                                <option value="0" selected>
-                                    Klinik Reztya Medika
-                                </option>
-                                <option value="1" disabled>
-                                    Masuk / Daftar terlebih dahulu
-                                </option>
-                            </select>
-                        @endauth
+                                                    @if(auth()->user()->city_id == 350)
+                                                        <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                                            @if(old('home_service'))
+                                                                <option value="1" selected>
+                                                                    Rumah ({{ Auth::user()->address }})
+                                                                </option>
+                                                                <option value="0">
+                                                                    Klinik Reztya Medika
+                                                                </option>
+                                                            @else
+                                                                <option value="1">
+                                                                    Rumah ({{ Auth::user()->address }})
+                                                                </option>
+                                                                <option value="0" selected>
+                                                                    Klinik Reztya Medika
+                                                                </option>
+                                                            @endif
+                                                        </select>
+                                                    @else
+                                                        <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                                            <option value="0" selected>
+                                                                Klinik Reztya Medika
+                                                            </option>
+                                                            <option value="1" disabled>
+                                                                Rumah di luar jangkauan
+                                                            </option>
+                                                        </select>
+                                                    @endif
+                                                    @else
+                                                        <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                                            <option value="0" selected>
+                                                                Klinik Reztya Medika
+                                                            </option>
+                                                            <option value="1" disabled>
+                                                                Masuk / Daftar terlebih dahulu
+                                                            </option>
+                                                        </select>
+                                                    @endauth
                                                     {{-- <select class="form-select shadow-none" id="home_service" name="home_service">
                                                         @if($item->home_service == 1)
                                                             <option value="1" selected hidden>
@@ -343,29 +343,66 @@ use Carbon\Carbon;
                     <div class="col-5">
                         <p class="mb-2 fw-bold">Opsi Pengiriman</p>
                         <select class="form-select shadow-none w-75 @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
+                            @auth
+                            @if(auth()->user()->city_id == 350)
+                                @if (old('home_service') == 1)
+                                    <option value="0">
+                                        Diantar oleh klinik pada hari perawatan
+                                    </option>
+                                    <option value="1">
+                                        Jasa pengiriman
+                                    </option>
+                                @else
+                                    <option value="0" selected>
+                                        Ambil sendiri
+                                    </option>
+                                    <option value="1">
+                                        Jasa pengiriman
+                                    </option>
+                                @endif
+                            @else
+                                @if ($)
+                                    
+                                @else
+                                    
+                                @endif
+                            @endif
+                            @else
+                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                    <option value="0" selected>
+                                        Klinik Reztya Medika
+                                    </option>
+                                    <option value="1" disabled>
+                                        Masuk / Daftar terlebih dahulu
+                                    </option>
+                                </select>
+                            @endauth
+                            
                             @if (old('delivery_service'))
-                                @if(old('delivery_service') == 1)
-                                <option value="1" selected>
-                                    Delivery
-                                </option>
-                                <option value="0">
-                                    Self-Pickup
-                                </option>
-                                @elseif(old('delivery_service') == 0)
-                                <option value="1">
-                                    Delivery
-                                </option>
-                                <option value="0" selected>
-                                    Self-Pickup
-                                </option>
+                                @if (old('home_service') == 1)
+                                    @if(old('delivery_service') == 1)
+                                        <option value="0">
+                                            Diantar oleh klinik pada hari perawatan
+                                        </option>
+                                        <option value="1">
+                                            Jasa pengiriman
+                                        </option>
+                                    @endif
+                                @else
+                                    <option value="0" selected>
+                                        Ambil sendiri
+                                    </option>
+                                    <option value="1">
+                                        Jasa pengiriman
+                                    </option>
                                 @endif
                             @else
                             <option value="-1" hidden>Pilih Tipe Pengiriman</option>
-                            <option value="1">
-                                Delivery
-                            </option>
                             <option value="0">
-                                Self-Pickup
+                                Ambil sendiri
+                            </option>
+                            <option value="1">
+                                Jasa pengiriman
                             </option>
                             @endif
                         </select>
