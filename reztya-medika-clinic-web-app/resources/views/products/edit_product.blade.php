@@ -108,7 +108,7 @@
         </div>
         <div class="col-md-8">
             <div class="input-group">
-                <span class="input-group-text">Rp. </span>
+                <span class="input-group-text">Rp</span>
                 <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $product->price) }}">
             </div>
             @error('price')
