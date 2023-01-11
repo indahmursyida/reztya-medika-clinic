@@ -61,41 +61,27 @@ class OrderDetailController extends Controller
         }
 
         // Validation if need delivery option change based on if there are no home_service
-        $existHomeService = false;
+        $isHomeService = false;
         $allOrderDetail = OrderDetail::where('order_id', $id)->where('home_service','=','1')->get();
+
+        $orderDetailFilter = DB::table('order_details')->whereNotNull('order_details.schedule_id')
+                                ->join('schedules','schedules.schedule_id','=','order_details.schedule_id')
+                                ->orderBy('start_time')->first();   
         
-        if(!$allOrderDetail->isEmpty())
+        if($orderDetailFilter)
         {
-            $existHomeService = true;
+            if($orderDetailFilter->home_service == 1)
+            {
+                $isHomeService = true;
+            }
+            else
+                $isHomeService = false;
         }
-        // dd($existHomeService);
-
-        // Nearest schedule
-        $nearestSchedule = OrderDetail::with(['schedule' => function($query)use($id){
-            $allOrderDetail = OrderDetail::where('order_id', $id)->whereNotNull('schedule_id')->get();
-            
-            $allOrderDetailScheduleIdArray = $allOrderDetail->map(function ($orderDetail) {
-                return collect($orderDetail->toArray())
-                    ->only(['schedule_id'])
-                    ->all();
-            });
-            // $schedule_id_array = [];
-            // foreach ($schedule_ids as $key => $schedule_id) {
-            //     $schedule_id_array[$key] = $schedule_id;
-            // }
-            // dd(array_values((array)$allOrderDetailScheduleIdArray)[0]);
-
-
-
-            dd($query->whereIn('schedule_id', array_values((array)$allOrderDetailScheduleIdArray)[0]));
-            // ->orderBy('start_time')
-            // dd($query->whereIn('schedule_id', $allOrderDetailScheduleIdArray)->orderBy('start_time')->toSql());
-        }])->first();
-
-        dd($nearestSchedule);
-
+        
         $order = Order::find($id);
-        // dd($order->delivery_service);
+        
+        $isProductExist = DB::table('order_details')->whereNotNull('product_id')->first() ? true : false;
+
         $feedback = null;
         if ($order->status == 'finished') {
             $feedback = DB::table('feedback')->where('payment_receipt_id', 'LIKE', $order->payment_receipt_id)->get();
@@ -110,7 +96,8 @@ class OrderDetailController extends Controller
             ->with(compact('costs'))
             ->with(compact('origin'))
             ->with(compact('feedback'))
-            ->with('existHomeService', $existHomeService);
+            ->with('isHomeService', $isHomeService)
+            ->with('isProductExist', $isProductExist);
     }
 
     public function reschedule(Request $req, $id)

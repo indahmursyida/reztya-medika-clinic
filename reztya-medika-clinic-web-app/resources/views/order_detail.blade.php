@@ -74,6 +74,12 @@
         <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
+@if(session()->has('error'))
+    <div class="alert alert-danger alert-dismissible fade show font-futura-reztya" style="width:90%; role=" alert">
+        {{session('error')}}
+        <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
 </div>
 <div class="d-flex justify-content-center">
     <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:90%;">
@@ -427,21 +433,21 @@
         <div class="d-flex flex-column mt-2">
             <div class="container">
                 @foreach ($order->orderDetail as $order_detail)
-                @if($order_detail->product_id)
-                @if($printProductOnce == false)
-                <div class="row">
-                    <div class="col d-flex justify-content-center">
-                        <h5 class="mb-0" style="padding-right: 15%">Produk</h5>
-                    </div>
-                    <div class="col-7">
-                    </div>
-                    <div class="col-3">
-                    </div>
-                </div>
-                @php
-                $printProductOnce = true;
-                @endphp
-                @endif
+                    @if($order_detail->product_id)
+                        @if($printProductOnce == false)
+                        <div class="row">
+                            <div class="col d-flex justify-content-center">
+                                <h5 class="mb-0" style="padding-right: 15%">Produk</h5>
+                            </div>
+                            <div class="col-7">
+                            </div>
+                            <div class="col-3">
+                            </div>
+                        </div>
+                        @php
+                        $printProductOnce = true;
+                        @endphp
+                    @endif
                 <div class="row my-2">
                     <div class="col d-flex justify-content-center align-items-center">
                         <img src="{{ asset("storage/" . $order_detail->product->image_path)}}" alt="" width="100px" height="100px">
@@ -466,45 +472,47 @@
                 @endif
                 @endforeach
             </div>
-            @if($order->delivery_service == 1)
-            <div class="container">
-                <div class="row mt-2">
-                    <div class="col">
-                    </div>
-                    <div class="col-7">    
-                        <div>
-                            <p class="mb-0 fw-bold">Ongkos Pengiriman</p>
-                            <p class="mb-0">JNE {{$order->delivery_name}} ({{$order->delivery_duration}} hari), berat {{$order->weight}} kg</p>
-                            <div class="d-flex">
-                                <p class="mb-0 me-1">Dikirim ke</p>
-                                <p class="fw-bold">{{$order->delivery_destination}}</p>
+            @if ($isProductExist)
+                @if($order->delivery_service == 1)
+                <div class="container">
+                    <div class="row mt-2">
+                        <div class="col">
+                        </div>
+                        <div class="col-7">    
+                            <div>
+                                <p class="mb-0 fw-bold">Ongkos Pengiriman</p>
+                                <p class="mb-0">JNE {{$order->delivery_name}} ({{$order->delivery_duration}} hari), berat {{$order->weight}} kg</p>
+                                <div class="d-flex">
+                                    <p class="mb-0 me-1">Dikirim ke</p>
+                                    <p class="fw-bold">{{$order->delivery_destination}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        Rp{{ number_format($order->delivery_fee, 2) }}
-                    </div>
-                </div>
-            </div>
-            @else
-            <div class="container">
-                <div class="row mt-2">
-                    <div class="col">
-                    </div>
-                    <div class="col-7">    
-                        <div>
-                            <p class="mb-0 fw-bold">Pengiriman</p>
-                            @if ($existHomeService)
-                                <p class="mb-0">Diantar Klinik (Saat Perawatan)</p>
-                            @else
-                                <p class="mb-0">Ambil Sendiri (Saat Perawatan)</p>
-                            @endif
+                        <div class="col-3">
+                            Rp{{ number_format($order->delivery_fee, 2) }}
                         </div>
                     </div>
-                    <div class="col-3">
+                </div>
+                @else
+                <div class="container">
+                    <div class="row mt-2">
+                        <div class="col">
+                        </div>
+                        <div class="col-7">    
+                            <div>
+                                <p class="mb-0 fw-bold">Pengiriman</p>
+                                @if ($isHomeService)
+                                    <p class="mb-0">Diantar Klinik (Saat Perawatan)</p>
+                                @else
+                                    <p class="mb-0">Ambil Sendiri (Saat Perawatan)</p>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-3">
+                        </div>
                     </div>
                 </div>
-            </div>
+                @endif
             @endif
             <hr style="margin-right: 3%; margin-left: 3%;" />
             <div class="container mb-4">
