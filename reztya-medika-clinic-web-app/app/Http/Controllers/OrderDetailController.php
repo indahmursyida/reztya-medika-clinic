@@ -66,6 +66,12 @@ class OrderDetailController extends Controller
             $feedback = DB::table('feedback')->where('payment_receipt_id', 'LIKE', $order->payment_receipt_id)->get();
         }
 
+        $noSchedule = false;
+        $scheduleSearch = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        if ($scheduleSearch->isEmpty()) {
+            $noSchedule = true;
+        }
+
         return view('order_detail')
             ->with('order', $order)
             ->with('schedules', $schedules)
@@ -74,7 +80,8 @@ class OrderDetailController extends Controller
             ->with('totalPrice', $totalPrice)
             ->with(compact('costs'))
             ->with(compact('origin'))
-            ->with(compact('feedback'));
+            ->with(compact('feedback'))
+            ->with(compact('noSchedule'));
     }
 
     public function reschedule(Request $req, $id)

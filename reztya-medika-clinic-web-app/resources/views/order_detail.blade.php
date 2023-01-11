@@ -304,118 +304,124 @@
                         @endif
                         <div>
                             @if($order->status == 'ongoing')
-                            <button data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}" class="btn button-color rounded-2 btn-sm mt-1 pt-1 btn-edit">
-                                <i class="fa-regular fa-pen-to-square pt-1 me-1"></i>Jadwal Ulang
-                            </button>
-                            {{-- <button class="btn btn-sm button-outline-reztya mb-4 mt-2" data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}">Ubah Jadwal</button> --}}
-                            <!-- Modal -->
-                            <div class="modal fade" id="reschedulePopup-{{$order_detail->order_detail_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        {{-- Form --}}
-                                        <form action="/reschedule/{{ $order_detail->order_detail_id }}" method="POST" enctype="multipart/form-data">
-                                            @method('put')
-                                            @csrf
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="reschedulePopupLongTitle">{{ $order_detail->service->name }}</h5>
-                                            </div>
-                                            <div class="modal-body container">
-                                                <input type="hidden" id="cart_id" name="cart_id" value="{{ $order_detail->cart_id }}">
-                                                @if ($order_detail->schedule_id)
-                                                <input type="hidden" id="old_schedule" name="old_schedule" value="{{ $order_detail->schedule->start_time }}">
-                                                <input type="hidden" id="old_schedule_id" name="old_schedule_id" value="{{ $order_detail->schedule_id }}">
-                                                @endif
-                                                <input type="hidden" id="service_name" name="service_name" value="{{ $order_detail->service->name }}">
-                                                <input type="hidden" id="order_id" name="order_id" value="{{ $order_detail->order_id }}">
-                                                <input type="hidden" id="username" name="email" value="{{ $order->user->username }}">
-                                                <input type="hidden" id="name" name="name" value="{{ $order->user->name }}">
-                                                <input type="hidden" id="email" name="email" value="{{ $order->user->email }}">
-                                                <div>
-                                                    <div class="mb-2 text-start">
-                                                        Pilih Jadwal yang Tersedia
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <select class="form-select shadow-none" name="schedule_id" id="schedule_id">
-                                                            @foreach($schedules as $schedule)
-                                                            @if($schedule->schedule_id == $order_detail->schedule_id)
-                                                            <option hidden selected value="{{ $order_detail->schedule_id }}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }}, {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} s.d. {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }} WIB</option>
-                                                            @elseif($schedule->status == 'available')
-                                                            <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }}, {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} s.d. {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }} WIB</option>
-                                                            @endif
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="mb-2 text-start">
-                                                        Pilih Tempat Perawatan
-                                                    </div>
+                                @if($noSchedule == false)
+                                    <button data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}" class="btn button-color rounded-2 btn-sm mt-1 pt-1 btn-edit">
+                                        <i class="fa-regular fa-pen-to-square pt-1 me-1"></i>Jadwal Ulang
+                                    </button>
+                                @else
+                                    <button disabled data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}" class="btn btn-dark rounded-2 btn-sm mt-1 pt-1 btn-edit">
+                                        <i class="fa-regular fa-pen-to-square pt-1 me-1"></i>Jadwal Ulang
+                                    </button>
+                                @endif
+                                {{-- <button class="btn btn-sm button-outline-reztya mb-4 mt-2" data-toggle="modal" data-target="#reschedulePopup-{{$order_detail->order_detail_id}}">Ubah Jadwal</button> --}}
+                                <!-- Modal -->
+                                <div class="modal fade" id="reschedulePopup-{{$order_detail->order_detail_id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="reschedulePopupTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            {{-- Form --}}
+                                            <form action="/reschedule/{{ $order_detail->order_detail_id }}" method="POST" enctype="multipart/form-data">
+                                                @method('put')
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="reschedulePopupLongTitle">{{ $order_detail->service->name }}</h5>
+                                                </div>
+                                                <div class="modal-body container">
+                                                    <input type="hidden" id="cart_id" name="cart_id" value="{{ $order_detail->cart_id }}">
+                                                    @if ($order_detail->schedule_id)
+                                                    <input type="hidden" id="old_schedule" name="old_schedule" value="{{ $order_detail->schedule->start_time }}">
+                                                    <input type="hidden" id="old_schedule_id" name="old_schedule_id" value="{{ $order_detail->schedule_id }}">
+                                                    @endif
+                                                    <input type="hidden" id="service_name" name="service_name" value="{{ $order_detail->service->name }}">
+                                                    <input type="hidden" id="order_id" name="order_id" value="{{ $order_detail->order_id }}">
+                                                    <input type="hidden" id="username" name="email" value="{{ $order->user->username }}">
+                                                    <input type="hidden" id="name" name="name" value="{{ $order->user->name }}">
+                                                    <input type="hidden" id="email" name="email" value="{{ $order->user->email }}">
                                                     <div>
-                                                        @auth
-                                                            @if(auth()->user()->city_id == 350)
-                                                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
-                                                                    @if(old('home_service'))
-                                                                        <option value="1" selected>
-                                                                            Rumah ({{ Auth::user()->address }})
-                                                                        </option>
-                                                                        <option value="0">
-                                                                            Klinik Reztya Medika
-                                                                        </option>
-                                                                    @else
-                                                                        <option value="1">
-                                                                            Rumah ({{ Auth::user()->address }})
-                                                                        </option>
+                                                        <div class="mb-2 text-start">
+                                                            Pilih Jadwal yang Tersedia
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <select class="form-select shadow-none" name="schedule_id" id="schedule_id">
+                                                                @foreach($schedules as $schedule)
+                                                                @if($schedule->schedule_id == $order_detail->schedule_id)
+                                                                <option hidden selected value="{{ $order_detail->schedule_id }}">{{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }}, {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} s.d. {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }} WIB</option>
+                                                                @elseif($schedule->status == 'available')
+                                                                <option value="{{ $schedule->schedule_id }}"> {{ Carbon::parse($schedule->start_time)->translatedFormat('l, d F Y') }}, {{ Carbon::parse($schedule->start_time)->translatedFormat('H.i') }} s.d. {{ Carbon::parse($schedule->end_time)->translatedFormat('H.i') }} WIB</option>
+                                                                @endif
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-2 text-start">
+                                                            Pilih Tempat Perawatan
+                                                        </div>
+                                                        <div>
+                                                            @auth
+                                                                @if(auth()->user()->city_id == 350)
+                                                                    <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                                                        @if(old('home_service'))
+                                                                            <option value="1" selected>
+                                                                                Rumah ({{ Auth::user()->address }})
+                                                                            </option>
+                                                                            <option value="0">
+                                                                                Klinik Reztya Medika
+                                                                            </option>
+                                                                        @else
+                                                                            <option value="1">
+                                                                                Rumah ({{ Auth::user()->address }})
+                                                                            </option>
+                                                                            <option value="0" selected>
+                                                                                Klinik Reztya Medika
+                                                                            </option>
+                                                                        @endif
+                                                                    </select>
+                                                                @else
+                                                                    <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
                                                                         <option value="0" selected>
                                                                             Klinik Reztya Medika
                                                                         </option>
-                                                                    @endif
-                                                                </select>
+                                                                        <option value="1" disabled>
+                                                                            Rumah di luar jangkauan
+                                                                        </option>
+                                                                    </select>
+                                                                @endif
                                                             @else
                                                                 <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
                                                                     <option value="0" selected>
                                                                         Klinik Reztya Medika
                                                                     </option>
                                                                     <option value="1" disabled>
-                                                                        Rumah di luar jangkauan
+                                                                        Masuk / Daftar terlebih dahulu
                                                                     </option>
                                                                 </select>
-                                                            @endif
-                                                        @else
-                                                            <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
-                                                                <option value="0" selected>
+                                                            @endauth
+                                                            {{-- <select class="form-select" id="home_service" name="home_service">
+                                                                @if($order_detail->home_service == 1)
+                                                                <option value="1" hidden selected>
+                                                                    Rumah ({{ Auth::user()->address }})
+                                                                </option>
+                                                                <option value="0">
                                                                     Klinik Reztya Medika
                                                                 </option>
-                                                                <option value="1" disabled>
-                                                                    Masuk / Daftar terlebih dahulu
+                                                                @else
+                                                                <option value="1">
+                                                                    Rumah ({{ Auth::user()->address }})
                                                                 </option>
-                                                            </select>
-                                                        @endauth
-                                                        {{-- <select class="form-select" id="home_service" name="home_service">
-                                                            @if($order_detail->home_service == 1)
-                                                            <option value="1" hidden selected>
-                                                                Rumah ({{ Auth::user()->address }})
-                                                            </option>
-                                                            <option value="0">
-                                                                Klinik Reztya Medika
-                                                            </option>
-                                                            @else
-                                                            <option value="1">
-                                                                Rumah ({{ Auth::user()->address }})
-                                                            </option>
-                                                            <option value="0" hidden selected>
-                                                                Klinik Reztya Medika
-                                                            </option>
-                                                            @endif
-                                                        </select> --}}
+                                                                <option value="0" hidden selected>
+                                                                    Klinik Reztya Medika
+                                                                </option>
+                                                                @endif
+                                                            </select> --}}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-danger mx-3" data-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn button-outline-reztya">Simpan</button>
-                                            </div>
-                                        </form>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-danger mx-3" data-dismiss="modal">Batal</button>
+                                                    <button type="submit" class="btn button-outline-reztya">Simpan</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endif
                         </div>
                     </div>
