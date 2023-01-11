@@ -60,7 +60,42 @@ class OrderDetailController extends Controller
             return redirect('/home')->with('signupError', 'Terjadi masalah dengan pendaftaran. Harap coba ulang.');
         }
 
+        // Validation if need delivery option change based on if there are no home_service
+        $existHomeService = false;
+        $allOrderDetail = OrderDetail::where('order_id', $id)->where('home_service','=','1')->get();
+        
+        if(!$allOrderDetail->isEmpty())
+        {
+            $existHomeService = true;
+        }
+        // dd($existHomeService);
+
+        // Nearest schedule
+        $nearestSchedule = OrderDetail::with(['schedule' => function($query)use($id){
+            $allOrderDetail = OrderDetail::where('order_id', $id)->whereNotNull('schedule_id')->get();
+            
+            $allOrderDetailScheduleIdArray = $allOrderDetail->map(function ($orderDetail) {
+                return collect($orderDetail->toArray())
+                    ->only(['schedule_id'])
+                    ->all();
+            });
+            // $schedule_id_array = [];
+            // foreach ($schedule_ids as $key => $schedule_id) {
+            //     $schedule_id_array[$key] = $schedule_id;
+            // }
+            // dd(array_values((array)$allOrderDetailScheduleIdArray)[0]);
+
+
+
+            dd($query->whereIn('schedule_id', array_values((array)$allOrderDetailScheduleIdArray)[0]));
+            // ->orderBy('start_time')
+            // dd($query->whereIn('schedule_id', $allOrderDetailScheduleIdArray)->orderBy('start_time')->toSql());
+        }])->first();
+
+        dd($nearestSchedule);
+
         $order = Order::find($id);
+        // dd($order->delivery_service);
         $feedback = null;
         if ($order->status == 'finished') {
             $feedback = DB::table('feedback')->where('payment_receipt_id', 'LIKE', $order->payment_receipt_id)->get();
@@ -74,7 +109,8 @@ class OrderDetailController extends Controller
             ->with('totalPrice', $totalPrice)
             ->with(compact('costs'))
             ->with(compact('origin'))
-            ->with(compact('feedback'));
+            ->with(compact('feedback'))
+            ->with('existHomeService', $existHomeService);
     }
 
     public function reschedule(Request $req, $id)

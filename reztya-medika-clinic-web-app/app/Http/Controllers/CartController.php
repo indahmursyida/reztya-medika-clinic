@@ -25,11 +25,11 @@ class CartController extends Controller
             $origin = null;
             $productExists = false;
             $serviceIncomplete = false;
-            $inRange = false;
+            $homeService = false;
 
             if(Auth::user()->user_role_id == 2){
                 $cart = Cart::where('user_id', Auth::user()->user_id)->get();
-                $inRange = $cart->where('home_service', 1)->first() != null ? true : false;
+                $homeService = $cart->where('home_service', 1)->first() != null ? true : false;
             }
 
             if(!$cart->isEmpty())
@@ -107,7 +107,7 @@ class CartController extends Controller
                     ->with('totalPrice', $totalPrice)
                     ->with(compact('costs'))
                     ->with(compact('origin'))
-                    ->with('inRange', $inRange)
+                    ->with('homeService', $homeService)
                     ->with('error', 'Ada tempat dan jadwal perawatan yang masih kosong. Silahkan lengkapi melalui tombol edit.');
             }
 
@@ -120,7 +120,7 @@ class CartController extends Controller
                 ->with('totalPrice', $totalPrice)
                 ->with(compact('costs'))
                 ->with(compact('origin'))
-                ->with('inRange', $inRange);
+                ->with('homeService', $homeService);
         }
         return view('view_cart')->with('cart', $cart)->with('weight',$weight);
     }

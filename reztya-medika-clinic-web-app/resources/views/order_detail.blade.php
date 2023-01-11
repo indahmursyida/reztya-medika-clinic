@@ -208,6 +208,7 @@
             $totalPrice += $order_detail->product->price * $order_detail->quantity;
         }
         @endphp
+        {{-- Member Detail Admin Only --}}
         @if(Auth::user()->user_role_id == 1)
         <div class="d-flex flex-column mb-3">
             <div class="container">
@@ -253,6 +254,7 @@
             </div>
         </div>
         @endif
+        {{-- End Member Detail Admin Only --}}
         <div class="d-flex flex-column">
             <div class="container">
                 @foreach($order->orderDetail as $order_detail)
@@ -469,7 +471,7 @@
                 <div class="row mt-2">
                     <div class="col">
                     </div>
-                    <div class="col-7">
+                    <div class="col-7">    
                         <div>
                             <p class="mb-0 fw-bold">Ongkos Pengiriman</p>
                             <p class="mb-0">JNE {{$order->delivery_name}} ({{$order->delivery_duration}} hari), berat {{$order->weight}} kg</p>
@@ -481,6 +483,25 @@
                     </div>
                     <div class="col-3">
                         Rp{{ number_format($order->delivery_fee, 2) }}
+                    </div>
+                </div>
+            </div>
+            @else
+            <div class="container">
+                <div class="row mt-2">
+                    <div class="col">
+                    </div>
+                    <div class="col-7">    
+                        <div>
+                            <p class="mb-0 fw-bold">Pengiriman</p>
+                            @if ($existHomeService)
+                                <p class="mb-0">Diantar Klinik (Saat Perawatan)</p>
+                            @else
+                                <p class="mb-0">Ambil Sendiri (Saat Perawatan)</p>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-3">
                     </div>
                 </div>
             </div>
