@@ -137,7 +137,7 @@ use Carbon\Carbon;
                             <div class="col-7">
                                 <p class="fw-bold mb-4">{{ $order->orderDetail[0]->product->name }}</p>
                                 <div>
-                                    {{ $order->orderDetail[0]->quantity }} barang x Rp{{ number_format($order->orderDetail[0]->product->price, 2) }}
+                                    {{ $order->orderDetail[0]->quantity }} buah x Rp{{ number_format($order->orderDetail[0]->product->price, 2) }}
                                 </div>
                             </div>
                             <div class="col-3">

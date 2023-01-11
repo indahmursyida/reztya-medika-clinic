@@ -124,44 +124,44 @@ class DatabaseSeeder extends Seeder
             'status' => 'available'
         ]);
 
-        Cart::create([
-            'user_id' => 2,
-            'service_id' => 2,
-            'schedule_id' => 2,
-            'home_service' => 1,
-        ]);
+        // Cart::create([
+        //     'user_id' => 2,
+        //     'service_id' => 2,
+        //     'schedule_id' => 2,
+        //     'home_service' => 1,
+        // ]);
 
-        Cart::create([
-            'user_id' => 2,
-            'service_id' => 1,
-            'schedule_id' => 1,
-            'home_service' => 0
-        ]);
+        // Cart::create([
+        //     'user_id' => 2,
+        //     'service_id' => 1,
+        //     'schedule_id' => 1,
+        //     'home_service' => 0
+        // ]);
 
-        Cart::create([
-            'user_id' => 2,
-            'product_id' => 1,
-            'quantity' => 1
-        ]);
+        // Cart::create([
+        //     'user_id' => 2,
+        //     'product_id' => 1,
+        //     'quantity' => 1
+        // ]);
 
-        Cart::create([
-            'user_id' => 2,
-            'product_id' => 2,
-            'quantity' => 3
-        ]);
+        // Cart::create([
+        //     'user_id' => 2,
+        //     'product_id' => 2,
+        //     'quantity' => 3
+        // ]);
 
-        Cart::create([
-            'user_id' => 3,
-            'service_id' => 2,
-            'schedule_id' => 2,
-            'home_service' => 1,
-        ]);
+        // Cart::create([
+        //     'user_id' => 3,
+        //     'service_id' => 2,
+        //     'schedule_id' => 2,
+        //     'home_service' => 1,
+        // ]);
 
-        Cart::create([
-            'user_id' => 3,
-            'product_id' => 2,
-            'quantity' => 3
-        ]);
+        // Cart::create([
+        //     'user_id' => 3,
+        //     'product_id' => 2,
+        //     'quantity' => 3
+        // ]);
 
         Product::create([
             'name' => 'Susu Almond (Small)',
@@ -627,27 +627,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Service::create([
-            'name' => 'Paket Totok Punggung dan Bekam',
-            'category_id' => '2',
-            'description' => "Manfaat Totok Punggung\r\n
-            Metode pengobatan yang dilakukan dengan menggunakan jari untuk memberikan stimulan pada titik / simpul syaraf tertentu yang terpusat di area tulang belakang, yang mana titik / simpul tersebut itu terkoneksi langsung dengan keluhan penyakit atau organ yang sedang mengalami gangguan.\r\n
-
-                                Manfaat Bekam (Sunnah dan Steril)\r\n
-                                ㆍ Membuang sel-sel darah yang mati\r\n
-                                ㆍ Menstabilkan tekanan darah\r\n
-                                ㆍ Melancarkan peredaran darah\r\n
-                                ㆍ Mengeluarkan toksin dalam tubuh\r\n
-                                ㆍ Menghilangkan angin dalam badan\r\n
-                                ㆍ Mengurangi kolestrol dalam tubuh\r\n
-                                ㆍ Meringankan tubuh\r\n
-                                ㆍ Melegakan sakit kepala\r\n
-                                ㆍ Mengatasi kelelahan",
-            'duration' => '80',
-            'price' => '250000',
-            'image_path' => '/service-images/ps.jpg'
-        ]);
-
-        Service::create([
             'name' => 'Totok Punggung',
             'category_id' => '2',
             'description' => "Manfaat Totok Punggung\r\n 
@@ -664,15 +643,6 @@ class DatabaseSeeder extends Seeder
             'duration' => '30',
             'price' => '125000',
             'image_path' => '/service-images/akupuntur.jpg'
-        ]);
-
-        Service::create([
-            'name' => 'Fashdu',
-            'category_id' => '2',
-            'description' => 'Deskripsi Fashdu',
-            'duration' => '30',
-            'price' => '100000',
-            'image_path' => '/service-images/fashdu.jpg'
         ]);
     }
 }

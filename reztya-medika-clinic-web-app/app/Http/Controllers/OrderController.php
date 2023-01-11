@@ -109,6 +109,10 @@ class OrderController extends Controller
                         'schedule_id' => $cart->schedule_id,
                         'home_service' => $cart->home_service
                     ]);
+
+                    $schedule = Schedule::find($cart->schedule_id);
+                    $schedule->status = 'unavailable';
+                    $schedule->save();
                 }
                 else
                 {
@@ -119,31 +123,40 @@ class OrderController extends Controller
             {
                 $product = Product::where('product_id', $cart->product_id)->first();
 
-                if($cart->quantity > $product->stock)
+                if($product->stock == 0)
                 {
-                    $cart->quantity = $product->stock;
-                    $product->stock = 0;
-                }
-                else if($cart->quantity == $product->stock)
-                {
-                    $product->stock = 0;
+                    Cart::where('user_id', Auth::user()->user_id)->where('product_id', $product->product_id)->delete();
+                    return redirect('/cart')->with('error','Mohon maaf, produk ' . $product->name .' telah habis');
                 }
                 else
                 {
-                    $product->stock -= $cart->quantity;
+                    if($cart->quantity > $product->stock)
+                    {
+                        $cart->quantity = $product->stock;
+                        $product->stock = 0;
+                    }
+                    else if($cart->quantity == $product->stock)
+                    {
+                        $product->stock = 0;
+                    }
+                    else
+                    {
+                        $product->stock -= $cart->quantity;
+                    }
+                    $product->save();
+
+                    OrderDetail::create([
+                        'order_id' => $orders->order_id,
+                        'product_id' => $cart->product_id,
+                        'quantity' => $cart->quantity
+                    ]);
                 }
-                $product->save();
-                
-                OrderDetail::create([
-                    'order_id' => $orders->order_id,
-                    'product_id' => $cart->product_id,
-                    'quantity' => $cart->quantity
-                ]);
             }
+                
         }
         
         Cart::where('user_id', Auth::user()->user_id)->delete();
-        return redirect()->route('detail_order', ['id' => $orders->order_id]);
+        return redirect()->route('detail_order', ['id' => $orders->order_id])->with('success', 'Pesanan berhasil dibuat!');
     }
 
     public function createOrderWithoutProduct()
@@ -174,6 +187,10 @@ class OrderController extends Controller
                     'service_id' => $cart->service_id,
                     'schedule_id' => $cart->schedule_id
                 ]);
+
+                $schedule = Schedule::find($cart->schedule_id);
+                $schedule->status = 'unavailable';
+                $schedule->save();
             }
             else
             {
@@ -187,7 +204,7 @@ class OrderController extends Controller
 
         Cart::where('user_id', Auth::user()->user_id)->delete();
 
-        return redirect()->route('detail_order', ['id' => $orders->order_id]);
+        return redirect()->route('detail_order', ['id' => $orders->order_id])->with('success', 'Pesanan berhasil dibuat!');
     }
 
     public function activeOrder()

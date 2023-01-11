@@ -60,7 +60,28 @@ class OrderDetailController extends Controller
             return redirect('/home')->with('signupError', 'Terjadi masalah dengan pendaftaran. Harap coba ulang.');
         }
 
+        // Validation if need delivery option change based on if there are no home_service
+        $isHomeService = false;
+        $allOrderDetail = OrderDetail::where('order_id', $id)->where('home_service','=','1')->get();
+
+        $orderDetailFilter = DB::table('order_details')->whereNotNull('order_details.schedule_id')
+                                ->join('schedules','schedules.schedule_id','=','order_details.schedule_id')
+                                ->orderBy('start_time')->first();
+
+        if($orderDetailFilter)
+        {
+            if($orderDetailFilter->home_service == 1)
+            {
+                $isHomeService = true;
+            }
+            else
+                $isHomeService = false;
+        }
+
         $order = Order::find($id);
+
+        $isProductExist = DB::table('order_details')->whereNotNull('product_id')->first() ? true : false;
+
         $feedback = null;
         if ($order->status == 'finished') {
             $feedback = DB::table('feedback')->where('payment_receipt_id', 'LIKE', $order->payment_receipt_id)->get();
@@ -81,6 +102,8 @@ class OrderDetailController extends Controller
             ->with(compact('costs'))
             ->with(compact('origin'))
             ->with(compact('feedback'))
+            ->with('isHomeService', $isHomeService)
+            ->with('isProductExist', $isProductExist)
             ->with(compact('noSchedule'));
     }
 
