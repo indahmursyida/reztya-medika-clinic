@@ -65,8 +65,8 @@
                             @enderror
                         </div>
                         <div class="d-grid gap-2 mt-4">
+                            <button class="btn button-outline-reztya font-futura-reztya" type="submit">Setel Ulang</button>
                             <a href="/signin" type="button" class="btn btn-outline-danger font-futura-reztya">Batal</a>
-                            <button class="btn button-outline-reztya font-futura-reztya" type="submit">Simpan</button>
                         </div>
                     </form>
                 </div>

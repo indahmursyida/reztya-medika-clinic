@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
 
 class ProfileController extends Controller
 {
@@ -23,29 +24,39 @@ class ProfileController extends Controller
         $new_pass = Hash::make($reset['password']);
         $confirm_new_pass = Hash::make($reset['confirm_password']);
 
-        if (Hash::check($reset['password'], $confirm_new_pass) && Hash::check($reset['confirm_password'], $new_pass)) {
-            $email = $request['email'];
-            $username = $request['username'];
-            $birthdate = $request['birthdate'];
+        if(!RateLimiter::tooManyAttempts('failed', 3)) {
+            if (Hash::check($reset['password'], $confirm_new_pass) && Hash::check($reset['confirm_password'], $new_pass)) {
+                $email = $request['email'];
+                $username = $request['username'];
+                $birthdate = $request['birthdate'];
 
-            $user = DB::table('users')
-                ->where('email', $email)
-                ->where('username', $username)
-                ->where('birthdate', $birthdate)
-                ->first();
+                $user = DB::table('users')
+                    ->where('email', $email)
+                    ->where('username', $username)
+                    ->where('birthdate', $birthdate)
+                    ->first();
 
-            if($user) {
-                if (!Hash::check($reset['confirm_password'], $user->password)) {
-                    DB::table('users')->where('email', $email)->update([
-                        'password' => $confirm_new_pass
-                    ]);
-                    $request->session()->regenerate();
-                    return redirect()->intended('/signin')->with('success', 'Kata sandi berhasil diubah! Harap masuk!');
+                if ($user) {
+                    if (!Hash::check($reset['confirm_password'], $user->password)) {
+                        DB::table('users')->where('email', $email)->update([
+                            'password' => $confirm_new_pass
+                        ]);
+                        $request->session()->regenerate();
+
+                        RateLimiter::resetAttempts('failed');
+                        return redirect()->intended('/signin')->with('success', 'Kata sandi berhasil diubah! Harap masuk!');
+                    }
+                    RateLimiter::hit('failed', 300);
+                    return back()->with('resetError', 'Kata sandi baru wajib berbeda dengan kata sandi lama!');
                 }
-                return back()->with('resetError', 'Kata sandi baru wajib berbeda dengan kata sandi lama!');
+                RateLimiter::hit('failed', 300);
+                return redirect('/signup')->with('signupError', 'User tidak ditemukan! Harap daftar terlebih dahulu!');
             }
-            return redirect('/signup')->with('signupError', 'User tidak ditemukan! Harap daftar terlebih dahulu!');
+        } else {
+            RateLimiter::hit('failed', 300);
+            return back()->with('resetError', 'Terlalu banyak gagal memasukkan input! Harap tunggu '. round(RateLimiter::availableIn('failed') / 60) .' menit lagi untuk mencoba ulang!');
         }
+
         return back()->with('resetError', 'Kata sandi dan konfirmasi kata sandi wajib sama!');
     }
 
