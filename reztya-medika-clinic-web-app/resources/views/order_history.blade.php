@@ -3,136 +3,170 @@
 @section('title', 'Order History')
 
 @section('container')
-@if(!$order->isEmpty())
-    <div class="border outline-reztya rounded-4 p-5 font-futura-reztya">
-        <h2 class="my-3 text-center font-alander-reztya unselectable">Riwayat Pesanan</h2>
+@php
+use Carbon\Carbon;
+@endphp
+<div class="d-flex justify-content-center">
+    <div class="border outline-reztya rounded-4 p-5 font-futura-reztya" style="margin-bottom:100px; width:85%;">
+        <h5 class="my-3 text-center font-alander-reztya unselectable fw-bold pt-4">Riwayat Pesanan</h5>
         <div class="dropdown">
             <button class="btn button-outline-reztya dropdown-toggle mt-4 mb-2" type="button" data-toggle="dropdown" aria-expanded="false">
                 Status
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/history-order/finished" class="button-outline-reztya dropdown-item">FINISHED</a></li>
-                <li><a href="/history-order/canceled" class="button-outline-reztya dropdown-item">CANCELED</a></li>
+                <li><a href="/order/{{'finished'}}" class="button-outline-reztya dropdown-item">Selesai</a></li>
+                <li><a href="/order/{{'canceled'}}" class="button-outline-reztya dropdown-item">Dibatalkan</a></li>
             </ul>
         </div>
-        @foreach($order as $y)
-            <div class="d-flex justify-content-between">
-                <div class="container">
-                    @if ($y->status =="FINISHED")
-                        <h4 class="col-md-4">{{ date('d M Y', strtotime($y->paymentReceipt->payment_date)) }}</h4>
-                    @else
-                        <h4 class="col-md-4">{{ date('d M Y', strtotime($y->order_date)) }}</h4>
-                    @endif
-                    @if ($y->status == "FINISHED")
-                    <p class="rounded-2 ps-2 pe-2 ms-3 col" style="border: 2px solid #00A54F; color: #00A54F; cursor: default;">
-                    @else
-                    <p class="btn rounded-2 ps-2 pe-2 ms-3 col" style="border: 2px solid red; color: red; cursor: default;">
-                    @endif
-                    {{ $y->status }}
-                    </p>
-                </div>
-                <div class="d-flex">
-                    @php
+        @if(!$orders->isEmpty())
+            @foreach($orders as $key=>$order)
+                @php
                     $totalPrice = 0;
-                    foreach($y->orderDetail as $p)
+                    foreach($order->orderDetail as $order_detail)
                     {
-                        if($p->service_id)
-                            $totalPrice += $p->service->price;
+                        if($order_detail->service_id)
+                            $totalPrice += $order_detail->service->price;
                         else
-                            $totalPrice += $p->product->price * $p->quantity;
+                            $totalPrice += $order_detail->product->price * $order_detail->quantity;
                     }
-                    @endphp
-                    Total Harga:
-                    <h4>Rp{{ number_format($totalPrice, 2) }}</h4>
-                    @if(Auth::user()->user_role_id == 2)
-                        <a href="/repeat-order/{{ $y->order_id }}" class="btn btn-success ms-5">Pesan Lagi</a>
+                    if($order->delivery_fee)
+                        $totalPrice += $order->delivery_fee;
+                @endphp
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        @if ($order->status =="finished")
+                            <h5 class="mb-0 align-items-center">{{ Carbon::parse($order->paymentReceipt->payment_date)->translatedFormat('d F Y') }}</h5>
+                            <p class="rounded-2 mb-0 ms-4" style="background-color: #00A54F; cursor: default;">
+                                <span class="badge">SELESAI</span>
+                            </p>
+                            @elseif($order->status == "canceled")
+                            <h5 class="mb-0 align-items-center">{{ Carbon::parse($order->order_date)->translatedFormat('d F Y') }}</h5>
+                            <p class="rounded-2 mb-0 ms-4" style="background-color: red; cursor: default;">
+                                <span class="badge">DIBATALKAN</span>
+                            </p>
+                        @endif
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="d-flex flex-column">
+                            <p class="mb-0 text-end">Total Harga</p>
+                            <p class="fw-bold mb-0">Rp{{ number_format($totalPrice, 2)}}</p>
+                        </div>
+                        <a href="/order-detail/{{$order->order_id}}" class="btn button-outline-reztya ms-3" type="button">Detail Pesanan</a>
+                    </div>
+                </div>
+                @if(Auth::user()->user_role_id == 1)
+                <div class="container mb-3" style="margin-left: -1%;">
+                    <div class="row">
+                        <div class="col-2">
+                            Pemesan
+                        </div>
+                        <div class="col-1 text-end">
+                            :
+                        </div>
+                        <div class="col-7 fw-bold">
+                            {{ $order->user->name }}
+                        </div>
+                        <div class="col-3">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            No. HP
+                        </div>
+                        <div class="col-1 text-end">
+                            :
+                        </div>
+                        <div class="col-7 fw-bold">
+                            {{ $order->user->phone }}
+                        </div>
+                        <div class="col-3">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            Alamat
+                        </div>
+                        <div class="col-1 text-end">
+                            :
+                        </div>
+                        <div class="col-7 fw-bold">
+                            {{ $order->user->address }}
+                        </div>
+                        <div class="col-3">
+                        </div>
+                    </div>
+                </div>
+                @endif
+                <div class="d-flex flex-column">
+                    <div class="container">
+                        @if($order->orderDetail[0]->service_id)
+                        <div class="row">
+                            <div class="col d-flex justify-content-center">
+                                <h5 class="mb-0">Perawatan</h5>
+                            </div>
+                            <div class="col-7">
+                            </div>
+                            <div class="col-3">
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col d-flex justify-content-center align-items-center">
+                                <img src="{{ asset('storage/' . $order->orderDetail[0]->service->image_path) }}" alt="" width="100px" height="100px">
+                            </div>
+                            <div class="col-7">
+                                <p class="fw-bold m-0">{{ $order->orderDetail[0]->service->name }}</p>
+                                Rp{{ number_format($order->orderDetail[0]->service->price, 2) }}
+                            </div>
+                            <div class="col-3">
+                            </div>
+                        </div>
+                        @elseif($order->orderDetail[0]->product_id != null)
+                        <div class="row">
+                            <div class="col d-flex justify-content-center">
+                                <h5 class="mb-0">Produk</h5>
+                            </div>
+                            <div class="col-7">
+                            </div>
+                            <div class="col-3">
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col d-flex justify-content-center align-items-center">
+                                <img src="{{ asset('storage/' . $order->orderDetail[0]->product->image_path) }}" alt="" width="100px" height="100px">
+                            </div>
+                            <div class="col-7">
+                                <p class="fw-bold mb-4">{{ $order->orderDetail[0]->product->name }}</p>
+                                <div>
+                                    {{ $order->orderDetail[0]->quantity }} buah x Rp{{ number_format($order->orderDetail[0]->product->price, 2) }}
+                                </div>
+                            </div>
+                            <div class="col-3">
+                            </div>
+                        </div>
+                        @endif
+                        @php
+                            $totalItem = count($order->orderDetail);
+                        @endphp
+                        @if ($totalItem > 1)
+                        <div class="row">
+                            <div class="col d-flex justify-content-center">
+                                <p class="mb-4">+{{$totalItem - 1}} pesanan lainnya</p>
+                            </div>
+                            <div class="col-7">
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                    @if($key != count($orders) - 1)
+                        <hr/>
                     @endif
                 </div>
-            </div>
-            @if(Auth::user()->user_role_id == 1)
-                <div class="d-flex flex-column ms-5">
-                    <div>
-                        Nama Pelanggan:
-                        <b>{{ $y->user->name }}</b>
-                    </div>
-                    <div>
-                        No. HP Pelanggan:
-                        <b>{{ $y->user->phone }}</b>
-                    </div>
-                    <div>
-                        Alamat Pelanggan:
-                        <b>{{ $y->user->address }}</b>
-                    </div>
-                </div>
-            @endif
-            <div class="d-flex flex-column ms-3">
-                    <table class="table">
-                        <tbody>
-                            @foreach($y->orderDetail as $x)
-                                @if($x->service_id)
-                                    @if($printServiceOnce == false)
-                                        <h5>Perawatan</h5>
-                                        @php
-                                            $printServiceOnce = true;
-                                        @endphp
-                                    @endif
-                                    <tr>
-                                        <td>
-                                            <img src="{{ asset("storage/" . $x->service->image_path) }}" alt="" width="200px" height="200px">
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <b>{{ $x->service->name}}</b>
-                                                <div>
-                                                    <div>
-                                                        Tanggal Perawatan:
-                                                        {{ date('l, d M Y', strtotime(old('start_time', $x->schedule->start_time))) }}
-                                                        {{-- {{ old('start_time', $x->schedule->start_time) }}  --}}
-                                                    </div>
-                                                    <div>
-                                                        Waktu Mulai: {{ date('H:i:s', strtotime($x->schedule->start_time)) }}
-                                                    </div>
-                                                    <div>
-                                                        Waktu Berakhir: {{ date('H:i:s', strtotime($x->schedule->end_time)) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Rp{{ number_format($x->service->price, 2) }}</td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                {{-- @endif --}}
-            </div>
-            <div class="d-flex flex-column ms-3">
-                <table class="table">
-                    <tbody>
-                        @foreach ($y->orderDetail as $x)
-                            @if($x->product_id)
-                                @if($printProductOnce == false)
-                                    <h5>Produk</h5>
-                                    @php
-                                        $printProductOnce = true;
-                                    @endphp
-                                @endif
-                                <tr>
-                                    <td>
-                                        <img src="{{ asset("storage/" . $x->product->image_path)}}" alt="" width="200px" height="200px">
-                                    </td>
-                                    <td><b>{{ $x->product->name}}</b></td>
-                                    <td> Kuantitas: {{ $x->quantity }}</td>
-                                    <td>Rp{{ number_format($x->product->price * $x->quantity, 2) }}</td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @endforeach
+            @endforeach
+        @else
+        <p class="my-3">Tidak ada histori transaksi apapun.</p>
+        @endif
     </div>
-@else
-    Tidak ada histori transaksi apapun.
-@endif
+</div>
 @endsection

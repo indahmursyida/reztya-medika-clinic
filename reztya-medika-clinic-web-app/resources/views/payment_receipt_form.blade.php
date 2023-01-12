@@ -6,17 +6,23 @@
 @php
 use Carbon\Carbon;
 @endphp
-<h2 class="my-3 text-center unselectable font-alander-reztya">Konfirmasi Pembayaran</h2>
-<div class="unselectable d-flex justify-content-center mt-3 mb-5">
-    <div class="card card-sign bg-white outline-reztya">
+<h5 class="mt-5 text-center unselectable font-alander-reztya fw-bold">Konfirmasi Pembayaran</h5>
+<div class="unselectable d-flex flex-column justify-content-center align-items-center mt-3">
+    @if($errors->first('invalid'))
+    <div class="alert alert-danger alert-dismissible fade show font-futura-reztya" style="width:37%;" role="alert">
+        {{$errors->first('invalid')}}
+        <button type="button" class="btn btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    <div class="card card-sign bg-white outline-reztya mb-5 mt-2">
         <div class="card-body">
             <form action="/add-payment-receipt/{{$order->order_id}}" method="POST" enctype="multipart/form-data" class="needs-validation">
                 @method('post')
                 @csrf
 
-                @if($order->status == 'WAITING')
+                @if($order->status == 'waiting')
                 <div class="d-flex justify-content-center my-4">
-                    <img class="img-preview img-fluid img-responsive img-thumbnail" width="300" height="300">
+                    <img class="img-preview img-fluid img-responsive img-thumbnail" width="200px" height="200px">
                 </div>
 
                 <div class="form-floating mb-2">
@@ -54,7 +60,7 @@ use Carbon\Carbon;
                     <label for="payment_amount" class="font-futura-reztya">Total Transfer</label>
                 </div>
 
-                @elseif($order->status == 'ON GOING')
+                @elseif($order->status == 'ongoing')
                 <div class="form-floating mb-2">
                     <input placeholder="order_date" disabled id="floating_order_date" class="shadow-none form-control" type="date" name="order_date" value="{{ old('order_date', $order->order_date)}}">
                     <label for="floating_order_date" class="font-futura-reztya">Tanggal Pesanan (Bulan/Tanggal/Tahun)</label>
@@ -87,24 +93,24 @@ use Carbon\Carbon;
                 </div>
                 @endif
 
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center fw-bold">
                     Verifikasi Admin
                 </div>
                 <div class="form-floating mb-2">
-                    <input placeholder="Username Admin" id="floating_confirmed_by" class="shadow-none form-control" type="text" name="confirmed_by" value="{{old('username', Auth::user()->username)}}">
-                    <label for="floating_confirmed_by" class="font-futura-reztya">Username Admin</label>
+                    <input placeholder="Username" id="floating_confirmed_by" class="shadow-none form-control @error('confirmed_by') is-invalid @enderror" type="text" name="confirmed_by">
+                    <label for="floating_confirmed_by" class="font-futura-reztya">Username</label>
                     @error('confirmed_by')
                     <div class="invalid-feedback">
-                        Username Admin wajib diisi
+                        {{ $message }}
                     </div>
                     @enderror
                 </div>
                 <div class="form-floating mb-2">
-                    <input placeholder="Password Admin" id="floating_admin_password" class="shadow-none form-control @error('admin_password') is-invalid @enderror" type="password" name="admin_password" value="{{old('password')}}">
-                    <label for="floating_admin_password" class="font-futura-reztya">Kata Sandi</label>
-                    @error('admin_password')
+                    <input placeholder="Password Admin" id="floating_password" class="shadow-none form-control @error('password') is-invalid @enderror" type="password" name="password" value="{{old('password')}}">
+                    <label for="floating_password" class="font-futura-reztya">Kata Sandi</label>
+                    @error('password')
                     <div class="invalid-feedback">
-                        Kata Sandi wajib diisi
+                        {{ $message }}
                     </div>
                     @enderror
                 </div>

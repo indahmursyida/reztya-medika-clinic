@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Schedule;
+use App\Models\OrderDetail;
+use App\Models\Cart;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\ScheduleWorkCommand;
 use Illuminate\Support\Facades\Validator;
 
@@ -11,13 +14,13 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        $schedules = Schedule::paginate(10);
-        return view('manage_schedules')->with('schedules', $schedules);
+        $schedules = Schedule::where('start_time', '>', Carbon::now())->paginate(10);
+        return view('schedules.manage_schedules')->with('schedules', $schedules);
     }
 
     public function add()
     {
-        return view('add_schedule');
+        return view('schedules.add_schedule');
     }
 
     public function store(Request $req)
@@ -40,7 +43,7 @@ class ScheduleController extends Controller
     public function edit($id)
     {
         $schedule = Schedule::find($id);
-        return view('edit_schedule')->with('schedule', $schedule);
+        return view('schedules.edit_schedule')->with('schedule', $schedule);
     }
 
     public function update(Request $req, $id)
@@ -61,7 +64,20 @@ class ScheduleController extends Controller
     
     public function delete($id)
     {
-        Schedule::find($id)->delete();
+        $schedule = Schedule::find($id);
+        $isExist = true;
+        if($schedule){
+            if(OrderDetail::where('schedule_id', $id)->count() == 0){
+                $isExist = false;
+            }
+        }
+
+        if(!$isExist){
+            Cart::where('schedule_id', $id)->delete();
+            Schedule::destroy($id);
+        }else{
+            return redirect('/manage-schedules')->with('error', 'Jadwal tidak dapat dihapus karena masih berada pada order yang aktif!');
+        }
         return redirect('/manage-schedules')->with('success','Jadwal berhasil dihapus!');
     }
 }

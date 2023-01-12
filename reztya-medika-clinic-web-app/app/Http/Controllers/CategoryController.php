@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Product;
 use App\Models\Category;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -14,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('manage_categories', [
+        return view('categories.manage_categories', [
             'categories' => Category::all()
         ]);
     }
@@ -26,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('add_category');
+        return view('categories.add_category');
     }
 
     /**
@@ -59,7 +60,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
-        return view('edit_category', [
+        return view('categories.edit_category', [
             'category' => $category
         ]);
     }
@@ -95,8 +96,20 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::destroy($id);
+        $category = Category::find($id);
+        $isExist = true;
+        if($category){
+            if(Product::where('category_id', $id)->count() == 0 && Service::where('category_id', $id)->count() == 0 ){
+                $isExist = false;
+            }
+        }
 
-        return redirect('/manage-categories')->with('Kategori berhasil dihapus!');
+        if(!$isExist){
+            Category::destroy($id);
+        }else{
+            return redirect('/manage-categories')->with('error', 'Kategori tidak dapat dihapus karena sedang digunakan oleh perawatan atau produk yang tersedia!');
+        }
+
+        return redirect('/manage-categories')->with('success','Kategori berhasil dihapus!');
     }
 }

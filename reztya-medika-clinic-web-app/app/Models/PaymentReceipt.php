@@ -10,20 +10,10 @@ class PaymentReceipt extends Model
     use HasFactory;
 
     protected $primaryKey = 'payment_receipt_id';
-    protected $fillable = [
-        'order_id',
-        'feedback_id',
-        'payment_date',
-        'payment_amount',
-        'payment_method',
-        'account_number',
-        'account_name',
-        'image_path',
-        'confirmed_by'
-    ];
+    protected $guarded = ['payment_receipt_id'];
 
     public function order(){
-        return $this->belongsTo(Order::class, 'payment_receipt_id');
+        return $this->hasOne(Order::class, 'payment_receipt_id');
     }
 
     public function feedback(){

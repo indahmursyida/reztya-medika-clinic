@@ -15,6 +15,15 @@
     user-select: none;
 }
 
+.selectable {
+    -webkit-touch-callout: default;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
 .button-color {
     background-color: #00A54F!important;
     color: white !important;
@@ -51,6 +60,10 @@
 }
 
 .form-control:focus {
+    border-color: #00A54F !important;
+}
+
+.form-select:focus {
     border-color: #00A54F !important;
 }
 
@@ -100,7 +113,7 @@ b {
 }
 
 .form-quantity {
-    width: 70px;
+    width: 100px;
 }
 
 .profile-box {
@@ -117,14 +130,16 @@ b {
     border-color: #00A54F !important;
 }
 
-.list-group-item-profile {
-    border-color: white !important;
-    margin-right: -7.5%;
-    background: none !important;
-}
-
 .img-thumbnail {
     overflow: hidden;
+}
+
+.h-240 {
+    height: 240px !important;
+}
+
+.h-300 {
+    height: 300px !important;
 }
 
 .view-profile-img {
@@ -143,24 +158,16 @@ b {
     margin-left: -2%;
 }
 
-.button-active-order {
-    width: 101%;
-    margin-left: -0.5%;
-    margin-top: -0.4%;
-}
-
-.button-history-order {
-    width: 101%;
-    margin-left: -0.45%;
-    margin-top: -0.4%;
-}
-
 .me-2-5 {
     margin-left: 2% !important;
 }
 
 .sign-box {
     width: 450px;
+}
+
+.ban-unban-box {
+    width: 800px;
 }
 
 .box-up {
@@ -182,10 +189,6 @@ b {
 }
 .carousel-reztya .carousel-caption {
     color: #00A54F;
-}
-
-.img-thumbnail-home {
-    background: #00A54F;
 }
 
 .edit-icon {
@@ -210,3 +213,22 @@ b {
     padding: 2px 10px 5px 10px;
 }
 
+.table-head-reztya{
+    background-color: #7dc241 !important;
+}
+
+.td-name{
+    width: 302px;
+}
+
+.border-reztya {
+    border-color: #00A54F !important;
+}
+
+.bg-reztya {
+    background-color: #00A54F !important;
+}
+
+.mb--1 {
+    margin-bottom: -10%;
+}
