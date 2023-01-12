@@ -26,7 +26,7 @@
                 <form action="/signin" method="POST">
                     @csrf
                     <div class="form-floating mb-2">
-                        <input placeholder="Email" id="floatingEmail" class="shadow-none form-control @error('email') is-invalid @enderror" type="text" name="email" value="{{\Illuminate\Support\Facades\Cookie::get('email')}}">
+                        <input autofocus placeholder="Email" id="floatingEmail" class="shadow-none form-control @error('email') is-invalid @enderror" type="text" name="email" value="{{\Illuminate\Support\Facades\Cookie::get('email')}}">
                         <label for="floatingEmail" class="font-futura-reztya">Email</label>
                         @error('email')
                         <div class="invalid-feedback">
