@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class Admin
+class Banned
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->check() || auth()->user()->user_role_id != 1) {
-            return redirect('/home')->with('signupError', 'Hanya admin yang bisa mengaksesnya!');
+        if (auth()->user()->is_banned == true) {
+            return redirect('/home')->with('signupError', 'Akun Anda telah diblokir! Silahkan kontak klinik!');
         }
 
         return $next($request);

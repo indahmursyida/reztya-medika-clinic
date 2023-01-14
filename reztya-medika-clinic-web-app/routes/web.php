@@ -34,7 +34,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // Redirects
 Route::permanentRedirect('/', '/home');
 Route::permanentRedirect('/login', '/signin')->middleware('guest');
-Route::permanentRedirect('/logout', '/home')->middleware(['auth', 'verified']);
+Route::permanentRedirect('/logout', '/home')->middleware(['auth', 'verified', 'clear']);
 
 Route::group(['middleware' => 'prevent-back-history'], function() {
     // Start Group cannot back //
@@ -46,11 +46,11 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
 
     Route::get('/active-order', function () {
         return view('active-order');
-    })->middleware(['auth', 'verified']);
+    })->middleware(['auth', 'verified', 'clear']);
 
     Route::get('/payment-receipt-form', function () {
         return view('payment-receipt-form');
-    })->middleware(['auth', 'verified']);
+    })->middleware(['auth', 'verified', 'clear']);
 
     // Sign Up
     Route::get('/signup', [SignUpController::class, 'signUp'])->middleware('guest');
@@ -82,14 +82,14 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
     Route::post('/signout', [SignInController::class, 'userLogout'])->middleware('auth');
 
     // View Profile
-    Route::get('/view-profile/{username}', [ProfileController::class, 'viewProfile'])->middleware(['auth', 'verified']);
+    Route::get('/view-profile/{username}', [ProfileController::class, 'viewProfile'])->middleware(['auth', 'verified', 'clear']);
 
     // Edit Profile
-    Route::get('/edit-profile/{username}', [ProfileController::class, 'viewEditProfile'])->middleware(['auth', 'verified']);
-    Route::post('/edit-profile/{username}', [ProfileController::class, 'editProfile'])->middleware(['auth', 'verified']);
+    Route::get('/edit-profile/{username}', [ProfileController::class, 'viewEditProfile'])->middleware(['auth', 'verified', 'clear']);
+    Route::post('/edit-profile/{username}', [ProfileController::class, 'editProfile'])->middleware(['auth', 'verified', 'clear']);
 
     // Change Password
-    Route::post('/change-password/{username}', [ProfileController::class, 'changePassword'])->middleware(['auth', 'verified']);
+    Route::post('/change-password/{username}', [ProfileController::class, 'changePassword'])->middleware(['auth', 'verified', 'clear']);
 
     // Reset Password
     Route::get('/reset-password', function () {
@@ -152,32 +152,32 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
     Route::put('/update-category/{id}', [CategoryController::class, 'update'])->middleware('admin');
 
     // Cart
-    Route::get('/cart', [CartController::class, 'index'])->middleware(['auth', 'verified']);
-    Route::post('/buy-product', [CartController::class, 'buyProduct'])->middleware(['auth', 'verified']);
-    Route::post('/book-service', [CartController::class, 'bookService'])->middleware(['auth', 'verified']);
-    Route::put('/update-schedule/{id}', [CartController::class, 'updateCartSchedule'])->middleware(['auth', 'verified']);
-    Route::put('/update-quantity/{id}', [CartController::class, 'updateCartQuantity'])->middleware(['auth', 'verified']);
-    Route::get('/remove-cart/{id}', [CartController::class, 'removeCart'])->middleware(['auth', 'verified']);
+    Route::get('/cart', [CartController::class, 'index'])->middleware(['auth', 'verified', 'clear']);
+    Route::post('/buy-product', [CartController::class, 'buyProduct'])->middleware(['auth', 'verified', 'clear']);
+    Route::post('/book-service', [CartController::class, 'bookService'])->middleware(['auth', 'verified', 'clear']);
+    Route::put('/update-schedule/{id}', [CartController::class, 'updateCartSchedule'])->middleware(['auth', 'verified', 'clear']);
+    Route::put('/update-quantity/{id}', [CartController::class, 'updateCartQuantity'])->middleware(['auth', 'verified', 'clear']);
+    Route::get('/remove-cart/{id}', [CartController::class, 'removeCart'])->middleware(['auth', 'verified', 'clear']);
 
     //Order
-    Route::get('/order/{status}', [OrderController::class, 'statusFilter'])->middleware(['auth', 'verified']);
-    Route::get('/create-order', [OrderController::class, 'createOrderWithoutProduct'])->middleware(['auth', 'verified']);
-    Route::post('/create-order', [OrderController::class, 'create'])->middleware(['auth', 'verified']);
-    Route::get('/active-order', [OrderController::class, 'activeOrder'])->middleware(['auth', 'verified']);
-    Route::get('/cancel-order/{id}', [OrderController::class, 'cancelOrder'])->middleware(['auth', 'verified']);
-    Route::get('/history-order', [OrderController::class, 'historyOrder'])->middleware(['auth', 'verified']);
-    Route::get('/repeat-order/{id}', [OrderController::class, 'repeatOrder'])->middleware(['auth', 'verified']);
+    Route::get('/order/{status}', [OrderController::class, 'statusFilter'])->middleware(['auth', 'verified', 'clear']);
+    Route::get('/create-order', [OrderController::class, 'createOrderWithoutProduct'])->middleware(['auth', 'verified', 'clear']);
+    Route::post('/create-order', [OrderController::class, 'create'])->middleware(['auth', 'verified', 'clear']);
+    Route::get('/active-order', [OrderController::class, 'activeOrder'])->middleware(['auth', 'verified', 'clear']);
+    Route::get('/cancel-order/{id}', [OrderController::class, 'cancelOrder'])->middleware(['auth', 'verified', 'clear']);
+    Route::get('/history-order', [OrderController::class, 'historyOrder'])->middleware(['auth', 'verified', 'clear']);
+    Route::get('/repeat-order/{id}', [OrderController::class, 'repeatOrder'])->middleware(['auth', 'verified', 'clear']);
 
     //Order Detail
-    Route::get('/order-detail/{id}', [OrderDetailController::class, 'detailOrder'])->name('detail_order')->middleware(['auth', 'verified']);
-    Route::put('/reschedule/{id}', [OrderDetailController::class, 'reschedule'])->middleware(['auth', 'verified']);
+    Route::get('/order-detail/{id}', [OrderDetailController::class, 'detailOrder'])->name('detail_order')->middleware(['auth', 'verified', 'clear']);
+    Route::put('/reschedule/{id}', [OrderDetailController::class, 'reschedule'])->middleware(['auth', 'verified', 'clear']);
 
     //Payment Receipt
-    Route::put('/upload-transfer-receipt/{id}', [PaymentReceiptController::class, 'uploadTransferReceipt'])->middleware(['auth', 'verified']);
+    Route::put('/upload-transfer-receipt/{id}', [PaymentReceiptController::class, 'uploadTransferReceipt'])->middleware(['auth', 'verified', 'clear']);
     Route::post('/add-payment-receipt/{id}', [PaymentReceiptController::class, 'addPaymentReceipt'])->middleware('admin');
     Route::get('/form-payment-receipt/{id}', [PaymentReceiptController::class, 'formPaymentReceipt'])->name('form_payment')->middleware('admin');
     Route::post('/upsert-payment-receipt/{id}', [PaymentReceiptController::class, 'upsertPaymentReceipt'])->middleware('admin');
 
     // Review
-    Route::post('/order-detail/{order_id}/add-clinic-review', [ReviewController::class, 'addClinicReview'])->middleware(['auth', 'verified']);
+    Route::post('/order-detail/{order_id}/add-clinic-review', [ReviewController::class, 'addClinicReview'])->middleware(['auth', 'verified', 'clear']);
 });
