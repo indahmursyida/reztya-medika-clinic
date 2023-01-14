@@ -343,14 +343,16 @@ use Carbon\Carbon;
                     <div class="col-5">
                         <p class="mb-2 fw-bold">Opsi Pengiriman</p>
                         <select class="form-select shadow-none w-75 @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
+                            
                             @auth
+                            <option value="-1" hidden>Pilih Tipe Pengiriman</option>
                                 @if(auth()->user()->city_id == 350)
                                     @if (old('home_service') == 1)
                                         <option value="0">
                                             Diantar Klinik (Saat Perawatan)
                                         </option>
                                     @elseif(old('home_service') == 0)
-                                        <option value="0" selected>
+                                        <option value="0" >
                                             Ambil Sendiri
                                         </option>
                                     @endif
@@ -358,18 +360,18 @@ use Carbon\Carbon;
                                         Jasa Pengiriman
                                     </option>
                                 @else
-                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
-                                    <option value="0" selected>
-                                        Klinik Reztya Medika
+                                                        
+                                    <option value="0">
+                                        Ambil Sendiri
                                     </option>
-                                    <option value="1" disabled>
-                                        Rumah di luar jangkauan
+                                    <option value="1">
+                                        Jasa Pengiriman
                                     </option>
-                                </select>
+                                
                                 @endif
                             @endauth
-                            
-                            {{-- @if (old('delivery_service'))
+                            </select>
+                            <!-- {{-- @if (old('delivery_service'))
                                 @if (old('home_service') == 1)
                                     @if(old('delivery_service') == 1)
                                         <option value="0">
@@ -396,7 +398,7 @@ use Carbon\Carbon;
                                 Jasa pengiriman
                             </option> --}}
                             {{-- @endif --}}
-                        </select>
+                        </select> -->
                         @error('delivery_service')
                         <div class="invalid-feedback">
                             {{ $message }}
