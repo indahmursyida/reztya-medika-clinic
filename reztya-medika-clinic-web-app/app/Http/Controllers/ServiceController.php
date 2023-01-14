@@ -22,7 +22,9 @@ class ServiceController extends Controller
             ->paginate()
             ->appends(['category' => $category_id]);
 
-        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $schedules = DB::table('schedules')
+            ->where('status','LIKE', 'available')
+            ->where('start_time', '>', Carbon::now())->get();
         $noSchedule = false;
 
         if ($schedules->isEmpty()) {
@@ -41,7 +43,9 @@ class ServiceController extends Controller
             ->orderBy('price', 'desc')
             ->get();
 
-        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $schedules = DB::table('schedules')
+            ->where('status','LIKE', 'available')
+            ->where('start_time', '>', Carbon::now())->get();
         $noSchedule = false;
 
         if ($schedules->isEmpty()) {
@@ -60,7 +64,9 @@ class ServiceController extends Controller
             ->orderBy('price')
             ->get();
 
-        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $schedules = DB::table('schedules')
+            ->where('status','LIKE', 'available')
+            ->where('start_time', '>', Carbon::now())->get();
         $noSchedule = false;
 
         if ($schedules->isEmpty()) {
@@ -79,7 +85,9 @@ class ServiceController extends Controller
             ->orderBy('name', 'desc')
             ->get();
 
-        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $schedules = DB::table('schedules')
+            ->where('status','LIKE', 'available')
+            ->where('start_time', '>', Carbon::now())->get();
         $noSchedule = false;
 
         if ($schedules->isEmpty()) {
@@ -98,7 +106,9 @@ class ServiceController extends Controller
             ->orderBy('name')
             ->get();
 
-        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $schedules = DB::table('schedules')
+            ->where('status','LIKE', 'available')
+            ->where('start_time', '>', Carbon::now())->get();
         $noSchedule = false;
 
         if ($schedules->isEmpty()) {
@@ -119,7 +129,9 @@ class ServiceController extends Controller
             ->paginate()
             ->appends(['keyword' => $keyword]);
 
-        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $schedules = DB::table('schedules')
+            ->where('status','LIKE', 'available')
+            ->where('start_time', '>', Carbon::now())->get();
         $noSchedule = false;
 
         if ($schedules->isEmpty()) {
@@ -134,7 +146,9 @@ class ServiceController extends Controller
     }
 
     public function view() {
-        $schedules = DB::table('schedules')->where('status','LIKE', 'available')->get();
+        $schedules = DB::table('schedules')
+            ->where('status','LIKE', 'available')
+            ->where('start_time', '>', Carbon::now())->get();
         $noSchedule = false;
 
         if ($schedules->isEmpty()) {
@@ -227,7 +241,7 @@ class ServiceController extends Controller
 
         return view('services.service_detail', [
             'service' => $service,
-            'schedules' => Schedule::where('status', 'Available')->where('start_time', '>', Carbon::now())->get(),
+            'schedules' => Schedule::where('status', 'available')->where('start_time', '>', Carbon::now())->get(),
             'description' => $description
         ]);
     }

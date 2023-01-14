@@ -38,10 +38,10 @@
                 Filter
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/view-services/filter/name/a-to-z" class="button-outline-reztya dropdown-item">A to Z</a></li>
-                <li><a href="/view-services/filter/name/z-to-a" class="button-outline-reztya dropdown-item">Z to A</a></li>
-                <li><a href="/view-services/filter/price/high-to-low" class="button-outline-reztya dropdown-item">Price: High to Low</a></li>
-                <li><a href="/view-services/filter/price/low-to-high" class="button-outline-reztya dropdown-item">Price: Low to High</a></li>
+                <li><a href="/view-services/filter/name/a-to-z" class="button-outline-reztya dropdown-item">A ke Z</a></li>
+                <li><a href="/view-services/filter/name/z-to-a" class="button-outline-reztya dropdown-item">Z ke A</a></li>
+                <li><a href="/view-services/filter/price/high-to-low" class="button-outline-reztya dropdown-item">Harga: Tertinggi ke Terendah</a></li>
+                <li><a href="/view-services/filter/price/low-to-high" class="button-outline-reztya dropdown-item">Harga: Terendah to Tertinggi</a></li>
                 @foreach($categories as $category)
                     <form action="/view-services/filter/category/{{$category->category_name}}" method="GET" enctype="multipart/form-data">
                         <input hidden type="hidden" name="category_id" value="{{$category->category_id}}">
@@ -50,7 +50,7 @@
                 @endforeach
             </ul>
         </div>
-        <div class="unselectable d-flex justify-content-center mt-2">
+        <div class="unselectable mt-2">
             <div class="row">
                 @foreach($services as $service)
                     <div class="col-3 mb-3 font-futura-reztya">
