@@ -35,7 +35,7 @@ class ScheduleController extends Controller
             'end_time.after' => 'Waktu Berakhir harus melewati  Waktu Mulai'
         ]);
 
-        $validated_data['status'] = 'Ready';
+        $validated_data['status'] = 'available';
         Schedule::create($validated_data);
         return redirect('/manage-schedules')->with('success','Jadwal berhasil ditambahkan!');
     }
@@ -57,11 +57,11 @@ class ScheduleController extends Controller
             'start_time.before' => 'Waktu Mulai harus mendahului dari Waktu Berakhir',
             'end_time.after' => 'Waktu Berakhir harus melewati  Waktu Mulai'
         ]);
-        $validated_data['status'] = 'Ready';
+        $validated_data['status'] = 'available';
         Schedule::find($id)->update($validated_data);
         return redirect('/manage-schedules');
     }
-    
+
     public function delete($id)
     {
         $schedule = Schedule::find($id);
