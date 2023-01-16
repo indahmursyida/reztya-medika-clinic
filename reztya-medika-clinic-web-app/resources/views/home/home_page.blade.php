@@ -59,21 +59,21 @@
         <div class="row d-flex justify-content-center mt-4">
             <div class="col-4 mb--1">
                 <div class="card border-reztya border border-4 h-75">
-                    <a href="#" class="overflow-hidden">
+                    <a href="/product-detail/{{$product1->product_id}}" class="overflow-hidden">
                         <img src="{{url('storage/lemon.jpg')}}" class="d-block w-100" alt="...">
                     </a>
                 </div>
             </div>
             <div class="col-4 mb--1">
                 <div class="card border-reztya border border-4 h-75">
-                    <a href="#" class="overflow-hidden">
+                    <a href="/product-detail/{{$product2->product_id}}" class="overflow-hidden">
                         <img src="{{url('storage/madu.jpg')}}" class="d-block w-100" alt="...">
                     </a>
                 </div>
             </div>
             <div class="col-4 mb--1">
                 <div class="card border-reztya border border-4 h-75">
-                    <a href="#" class="overflow-hidden">
+                    <a href="/product-detail/{{$product3->product_id}}" class="overflow-hidden">
                         <img src="{{url('storage/granola.jpg')}}" class="d-block w-100" alt="...">
                     </a>
                 </div>
@@ -92,7 +92,7 @@
             <div class="col-6">
                 <p class="d-flex justify-content-center h5 fw-bold unselectable font-alander-reztya mb-3">Produk</p>
                 <div class="card border-reztya border border-4 h-75 justify-content-center bg-reztya">
-                    <a href="#" class="overflow-hidden">
+                    <a href="/product-detail/{{$product->product_id}}" class="overflow-hidden">
                         <img src="{{url('storage/product.png')}}" class="d-block w-100" alt="Product Image">
                     </a>
                 </div>

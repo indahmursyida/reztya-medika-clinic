@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Redirect;
 class HomeController extends Controller
 {
     public function home() {
-        $service = DB::table('services')->where('service_id', '=', 2)->first();
+        $service = DB::table('services')->where('service_id', '=', 5)->first();
+        $product = DB::table('products')->where('product_id', '=', 2)->first();
+        $product1 = DB::table('products')->where('product_id', '=', 5)->first();
+        $product2 = DB::table('products')->where('product_id', '=', 11)->first();
+        $product3 = DB::table('products')->where('product_id', '=', 9)->first();
+
         /*
         $url = "https://www.nuskin.com/en_US/topnav-skin-and-beauty/popular.html";
         $html = file_get_contents($url);
@@ -23,7 +28,13 @@ class HomeController extends Controller
         $div = $div->item(0);
         echo $dom->saveXML($div);
         */
-        return view('home.home_page')->with(compact('service'));
+
+        return view('home.home_page')
+            ->with(compact('service'))
+            ->with(compact('product'))
+            ->with(compact('product1'))
+            ->with(compact('product2'))
+            ->with(compact('product3'));
     }
 
     public function aboutUs() {
