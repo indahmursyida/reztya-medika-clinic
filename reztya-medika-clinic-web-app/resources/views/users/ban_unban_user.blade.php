@@ -53,7 +53,7 @@
                     @if($member->is_banned == false)
                         <form class="d-grid me-3 mb-1 mt-2" action="/ban-user/{{$member->username}}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <button class="btn button-outline-ban-reztya mb-1 mt-1" onclick="return confirm('Apakah anda yakin ingin melakukan ban terhadap {{$member->username}}?')">
+                            <button class="btn btn-outline-danger mb-1 mt-1" onclick="return confirm('Apakah anda yakin ingin melakukan ban terhadap {{$member->username}}?')">
                                 Ban
                             </button>
                         </form>

@@ -11,14 +11,6 @@ class Cart extends Model
 
     protected $primaryKey = 'cart_id';
     protected $guarded = ['cart_id'];
-    // protected $fillable = [
-    //     'user_id',
-    //     'service_id', 
-    //     'product_id',
-    //     'schedule_id',
-    //     'quantity',
-    //     'home_service'
-    // ];
 
     public function user(){
         return $this->belongsTo(User::class, 'user_id');

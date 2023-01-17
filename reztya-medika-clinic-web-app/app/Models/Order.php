@@ -11,14 +11,7 @@ class Order extends Model
 
     protected $primaryKey = 'order_id';
     protected $guarded = ['order_id'];
-    // protected guarded $fillable = [
-    //     'order_detail_id',
-    //     'cancel_id',
-    //     'payment_receipt_id',
-    //     'user_id',
-    //     'order_date',
-    //     'status'
-    // ];
+
     public function orderDetail(){
         return $this->hasMany(OrderDetail::class, 'order_id');
     }
@@ -33,5 +26,9 @@ class Order extends Model
 
     public function paymentReceipt(){
         return $this->belongsTo(PaymentReceipt::class, 'payment_receipt_id');
+    }
+
+    public function feedback(){
+        return $this->hasOne(Feedback::class, 'feedback_id');
     }
 }

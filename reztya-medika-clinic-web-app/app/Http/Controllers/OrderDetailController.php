@@ -84,7 +84,7 @@ class OrderDetailController extends Controller
 
         $feedback = null;
         if ($order->status == 'finished') {
-            $feedback = DB::table('feedback')->where('payment_receipt_id', 'LIKE', $order->payment_receipt_id)->get();
+            $feedback = DB::table('feedbacks')->where('order_id', 'LIKE', $id)->get();
         }
 
         $noSchedule = false;

@@ -14,9 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->increments('product_id')->primaryKey();
-            $table->integer('category_id')->unsigned();
-            $table->foreign('category_id')->references('category_id')->on('categories');
+            $table->id('product_id');
+            $table->foreignId('category_id');
             $table->string('name', 255);
             $table->text('description');
             $table->string('size')->nullable();

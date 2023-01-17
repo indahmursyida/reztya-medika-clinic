@@ -3,7 +3,7 @@
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
@@ -179,5 +179,5 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
     Route::post('/upsert-payment-receipt/{id}', [PaymentReceiptController::class, 'upsertPaymentReceipt'])->middleware('admin');
 
     // Review
-    Route::post('/order-detail/{order_id}/add-clinic-review', [ReviewController::class, 'addClinicReview'])->middleware(['auth', 'verified', 'clear']);
+    Route::post('/order-detail/{order_id}/add-clinic-review', [FeedbackController::class, 'addClinicFeedback'])->middleware(['auth', 'verified', 'clear']);
 });

@@ -159,9 +159,9 @@ use Carbon\Carbon;
                                                 </div>
                                                 <div>
                                                     @auth
-                                                    @if(auth()->user()->city_id == 350)
-                                                        <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
-                                                            @if(old('home_service'))
+                                                    <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                                        @if(auth()->user()->city_id == 350)
+                                                            @if($item->home_service == 1)
                                                                 <option value="1" selected>
                                                                     Rumah ({{ Auth::user()->address }})
                                                                 </option>
@@ -176,25 +176,14 @@ use Carbon\Carbon;
                                                                     Klinik Reztya Medika
                                                                 </option>
                                                             @endif
-                                                        </select>
-                                                    @else
-                                                        <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
+                                                        @else
                                                             <option value="0" selected>
                                                                 Klinik Reztya Medika
                                                             </option>
                                                             <option value="1" disabled>
                                                                 Rumah di luar jangkauan
                                                             </option>
-                                                        </select>
-                                                    @endif
-                                                    @else
-                                                        <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
-                                                            <option value="0" selected>
-                                                                Klinik Reztya Medika
-                                                            </option>
-                                                            <option value="1" disabled>
-                                                                Masuk / Daftar terlebih dahulu
-                                                            </option>
+                                                        @endif
                                                         </select>
                                                     @endauth
                                                     {{-- <select class="form-select shadow-none" id="home_service" name="home_service">
@@ -343,62 +332,55 @@ use Carbon\Carbon;
                     <div class="col-5">
                         <p class="mb-2 fw-bold">Opsi Pengiriman</p>
                         <select class="form-select shadow-none w-75 @error('delivery_service') is-invalid @enderror" id="delivery_service" name="delivery_service">
-                            
                             @auth
-                            <option value="-1" hidden>Pilih Tipe Pengiriman</option>
+                            <option disabled selected value hidden>Pilih Tipe Pengiriman</option>
                                 @if(auth()->user()->city_id == 350)
-                                    @if (old('home_service') == 1)
+                                    @if ($homeService)
+                                        @if (old('delivery_service'))
+                                        <option value="0" selected>
+                                            Diantar Klinik (Saat Perawatan)
+                                        </option>
+                                        @else
                                         <option value="0">
                                             Diantar Klinik (Saat Perawatan)
                                         </option>
-                                    @elseif(old('home_service') == 0)
-                                        <option value="0" >
+                                        @endif
+                                    @else
+                                        @if (old('delivery_service'))
+                                        <option value="0" selected>
                                             Ambil Sendiri
                                         </option>
+                                        @else
+                                        <option value="0">
+                                            Ambil Sendiri
+                                        </option>
+                                        @endif
                                     @endif
+                                    @if (old('delivery_service'))
+                                        <option value="1" selected>
+                                            Jasa Pengiriman
+                                        </option>
+                                    @else
                                     <option value="1">
                                         Jasa Pengiriman
                                     </option>
+                                    @endif
                                 @else
-                                                        
                                     <option value="0">
                                         Ambil Sendiri
                                     </option>
+                                    @if (old('delivery_service') == 1)
+                                    <option value="1" selected>
+                                        Jasa Pengiriman
+                                    </option>
+                                    @else
                                     <option value="1">
                                         Jasa Pengiriman
                                     </option>
-                                
+                                    @endif
                                 @endif
                             @endauth
-                            </select>
-                            <!-- {{-- @if (old('delivery_service'))
-                                @if (old('home_service') == 1)
-                                    @if(old('delivery_service') == 1)
-                                        <option value="0">
-                                            Diantar oleh klinik pada hari perawatan
-                                        </option>
-                                        <option value="1">
-                                            Jasa pengiriman
-                                        </option>
-                                    @endif
-                                @else
-                                    <option value="0" selected>
-                                        Ambil sendiri
-                                    </option>
-                                    <option value="1">
-                                        Jasa pengiriman
-                                    </option>
-                                @endif
-                            @else
-                            <option value="-1" hidden>Pilih Tipe Pengiriman</option>
-                            <option value="0">
-                                Ambil sendiri
-                            </option>
-                            <option value="1">
-                                Jasa pengiriman
-                            </option> --}}
-                            {{-- @endif --}}
-                        </select> -->
+                        </select>
                         @error('delivery_service')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -423,7 +405,7 @@ use Carbon\Carbon;
                                 <select onchange="includeFee(this.value)" id="cost" name="cost" class="form-select shadow-none w-75  @error('cost') is-invalid @enderror">
 
                                     @foreach($costs as $cost)
-                                    <option value="" disabled selected hidden>Pilih Jasa Pengiriman</option>
+                                    <option value="" disabled selected hidden>Pilih Jenis Pengiriman</option>
                                     <option value="{{ json_encode($cost) }} ">JNE {{$cost->service}} ({{$cost->cost[0]->etd}} hari)</option>
                                     @endforeach
                                 </select>
@@ -488,22 +470,8 @@ Tidak dapat mengakses halaman ini.
 @endif
 <script>
     $(document).ready(function() {
-
-        // $("#delivery_service").change(
-        //     function () {
-        //         alert("Textbox value is changed");
-        //     }
-        // );
-
-        // $('#update_schedule').on('change', function(){
-        //     window.location.reload();
-        // });
-        // $('#update_quantity').on('change', function(){
-        //     window.location.reload();
-        // });
-
         let count = '<?php echo count($errors); ?>';
-        let error = '<?php echo $errors->first(); ?>';
+        let error = "<?php echo $errors->first() == 'quantity'; ?>";
 
         if(count > 0 && error)
             document.getElementById("button_modal").click();
@@ -534,14 +502,5 @@ Tidak dapat mengakses halaman ini.
         document.getElementById('totalPriceText').innerHTML = "Rp" + total.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
         document.getElementById('deliveryFeeText').innerHTML = "Rp" + delivery_fee.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ".00";
     }
-
-    // document.getElementById('delete-button').addEventListener('click', function(e) {
-    //     e.preventDefault();
-
-    //     axios.delete('/remove-cart/' + this.dataset.id)
-    //         .then(response => {
-
-    //         });
-    //     });
 </script>
 @endsection

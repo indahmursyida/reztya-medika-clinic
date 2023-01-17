@@ -8,15 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Feedback extends Model
 {
     use HasFactory;
-
+    public $table = 'feedbacks';
     protected $primaryKey = 'feedback_id';
-    protected $fillable = [
-        'payment_receipt_id',
-        'feedback_body'
-    ];
+    protected $guarded = ['feedback_id'];
 
-    public function paymentReceipt(){
-        return $this->belongsTo(PaymentReceipt::class, 'feedback_id', 'feedback_id');
+    public function order(){
+        return $this->belongsTo(Order::class, 'order_id', 'order_id');
     }
-
 }

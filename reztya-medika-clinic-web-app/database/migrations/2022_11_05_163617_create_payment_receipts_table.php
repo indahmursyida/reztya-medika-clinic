@@ -14,12 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('payment_receipts', function (Blueprint $table) {
-            $table->id('payment_receipt_id')->primaryKey();
-            $table->foreignId('feedback_id')->nullable();
-            $table->date('payment_date')->nullable();;
-            $table->integer('payment_amount')->length(11)->nullable();
-            $table->string('payment_method', 15)->nullable();
-            $table->string('account_number', 15)->nullable();
+            $table->id('payment_receipt_id');
+            $table->date('payment_date');
+            $table->integer('payment_amount')->length(11);
+            $table->string('payment_method', 15);
+            $table->string('account_number', 20)->nullable();
             $table->string('account_name', 255)->nullable();
             $table->string('image_path', 255)->nullable();
             $table->string('confirmed_by', 255)->nullable();

@@ -15,15 +15,16 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id');
-            $table->foreignId('cancel_id')->nullable();
-            $table->foreignId('payment_receipt_id')->nullable();
             $table->foreignId('user_id');
+            $table->foreignId('payment_receipt_id')->nullable();
+            // $table->foreignId('cancel_id')->nullable();
+            $table->foreignId('feedback_id')->nullable();
             $table->date('order_date');
             $table->string('status', 255);
             $table->boolean('delivery_service')->nullable();
             $table->string('delivery_name')->nullable();
             $table->string('delivery_duration')->nullable();
-            $table->string('weight')->nullable();
+            $table->integer('weight')->nullable();
             $table->string('delivery_destination')->nullable();
             $table->integer('delivery_fee')->length(11)->nullable();
             $table->timestamps();

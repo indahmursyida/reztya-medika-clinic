@@ -15,8 +15,4 @@ class PaymentReceipt extends Model
     public function order(){
         return $this->hasOne(Order::class, 'payment_receipt_id');
     }
-
-    public function feedback(){
-        return $this->hasOne(Feedback::class, 'feedback_id');
-    }
 }

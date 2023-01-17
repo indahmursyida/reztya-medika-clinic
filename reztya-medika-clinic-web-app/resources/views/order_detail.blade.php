@@ -34,9 +34,9 @@
                         </div>
                         @enderror
                     </div>
-                    <input hidden name="payment_receipt_id" value="{{$order->payment_receipt_id}}">
+                    {{-- <input hidden name="payment_receipt_id" value="{{$order->payment_receipt_id}}"> --}}
                     <div class="modal-footer">
-                        <button type="button" class="btn button-outline-ban-reztya font-futura-reztya" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-outline-danger font-futura-reztya" data-bs-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn button-outline-reztya font-futura-reztya">Kirim Kritik dan Saran</button>
                     </div>
                 </form>
@@ -358,9 +358,9 @@
                                                             Pilih Tempat Perawatan
                                                         </div>
                                                         <div>
+                                                            <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
                                                             @auth
                                                                 @if(auth()->user()->city_id == 350)
-                                                                    <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
                                                                         @if(old('home_service'))
                                                                             <option value="1" selected>
                                                                                 Rumah ({{ Auth::user()->address }})
@@ -378,7 +378,6 @@
                                                                         @endif
                                                                     </select>
                                                                 @else
-                                                                    <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
                                                                         <option value="0" selected>
                                                                             Klinik Reztya Medika
                                                                         </option>
@@ -388,15 +387,14 @@
                                                                     </select>
                                                                 @endif
                                                             @else
-                                                                <select class="form-select shadow-none @error('home_service') is-invalid @enderror" id="home_service" name="home_service">
                                                                     <option value="0" selected>
                                                                         Klinik Reztya Medika
                                                                     </option>
                                                                     <option value="1" disabled>
                                                                         Masuk / Daftar terlebih dahulu
                                                                     </option>
-                                                                </select>
-                                                            @endauth
+                                                                    @endauth
+                                                            </select>
                                                             {{-- <select class="form-select" id="home_service" name="home_service">
                                                                 @if($order_detail->home_service == 1)
                                                                 <option value="1" hidden selected>
@@ -504,7 +502,7 @@
                     <div class="row mt-2">
                         <div class="col">
                         </div>
-                        <div class="col-7">    
+                        <div class="col-7">
                             <div>
                                 <p class="mb-0 fw-bold">Pengiriman</p>
                                 @if ($isHomeService)

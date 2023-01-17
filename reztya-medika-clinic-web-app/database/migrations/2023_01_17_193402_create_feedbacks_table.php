@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_role', function (Blueprint $table) {
-            $table->increments('user_role_id')->primaryKey();
-            $table->string('user_role_name');
+        Schema::create('feedbacks', function (Blueprint $table) {
+            $table->id('feedback_id');
+            $table->foreignId('order_id');
+            $table->text('feedback_body');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_role');
+        Schema::dropIfExists('feedbacks');
     }
 };

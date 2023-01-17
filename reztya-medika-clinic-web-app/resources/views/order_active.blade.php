@@ -136,7 +136,7 @@ use Carbon\Carbon;
                                 <img src="{{ asset('storage/' . $order->orderDetail[0]->product->image_path) }}" alt="" width="100px" height="100px">
                             </div>
                             <div class="col-7">
-                                <p class="fw-bold mb-4">{{ $order->orderDetail[0]->product->name }}</p>
+                                <p class="fw-bold m-0">{{ $order->orderDetail[0]->product->name }}</p>
                                 <div>
                                     {{ $order->orderDetail[0]->quantity }} buah x Rp{{ number_format($order->orderDetail[0]->product->price, 2) }}
                                 </div>
