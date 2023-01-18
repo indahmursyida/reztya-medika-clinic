@@ -298,9 +298,6 @@ use Carbon\Carbon;
                                                 @error('quantity')
                                                 <div class="invalid-feedback">
                                                     {{$message}}
-                                                    {{-- @php
-                                                        dd($errors);
-                                                    @endphp --}}
                                                 </div>
                                                 @enderror
                                             </div>
@@ -470,10 +467,9 @@ Tidak dapat mengakses halaman ini.
 @endif
 <script>
     $(document).ready(function() {
-        let count = '<?php echo count($errors); ?>';
-        let error = "<?php echo $errors->first() == 'quantity'; ?>";
+        let quantity_error = "<?php echo $errors->has('quantity') ?>";
 
-        if(count > 0 && error)
+        if(quantity_error)
             document.getElementById("button_modal").click();
 
         $('#delivery_service').change(

@@ -477,7 +477,7 @@
                 @endforeach
             </div>
             @if ($isProductExist)
-                @if($order->delivery_service == 1)
+                @if($order->deliveryInfo)
                 <div class="container">
                     <div class="row mt-2">
                         <div class="col">
@@ -485,15 +485,15 @@
                         <div class="col-7">    
                             <div>
                                 <p class="mb-0 fw-bold">Ongkos Pengiriman</p>
-                                <p class="mb-0">JNE {{$order->delivery_name}} ({{$order->delivery_duration}} hari), berat {{$order->weight}} kg</p>
+                                <p class="mb-0">JNE {{$order->deliveryInfo->delivery_type}} ({{$order->deliveryInfo->estimated_days}} hari), berat {{$order->deliveryInfo->weight}} kg</p>
                                 <div class="d-flex">
                                     <p class="mb-0 me-1">Dikirim ke</p>
-                                    <p class="fw-bold">{{$order->delivery_destination}}</p>
+                                    <p class="fw-bold">{{$order->deliveryInfo->delivery_destination}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-3">
-                            Rp{{ number_format($order->delivery_fee, 2) }}
+                            Rp{{ number_format($order->deliveryInfo->delivery_fee, 2) }}
                         </div>
                     </div>
                 </div>
@@ -527,7 +527,7 @@
                     <div class="col-7">
                     </div>
                     <div class="col-3 d-flex align-items-center">
-                        <h5 class="mb-0">Rp{{ number_format($totalPrice + $order->delivery_fee, 2) }}</h5>
+                        <h5 class="mb-0">Rp{{ number_format($totalPrice + $order->deliveryInfo->delivery_fee, 2) }}</h5>
                     </div>
                 </div>
             </div>
@@ -545,9 +545,9 @@
     });
     $(document).ready(
         function() {
-            let count = '<?php echo count($errors); ?>';
+            let count = "<?php echo $errors->has('image_path') || $errors->has('account_number') || $errors->has('account_name'); ?>";
 
-            if(count > 0)
+            if(count)
                 document.getElementById("button_modal").click();
         })
 </script>

@@ -13,6 +13,6 @@ class Feedback extends Model
     protected $guarded = ['feedback_id'];
 
     public function order(){
-        return $this->belongsTo(Order::class, 'order_id', 'order_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 }

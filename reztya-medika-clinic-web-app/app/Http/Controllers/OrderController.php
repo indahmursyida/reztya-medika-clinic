@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Schedule;
 use App\Models\PaymentReceipt;
+use App\Models\DeliveryInfo;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Product;
@@ -63,21 +64,12 @@ class OrderController extends Controller
         //     }
         // }
         
-        $orders = Order::create([
-            'user_id' => Auth::user()->user_id,
-            'order_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
-            'status' => 'ongoing'
-        ]);
-        
         $validated_delivery_service = $req->validate([
             'delivery_service' => 'required'
         ],[
             'delivery_service.required' => 'Tipe pengiriman wajib diisi'
         ]);
-        
-        $orders['delivery_service'] = $validated_delivery_service['delivery_service'];
-        $orders['weight'] = $req['weight'];
-        
+
         if($validated_delivery_service['delivery_service'] == 1)
         {
             $validated_cost = $req->validate([
@@ -88,12 +80,30 @@ class OrderController extends Controller
             
             $json_decoded = json_decode($validated_cost['cost']);
             
-            $orders['delivery_name'] = $json_decoded->service;
-            $orders['delivery_duration'] = $json_decoded->cost[0]->etd;
-            $orders['delivery_destination'] = $req['origin'];
-            $orders['delivery_fee'] = $json_decoded->cost[0]->value * $orders['weight'];
+            $order = Order::create([
+                'user_id' => Auth::user()->user_id,
+                'order_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
+                'status' => 'ongoing'
+            ]);
+
+            $deliveryInfo = DeliveryInfo::create([
+                'delivery_destination' => $req['origin'],
+                'delivery_type' => $json_decoded->service,
+                'estimated_days' => $json_decoded->cost[0]->etd,
+                'weight' => $req['weight'],
+                'delivery_fee' => $json_decoded->cost[0]->value * $req['weight'],
+            ]);
+            $order->delivery_info_id = $deliveryInfo->delivery_info_id;
+            $order->save();
         }
-        $orders->save();
+        elseif($validated_delivery_service['delivery_service'] == 0)
+        {
+            $order = Order::create([
+                'user_id' => Auth::user()->user_id,
+                'order_date' => Carbon::parse(Carbon::now())->format('Y-m-d'),
+                'status' => 'ongoing'
+            ]);
+        }
 
         $carts = Cart::where('user_id', Auth::user()->user_id)->get();
         
@@ -104,7 +114,7 @@ class OrderController extends Controller
                 if($cart->schedule_id || $cart->home_service)
                 {
                     OrderDetail::create([
-                        'order_id' => $orders->order_id,
+                        'order_id' => $order->order_id,
                         'service_id' => $cart->service_id,
                         'schedule_id' => $cart->schedule_id,
                         'home_service' => $cart->home_service
@@ -146,7 +156,7 @@ class OrderController extends Controller
                     $product->save();
 
                     OrderDetail::create([
-                        'order_id' => $orders->order_id,
+                        'order_id' => $order->order_id,
                         'product_id' => $cart->product_id,
                         'quantity' => $cart->quantity
                     ]);
@@ -156,7 +166,7 @@ class OrderController extends Controller
         }
         
         Cart::where('user_id', Auth::user()->user_id)->delete();
-        return redirect()->route('detail_order', ['id' => $orders->order_id])->with('success', 'Pesanan berhasil dibuat!');
+        return redirect()->route('detail_order', ['id' => $order->order_id])->with('success', 'Pesanan berhasil dibuat!');
     }
 
     public function createOrderWithoutProduct()

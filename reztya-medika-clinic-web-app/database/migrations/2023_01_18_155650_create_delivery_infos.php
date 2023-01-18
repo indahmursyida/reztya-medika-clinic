@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
-            $table->id('cart_id');
-            $table->foreignId('user_id');
-            $table->foreignId('service_id')->nullable();
-            $table->foreignId('schedule_id')->nullable();
-            $table->foreignId('product_id')->nullable();
-            $table->boolean('home_service')->nullable();
-            $table->integer('quantity')->nullable();
+        Schema::create('delivery_infos', function (Blueprint $table) {
+            $table->id('delivery_info_id');
+            $table->string('delivery_destination', 255);
+            $table->string('delivery_type', 255);
+            $table->string('estimated_days', 255);
+            $table->integer('weight');
+            $table->integer('delivery_fee')->length(11);
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('delivery_infos');
     }
 };

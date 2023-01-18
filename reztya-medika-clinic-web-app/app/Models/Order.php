@@ -31,4 +31,8 @@ class Order extends Model
     public function feedback(){
         return $this->hasOne(Feedback::class, 'feedback_id');
     }
+
+    public function deliveryInfo(){
+        return $this->belongsTo(DeliveryInfo::class, 'delivery_info_id');
+    }
 }
