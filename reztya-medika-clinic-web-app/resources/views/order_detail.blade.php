@@ -482,7 +482,7 @@
                     <div class="row mt-2">
                         <div class="col">
                         </div>
-                        <div class="col-7">    
+                        <div class="col-7">
                             <div>
                                 <p class="mb-0 fw-bold">Ongkos Pengiriman</p>
                                 <p class="mb-0">JNE {{$order->deliveryInfo->delivery_type}} ({{$order->deliveryInfo->estimated_days}} hari), berat {{$order->deliveryInfo->weight}} kg</p>
@@ -527,7 +527,11 @@
                     <div class="col-7">
                     </div>
                     <div class="col-3 d-flex align-items-center">
-                        <h5 class="mb-0">Rp{{ number_format($totalPrice + $order->deliveryInfo->delivery_fee, 2) }}</h5>
+                        @if($order->deliveryInfo)
+                            <h5 class="mb-0">Rp{{ number_format($totalPrice + $order->deliveryInfo->delivery_fee, 2) }}</h5>
+                        @else
+                            <h5 class="mb-0">Rp{{ number_format($totalPrice, 2) }}</h5>
+                        @endif
                     </div>
                 </div>
             </div>

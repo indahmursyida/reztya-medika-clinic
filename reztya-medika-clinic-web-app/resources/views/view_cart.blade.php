@@ -101,7 +101,7 @@ use Carbon\Carbon;
                             -
                         </div>
                         @endif
-                        
+
                     </div>
                     <div class="col">Rp{{ number_format($item->service->price, 2) }}</div>
                     <div class="col text-center">
@@ -433,7 +433,7 @@ use Carbon\Carbon;
                         <h5 class="mb-0" id="totalPriceText">Rp{{ number_format($totalPrice, 2) }}</h5>
                     </div>
                     <div class="col d-flex justify-content-center align-items-center">
-                        <button type="submit" class="btn button-outline-reztya">Buat Pesanan</button>
+                        <button onclick="return confirm('Apakah anda yakin ingin melakukan pesanan?')" type="submit" class="btn button-outline-reztya">Buat Pesanan</button>
                     </div>
                 </div>
             </div>
