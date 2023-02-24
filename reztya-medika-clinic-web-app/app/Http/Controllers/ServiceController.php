@@ -276,8 +276,7 @@ class ServiceController extends Controller
                 'name' => 'required|max:255',
                 'description' => 'required',
                 'duration' => 'required|numeric',
-                'price' => 'required|numeric',
-                'image_path' => 'required|image'
+                'price' => 'required|numeric'
             ],
             [
                 'category_id.required' => 'Kategori perawatan wajib diisi',
@@ -287,12 +286,18 @@ class ServiceController extends Controller
                 'duration.required' => 'Durasi perawatan wajib diisi',
                 'duration.numeric' => 'Durasi perawatan harus angka',
                 'price.required' => 'Harga perawatan wajib diisi',
-                'price.numeric' => 'Harga perawatan harus angka',
-                'image_path.required' => 'Foto perawatan wajib diisi',
-                'image_path.image' => 'Foto perawatan harus berbentuk jpeg, jpg, atau png'
+                'price.numeric' => 'Harga perawatan harus angka'
             ]
         );
 
+        if($request->image_path){
+            $validatedData['image_path'] = $request->validate([
+                'image_path' => 'required|image'
+            ],[
+                'image_path.required' => 'Foto produk wajib diisi',
+                'image_path.image' => 'Foto produk harus berbentuk jpeg, jpg, atau png'
+            ]);
+        }
         if ($request->file('image_path')) {
             if ($request->old_image) {
                 Storage::delete($request->old_image);

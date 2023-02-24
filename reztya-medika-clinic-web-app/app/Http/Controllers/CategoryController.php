@@ -85,7 +85,7 @@ class CategoryController extends Controller
         Category::find($id)
         ->update($validatedData);
 
-        return redirect('manage-categories')->with('success','Kategori berhasil ditambahkan!');
+        return redirect('manage-categories')->with('success','Kategori berhasil diubah!');
     }
 
     /**

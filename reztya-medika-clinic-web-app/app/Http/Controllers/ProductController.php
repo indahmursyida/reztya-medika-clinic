@@ -202,8 +202,7 @@ class ProductController extends Controller
             'size' => 'nullable',
             'price' => 'required|numeric',
             'expired_date' => 'required|date|after:now',
-            'stock' => 'required|min:1|max:1000',
-            'image_path' => 'required|image'
+            'stock' => 'required|min:1|max:1000'
         ],[
             'category_id.required' => 'Kategori produk wajib diisi',
             'name.required' => 'Nama produk wajib diisi',
@@ -216,10 +215,17 @@ class ProductController extends Controller
             'expired_date.after' => 'Produk sudah kadaluarsa!',
             'stock.required' => 'Stok produk wajib diisi',
             'stock.min' => 'Stok produk minimal 1',
-            'stock.max' => 'Stok produk maksimal 1000',
-            'image_path.required' => 'Foto produk wajib diisi',
-            'image_path.image' => 'Foto produk harus berbentuk jpeg, jpg, atau png'
+            'stock.max' => 'Stok produk maksimal 1000'
         ]);
+
+        if($request->image_path){
+            $validatedData['image_path'] = $request->validate([
+                'image_path' => 'required|image'
+            ],[
+                'image_path.required' => 'Foto produk wajib diisi',
+                'image_path.image' => 'Foto produk harus berbentuk jpeg, jpg, atau png'
+            ]);
+        }
 
         if($request->file('image_path')){
             if($request->old_image){

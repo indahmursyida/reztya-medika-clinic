@@ -16,13 +16,13 @@ class BanController extends Controller
         DB::table('users')->where('username', $username)->update([
             'is_banned' => true
         ]);
-        return redirect('/view-users')->with('successUpdate', 'Akun Member telah berhasil di ban!');
+        return redirect('/view-users')->with('successUpdate', 'Akun Member telah berhasil di-ban!');
     }
 
     public function unbanUser($username) {
         DB::table('users')->where('username', $username)->update([
             'is_banned' => false
         ]);
-        return redirect('/view-users')->with('successUpdate', 'Akun Member telah berhasil di unban!');
+        return redirect('/view-users')->with('successUpdate', 'Akun Member telah berhasil di-unban!');
     }
 }
