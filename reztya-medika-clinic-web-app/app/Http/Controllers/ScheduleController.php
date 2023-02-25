@@ -59,7 +59,7 @@ class ScheduleController extends Controller
         ]);
         $validated_data['status'] = 'available';
         Schedule::find($id)->update($validated_data);
-        return redirect('/manage-schedules');
+        return redirect('/manage-schedules')->with('success','Jadwal berhasil diperbarui!');
     }
 
     public function delete($id)

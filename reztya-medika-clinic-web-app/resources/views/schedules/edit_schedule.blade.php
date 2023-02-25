@@ -11,7 +11,7 @@
             </div>
         </div>
         <form action="/update-schedule/{{ $schedule->schedule_id }}" method="POST" enctype="multipart/form-data">
-            @method('put')
+            @method('post')
             @csrf
             <div class="container">
                 <div class="col mb-2">

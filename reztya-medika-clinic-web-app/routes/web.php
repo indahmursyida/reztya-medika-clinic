@@ -135,7 +135,7 @@ Route::group(['middleware' => 'prevent-back-history'], function() {
     Route::get('/add-schedule', [ScheduleController::class, 'add'])->middleware('admin');
     Route::post('/add-schedule', [ScheduleController::class, 'store'])->middleware('admin');
     Route::get('/edit-schedule/{id}', [ScheduleController::class, 'edit'])->middleware('admin');
-    Route::put('/update-schedule/{id}', [ScheduleController::class, 'update'])->middleware('admin');
+    Route::post('/update-schedule/{id}', [ScheduleController::class, 'update'])->middleware('admin');
     Route::get('/delete-schedule/{id}', [ScheduleController::class, 'delete'])->middleware('admin');
 
     // Ban and Unban User
